@@ -1,0 +1,2 @@
+# sklad
+Vizualizácia skladu
