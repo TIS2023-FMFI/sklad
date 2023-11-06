@@ -1,9 +1,9 @@
-package entity;
+package org.entity;
 
 import jakarta.persistence.*;
 
 @Entity
-public class Users {
+public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -12,8 +12,17 @@ public class Users {
     @Column(name = "name")
     private String name;
     @Basic
-    @Column(name = "email")
-    private String email;
+    @Column(name = "weight")
+    private int weight;
+
+    public Product(){
+
+    }
+
+    public Product(String name, int weight) {
+        this.name = name;
+        this.weight = weight;
+    }
 
     public int getId() {
         return id;
@@ -31,12 +40,12 @@ public class Users {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public int getWeight() {
+        return weight;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     @Override
@@ -44,11 +53,11 @@ public class Users {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Users users = (Users) o;
+        Product product = (Product) o;
 
-        if (id != users.id) return false;
-        if (name != null ? !name.equals(users.name) : users.name != null) return false;
-        if (email != null ? !email.equals(users.email) : users.email != null) return false;
+        if (id != product.id) return false;
+        if (weight != product.weight) return false;
+        if (name != null ? !name.equals(product.name) : product.name != null) return false;
 
         return true;
     }
@@ -57,7 +66,7 @@ public class Users {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + weight;
         return result;
     }
 }

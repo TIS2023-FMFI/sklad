@@ -1,4 +1,4 @@
-package entity;
+package org.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -12,6 +12,9 @@ public class Responsibilities {
     @Basic
     @Column(name = "idProduct")
     private int idProduct;
+    @Basic
+    @Column(name = "id")
+    private int id;
 
     public int getIdUser() {
         return idUser;
@@ -29,6 +32,14 @@ public class Responsibilities {
         this.idProduct = idProduct;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,6 +49,7 @@ public class Responsibilities {
 
         if (idUser != that.idUser) return false;
         if (idProduct != that.idProduct) return false;
+        if (id != that.id) return false;
 
         return true;
     }
@@ -46,6 +58,7 @@ public class Responsibilities {
     public int hashCode() {
         int result = idUser;
         result = 31 * result + idProduct;
+        result = 31 * result + id;
         return result;
     }
 }
