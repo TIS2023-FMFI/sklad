@@ -18,17 +18,17 @@ public class MainMenu {
 
     public void relocateProduct() throws IOException {
         Warehouse warehouse = new Warehouse();
-        warehouse.changeScene("login.fxml");
+        warehouse.changeScene("moveFromForm.fxml");
     }
 
     public void placeOrder() throws IOException {
         Warehouse warehouse = new Warehouse();
-        warehouse.changeScene("login.fxml");
+        warehouse.changeScene("orderCustomerSelectionForm.fxml");
     }
 
     public void showStatistics() throws IOException {
         Warehouse warehouse = new Warehouse();
-        warehouse.changeScene("login.fxml");
+        warehouse.changeScene("statisticsMainPage.fxml");
     }
 
     public void logout() throws IOException {

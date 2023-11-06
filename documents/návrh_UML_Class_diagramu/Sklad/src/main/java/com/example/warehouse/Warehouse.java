@@ -8,9 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 public class Warehouse extends Application {
-
     private static Stage stage;
-
     @Override
     public void start(Stage primarystage) throws Exception {
         stage = primarystage;
