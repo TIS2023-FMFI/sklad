@@ -21,7 +21,7 @@ public class LoginController {
     // funkcia na overenie či uživateľ zadal správne meno a heslo
     // ak áno prihlási ho
     public void login() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("mainMenu.fxml");
     }
 }

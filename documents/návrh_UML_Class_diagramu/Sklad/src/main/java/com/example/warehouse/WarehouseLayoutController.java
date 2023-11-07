@@ -16,12 +16,12 @@ public class WarehouseLayoutController {
 
 
     public void backToMenu() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("mainMenu.fxml");
     }
 
     public void backToRows() throws IOException{
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("warehouseLayoutRows.fxml");
     }
 }

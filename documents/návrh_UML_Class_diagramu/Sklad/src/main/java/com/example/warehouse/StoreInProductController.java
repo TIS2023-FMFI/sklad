@@ -35,19 +35,19 @@ public class StoreInProductController {
     }
 
     public void backToMenu() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("mainMenu.fxml");
     }
 
     // setne informácie zákazník, číslo točky, použivateľa pre paletu
     // presunutie na ďalší formulár kde zákazník vyplní informácie o produkte
     public void nextToInformationForm() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("informationForm.fxml");
     }
 
     public void backToCustomerTockaForm() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("customerTockaForm.fxml");
     }
 
@@ -63,7 +63,7 @@ public class StoreInProductController {
 
     // setne informácie PNR, nadrozmernosť, poškodenosť, hmotnosť, typ palety, materiály a ich množstvo
     public void nextToPositionForm() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("positionForm.fxml");
 
         // tu bude nejaký cyklus, ktorý pridá po jednom jednotlivé materiály a ich počet
@@ -89,7 +89,7 @@ public class StoreInProductController {
     // zaskladní paletu (pridá záznam do databázy)
     // presunie na main menu
     public void storeInProduct() throws IOException{
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("mainMenu.fxml");
     }
 
@@ -98,7 +98,7 @@ public class StoreInProductController {
     // nezabudnúť na vynulovanie taktiež materialCount
     public void continueStoringIn() throws IOException{
         storeInProduct();
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("informationForm.fxml");
     }
 }

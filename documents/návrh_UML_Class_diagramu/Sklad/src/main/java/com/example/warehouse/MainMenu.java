@@ -7,32 +7,32 @@ public class MainMenu {
     // private Map<String, Map<String, Position[]>> warehouseLayout --> a jeho načítanie z databázy
 
     public void showWarehouseLayout() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("warehouseLayoutRows.fxml");
     }
 
     public void storeInProduct() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("customerTockaForm.fxml");
     }
 
     public void relocateProduct() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("moveFromForm.fxml");
     }
 
     public void placeOrder() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("orderCustomerSelectionForm.fxml");
     }
 
     public void showStatistics() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("statisticsMainPage.fxml");
     }
 
     public void logout() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("login.fxml");
     }
 }
