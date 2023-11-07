@@ -22,14 +22,14 @@ public class MoveProductController {
         }
         else {
             System.out.println(position.getText());
-            Warehouse warehouse = new Warehouse();
+            Warehouse warehouse = Warehouse.getInstance();
             warehouse.changeScene("chooseProductToMoveForm.fxml");
             //fillProductList();
         }
     }
 
     public void backToMenu() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("mainMenu.fxml");
     }
 
@@ -44,26 +44,22 @@ public class MoveProductController {
     }
 
     public void backToInitialPosition() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("moveFromForm.fxml");
     }
 
     public void confirmProductToMove() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("chooseFinalPositionForm.fxml");
     }
 
     public void backToProductChoice() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("chooseProductToMoveForm.fxml");
     }
 
-    /***
-     * Zmení údaje v databáze.
-     * @throws IOException
-     */
     public void confirmFinalPosition() throws IOException {
-        Warehouse warehouse = new Warehouse();
+        Warehouse warehouse = Warehouse.getInstance();
         warehouse.changeScene("movingConfirmationForm.fxml");
     }
 }

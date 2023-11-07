@@ -8,6 +8,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 public class Warehouse extends Application {
+
+    private static Warehouse INSTANCE;
+    public static Warehouse getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new Warehouse();
+        }
+        return INSTANCE;
+    }
     private static Stage stage;
     @Override
     public void start(Stage primarystage) throws Exception {
