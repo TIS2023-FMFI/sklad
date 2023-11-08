@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="384.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.warehouse.StoreInProductController">
+<AnchorPane prefHeight="384.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.warehouse.StoreInProductController">
    <children>
       <Label layoutX="37.0" layoutY="98.0" text="Zaskladniť na pozíciu:" />
       <Label layoutX="37.0" layoutY="145.0" text="Poznámka:" />
