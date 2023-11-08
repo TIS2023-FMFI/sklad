@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 public class Warehouse extends Application {
-
     private static Warehouse INSTANCE;
     public static Warehouse getInstance() {
         if(INSTANCE == null) {
