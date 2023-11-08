@@ -1,6 +1,8 @@
 package com.example.warehouse;
 
 public class User {
+//toto je meno pouzivatela
+    //fdsajhfskdj
 
     private String username;
     private boolean admin;
