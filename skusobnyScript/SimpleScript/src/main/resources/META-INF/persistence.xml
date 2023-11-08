@@ -5,9 +5,9 @@
              version="3.0">
     <persistence-unit name="default">
 
-        <class>entity.Product</class>
-        <class>entity.Responsibilities</class>
-        <class>entity.Users</class>
+        <class>org.entity.Product</class>
+        <class>org.entity.Responsibilities</class>
+        <class>org.entity.Users</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
