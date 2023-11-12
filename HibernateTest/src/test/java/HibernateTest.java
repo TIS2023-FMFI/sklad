@@ -7,6 +7,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import java.sql.Date;
+
+import java.util.List;
 
 public class HibernateTest {
     private SessionFactory sessionFactory;
@@ -49,6 +52,27 @@ public class HibernateTest {
             session.beginTransaction();
             session.delete(newProjekt);
             session.getTransaction().commit();
+        }
+    }
+
+    @Test
+    void hql_fetch_data(){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            //List<String> projekt = session.createQuery("select p.meno from Projekt p where rola='Implementacia'", String.class).list();
+            //projekt.forEach(System.out::println);
+            //List<Projekt> projekt = session.createQuery("select p from Projekt p order by meno", Projekt.class).list();
+            //projekt.forEach(System.out::println);
+            //System.out.println(session.createQuery("select sum(id) from Projekt p", Projekt.class).list().get(0));
+
+            //List<String> projekt = session.createQuery("select p.rola from Projekt p join Users u " +
+            //        "on u.meno=p.meno where u.datum_narodenia=", String.class).list();
+            //projekt.forEach(System.out::println);
+
+            List<String> query = session.createQuery("select u.meno from Users u join Projekt p on p.id=u.id where p.rola='Komunikacia'", String.class).list();
+            query.forEach(System.out::println);
+
+            //session.getTransaction().commit();
         }
     }
 
