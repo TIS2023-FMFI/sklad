@@ -5,6 +5,7 @@ import jakarta.persistence.Table;
 import java.sql.Date;
 
 @Entity
+@Table(name = "projekt")
 public class Projekt {
     @Id
     long id;
@@ -12,7 +13,7 @@ public class Projekt {
     String rola;
     public static void main(String[] args) {
         Date d = new Date(2001, 7, 4);
-        System.out.println();
+        System.out.println(String.valueOf(d));
     }
 
     public void setId(Long id) {
