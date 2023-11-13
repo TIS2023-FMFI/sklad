@@ -19,6 +19,7 @@
 
         <!-- Specify annotated entity classes -->
         <mapping class="Projekt"/>
+        <mapping class="Users"/>
 
         <!-- Other Hibernate settings -->
         <!-- ... -->
