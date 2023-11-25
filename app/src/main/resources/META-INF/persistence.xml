@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -5,15 +6,20 @@
              version="3.0">
     <persistence-unit name="default">
 
-        <class>Entity.ProductEntity</class>
-        <class>Entity.ProjektEntity</class>
-        <class>Entity.ResponsibilitiesEntity</class>
-        <class>Entity.UsersEntity</class>
+        <class>Entity.CustomerEntity</class>
+        <class>Entity.CustomerReservationEntity</class>
+        <class>Entity.HistoryEntity</class>
+        <class>Entity.MaterialEntity</class>
+        <class>Entity.PalleteEntity</class>
+        <class>Entity.PositionEntity</class>
+        <class>Entity.StoredOnPositionEntity</class>
+        <class>Entity.UserEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.connection.username" value="postgres"/>
             <property name="hibernate.connection.password" value="admin"/>
+
         </properties>
     </persistence-unit>
 </persistence>

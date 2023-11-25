@@ -1,17 +1,18 @@
-import Entity.ProductEntity;
-import Entity.ResponsibilitiesEntity;
-import Entity.UsersEntity;
-import Entity.ProjektEntity;
+import Entity.MaterialEntity;
+import Entity.UserEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Queue;
+
 public class Tests {
     private SessionFactory sessionFactory;
 
@@ -20,11 +21,14 @@ public class Tests {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
+        System.out.println("registry created");
         try {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+            System.out.println("Session factory created");
         }
         catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
+            System.out.println("Session factory creation failed with exception: " + e);
         }
     }
 
@@ -37,7 +41,13 @@ public class Tests {
 
     @Test
     void saveToDB(){
-
+        MaterialEntity newMaterial = new MaterialEntity();
+        newMaterial.setName("Test material");
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.persist(newMaterial);
+            session.getTransaction().commit();
+        }
     }
 
     @Test
@@ -49,7 +59,12 @@ public class Tests {
     void hql_fetch_data(){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-//
+            //List<String> query = session.createQuery("select u.name from CustomerEntity u", String.class).list();
+            //query.forEach(System.out::println);
+            Query query = session.createQuery("select u.name from CustomerEntity u");
+            System.out.println("query created");
+            query.getResultList().forEach(System.out::println);
+
 
             session.getTransaction().commit();
         }
@@ -59,16 +74,6 @@ public class Tests {
     public void foreignKeys() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            List<ResponsibilitiesEntity> responsibilities = session.createQuery("SELECT r.iduser, r.idproduct from ResponsibilitiesEntity r", ResponsibilitiesEntity.class).list();
-
-            for (ResponsibilitiesEntity r : responsibilities) {
-                UsersEntity u = session.get(UsersEntity.class, r.getIduser());
-                ProductEntity p = session.get(ProductEntity.class, r.getIdproduct());
-                System.out.println(r);
-                System.out.println("Pouzivatel " + u.getName() + " je zodpovedny za " + p.getName() + " s vahou: " + p.getWeight() + " kg.");
-
-                // Process userId and productId as needed
-            }
             session.getTransaction().commit();
         }
     }

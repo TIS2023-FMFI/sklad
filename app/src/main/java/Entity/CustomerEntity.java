@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "product", schema = "public", catalog = "testovaciaDatabazaTIS")
-public class ProductEntity {
+@Table(name = "customer", schema = "public", catalog = "testovaciaDatabazaTIS")
+public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -14,9 +14,6 @@ public class ProductEntity {
     @Basic
     @Column(name = "name")
     private String name;
-    @Basic
-    @Column(name = "weight")
-    private int weight;
 
     public int getId() {
         return id;
@@ -34,24 +31,16 @@ public class ProductEntity {
         this.name = name;
     }
 
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductEntity that = (ProductEntity) o;
-        return id == that.id && weight == that.weight && Objects.equals(name, that.name);
+        CustomerEntity that = (CustomerEntity) o;
+        return id == that.id && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, weight);
+        return Objects.hash(id, name);
     }
 }
