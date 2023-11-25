@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "users", schema = "public", catalog = "testovaciaDatabazaTIS")
-public class UsersEntity {
+@Table(name = "material", schema = "public", catalog = "testovaciaDatabazaTIS")
+public class MaterialEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -14,9 +14,6 @@ public class UsersEntity {
     @Basic
     @Column(name = "name")
     private String name;
-    @Basic
-    @Column(name = "email")
-    private String email;
 
     public int getId() {
         return id;
@@ -34,24 +31,16 @@ public class UsersEntity {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UsersEntity that = (UsersEntity) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(email, that.email);
+        MaterialEntity that = (MaterialEntity) o;
+        return id == that.id && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email);
+        return Objects.hash(id, name);
     }
 }
