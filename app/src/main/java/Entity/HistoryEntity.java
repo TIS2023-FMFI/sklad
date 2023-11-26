@@ -7,7 +7,7 @@ import java.sql.Time;
 import java.util.Objects;
 
 @Entity
-@Table(name = "history", schema = "public", catalog = "testovaciaDatabazaTIS")
+@Table(name = "history", schema = "public", catalog = "storage")
 public class HistoryEntity {
     @Basic
     @Column(name = "id")
