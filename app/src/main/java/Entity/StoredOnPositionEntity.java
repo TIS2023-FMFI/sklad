@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "stored_on_position", schema = "public", catalog = "testovaciaDatabazaTIS")
+@Table(name = "stored_on_position", schema = "public", catalog = "storage")
 public class StoredOnPositionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

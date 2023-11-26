@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customer_reservation", schema = "public", catalog = "testovaciaDatabazaTIS")
+@Table(name = "customer_reservation", schema = "public", catalog = "storage")
 public class CustomerReservationEntity {
     @Id
     @Basic
