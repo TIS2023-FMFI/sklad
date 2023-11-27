@@ -9,7 +9,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="408.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Strecno.PalletInformationController">
+<AnchorPane prefHeight="446.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Strecno.PalletInformationController">
    <children>
       <Button layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#backToCustomerTockaForm" text="Naspäť" />
       <Button layoutX="321.0" layoutY="356.0" mnemonicParsing="false" onAction="#nextToPositionForm" text="Nájsť pozíciu" />

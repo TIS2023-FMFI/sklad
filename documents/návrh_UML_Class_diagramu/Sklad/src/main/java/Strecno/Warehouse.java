@@ -4,9 +4,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
+
 public class Warehouse extends Application {
     private static Warehouse INSTANCE;
     public static Warehouse getInstance() {
@@ -19,7 +22,7 @@ public class Warehouse extends Application {
     @Override
     public void start(Stage primarystage) throws Exception {
         stage = primarystage;
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         primarystage.setTitle("Skladovací systém");
         primarystage.setScene(new Scene(root, 400, 300));
         primarystage.show();
