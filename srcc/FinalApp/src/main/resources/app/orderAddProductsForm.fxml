@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.warehouse.OrdersController">
+   <children>
+      <Button layoutX="47.0" layoutY="28.0" mnemonicParsing="false" onAction="#backToCustomerSelection" text="Naspäť" />
+      <Label layoutX="79.0" layoutY="96.0" text="Materiál:" />
+      <TextField layoutX="150.0" layoutY="92.0" />
+      <Label layoutX="338.0" layoutY="96.0" text="Počet:" />
+      <TextField layoutX="380.0" layoutY="92.0" prefHeight="18.0" prefWidth="46.0" />
+      <Button layoutX="248.0" layoutY="136.0" mnemonicParsing="false" text="Pridať materiál">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="270.0" layoutY="330.0" mnemonicParsing="false" onAction="#confirmOrderProducts" text="Ďalej">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
