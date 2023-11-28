@@ -45,7 +45,7 @@ public class Tests {
     @Test
     void saveToDB(){
         Material newMaterial = new Material();
-        newMaterial.setName("Test material");
+        newMaterial.setName("Test materialu");
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.persist(newMaterial);
