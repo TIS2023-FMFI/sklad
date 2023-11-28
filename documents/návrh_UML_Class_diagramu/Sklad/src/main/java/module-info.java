@@ -4,6 +4,6 @@ module com.example.sklad {
 
     requires com.dlsc.formsfx;
 
-    opens com.example.warehouse to javafx.fxml;
-    exports com.example.warehouse;
+    opens Strecno to javafx.fxml;
+    exports Strecno;
 }
