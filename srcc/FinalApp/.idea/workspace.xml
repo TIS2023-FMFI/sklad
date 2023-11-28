@@ -4,7 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="957dc365-4ead-4782-be30-40d69473d10c" name="Changes" comment="" />
+    <list default="true" id="957dc365-4ead-4782-be30-40d69473d10c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/CustomerReservation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/History.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/Material.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/Pallete.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/Position.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/StoredOnPosition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/HelloApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/HelloController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/addPriceForInvoicing.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/calculatedInvoicing.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/chooseFinalPositionForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/chooseProductToMoveForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/customerTockaForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/graph.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/hello-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/informationForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/inventoryCheck.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/login.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/mainMenu.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/moveFromForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/movingConfirmationForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/orderAddProductsForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/orderCustomerSelectionForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/orderDownloadConfirmation.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/orderShowPositionsForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/positionForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/rowLayout.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/statisticsMainPage.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/warehouseLayoutRows.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Tests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/storage.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../storage.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +58,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2YmE2NJmJwrXeHZwUJ8VWhGWU1d" />
   <component name="ProjectViewState">
@@ -42,6 +91,7 @@
       <workItem from="1701122147703" duration="1996000" />
       <workItem from="1701124853220" duration="460000" />
       <workItem from="1701152792933" duration="403000" />
+      <workItem from="1701154128407" duration="91000" />
     </task>
     <servers />
   </component>
