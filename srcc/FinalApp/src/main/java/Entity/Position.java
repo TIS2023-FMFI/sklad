@@ -14,6 +14,9 @@ public class Position {
     @Column(name = "is_high")
     private boolean isHigh;
 
+    public Position() {
+    }
+
     public String getName() {
         return name;
     }
