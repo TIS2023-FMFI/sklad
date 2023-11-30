@@ -14,6 +14,11 @@ public class Position {
     @Column(name = "is_high")
     private boolean isHigh;
 
+    public Position(String name, boolean isHigh) {
+        this.name = name;
+        this.isHigh = isHigh;
+    }
+
     public Position() {
     }
 

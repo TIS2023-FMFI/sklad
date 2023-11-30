@@ -1,50 +1,10 @@
 package app;
 
-//<<<<<<< HEAD
-import Entity.Material;
-import Entity.User;
-//=======
-//>>>>>>> aea1e46c14cc0de8094550daec6d11bd9a3b5e8c
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-//<<<<<<< HEAD
-//import javafx.util.Pair;
-//
-//import java.io.IOException;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Objects;
-//
-//public class Warehouse extends Application{
-//    //DatabaseHandler databaseHandler;
-//    /***
-//     * Aktuálne prihlásený používateľ.
-//     */
-//    User currentUser;
-//
-//    /***
-//     * Mapa, ktorá obsahuje údaje o obsahu sklade. Kľúč prvej mapy je rad v sklade, kľúč druhej mapy
-//     * je názov pozície a hodnota je zoznam obsahujúci dvojice materiálu a jeho počtu na tej pozícii.
-//     */
-//    Map<String,Map<String, List<Pair<Material, Integer>>>> warehouseData;
-//
-//    private static Stage stage;
-//
-//    /***
-//     * Hlavná metóda, ktorá spustí aplikáciu.
-//     * @param primarystage
-//     * @throws Exception
-//     */
-//    @Override
-//    public void start(Stage primarystage) throws Exception {
-//        //databaseHandler = new DatabaseHandler();
-//        stage = primarystage;
-//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("app/login.fxml")));
-////=======
-
 import java.io.IOException;
 import java.util.Objects;
 
