@@ -3,7 +3,7 @@ package app;
 
 import Entity.DatabaseHandler;
 import Entity.Position;
-import Entity.User;
+import Entity.Users;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +31,7 @@ public class Warehouse extends Application {
     /***
      * Currently logged-in user.
      */
-    User currentUser;
+    Users currentUser;
 
     /***
      * Map that maps rows in the warehouse to a list of positions in that row.

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @org.hibernate.annotations.NamedQuery(name = "User_findByNameAndPassword",
-        query = "from User where name = :login and password = :password")
+        query = "from Users where name = :login and password = :password")
 
 public class DatabaseHandler {
 
@@ -47,13 +47,20 @@ public class DatabaseHandler {
         return null;
     }
 
-    public User checkUser(String login, String password) {
+    /***
+     * Method, that checks if the user exists in the database.
+     * @param login The login provided by the user.
+     * @param password The password provided by the user.
+     * @return The user if exists, null otherwise.
+     */
+    public Users checkUser(String login, String password) {
         try (Session session = sessionFactory.openSession()) {
-            //Query<User> query = session.createNamedQuery("User_findByNameAndPassword", User.class);
-            Query query = session.createQuery("select u from User u where u.name = :login and u.password = :password");
+            //Query<Users> query = session.createNamedQuery("User_findByNameAndPassword", Users.class); //pokus o prácu s named querry ale neuspešný
+
+            Query query = session.createQuery("from Users u where u.name = :login and u.password = :password");
             query.setParameter("login", login);
             query.setParameter("password", password);
-            List<User> users = query.list();
+            List<Users> users = query.list();
             if (users.size() == 1) {
                 return users.get(0);
             }
@@ -61,6 +68,9 @@ public class DatabaseHandler {
         return null;
     }
 
+    /***
+     * A destructor that closes session factory after exiting application.
+     */
     @Override
     protected void finalize(){
         if ( sessionFactory != null ) {

@@ -1,5 +1,5 @@
 import Entity.Material;
-import Entity.User;
+import Entity.Users;
 import Entity.Customer;
 import Entity.DatabaseHandler;
 import jakarta.persistence.*;
@@ -11,6 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class Tests {
     private SessionFactory sessionFactory;
 
-    //@BeforeEach
+    @BeforeEach
     protected void setUp() throws Exception {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
@@ -36,7 +37,7 @@ public class Tests {
         }
     }
 
-    //@AfterEach
+    @AfterEach
     protected void tearDown() throws Exception {
         if ( sessionFactory != null ) {
             sessionFactory.close();
@@ -44,10 +45,17 @@ public class Tests {
     }
 
     @Test
-    void testUserCheck() throws Exception {
+    void testCorrectUserCheck() throws Exception {
         DatabaseHandler db = new DatabaseHandler();
-        User u = db.checkUser("admin", "admin");
-        System.out.println(u);
+        Users u = db.checkUser("admin", "admin");
+        Assertions.assertEquals(Users.class, u.getClass());
+    }
+
+    @Test
+    void testWrongUserCheck() throws Exception {
+        DatabaseHandler db = new DatabaseHandler();
+        Users u = db.checkUser("admino", "admin");
+        Assertions.assertNull(u);
     }
 
 
@@ -74,7 +82,7 @@ public class Tests {
     void hql_fetch_data(){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            List<String> query = session.createQuery("select u.name from Customer u", String.class).list();
+            List<String> query = session.createQuery("select u.name from Users u where password='admin'", String.class).list();
             query.forEach(System.out::println);
 
             //Query query = session.createQuery("select u.name from Customer u");

@@ -8,6 +8,8 @@
         <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 
+        <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
+
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/storage</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">admin</property>
@@ -27,12 +29,12 @@
         <mapping class="Entity.Pallete"/>
         <mapping class="Entity.Position"/>
         <mapping class="Entity.StoredOnPosition"/>
-        <mapping class="Entity.User"/>
+        <mapping class="Entity.Users"/>
 
 
 
         <!-- Enable Hibernate's automatic schema generation (for development, not recommended for production)
-        <property name="hibernate.hbm2ddl.auto">update</property> -->
+        -->
 
         <!-- Other Hibernate settings -->
         <!-- ... -->
