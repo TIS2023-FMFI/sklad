@@ -21,7 +21,6 @@ public class Warehouse extends Application {
     public void start(Stage primarystage) throws Exception {
         stage = primarystage;
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
-//>>>>>>> aea1e46c14cc0de8094550daec6d11bd9a3b5e8c
         primarystage.setTitle("Skladovací systém");
         primarystage.setScene(new Scene(root, 400, 300));
         primarystage.show();
