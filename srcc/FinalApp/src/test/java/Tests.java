@@ -1,6 +1,7 @@
 import Entity.Material;
-import Entity.User;
+import Entity.Users;
 import Entity.Customer;
+import Entity.DatabaseHandler;
 import jakarta.persistence.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,6 +45,24 @@ public class Tests {
     }
 
     @Test
+    void testCorrectUserCheck() throws Exception {
+        DatabaseHandler db = new DatabaseHandler();
+        Users u = db.checkUser("admin", "admin");
+        Assertions.assertEquals(Users.class, u.getClass());
+    }
+
+    @Test
+    void testWrongUserCheck() throws Exception {
+        DatabaseHandler db = new DatabaseHandler();
+        Users u = db.checkUser("admino", "admin");
+        Assertions.assertNull(u);
+    }
+
+
+
+
+
+    @Test
     void saveToDB(){
         Material newMaterial = new Material();
         newMaterial.setName("Test materialu");
@@ -62,7 +82,7 @@ public class Tests {
     void hql_fetch_data(){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            List<String> query = session.createQuery("select u.name from Customer u", String.class).list();
+            List<String> query = session.createQuery("select u.name from Users u where password='admin'", String.class).list();
             query.forEach(System.out::println);
 
             //Query query = session.createQuery("select u.name from Customer u");

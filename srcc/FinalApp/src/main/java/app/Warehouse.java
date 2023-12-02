@@ -1,11 +1,19 @@
 package app;
 
+
+import Entity.DatabaseHandler;
+import Entity.Position;
+import Entity.Users;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Warehouse extends Application {
@@ -17,8 +25,27 @@ public class Warehouse extends Application {
         return INSTANCE;
     }
     private static Stage stage;
+
+    private DatabaseHandler databaseHandler;
+
+    /***
+     * Currently logged-in user.
+     */
+    Users currentUser;
+
+    /***
+     * Map that maps rows in the warehouse to a list of positions in that row.
+     */
+    Map<String, List<Position>> warehouseData;
+
+    /***
+     //     * Main method, that runs the application.
+     //     * @param primarystage
+     //     * @throws Exception
+     //     */
     @Override
     public void start(Stage primarystage) throws Exception {
+        databaseHandler = new DatabaseHandler();
         stage = primarystage;
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         primarystage.setTitle("Skladovací systém");
@@ -28,10 +55,10 @@ public class Warehouse extends Application {
 
 
     /***
-     * Metóda, ktorá načíta údaje z databázy do pamäte po úspešnom prihlásení.
+     * Method, that loads data to the memory after a successful login.
      */
     public void loadDb(){
-        //warehouseData = DatabaseHandler.getWarehouseData();
+        warehouseData = databaseHandler.getWarehouseData();
     }
 
     /***
@@ -39,7 +66,6 @@ public class Warehouse extends Application {
      * @param fxml Fxml súbor s novou scénou.
      * @throws IOException Ak sa nepodarí načítať súbor.
      */
-
     public void changeScene(String fxml) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent pane = loader.load();

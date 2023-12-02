@@ -59,6 +59,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.naming</groupId>
+            <artifactId>jndi</artifactId>
+            <version>1.2.1</version> <!-- Use the appropriate version -->
+        </dependency>
     </dependencies>
 
     <build>
