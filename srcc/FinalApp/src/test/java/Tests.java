@@ -1,6 +1,7 @@
 import Entity.Material;
 import Entity.User;
 import Entity.Customer;
+import Entity.DatabaseHandler;
 import jakarta.persistence.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +19,7 @@ import java.util.List;
 public class Tests {
     private SessionFactory sessionFactory;
 
-    @BeforeEach
+    //@BeforeEach
     protected void setUp() throws Exception {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
@@ -35,12 +36,23 @@ public class Tests {
         }
     }
 
-    @AfterEach
+    //@AfterEach
     protected void tearDown() throws Exception {
         if ( sessionFactory != null ) {
             sessionFactory.close();
         }
     }
+
+    @Test
+    void testUserCheck() throws Exception {
+        DatabaseHandler db = new DatabaseHandler();
+        User u = db.checkUser("admin", "admin");
+        System.out.println(u);
+    }
+
+
+
+
 
     @Test
     void saveToDB(){
