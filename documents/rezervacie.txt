@@ -1,0 +1,6 @@
+názov_firmy, počet_všetkých_miest, počet_do_výšky_nadrozmerných_miest
+
+Boge SK, 1000, 10
+MATRIX, 300, 0
+Kábel s.r.o., 50, 3
+

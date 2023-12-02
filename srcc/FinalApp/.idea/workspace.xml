@@ -4,15 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="56e9df51-a8e3-4c40-b117-42320e1b7c76" name="Changes" comment="">
+    <list default="true" id="aab55bb6-8901-4e6d-8626-8b4c8669833b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entity/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entity/Position.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Warehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ň" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -25,22 +33,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ssnid/Desktop/Matfyz/3.rocnik/zimny/TIS/sklad/sklad/srcc/FinalApp&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "last_opened_file_path": "C:/Users/Lenovo/Desktop/Matej/AIN/LS 22-23/Java/Cvicenie_8",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager">
-    <configuration name="Warehouse" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="app.Warehouse" />
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lenovo\Desktop\Sklad Strecno\Git repository\sklad\srcc\FinalApp\src" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="app" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.LoadPositionsTest">
+    <configuration name="LoadPositions" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="app.LoadPositions" />
       <module name="FinalApp" />
       <extension name="coverage">
         <pattern>
@@ -52,16 +73,80 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="loadPositions" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="app.loadPositions" />
+      <module name="FinalApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadPositionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FinalApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="app" />
+      <option name="MAIN_CLASS_NAME" value="app.LoadPositionsTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadPositionsTest.checkName_invalidNumberFormat_returnFalse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FinalApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="app" />
+      <option name="MAIN_CLASS_NAME" value="app.LoadPositionsTest" />
+      <option name="METHOD_NAME" value="checkName_invalidNumberFormat_returnFalse" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadPositionsTest.savePosition_validName_returnTrue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FinalApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="app" />
+      <option name="MAIN_CLASS_NAME" value="app.LoadPositionsTest" />
+      <option name="METHOD_NAME" value="savePosition_validName_returnTrue" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Warehouse" />
+        <item itemvalue="JUnit.LoadPositionsTest" />
+        <item itemvalue="JUnit.LoadPositionsTest.checkName_invalidNumberFormat_returnFalse" />
+        <item itemvalue="JUnit.LoadPositionsTest.savePosition_validName_returnTrue" />
+        <item itemvalue="Application.LoadPositions" />
+        <item itemvalue="Application.loadPositions" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="56e9df51-a8e3-4c40-b117-42320e1b7c76" name="Changes" comment="" />
+      <changelist id="aab55bb6-8901-4e6d-8626-8b4c8669833b" name="Changes" comment="" />
       <created>1701122146576</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -71,8 +156,7 @@
       <workItem from="1701152792933" duration="403000" />
       <workItem from="1701154128407" duration="91000" />
       <workItem from="1701159189984" duration="904000" />
-      <workItem from="1701451568870" duration="1995000" />
-      <workItem from="1701460321358" duration="264000" />
+      <workItem from="1701351196407" duration="8220000" />
     </task>
     <servers />
   </component>
