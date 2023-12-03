@@ -9,7 +9,6 @@ public class InventoryConroller {
     }
 
     public void backToStatistics() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("statisticsMainPage.fxml");
+        Warehouse.getInstance().changeScene("statisticsMainPage.fxml");
     }
 }

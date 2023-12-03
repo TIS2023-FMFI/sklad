@@ -6,11 +6,9 @@ import java.io.IOException;
 
 public class OrderShowPositionsController {
     public void backToCustomerSelection() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("orderCustomerSelectionForm.fxml");
+        Warehouse.getInstance().changeScene("orderCustomerSelectionForm.fxml");
     }
     public void saveOrderAndContinue() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("orderDownloadConfirmation.fxml");
+        Warehouse.getInstance().changeScene("orderDownloadConfirmation.fxml");
     }
 }

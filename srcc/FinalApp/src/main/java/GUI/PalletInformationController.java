@@ -20,14 +20,12 @@ public class PalletInformationController {
     private final String[] palletTypeOptions = {"Europaleta", "Americká paleta", "GitterBox"};
 
     public void backToCustomerTockaForm() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("customerTockaForm.fxml");
+        Warehouse.getInstance().changeScene("customerTruckNumberForm.fxml");
     }
 
     // setne informácie PNR, nadrozmernosť, poškodenosť, hmotnosť, typ palety, materiály a ich množstvo
     public void nextToPositionForm() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("storeInPositionForm.fxml");
+        Warehouse.getInstance().changeScene("storeInPositionForm.fxml");
 
         // tu bude nejaký cyklus, ktorý pridá po jednom jednotlivé materiály a ich počet
         // predstavujem si to zatiaľ tak nejak, že každý Textfield nazveme, že material[jeho poradové číslo] a

@@ -10,8 +10,7 @@ public class MoveProductFromController {
     private TextField position;
 
     public void backToMenu() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("mainMenu.fxml");
+        Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
     public void confirmInitialPosition() throws IOException {
         if (!checkIfPositionIsCorrect(position.getText())){
@@ -19,8 +18,7 @@ public class MoveProductFromController {
         }
         else {
             System.out.println(position.getText());
-            Warehouse warehouse = Warehouse.getInstance();
-            warehouse.changeScene("chooseProductToMoveForm.fxml");
+            Warehouse.getInstance().changeScene("chooseProductToMoveForm.fxml");
             //fillProductList();
         }
     }
