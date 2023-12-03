@@ -28,8 +28,7 @@ public class StoreInPositionController {
     // zaskladní paletu (pridá záznam do databázy)
     // presunie na main menu
     public void storeInProduct() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("mainMenu.fxml");
+        Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
 
     // vykoná storeInProduct a pokračuje v zaskladňovaní
@@ -37,7 +36,6 @@ public class StoreInPositionController {
     // nezabudnúť na vynulovanie taktiež materialCount
     public void continueStoringIn() throws IOException{
         storeInProduct();
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("palletInformationForm.fxml");
+        Warehouse.getInstance().changeScene("palletInformationForm.fxml");
     }
 }

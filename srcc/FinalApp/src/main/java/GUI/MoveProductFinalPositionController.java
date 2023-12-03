@@ -6,12 +6,10 @@ import java.io.IOException;
 
 public class MoveProductFinalPositionController {
     public void backToProductChoice() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("chooseProductToMoveForm.fxml");
+        Warehouse.getInstance().changeScene("chooseProductToMoveForm.fxml");
     }
 
     public void confirmFinalPosition() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("confirmMovingForm.fxml");
+        Warehouse.getInstance().changeScene("confirmMovingForm.fxml");
     }
 }

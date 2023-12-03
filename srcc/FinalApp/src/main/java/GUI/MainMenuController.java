@@ -5,32 +5,26 @@ import java.io.IOException;
 
 public class MainMenuController {
     public void showWarehouseLayout() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("warehouseLayoutRows.fxml");
+        Warehouse.getInstance().changeScene("warehouseLayoutRows.fxml");
     }
 
     public void storeInProduct() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("customerTockaForm.fxml");
+        Warehouse.getInstance().changeScene("customerTruckNumberForm.fxml");
     }
 
     public void relocateProduct() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("moveProductFromForm.fxml");
+        Warehouse.getInstance().changeScene("moveProductFromForm.fxml");
     }
 
     public void placeOrder() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("orderCustomerSelectionForm.fxml");
+        Warehouse.getInstance().changeScene("orderCustomerSelectionForm.fxml");
     }
 
     public void showStatistics() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("statisticsMainPage.fxml");
+        Warehouse.getInstance().changeScene("statisticsMainPage.fxml");
     }
 
     public void logout() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("login.fxml");
+         Warehouse.getInstance().changeScene("login.fxml");
     }
 }

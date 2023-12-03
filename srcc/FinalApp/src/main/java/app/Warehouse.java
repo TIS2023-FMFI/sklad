@@ -25,18 +25,21 @@ public class Warehouse extends Application {
         return INSTANCE;
     }
     private static Stage stage;
-
     private DatabaseHandler databaseHandler;
 
     /***
      * Currently logged-in user.
      */
-    Users currentUser;
+    private Users currentUser;
+
+    public void setCurrentUser(Users currentUser) {
+        this.currentUser = currentUser;
+    }
 
     /***
      * Map that maps rows in the warehouse to a list of positions in that row.
      */
-    Map<String, List<Position>> warehouseData;
+    private Map<String, List<Position>> warehouseData;
 
     /***
      //     * Main method, that runs the application.
@@ -84,4 +87,3 @@ public class Warehouse extends Application {
         launch();
     }
 }
-

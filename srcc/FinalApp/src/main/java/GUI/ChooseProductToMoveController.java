@@ -12,11 +12,9 @@ public class ChooseProductToMoveController {
     private void fillProductsOnPallet(){
     }
     public void backToInitialPosition() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("moveProductFromForm.fxml");
+        Warehouse.getInstance().changeScene("moveProductFromForm.fxml");
     }
     public void confirmProductToMove() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("moveProductFinalPosition.fxml");
+        Warehouse.getInstance().changeScene("moveProductFinalPosition.fxml");
     }
 }

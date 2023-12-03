@@ -1,12 +1,13 @@
 package GUI;
 
+import Entity.DatabaseHandler;
+import Exceptions.EmptyPassword;
+import Exceptions.EmptyUsername;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
-import java.io.IOException;
 
 public class LoginController {
     @FXML
@@ -15,14 +16,19 @@ public class LoginController {
     private TextField username;
     @FXML
     private PasswordField password;
-
-    public LoginController(){
-    }
-
-    // funkcia na overenie či uživateľ zadal správne meno a heslo
-    // ak áno prihlási ho
-    public void login() throws IOException {
-        Warehouse warehouse = Warehouse.getInstance();
-        warehouse.changeScene("mainMenu.fxml");
+    public void login(){
+        try {
+            if (username.getText() == null || username.getText().trim().isEmpty()) {
+                throw new EmptyUsername();
+            }
+            if (password.getText() == null || password.getText().trim().isEmpty()){
+                throw new EmptyPassword();
+            }
+            Warehouse.getInstance().setCurrentUser(DatabaseHandler.checkUser(username.getText(), password.getText()));
+            Warehouse.getInstance().changeScene("mainMenu.fxml");
+        }
+        catch (Exception e){
+            wrongLogin.setText(e.getMessage());
+        }
     }
 }

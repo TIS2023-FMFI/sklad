@@ -1,5 +1,7 @@
 package Entity;
 
+import Exceptions.UserDoesNotExist;
+import Exceptions.WrongPassword;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -10,12 +12,9 @@ import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Map;
 
-@org.hibernate.annotations.NamedQuery(name = "User_findByNameAndPassword",
-        query = "from Users where name = :login and password = :password")
-
 public class DatabaseHandler {
 
-    private SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
     public DatabaseHandler() throws Exception {
         setUpSessionFactory();
     }
@@ -53,20 +52,35 @@ public class DatabaseHandler {
      * @param password The password provided by the user.
      * @return The user if exists, null otherwise.
      */
-    public Users checkUser(String login, String password) {
+    public static Users checkUser(String login, String password) throws UserDoesNotExist, WrongPassword {
         try (Session session = sessionFactory.openSession()) {
-            //Query<Users> query = session.createNamedQuery("User_findByNameAndPassword", Users.class); //pokus o prácu s named querry ale neuspešný
-
-            Query query = session.createQuery("from Users u where u.name = :login and u.password = :password");
+            Query query = session.createQuery("from Users u where u.name = :login");
             query.setParameter("login", login);
-            query.setParameter("password", password);
             List<Users> users = query.list();
+
             if (users.size() == 1) {
-                return users.get(0);
+                Users user = users.get(0);
+
+                if (user.getPassword().equals(password)) {
+                    return user;
+                }
+                else {
+                    throw new WrongPassword(login);
+                }
+            }
+            else {
+                throw new UserDoesNotExist(login);
             }
         }
-        return null;
+        catch (UserDoesNotExist | WrongPassword e) {
+            throw e;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
 
     /***
      * A destructor that closes session factory after exiting application.

@@ -6,23 +6,18 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.invoke.WrongMethodTypeException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
-public class LoadPositions {
-    private static final String fileName = "loadPositionExample.txt";
+public class loadPositions {
+    private static final String FILE_NAME = "warehouse_layout.txt";
     private static final int POSTION_NAME_LENGTH = 5;
 
     public List<String> rows = new ArrayList<>();
     public List<Position> finalPositions = new ArrayList<>();
-    public LoadPositions() throws IOException, WrongStringFormatException {
-        FileInputStream file = new FileInputStream(fileName);
+    public loadPositions() throws IOException, WrongStringFormatCustomException {
+        FileInputStream file = new FileInputStream(FILE_NAME);
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file))) {
             String line = reader.readLine();
@@ -39,16 +34,16 @@ public class LoadPositions {
 
     private Position createPosition(){return null;}
 
-    public int addPositions() throws WrongStringFormatException {
+    public int addPositions() throws WrongStringFormatCustomException {
         int addedPosition = 0;
         for(String row : rows){
             List<String> splittedPositions = new ArrayList<>(List.of(row.split("-")));
             String isTall = splittedPositions.remove(0);
             if(isTall.length() > 1){
-                throw new WrongStringFormatException();
+                throw new WrongStringFormatCustomException(row);
             }
             if (! (isTall.equals("n") || isTall.equals("v")) ){
-                throw new WrongStringFormatException(row);
+                throw new WrongStringFormatCustomException(row);
             }
 
             boolean tall = false;
@@ -60,14 +55,14 @@ public class LoadPositions {
                     addedPosition++;
                 }
                 else{
-                    throw new WrongStringFormatException(postionName);
+                    throw new WrongStringFormatCustomException(postionName);
                 }
             }
         }
         return addedPosition;
     }
 
-    public boolean savePosition(String name, boolean isTall) throws WrongStringFormatException {
+    public boolean savePosition(String name, boolean isTall) throws WrongStringFormatCustomException {
         if(!checkName(name)){
             return false;
         }
@@ -96,12 +91,11 @@ public class LoadPositions {
     }
     public static void main(String[] args) {
         try{
-            LoadPositions load = new LoadPositions();
+            loadPositions load = new loadPositions();
             load.addPositions();
         }
-     catch (IOException | WrongStringFormatException e) {
+     catch (IOException | WrongStringFormatCustomException e) {
         System.err.println(e);
     }
-
     }
 }
