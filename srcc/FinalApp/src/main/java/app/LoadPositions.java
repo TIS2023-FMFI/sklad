@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class loadPositions {
+public class LoadPositions {
     private static final String FILE_NAME = "warehouse_layout.txt";
     private static final int POSTION_NAME_LENGTH = 5;
 
     public List<String> rows = new ArrayList<>();
     public List<Position> finalPositions = new ArrayList<>();
-    public loadPositions() throws IOException, WrongStringFormatCustomException {
+    public LoadPositions() throws IOException, WrongStringFormatCustomException {
         FileInputStream file = new FileInputStream(FILE_NAME);
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file))) {
@@ -28,7 +28,6 @@ public class loadPositions {
                 line = reader.readLine();
             }
         }
-
         addPositions();
     }
 
@@ -39,10 +38,7 @@ public class loadPositions {
         for(String row : rows){
             List<String> splittedPositions = new ArrayList<>(List.of(row.split("-")));
             String isTall = splittedPositions.remove(0);
-            if(isTall.length() > 1){
-                throw new WrongStringFormatCustomException(row);
-            }
-            if (! (isTall.equals("n") || isTall.equals("v")) ){
+            if (!(isTall.equals("n") || isTall.equals("v")) ){
                 throw new WrongStringFormatCustomException(row);
             }
 
@@ -91,7 +87,7 @@ public class loadPositions {
     }
     public static void main(String[] args) {
         try{
-            loadPositions load = new loadPositions();
+            LoadPositions load = new LoadPositions();
             load.addPositions();
         }
      catch (IOException | WrongStringFormatCustomException e) {
