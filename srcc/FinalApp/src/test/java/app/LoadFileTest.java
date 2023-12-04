@@ -69,12 +69,11 @@ class LoadPositionsTest {
     }
 
     @Test
+
     void checkName_invalidFirstLetter_returnFalse() throws FileNotFound {
         LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         assertFalse(load.checkName("G101"));
     }
-
-
 
     @Test
     void savePosition_validName_returnTrue() throws FileNotFound {
@@ -84,5 +83,4 @@ class LoadPositionsTest {
         assertEquals(1, finalPositions.size());
         assertEquals("A1001", finalPositions.get(0).getName());
     }
-
 }

@@ -13,6 +13,6 @@
       <TextField fx:id="username" layoutX="202.0" layoutY="108.0" promptText="meno" />
       <PasswordField fx:id="password" layoutX="202.0" layoutY="166.0" promptText="heslo" />
       <Button layoutX="156.0" layoutY="219.0" mnemonicParsing="false" onAction="#login" text="Prihlásiť sa" />
-      <Label fx:id="wrongLogin" layoutX="216.0" layoutY="73.0" />
+      <Label fx:id="wrongLogin" alignment="CENTER" layoutX="1.0" layoutY="64.0" prefHeight="26.0" prefWidth="385.0" textAlignment="JUSTIFY" textFill="RED" />
    </children>
 </AnchorPane>

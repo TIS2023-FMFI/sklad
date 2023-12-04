@@ -11,5 +11,6 @@ module app.finalapp {
     opens app to javafx.fxml;
     exports app;
     exports Exceptions;
+    exports Entity;
     opens Exceptions to javafx.fxml;
 }

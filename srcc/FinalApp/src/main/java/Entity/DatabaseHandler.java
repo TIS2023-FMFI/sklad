@@ -2,6 +2,7 @@ package Entity;
 
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
+import javafx.util.Pair;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -9,6 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -102,5 +104,19 @@ public class DatabaseHandler {
         if ( sessionFactory != null ) {
             sessionFactory.close();
         }
+    }
+
+    /***
+     * Method, that returns the statistics for the given period of time for a specific customer.
+     * @param dateFrom The date from which the statistics should be calculated.
+     * @param dateTo The date to which the statistics should be calculated.
+     * @param customerName The name of the customer for which the statistics should be calculated.
+     * @return The map of dates and pairs of numbers (number of palets going in and number of
+     *         palets going out for that date).
+     */
+    public static Map<Date, Pair<Integer,Integer>> getStatistics(Date dateFrom,
+                                                                 Date dateTo,
+                                                                 String customerName) {
+        return null;
     }
 }

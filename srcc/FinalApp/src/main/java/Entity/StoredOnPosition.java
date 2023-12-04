@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "stored_on_position", schema = "public", catalog = "storage")
+@Table(name = "stored_on_pallet", schema = "public", catalog = "storage")
 public class StoredOnPosition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -64,5 +64,12 @@ public class StoredOnPosition {
     @Override
     public int hashCode() {
         return Objects.hash(id, pnr, idProduct, quantity);
+    }
+
+    public StoredOnPosition(int id, String pnr, int idProduct, int quantity) {
+        this.id = id;
+        this.pnr = pnr;
+        this.idProduct = idProduct;
+        this.quantity = quantity;
     }
 }

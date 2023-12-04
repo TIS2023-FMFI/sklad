@@ -12,10 +12,12 @@ import java.util.List;
 
 public class LoadPositions {
 
+
     private static final int POSTION_NAME_LENGTH = 5;
 
     public List<String> rows = new ArrayList<>();
     public List<Position> finalPositions = new ArrayList<>();
+
 
     /***
      * Constructor, that loads data from a file into memory.
@@ -36,6 +38,7 @@ public class LoadPositions {
         catch (IOException e){
             throw new FileNotFound(fileName);
         }
+
     }
     /***
      * Method, that checks loaded data. When data are checked, it creates new Position
@@ -47,10 +50,7 @@ public class LoadPositions {
         for(String row : rows){
             List<String> splittedPositions = new ArrayList<>(List.of(row.split("-")));
             String isTall = splittedPositions.remove(0);
-            if(isTall.length() > 1){
-                throw new WrongStringFormatCustomException(row);
-            }
-            if (! (isTall.equals("n") || isTall.equals("v")) ){
+            if (!(isTall.equals("n") || isTall.equals("v")) ){
                 throw new WrongStringFormatCustomException(row);
             }
 
@@ -100,5 +100,4 @@ public class LoadPositions {
         }
         return true;
     }
-
 }

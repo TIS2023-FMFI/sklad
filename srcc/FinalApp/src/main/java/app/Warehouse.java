@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hibernate.Session;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,13 +19,18 @@ import java.util.Objects;
 
 public class Warehouse extends Application {
     private static Warehouse INSTANCE;
+
+    /***
+     * Method that always returns the same instance of the Warehouse class.
+     * @return Instance of the Warehouse class.
+     */
     public static Warehouse getInstance() {
         if(INSTANCE == null) {
             INSTANCE = new Warehouse();
         }
         return INSTANCE;
     }
-    private static Stage stage;
+    public static Stage stage;
     private DatabaseHandler databaseHandler;
 
     /***
@@ -65,9 +71,9 @@ public class Warehouse extends Application {
     }
 
     /***
-     * Metóda, ktorá zmení scénu na základe fxml súboru.
-     * @param fxml Fxml súbor s novou scénou.
-     * @throws IOException Ak sa nepodarí načítať súbor.
+     * Metho, that changes the currently displayed scene based in the fxml file provided.
+     * @param fxml Fxml that defines the new scene.
+     * @throws IOException If there is an issue displaying the new scene.
      */
     public void changeScene(String fxml) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
@@ -82,8 +88,16 @@ public class Warehouse extends Application {
         stage.getScene().getWindow().setHeight(newHeight);
     }
 
+    public Users getCurrentUser() {
+        return currentUser;
+    }
+
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public DatabaseHandler getDatabaseHandler() {
+        return databaseHandler;
     }
 }

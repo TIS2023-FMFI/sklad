@@ -22,13 +22,13 @@ public class History {
     @Column(name = "date")
     private Date date;
     @Basic
-    @Column(name = "truck_in_out")
+    @Column(name = "truck_income")
     private boolean truckInOut;
     @Basic
     @Column(name = "number_of_pallets")
     private int numberOfPallets;
     @Basic
-    @Column(name = "order_number")
+    @Column(name = "truck_number")
     private int orderNumber;
 
     public int getId() {
