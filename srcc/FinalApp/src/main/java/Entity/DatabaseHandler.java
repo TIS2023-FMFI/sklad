@@ -35,6 +35,18 @@ public class DatabaseHandler {
     public static void saveToDB() {
     }
 
+    public static void savePositionsToDB(List<Position> positions) {
+        try (Session session = sessionFactory.openSession()) {
+            for (Position p : positions) {
+                session.persist(p);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+//            return null;
+        }
+    }
+
     public static void removeFromDB() {
     }
 

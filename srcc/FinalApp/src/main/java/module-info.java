@@ -10,4 +10,6 @@ module app.finalapp {
 
     opens app to javafx.fxml;
     exports app;
+    exports Exceptions;
+    opens Exceptions to javafx.fxml;
 }
