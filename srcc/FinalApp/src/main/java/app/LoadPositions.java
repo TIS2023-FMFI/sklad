@@ -1,25 +1,32 @@
 package app;
 
 import Entity.Position;
+import Exceptions.FileNotFound;
+import Exceptions.WrongStringFormatCustomException;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class LoadPositions {
-    private static final String FILE_NAME = "warehouse_layout.txt";
+
+
     private static final int POSTION_NAME_LENGTH = 5;
 
     public List<String> rows = new ArrayList<>();
     public List<Position> finalPositions = new ArrayList<>();
-    public LoadPositions() throws IOException, WrongStringFormatCustomException {
-        FileInputStream file = new FileInputStream(FILE_NAME);
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file))) {
+
+    /***
+     * Constructor, that loads data from a file into memory.
+     * @throws FileNotFound when file could not be found.
+     */
+    public LoadPositions(String fileName) throws FileNotFound {
+
+        try (FileInputStream file = new FileInputStream(fileName);) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(file));
             String line = reader.readLine();
             while (line != null) {
                 if(!line.equals("\n")) {
@@ -28,12 +35,17 @@ public class LoadPositions {
                 line = reader.readLine();
             }
         }
-        addPositions();
+        catch (IOException e){
+            throw new FileNotFound(fileName);
+        }
+
     }
-
-    private Position createPosition(){return null;}
-
-    public int addPositions() throws WrongStringFormatCustomException {
+    /***
+     * Method, that checks loaded data. When data are checked, it creates new Position
+     * and add it to the finalPositions where all created positions are stored.
+     * @throws WrongStringFormatCustomException when name of the position has wrong format or first letter in the row isn't 'n' or 'v'
+     */
+    protected int addPositions() throws WrongStringFormatCustomException {
         int addedPosition = 0;
         for(String row : rows){
             List<String> splittedPositions = new ArrayList<>(List.of(row.split("-")));
@@ -42,10 +54,8 @@ public class LoadPositions {
                 throw new WrongStringFormatCustomException(row);
             }
 
-            boolean tall = false;
-            if(isTall.equals("v")){
-                tall = true;
-            }
+            boolean tall = isTall.equals("v");
+
             for(String postionName : splittedPositions){
                 if(savePosition(postionName, tall)){
                     addedPosition++;
@@ -57,21 +67,26 @@ public class LoadPositions {
         }
         return addedPosition;
     }
+    protected boolean saveToDB(){
+        return false;
+    }
 
-    public boolean savePosition(String name, boolean isTall) throws WrongStringFormatCustomException {
+    protected boolean savePosition(String name, boolean isTall) {
         if(!checkName(name)){
             return false;
         }
         Position position = new Position(name, isTall);
+        if(finalPositions.contains(position)){
+            return false;
+        }
         finalPositions.add(position);
         return true;
     }
 
-    public boolean checkName(String name){
+    protected boolean checkName(String name){
         if(name.length() != POSTION_NAME_LENGTH){
             return false;
         }
-
         char firstLetter = name.charAt(0);
         if(firstLetter < 'A' || firstLetter > 'F'){    //v rozmedzi A a F
             return false;
@@ -84,14 +99,5 @@ public class LoadPositions {
             return false;
         }
         return true;
-    }
-    public static void main(String[] args) {
-        try{
-            LoadPositions load = new LoadPositions();
-            load.addPositions();
-        }
-     catch (IOException | WrongStringFormatCustomException e) {
-        System.err.println(e);
-    }
     }
 }

@@ -5,38 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aab55bb6-8901-4e6d-8626-8b4c8669833b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FinalApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FinalApp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Entity/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entity/DatabaseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/CalculatedInvoicingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/CalculatedInvoicingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/ChooseProductToMoveController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/ChooseProductToMoveController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/ConfirmMovingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/ConfirmMovingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/CustomerTockaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/CustomerTruckNumberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GraphController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GraphController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/InventoryConroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/InventoryConroller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/MoveProductFinalPositionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/MoveProductFinalPositionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/MoveProductFromController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/MoveProductFromController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/OrderCustomerSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/OrderCustomerSelectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/OrderDownloadConfirmation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/OrderDownloadConfirmation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/OrderProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/OrderProductsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/OrderShowPositionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/OrderShowPositionsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/PalletInformationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/PalletInformationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/PriceForInvoicingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/PriceForInvoicingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/RowLayoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/RowLayoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/StatisticMainPageContoller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/StatisticMainPageContoller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/StoreInPositionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/StoreInPositionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/WarehouseLayoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/WarehouseLayoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/LoadPositions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/loadPositions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Warehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/WrongStringFormatException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/customerTockaForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/customerTruckNumberForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/warehouse_layout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/FileNotFound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/FileNotFound.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/WrongStringFormatCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/WrongStringFormatCustomException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/loadPositions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/LoadPositions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/app/LoadFileTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/app/LoadFileTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/Tests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/Tests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../storage.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../storage.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,26 +47,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "last_opened_file_path": "C:/Users/Lenovo/Desktop/Matej/AIN/LS 22-23/Java/Cvicenie_8",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lenovo/Desktop/Matej/AIN/LS 22-23/Java/Cvicenie_8&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Lenovo\Desktop\Sklad Strecno\Git repository\sklad\srcc\FinalApp\src" />
@@ -97,17 +74,33 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="Exceptions" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="app" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.LoadPositionsTest">
+    <configuration name="LoadPositions" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="app.LoadPositions" />
+      <module name="FinalApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Exceptions.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Warehouse" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="app.Warehouse" />
       <module name="FinalApp" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="app.*" />
+          <option name="PATTERN" value="Exceptions.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -128,60 +121,47 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="loadPositions" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="app.loadPositions" />
+    <configuration name="LoadPositionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FinalApp" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="loadPositionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FinalApp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="app.*" />
+          <option name="PATTERN" value="Exceptions.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="app" />
-      <option name="MAIN_CLASS_NAME" value="app.loadPositionsTest" />
+      <option name="MAIN_CLASS_NAME" value="app.LoadPositionsTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="loadPositionsTest.checkName_invalidNumberFormat_returnFalse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LoadPositionsTest.checkName_invalidNumberFormat_returnFalse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FinalApp" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="app.*" />
+          <option name="PATTERN" value="Exceptions.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="app" />
-      <option name="MAIN_CLASS_NAME" value="app.loadPositionsTest" />
+      <option name="MAIN_CLASS_NAME" value="app.LoadPositionsTest" />
       <option name="METHOD_NAME" value="checkName_invalidNumberFormat_returnFalse" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="loadPositionsTest.savePosition_validName_returnTrue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LoadPositionsTest.savePosition_validName_returnTrue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FinalApp" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="app.*" />
+          <option name="PATTERN" value="Exceptions.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="app" />
-      <option name="MAIN_CLASS_NAME" value="app.loadPositionsTest" />
+      <option name="MAIN_CLASS_NAME" value="app.LoadPositionsTest" />
       <option name="METHOD_NAME" value="savePosition_validName_returnTrue" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -190,11 +170,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LoadPositionsTest" />
+        <item itemvalue="Application.LoadPositions" />
         <item itemvalue="Application.Warehouse" />
-        <item itemvalue="JUnit.loadPositionsTest.savePosition_validName_returnTrue" />
-        <item itemvalue="JUnit.loadPositionsTest.checkName_invalidNumberFormat_returnFalse" />
-        <item itemvalue="JUnit.loadPositionsTest" />
-        <item itemvalue="Application.loadPositions" />
+        <item itemvalue="JUnit.LoadPositionsTest.savePosition_validName_returnTrue" />
+        <item itemvalue="JUnit.LoadPositionsTest.checkName_invalidNumberFormat_returnFalse" />
       </list>
     </recent_temporary>
   </component>
@@ -212,6 +192,7 @@
       <workItem from="1701154128407" duration="91000" />
       <workItem from="1701159189984" duration="904000" />
       <workItem from="1701351196407" duration="8220000" />
+      <workItem from="1701685135028" duration="7093000" />
     </task>
     <servers />
   </component>
