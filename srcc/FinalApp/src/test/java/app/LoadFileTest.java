@@ -2,10 +2,9 @@ package app;
 
 import Entity.Position;
 import Exceptions.FileNotFound;
-import Exceptions.WrongStringFormatCustomException;
+import Exceptions.WrongStringFormat;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +37,7 @@ class LoadPositionsTest {
     }
 
     @Test
-    void savePosition() throws WrongStringFormatCustomException, FileNotFound {
+    void savePosition() throws FileNotFound {
         LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         String name = "A0103";
         assertTrue(load.checkName("A0103"));
@@ -46,7 +45,7 @@ class LoadPositionsTest {
     }
 
     @Test
-    void saveSamePosition() throws WrongStringFormatCustomException, FileNotFound {
+    void saveSamePosition() throws FileNotFound {
         LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         String name = "A0103";
         assertTrue(load.checkName("A0103"));
@@ -58,7 +57,7 @@ class LoadPositionsTest {
     void addPositions_invalidInput_throwWrongStringFormatException() throws FileNotFound {
         LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         load.rows.add("v-A101-B102-C103-D104-E105");
-        assertThrows(WrongStringFormatCustomException.class, load::addPositions);
+        assertThrows(WrongStringFormat.class, load::addPositions);
     }
 
 

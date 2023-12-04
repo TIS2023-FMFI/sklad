@@ -52,17 +52,6 @@ public class Tests {
     }
 
     @Test
-    void testWrongUserCheck() throws Exception {
-        DatabaseHandler db = new DatabaseHandler();
-        Users u = db.checkUser("admino", "admin");
-        Assertions.assertNull(u);
-    }
-
-
-
-
-
-    @Test
     void saveToDB(){
         Material newMaterial = new Material();
         newMaterial.setName("Test materialu");

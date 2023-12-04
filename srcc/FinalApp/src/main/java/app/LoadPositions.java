@@ -2,12 +2,11 @@ package app;
 
 import Entity.Position;
 import Exceptions.FileNotFound;
-import Exceptions.WrongStringFormatCustomException;
+import Exceptions.WrongStringFormat;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class LoadPositions {
@@ -43,15 +42,15 @@ public class LoadPositions {
     /***
      * Method, that checks loaded data. When data are checked, it creates new Position
      * and add it to the finalPositions where all created positions are stored.
-     * @throws WrongStringFormatCustomException when name of the position has wrong format or first letter in the row isn't 'n' or 'v'
+     * @throws WrongStringFormat when name of the position has wrong format or first letter in the row isn't 'n' or 'v'
      */
-    protected int addPositions() throws WrongStringFormatCustomException {
+    protected int addPositions() throws WrongStringFormat {
         int addedPosition = 0;
         for(String row : rows){
             List<String> splittedPositions = new ArrayList<>(List.of(row.split("-")));
             String isTall = splittedPositions.remove(0);
             if (!(isTall.equals("n") || isTall.equals("v")) ){
-                throw new WrongStringFormatCustomException(row);
+                throw new WrongStringFormat(row);
             }
 
             boolean tall = isTall.equals("v");
@@ -61,7 +60,7 @@ public class LoadPositions {
                     addedPosition++;
                 }
                 else{
-                    throw new WrongStringFormatCustomException(postionName);
+                    throw new WrongStringFormat(postionName);
                 }
             }
         }
