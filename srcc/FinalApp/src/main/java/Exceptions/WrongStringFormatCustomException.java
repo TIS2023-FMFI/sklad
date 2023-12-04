@@ -1,7 +1,7 @@
-package app;
+package Exceptions;
 
 public class WrongStringFormatCustomException extends Exception {
     public WrongStringFormatCustomException(String m) {
-        super(m);
+        super("Nesprány formát: " + m);
     }
 }

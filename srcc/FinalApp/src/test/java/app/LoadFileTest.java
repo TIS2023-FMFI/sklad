@@ -1,6 +1,8 @@
 package app;
 
 import Entity.Position;
+import Exceptions.FileNotFound;
+import Exceptions.WrongStringFormatCustomException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -8,54 +10,79 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class loadPositionsTest {
-
+class LoadPositionsTest {
+    private static final String FILE_NAME = "warehouse_layout.txt";
+    private  final String TEST_FILE_NAME = "loadPositionExample.txt";
     @Test
-    void addPositions_validInput_returnCorrectNumberOfPositions() throws WrongStringFormatCustomException, IOException {
-        loadPositions load = new loadPositions();
-        int addedPositions = load.addPositions();
-        assertEquals(7, addedPositions); // Adjust the expected value based on your input file
+    void checkNameShort() throws  FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
+        assertFalse(load.checkName("A105"));
     }
 
     @Test
-    void addPositions_invalidInput_throwWrongStringFormatException() throws WrongStringFormatCustomException, IOException {
-        loadPositions load = new loadPositions();
+    void checkNameWrongFirstLetter() throws  FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
+        assertFalse(load.checkName("G010A"));
+    }
+
+    @Test
+    void checkNameLetterInSecondPart() throws  FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
+        assertFalse(load.checkName("A010A"));
+    }
+
+    @Test
+    void checkNameCorrect() throws  FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
+        assertTrue(load.checkName("A0103"));
+    }
+
+    @Test
+    void savePosition() throws WrongStringFormatCustomException, FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
+        String name = "A0103";
+        assertTrue(load.checkName("A0103"));
+        assertTrue(load.savePosition(name, true));
+    }
+
+    @Test
+    void saveSamePosition() throws WrongStringFormatCustomException, FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
+        String name = "A0103";
+        assertTrue(load.checkName("A0103"));
+        assertTrue(load.savePosition(name, true));
+        assertFalse(load.savePosition(name, true));
+    }
+
+    @Test
+    void addPositions_invalidInput_throwWrongStringFormatException() throws FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         load.rows.add("v-A101-B102-C103-D104-E105");
         assertThrows(WrongStringFormatCustomException.class, load::addPositions);
     }
 
 
     @Test
-    void checkName_invalidLength_returnFalse() throws WrongStringFormatCustomException, IOException {
-        loadPositions load = new loadPositions();
+    void checkName_invalidLength_returnFalse() throws FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         assertFalse(load.checkName("A10"));
     }
 
     @Test
-    void checkName_invalidFirstLetter_returnFalse() throws WrongStringFormatCustomException, IOException {
-        loadPositions load = new loadPositions();
+    void checkName_invalidFirstLetter_returnFalse() throws FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         assertFalse(load.checkName("G101"));
     }
 
-    @Test
-    void checkName_invalidNumberFormat_returnFalse() throws WrongStringFormatCustomException, IOException {
-        loadPositions load = new loadPositions();
-        assertFalse(load.checkName("A10A"));
-    }
+
 
     @Test
-    void savePosition_validName_returnTrue() throws WrongStringFormatCustomException, IOException {
-        loadPositions load = new loadPositions();
-        assertTrue(load.savePosition("A101", true));
+    void savePosition_validName_returnTrue() throws FileNotFound {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
+        assertTrue(load.savePosition("A1001", true));
         List<Position> finalPositions = load.finalPositions;
         assertEquals(1, finalPositions.size());
-        assertEquals("A101", finalPositions.get(0).getName());
-//        assertTrue(finalPositions.get(0).isTall());
+        assertEquals("A1001", finalPositions.get(0).getName());
     }
 
-    @Test
-    void savePosition_invalidName_throwWrongStringFormatException() throws WrongStringFormatCustomException, IOException {
-        loadPositions load = new loadPositions();
-        assertThrows(WrongStringFormatCustomException.class, () -> load.savePosition("G101", true));
-    }
 }
