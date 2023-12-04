@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hibernate.Session;
 
 import java.io.IOException;
 import java.util.List;
@@ -87,8 +88,16 @@ public class Warehouse extends Application {
         stage.getScene().getWindow().setHeight(newHeight);
     }
 
+    public Users getCurrentUser() {
+        return currentUser;
+    }
+
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public DatabaseHandler getDatabaseHandler() {
+        return databaseHandler;
     }
 }

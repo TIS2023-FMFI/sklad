@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="457.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerTruckNumberController">
+<AnchorPane prefHeight="457.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerTruckNumberController">
    <children>
       <Button layoutX="39.0" layoutY="32.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
       <Button layoutX="223.0" layoutY="381.0" mnemonicParsing="false" onAction="#nextToInformationForm" text="Ďalej" />
