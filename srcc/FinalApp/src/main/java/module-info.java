@@ -13,4 +13,9 @@ module app.finalapp {
     exports Exceptions;
     exports Entity;
     opens Exceptions to javafx.fxml;
+    opens GUI.OrderProduct;
+    opens GUI.WarehouseLayout;
+    opens GUI.StoreInProduct;
+    opens GUI.Statistics;
+    opens GUI.RelocateProduct;
 }

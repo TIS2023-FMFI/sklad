@@ -95,17 +95,6 @@ public class DatabaseHandler {
         }
     }
 
-
-    /***
-     * A destructor that closes session factory after exiting application.
-     */
-    @Override
-    protected void finalize(){
-        if ( sessionFactory != null ) {
-            sessionFactory.close();
-        }
-    }
-
     /***
      * Method, that returns the statistics for the given period of time for a specific customer.
      * @param dateFrom The date from which the statistics should be calculated.
@@ -118,5 +107,16 @@ public class DatabaseHandler {
                                                                  Date dateTo,
                                                                  String customerName) {
         return null;
+    }
+
+
+    /***
+     * A destructor that closes session factory after exiting application.
+     */
+    @Override
+    protected void finalize(){
+        if ( sessionFactory != null ) {
+            sessionFactory.close();
+        }
     }
 }
