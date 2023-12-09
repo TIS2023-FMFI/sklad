@@ -1,10 +1,8 @@
 package app;
 
-import Entity.Customer;
 import Entity.DatabaseHandler;
 import Entity.StoredOnPosition;
 import javafx.scene.chart.BarChart;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Pair;
 
