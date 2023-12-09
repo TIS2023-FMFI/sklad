@@ -3,16 +3,22 @@ package GUI.Statistics;
 import app.Warehouse;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 
-public class StatisticMainPageContoller {
+public class StatisticMainPageContoller implements Initializable {
     @FXML
     public Label invoicingLabel;
+    @FXML
+    public ChoiceBox customers;
     @FXML
     DatePicker dateFrom;
 
@@ -21,14 +27,23 @@ public class StatisticMainPageContoller {
     DatePicker dateTo;
 
     Date dateToValue;
-    @FXML
-    String customersStats;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Warehouse.getInstance().addController("statisticsMainPage", this);
+    }
 
     public void backToMenu() throws IOException {
         Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
     public void showGraph() throws IOException {
-        Warehouse.getInstance().changeScene("Statistics/graphForm.fxml");
+        if (dateFromValue == null || dateToValue == null) {
+            invoicingLabel.setText("Zlý dátum");
+        }else if (dateFromValue.after(dateToValue)) {
+            invoicingLabel.setText("Dátum od je väčší ako dátum do");
+        }else {
+            Warehouse.getInstance().changeScene("Statistics/graphForm.fxml");
+        }
     }
 
     public void showInventoryCheck() throws IOException {
@@ -56,4 +71,6 @@ public class StatisticMainPageContoller {
         LocalDate localDate = dateTo.getValue();
         dateToValue = Date.valueOf(localDate);
     }
+
+
 }

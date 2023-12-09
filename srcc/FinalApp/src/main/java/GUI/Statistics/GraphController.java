@@ -4,6 +4,7 @@ import app.Statistics;
 import app.Warehouse;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class GraphController implements javafx.fxml.Initializable{
+public class GraphController implements Initializable {
     @FXML
     private BarChart<String,Number> barChart;
 
@@ -26,15 +27,9 @@ public class GraphController implements javafx.fxml.Initializable{
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        StatisticMainPageContoller input = (StatisticMainPageContoller) Warehouse.getInstance().getController("statisticsMainPage");
+
         Statistics statistics = new Statistics();
-
-        CategoryAxis xAxis = new CategoryAxis();
-        xAxis.setCategories(FXCollections.<String>
-                observableArrayList(Arrays.asList("1.12.2023", "2.12.2023", "3.12.2023", "4.12.2023")));
-        xAxis.setLabel("Dátum");
-
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Počet");
 
         barChart.setTitle("Počet exportovaných a importovaných paliet");
 

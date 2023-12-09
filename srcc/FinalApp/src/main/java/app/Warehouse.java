@@ -110,4 +110,6 @@ public class Warehouse extends Application {
     public void addController(String name, Object controler) {
         controllers.put(name, controler);
     }
+
+    public Object getController(String name) {return controllers.get(name);}
 }

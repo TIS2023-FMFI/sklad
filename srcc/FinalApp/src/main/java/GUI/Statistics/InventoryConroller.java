@@ -3,6 +3,7 @@ package GUI.Statistics;
 import Entity.StoredOnPosition;
 import app.Statistics;
 import app.Warehouse;
+import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 
 import java.io.IOException;
