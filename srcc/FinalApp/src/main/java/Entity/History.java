@@ -23,7 +23,7 @@ public class History {
     private Date date;
     @Basic
     @Column(name = "truck_income")
-    private boolean truckInOut;
+    private boolean truckIncome;
     @Basic
     @Column(name = "number_of_pallets")
     private int numberOfPallets;
@@ -63,12 +63,12 @@ public class History {
         this.date = date;
     }
 
-    public boolean isTruckInOut() {
-        return truckInOut;
+    public boolean isTruckIncome() {
+        return truckIncome;
     }
 
-    public void setTruckInOut(boolean truckInOut) {
-        this.truckInOut = truckInOut;
+    public void setTruckIncome(boolean truckInOut) {
+        this.truckIncome = truckInOut;
     }
 
     public int getNumberOfPallets() {
@@ -92,11 +92,11 @@ public class History {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         History history = (History) o;
-        return id == history.id && idCustomer == history.idCustomer && truckInOut == history.truckInOut && numberOfPallets == history.numberOfPallets && orderNumber == history.orderNumber && Objects.equals(time, history.time) && Objects.equals(date, history.date);
+        return id == history.id && idCustomer == history.idCustomer && truckIncome == history.truckIncome && numberOfPallets == history.numberOfPallets && orderNumber == history.orderNumber && Objects.equals(time, history.time) && Objects.equals(date, history.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, idCustomer, time, date, truckInOut, numberOfPallets, orderNumber);
+        return Objects.hash(id, idCustomer, time, date, truckIncome, numberOfPallets, orderNumber);
     }
 }

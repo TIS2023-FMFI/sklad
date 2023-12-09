@@ -1,6 +1,9 @@
 package GUI.Statistics;
 
+import Entity.Customer;
 import app.Warehouse;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,13 +15,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Currency;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class StatisticMainPageContoller implements Initializable {
     @FXML
     public Label invoicingLabel;
     @FXML
-    public ChoiceBox customers;
+    public ChoiceBox<String> customers;
     @FXML
     DatePicker dateFrom;
 
@@ -31,6 +36,12 @@ public class StatisticMainPageContoller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Warehouse.getInstance().addController("statisticsMainPage", this);
+        ObservableList<String> listInstance = FXCollections. observableArrayList();
+        List<Customer> choices = Warehouse.getInstance().getDatabaseHandler().getCustomers();
+        for (Customer customer : choices) {
+            listInstance.add(customer.getName());
+        }
+        customers.setItems(listInstance);
     }
 
     public void backToMenu() throws IOException {

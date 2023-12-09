@@ -28,23 +28,18 @@ public class Statistics {
      * @return BarChart with data.
      */
     public List<XYChart.Series<String,Number>> setBarChart(Date dateFrom, Date dateTo, String customerName) {
-        DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
-        Map<Date, Pair<Integer,Integer>> data = db.getStatistics(dateFrom, dateTo, customerName);
-
+        Map<Date, Pair<Integer,Integer>> data = Warehouse.getInstance().getDatabaseHandler()
+                                                .getStatistics(dateFrom, dateTo, customerName);
+        System.out.println(data);
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("Export");
-
-        series1.getData().add(new XYChart.Data<>("1.12.2023", 1));
-        series1.getData().add(new XYChart.Data<>("2.12.2023", 3));
-        series1.getData().add(new XYChart.Data<>("3.12.2023", 5));
-        series1.getData().add(new XYChart.Data<>("4.12.2023", 5));
-
+        series1.setName("Import");
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
-        series2.setName("Import");
-        series2.getData().add(new XYChart.Data<>("1.12.2023", 5));
-        series2.getData().add(new XYChart.Data<>("2.12.2023", 6));
-        series2.getData().add(new XYChart.Data<>("3.12.2023", 10));
-        series2.getData().add(new XYChart.Data<>("4.12.2023", 4));
+        series2.setName("Export");
+
+        for (Map.Entry<Date, Pair<Integer,Integer>> entry : data.entrySet()) {
+            series1.getData().add(new XYChart.Data<>(entry.getKey().toString(), entry.getValue().getKey()));
+            series2.getData().add(new XYChart.Data<>(entry.getKey().toString(), entry.getValue().getValue()));
+        }
 
         return Arrays.asList(
                 series1,

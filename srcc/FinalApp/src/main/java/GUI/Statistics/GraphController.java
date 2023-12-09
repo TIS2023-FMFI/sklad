@@ -12,6 +12,7 @@ import javafx.scene.chart.XYChart;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,12 +29,15 @@ public class GraphController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         StatisticMainPageContoller input = (StatisticMainPageContoller) Warehouse.getInstance().getController("statisticsMainPage");
+        Date dateFrom = input.dateFromValue;
+        Date dateTo = input.dateToValue;
+        String customer = input.customers.getValue();
 
         Statistics statistics = new Statistics();
 
         barChart.setTitle("Počet exportovaných a importovaných paliet");
 
-        List<XYChart.Series<String, Number>> series = statistics.setBarChart(null, null, null);
+        List<XYChart.Series<String, Number>> series = statistics.setBarChart(dateFrom, dateTo, customer);
         barChart.getData().addAll(series);
     }
     public void backToStatistics() throws IOException {

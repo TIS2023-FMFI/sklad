@@ -11,6 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,11 +105,54 @@ public class DatabaseHandler {
      *         palets going out for that date).
      */
     public Map<Date, Pair<Integer,Integer>> getStatistics(Date dateFrom,
-                                                                 Date dateTo,
-                                                                 String customerName) {
-        return null;
+                                                          Date dateTo,
+                                                          String customerName) {
+        try (Session session = sessionFactory.openSession()) {
+             Query q = session.createQuery("select c.id from Customer c where name=:customerName");
+            int customerId = (int) q.setParameter("customerName", customerName).uniqueResult();
+
+            Query query = session.createQuery("select h from History h " +
+                    "where h.date >= :dateFrom and h.date <= :dateTo and h.idCustomer = :customerId");
+            query.setParameter("dateFrom", dateFrom);
+            query.setParameter("dateTo", dateTo);
+            query.setParameter("customerId", customerId);
+
+            List<History> result = query.list();
+            System.out.println(result.size());
+
+            Map<Date, Pair<Integer,Integer>> statistics = new HashMap<>();
+            for (History h : result) {
+                Date date = h.getDate();
+                Pair<Integer,Integer> pair = statistics.get(date);
+                if (pair == null) {
+                    pair = new Pair<>(0,0);
+                }
+                if (h.isTruckIncome()) {
+                    pair = new Pair<>(pair.getKey() + h.getNumberOfPallets(), pair.getValue());
+                }
+                else {
+                    pair = new Pair<>(pair.getKey(), pair.getValue() + h.getNumberOfPallets());
+                }
+                statistics.put(date, pair);
+            }
+            return statistics;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
+    public List<Customer> getCustomers() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Customer> query = session.createQuery("from Customer");
+            return query.list();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /***
      * A destructor that closes session factory after exiting application.
