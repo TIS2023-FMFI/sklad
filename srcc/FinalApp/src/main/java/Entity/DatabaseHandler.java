@@ -114,7 +114,7 @@ public class DatabaseHandler {
      * @return The map of dates and pairs of numbers (number of palets going in and number of
      *         palets going out for that date).
      */
-    public static Map<Date, Pair<Integer,Integer>> getStatistics(Date dateFrom,
+    public Map<Date, Pair<Integer,Integer>> getStatistics(Date dateFrom,
                                                                  Date dateTo,
                                                                  String customerName) {
         return null;

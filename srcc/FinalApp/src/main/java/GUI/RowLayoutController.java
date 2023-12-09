@@ -1,6 +1,7 @@
 package GUI;
 
 import app.Warehouse;
+import Entity.Position;
 
 import java.io.IOException;
 

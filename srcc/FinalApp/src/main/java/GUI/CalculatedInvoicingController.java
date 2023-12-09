@@ -23,7 +23,6 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     /***

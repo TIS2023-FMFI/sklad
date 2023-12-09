@@ -3,6 +3,7 @@ package app;
 import Entity.Customer;
 import Entity.Material;
 import Entity.Position;
+import javafx.fxml.FXML;
 import javafx.util.Pair;
 
 import java.util.List;

@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 public class InventoryConroller implements javafx.fxml.Initializable{
 
+    @FXML
     public TableView<StoredOnPosition> inventoryTable;
 
     /***
@@ -23,7 +24,7 @@ public class InventoryConroller implements javafx.fxml.Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Statistics statistics = new Statistics();
-        statistics.setInventoryTable(inventoryTable);
+        inventoryTable.getItems().addAll(statistics.setInventoryTable());
     }
 
     public void saveInventoryList(){
