@@ -1,6 +1,5 @@
 package app;
 
-import Entity.Customer;
 import Entity.DatabaseHandler;
 import Entity.StoredOnPosition;
 import jakarta.persistence.criteria.CriteriaBuilder;

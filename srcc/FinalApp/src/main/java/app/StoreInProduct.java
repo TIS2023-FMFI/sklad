@@ -12,7 +12,7 @@ public class StoreInProduct {
     Customer customer;
     int truckNumber;  //cislo tocky
     List<Pair<Material, Integer>> addMaterials;
-    boolean requiresHighPosition;
+    boolean requiresTallPosition;
     boolean isDamaged;
     int weight;
     String note;
