@@ -1,5 +1,9 @@
-package Entity;
+package app;
 
+import Entity.Customer;
+import Entity.History;
+import Entity.Position;
+import Entity.Users;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
 import javafx.util.Pair;
@@ -11,6 +15,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +63,28 @@ public class DatabaseHandler {
      * @return The map of rows and positions.
      */
     public Map<String, List<Position>> getWarehouseData() {
-        return null;
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("from Position");
+            List<Position> positions = query.list();
+
+            Map<String, List<Position>> data = new HashMap<>();
+            for (Position p : positions) {
+                String row = p.getName().substring(0, 1);
+                if (Integer.parseInt(p.getName().substring(3,4))%2==0){
+                    row = row + "p";
+                }else {
+                    row = row + "n";
+                }
+                if (!data.containsKey(row)) {
+                    data.put(row, new ArrayList<>());
+                }
+                data.get(row).add(p);
+            }
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /***

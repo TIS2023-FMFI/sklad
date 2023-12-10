@@ -1,15 +1,11 @@
 import Entity.Material;
 import Entity.Users;
-import Entity.Customer;
-import Entity.DatabaseHandler;
-import jakarta.persistence.*;
+import app.DatabaseHandler;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.model.CustomSql;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.query.Query;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

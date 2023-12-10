@@ -1,18 +1,10 @@
 package app;
 
-import Entity.DatabaseHandler;
-import Entity.StoredOnPosition;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import javafx.collections.FXCollections;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
+import Entity.Position;
+import Entity.StoredOnPallet;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.util.Pair;
 
-import java.sql.Array;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,10 +42,26 @@ public class Statistics {
     /***
      * This method takes data from database and fills in the table used for inventory check.
      */
-    public List<StoredOnPosition> setInventoryTable(){
-        StoredOnPosition storedOnPosition = new StoredOnPosition(1, "00001", 8, 4);
+    public List<Map<String, Object>> setInventoryTable(){
+        List<Map<String,Object>> res = new ArrayList<>();
+        var data = Warehouse.getInstance().getWarehouseData();
+        for (List<Position> entry : data.values()) {
+            for (Position position : entry) {
+                //if (position.getStoredOnPallet() == null) continue;
 
-        return List.of(storedOnPosition);
+            }
+        }
+
+        res.add(Map.of(
+                "PNR", "45645",
+                "Pozícia", "A0001",
+                "Materiál", "Motor",
+                "Počet", 2
+        ));
+
+        System.out.println(res);
+
+        return res;
     }
 
 }

@@ -8,7 +8,6 @@ module app.finalapp {
     opens GUI;
 
 
-    opens app to javafx.fxml;
     exports app;
     exports Exceptions;
     exports Entity;
@@ -18,4 +17,5 @@ module app.finalapp {
     opens GUI.StoreInProduct;
     opens GUI.Statistics;
     opens GUI.RelocateProduct;
+    opens app;
 }

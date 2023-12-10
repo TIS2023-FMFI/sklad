@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "stored_on_pallet", schema = "public", catalog = "storage")
-public class StoredOnPosition {
+public class StoredOnPallet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -20,6 +20,8 @@ public class StoredOnPosition {
     @Basic
     @Column(name = "quantity")
     private int quantity;
+
+    public StoredOnPallet() {}
 
     public int getId() {
         return id;
@@ -57,7 +59,7 @@ public class StoredOnPosition {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StoredOnPosition that = (StoredOnPosition) o;
+        StoredOnPallet that = (StoredOnPallet) o;
         return id == that.id && idProduct == that.idProduct && quantity == that.quantity && Objects.equals(pnr, that.pnr);
     }
 
@@ -66,7 +68,7 @@ public class StoredOnPosition {
         return Objects.hash(id, pnr, idProduct, quantity);
     }
 
-    public StoredOnPosition(int id, String pnr, int idProduct, int quantity) {
+    public StoredOnPallet(int id, String pnr, int idProduct, int quantity) {
         this.id = id;
         this.pnr = pnr;
         this.idProduct = idProduct;

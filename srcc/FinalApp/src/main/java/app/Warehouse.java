@@ -1,7 +1,6 @@
 package app;
 
 
-import Entity.DatabaseHandler;
 import Entity.Position;
 import Entity.Users;
 
@@ -112,4 +111,8 @@ public class Warehouse extends Application {
     }
 
     public Object getController(String name) {return controllers.get(name);}
+
+    public Map<String, List<Position>> getWarehouseData() {
+        return warehouseData;
+    }
 }

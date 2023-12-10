@@ -1,6 +1,5 @@
 package app;
 
-import Entity.DatabaseHandler;
 import Entity.Users;
 import Exceptions.*;
 import org.junit.jupiter.api.Assertions;
