@@ -11,12 +11,12 @@ public class Position {
     @Column(name = "name")
     private String name;
     @Basic
-    @Column(name = "is_high")
-    private boolean isHigh;
+    @Column(name = "is_tall")
+    private boolean isTall;
 
     public Position(String name, boolean isHigh) {
         this.name = name;
-        this.isHigh = isHigh;
+        this.isTall = isHigh;
     }
 
     public Position() {
@@ -31,11 +31,11 @@ public class Position {
     }
 
     public boolean isHigh() {
-        return isHigh;
+        return isTall;
     }
 
     public void setHigh(boolean high) {
-        isHigh = high;
+        isTall = high;
     }
 
     @Override
@@ -43,11 +43,11 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return isHigh == position.isHigh && Objects.equals(name, position.name);
+        return isTall == position.isTall && Objects.equals(name, position.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, isHigh);
+        return Objects.hash(name, isTall);
     }
 }

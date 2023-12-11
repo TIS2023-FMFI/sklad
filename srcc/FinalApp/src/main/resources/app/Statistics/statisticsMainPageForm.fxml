@@ -17,7 +17,7 @@
       <Button layoutX="257.0" layoutY="222.0" mnemonicParsing="false" onAction="#showGraph" text="Zobraziť graf" />
       <Button layoutX="266.0" layoutY="263.0" mnemonicParsing="false" onAction="#showInventoryCheck" text="Inventúra" />
       <Button layoutX="264.0" layoutY="329.0" mnemonicParsing="false" onAction="#askForPriceForInvoicing" prefHeight="0.0" prefWidth="70.0" text="Fakturácia" />
-      <ChoiceBox layoutX="224.0" layoutY="178.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="customers" layoutX="224.0" layoutY="178.0" prefWidth="150.0" />
       <Label fx:id="invoicingLabel" alignment="CENTER" layoutX="106.0" layoutY="303.0" prefHeight="18.0" prefWidth="388.0" textFill="RED" />
    </children>
 </AnchorPane>

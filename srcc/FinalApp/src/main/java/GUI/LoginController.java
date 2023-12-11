@@ -1,6 +1,6 @@
 package GUI;
 
-import Entity.DatabaseHandler;
+import app.DatabaseHandler;
 import Exceptions.EmptyPassword;
 import Exceptions.EmptyUsername;
 import app.Warehouse;
@@ -25,6 +25,7 @@ public class LoginController {
                 throw new EmptyPassword();
             }
             Warehouse.getInstance().setCurrentUser(DatabaseHandler.checkUser(username.getText(), password.getText()));
+            Warehouse.getInstance().loadDb();
             Warehouse.getInstance().changeScene("mainMenu.fxml");
         }
         catch (Exception e){

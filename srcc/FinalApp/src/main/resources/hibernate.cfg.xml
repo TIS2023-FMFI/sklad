@@ -28,7 +28,7 @@
         <mapping class="Entity.Material"/>
         <mapping class="Entity.Pallete"/>
         <mapping class="Entity.Position"/>
-        <mapping class="Entity.StoredOnPosition"/>
+        <mapping class="Entity.StoredOnPallet"/>
         <mapping class="Entity.Users"/>
 
 

@@ -1,7 +1,6 @@
 package app;
 
 
-import Entity.DatabaseHandler;
 import Entity.Position;
 import Entity.Users;
 
@@ -12,12 +11,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Warehouse extends Application {
     private static Warehouse INSTANCE;
+
+    Map<String, Object> controllers = new HashMap<>();
 
     /***
      * Method that always returns the same instance of the Warehouse class.
@@ -28,6 +27,14 @@ public class Warehouse extends Application {
             INSTANCE = new Warehouse();
         }
         return INSTANCE;
+    }
+
+    public Warehouse() {
+        try {
+            databaseHandler = new DatabaseHandler();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public static Stage stage;
     private DatabaseHandler databaseHandler;
@@ -53,7 +60,6 @@ public class Warehouse extends Application {
      //     */
     @Override
     public void start(Stage primarystage) throws Exception {
-        databaseHandler = new DatabaseHandler();
         stage = primarystage;
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         primarystage.setTitle("Skladovací systém");
@@ -98,5 +104,15 @@ public class Warehouse extends Application {
 
     public DatabaseHandler getDatabaseHandler() {
         return databaseHandler;
+    }
+
+    public void addController(String name, Object controler) {
+        controllers.put(name, controler);
+    }
+
+    public Object getController(String name) {return controllers.get(name);}
+
+    public Map<String, List<Position>> getWarehouseData() {
+        return warehouseData;
     }
 }

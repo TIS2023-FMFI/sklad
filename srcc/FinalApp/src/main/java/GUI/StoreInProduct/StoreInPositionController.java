@@ -5,6 +5,7 @@ import Entity.Position;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import Entity.Position;
 
 import java.io.IOException;
 

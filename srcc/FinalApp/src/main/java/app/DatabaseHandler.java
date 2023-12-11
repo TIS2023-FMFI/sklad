@@ -1,5 +1,9 @@
-package Entity;
+package app;
 
+import Entity.Customer;
+import Entity.History;
+import Entity.Position;
+import Entity.Users;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
 import javafx.util.Pair;
@@ -11,6 +15,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +63,28 @@ public class DatabaseHandler {
      * @return The map of rows and positions.
      */
     public Map<String, List<Position>> getWarehouseData() {
-        return null;
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("from Position");
+            List<Position> positions = query.list();
+
+            Map<String, List<Position>> data = new HashMap<>();
+            for (Position p : positions) {
+                String row = p.getName().substring(0, 1);
+                if (Integer.parseInt(p.getName().substring(3,4))%2==0){
+                    row = row + "p";
+                }else {
+                    row = row + "n";
+                }
+                if (!data.containsKey(row)) {
+                    data.put(row, new ArrayList<>());
+                }
+                data.get(row).add(p);
+            }
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /***
@@ -103,12 +130,55 @@ public class DatabaseHandler {
      * @return The map of dates and pairs of numbers (number of palets going in and number of
      *         palets going out for that date).
      */
-    public static Map<Date, Pair<Integer,Integer>> getStatistics(Date dateFrom,
-                                                                 Date dateTo,
-                                                                 String customerName) {
-        return null;
+    public Map<Date, Pair<Integer,Integer>> getStatistics(Date dateFrom,
+                                                          Date dateTo,
+                                                          String customerName) {
+        try (Session session = sessionFactory.openSession()) {
+             Query q = session.createQuery("select c.id from Customer c where name=:customerName");
+            int customerId = (int) q.setParameter("customerName", customerName).uniqueResult();
+
+            Query query = session.createQuery("select h from History h " +
+                    "where h.date >= :dateFrom and h.date <= :dateTo and h.idCustomer = :customerId");
+            query.setParameter("dateFrom", dateFrom);
+            query.setParameter("dateTo", dateTo);
+            query.setParameter("customerId", customerId);
+
+            List<History> result = query.list();
+            System.out.println(result.size());
+
+            Map<Date, Pair<Integer,Integer>> statistics = new HashMap<>();
+            for (History h : result) {
+                Date date = h.getDate();
+                Pair<Integer,Integer> pair = statistics.get(date);
+                if (pair == null) {
+                    pair = new Pair<>(0,0);
+                }
+                if (h.isTruckIncome()) {
+                    pair = new Pair<>(pair.getKey() + h.getNumberOfPallets(), pair.getValue());
+                }
+                else {
+                    pair = new Pair<>(pair.getKey(), pair.getValue() + h.getNumberOfPallets());
+                }
+                statistics.put(date, pair);
+            }
+            return statistics;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
+    public List<Customer> getCustomers() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Customer> query = session.createQuery("from Customer");
+            return query.list();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /***
      * A destructor that closes session factory after exiting application.
