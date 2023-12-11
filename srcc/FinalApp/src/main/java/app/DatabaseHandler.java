@@ -1,9 +1,7 @@
 package app;
 
-import Entity.Customer;
-import Entity.History;
-import Entity.Position;
-import Entity.Users;
+import Entity.*;
+import Exceptions.MaterialNotAvailable;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
 import javafx.util.Pair;
@@ -180,6 +178,18 @@ public class DatabaseHandler {
         }
     }
 
+    public Customer getCustomer(String toString) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Customer> query = session.createQuery("from Customer c where c.name = :name");
+            query.setParameter("name", toString);
+            return query.uniqueResult();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /***
      * A destructor that closes session factory after exiting application.
      */
@@ -187,6 +197,17 @@ public class DatabaseHandler {
     protected void finalize(){
         if ( sessionFactory != null ) {
             sessionFactory.close();
+        }
+    }
+
+    public Material getMaterial(String text) throws MaterialNotAvailable{
+        try (Session session = sessionFactory.openSession()) {
+            Query<Material> query = session.createQuery("from Material m where m.name = :name");
+            query.setParameter("name", text);
+            if (query.list().size() == 0) {
+                throw new MaterialNotAvailable(text);
+            }
+            return query.uniqueResult();
         }
     }
 }

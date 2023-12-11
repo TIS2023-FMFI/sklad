@@ -6,11 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< HEAD:srcc/FinalApp/src/main/resources/app/orderCustomerSelectionForm.fxml
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OrderCustomerSelectionController">
-=======
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OrderProduct.OrderCustomerSelectionController">
->>>>>>> 81e21b59f7e241977fcebaa8bdb1e2748f67e8a0:srcc/FinalApp/src/main/resources/app/OrderProduct/orderCustomerSelectionForm.fxml
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OrderProduct.OrderCustomerSelectionController">
    <children>
       <Button layoutX="55.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
       <Button layoutX="273.0" layoutY="270.0" mnemonicParsing="false" onAction="#confirmOrderCustomer" text="Ďalej">
@@ -18,7 +14,7 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <ChoiceBox layoutX="300.0" layoutY="165.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="customerChoices" layoutX="300.0" layoutY="165.0" prefWidth="150.0" />
       <Label layoutX="189.0" layoutY="165.0" text="Zákazník:">
          <font>
             <Font size="16.0" />
