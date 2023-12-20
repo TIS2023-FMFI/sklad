@@ -3,8 +3,8 @@ package GUI.OrderProduct;
 import Entity.Customer;
 import Entity.Material;
 import Exceptions.MaterialNotAvailable;
+import app.OrderProduct;
 import app.Warehouse;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -47,19 +47,38 @@ public class OrderProductsController implements Initializable {
 
     public void addProduct() {
         try {
+            if (material.getValue() == null) {
+                errorMessage.setText("Vyberte materiál!");
+                return;
+            }
             Material m = Warehouse.getInstance().getDatabaseHandler().getMaterial(material.getValue());
+            if (quantity.getText().length() == 0) {
+                errorMessage.setText("Zadajte počet!");
+                return;
+            }
+            Pair<Material, Integer> oldPair = null;
             var newMaterial = new Pair<>(m, Integer.parseInt(quantity.getText()));
             for (Pair<Material,Integer> p : materials) {
                 if (p.getKey().getName().equals(m.getName())) {
+                    oldPair = p;
                     newMaterial = new Pair<>(m, p.getValue() + Integer.parseInt(quantity.getText()));
                     materials.remove(p);
                     break;
                 }
             }
+
+            OrderProduct op = new OrderProduct();
+            if (!op.canCustomerOrder(customer, m, newMaterial.getValue())) {
+                errorMessage.setText("Nedostatok materiálu!");
+                return;
+            }
+
             materials.add(newMaterial);
             writeMaterials();
         } catch (MaterialNotAvailable e) {
             errorMessage.setText(e.getMessage());
+        } catch (NumberFormatException e){
+            errorMessage.setText("Počet musí byť číslo!");
         }
     }
 

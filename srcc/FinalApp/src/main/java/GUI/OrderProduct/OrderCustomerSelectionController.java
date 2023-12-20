@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +19,7 @@ public class OrderCustomerSelectionController implements Initializable {
     public ChoiceBox customerChoices;
 
     public Customer customer;
+    public Label errorField;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -33,6 +35,10 @@ public class OrderCustomerSelectionController implements Initializable {
     }
 
     public void confirmOrderCustomer() throws IOException {
+        if (customerChoices.getValue() == null) {
+            errorField.setText("Vyberte zákazníka!");
+            return;
+        }
         customer = Warehouse.getInstance().getDatabaseHandler().getCustomer(customerChoices.getValue().toString());
         if (customer != null) {
             Warehouse.getInstance().changeScene("OrderProduct/orderProductsForm.fxml");

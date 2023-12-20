@@ -281,15 +281,28 @@ public class DatabaseHandler {
         }
     }
 
-    private boolean hasMaterial(String customer, String material) {
+    /***
+     * Method, that returns the list of positions reserved by a given customer.
+     * @param customer The name of the customer.
+     * @return The list of positions reserved by a given customer.
+     */
+    public List<Position> getPositionsReservedByCustomer(String customer){
         try (Session session = sessionFactory.openSession()) {
             int customerId = getCustomer(customer).getId();
-            Query<String> query = session.createQuery("select p.name from Position p " +
+            Query<Position> query = session.createQuery("from Position p " +
                     "join CustomerReservation cr on p.id = cr.idPosition where cr.idCustomer = :id");
             query.setParameter("id", customerId);
-            List<String> idsOfPositionsOfCustomer = query.getResultList();
+            List<Position> positions = query.getResultList();
+            return positions;
+        }
+    }
 
-            for (String namePos : idsOfPositionsOfCustomer) {
+    private boolean hasMaterial(String customer, String material) {
+        try (Session session = sessionFactory.openSession()) {
+            List<Position> positions = getPositionsReservedByCustomer(customer);
+
+            for (Position pos : positions) {
+                String namePos = pos.getName();
                 Query<String> query2 = session.createQuery("select pop.idPallet from PalletOnPosition pop " +
                         "where pop.idPosition = :name");
                 query2.setParameter("name", namePos);
@@ -322,6 +335,20 @@ public class DatabaseHandler {
                 }
             }
             return names;
+        }
+    }
+
+    public Integer getMaterialQuantityOnPallet(Pallet pallet, Material material) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<StoredOnPallet> query = session.createQuery("from StoredOnPallet sop where sop.pnr = :pnr and sop.idProduct = :id");
+            query.setParameter("pnr", pallet.getPnr());
+            query.setParameter("id", material.getId());
+            Integer res = 0;
+            List<StoredOnPallet> storedOnPallets = query.getResultList();
+            for (StoredOnPallet sop : storedOnPallets) {
+                res += sop.getQuantity();
+            }
+            return res;
         }
     }
 }
