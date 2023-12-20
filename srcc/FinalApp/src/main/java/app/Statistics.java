@@ -68,7 +68,6 @@ public class Statistics {
                 }
             }
         }
-        System.out.println(res);
         return res;
     }
 

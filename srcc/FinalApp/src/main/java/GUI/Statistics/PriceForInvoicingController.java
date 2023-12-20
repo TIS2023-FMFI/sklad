@@ -2,17 +2,25 @@ package GUI.Statistics;
 
 import app.Warehouse;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class PriceForInvoicingController {
+public class PriceForInvoicingController implements Initializable{
     @FXML
     public TextField priceForOnePositionForOneDay;
-    Integer price;
+    private Integer price;
     @FXML
     public Label warningLabel;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Warehouse.getInstance().addController("priceForInvoicing", this);
+    }
 
     /***
      * This method checks if the input is a number and if it is, it saves it to the variable price.
@@ -48,5 +56,9 @@ public class PriceForInvoicingController {
                 Warehouse.getInstance().changeScene("Statistics/calculatedInvoicingForm.fxml");
             }
         }
+    }
+
+    public Integer getPrice(){
+        return price;
     }
 }

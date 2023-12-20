@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
 public class CalculatedInvoicingController implements javafx.fxml.Initializable{
@@ -22,6 +23,19 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        PriceForInvoicingController cont = (PriceForInvoicingController) Warehouse.
+                getInstance().getController("priceForInvoicing");
+        int price = cont.getPrice();
+        StatisticMainPageContoller input = (StatisticMainPageContoller) Warehouse.getInstance().getController("statisticsMainPage");
+        Date dateFrom = input.dateFromValue;
+        Date dateTo = input.dateToValue;
+        String customer = input.customers.getValue();
+
+        customerName.setText(customer);
+        intervalFrom.setText(dateFrom.toString());
+        intervalTo.setText(dateTo.toString());
+        calculatedPrice.setText(price + " €"); //price sa musi ešte vynásobiť počtom dní
+
     }
 
     /***
