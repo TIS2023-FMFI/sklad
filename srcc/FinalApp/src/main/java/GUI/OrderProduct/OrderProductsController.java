@@ -7,6 +7,7 @@ import app.Warehouse;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Pair;
@@ -19,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class OrderProductsController implements Initializable {
     @FXML
-    public TextField material;
+    public ChoiceBox<String> material;
     @FXML
     public TextField quantity;
     @FXML
@@ -37,11 +38,16 @@ public class OrderProductsController implements Initializable {
         OrderCustomerSelectionController cont = (OrderCustomerSelectionController) Warehouse.getInstance().
                 getController("OrderCustomerSelectionController");
         customer = cont.customer;
+        var dbh = Warehouse.getInstance().getDatabaseHandler();
+        var lm = dbh.getMaterials(customer);
+        for (String m : lm) {
+            material.getItems().add(m);
+        }
     }
 
     public void addProduct() {
         try {
-            Material m = Warehouse.getInstance().getDatabaseHandler().getMaterial(material.getText());
+            Material m = Warehouse.getInstance().getDatabaseHandler().getMaterial(material.getValue());
             var newMaterial = new Pair<>(m, Integer.parseInt(quantity.getText()));
             for (Pair<Material,Integer> p : materials) {
                 if (p.getKey().getName().equals(m.getName())) {

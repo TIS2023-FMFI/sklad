@@ -4,6 +4,7 @@ import Entity.*;
 import Exceptions.MaterialNotAvailable;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.util.Pair;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -277,6 +278,50 @@ public class DatabaseHandler {
                 }
             }
             return numberOfReservations;
+        }
+    }
+
+    private boolean hasMaterial(String customer, String material) {
+        try (Session session = sessionFactory.openSession()) {
+            int customerId = getCustomer(customer).getId();
+            Query<String> query = session.createQuery("select p.name from Position p " +
+                    "join CustomerReservation cr on p.id = cr.idPosition where cr.idCustomer = :id");
+            query.setParameter("id", customerId);
+            List<String> idsOfPositionsOfCustomer = query.getResultList();
+
+            for (String namePos : idsOfPositionsOfCustomer) {
+                Query<String> query2 = session.createQuery("select pop.idPallet from PalletOnPosition pop " +
+                        "where pop.idPosition = :name");
+                query2.setParameter("name", namePos);
+                List<String> pnrs = query2.getResultList();
+                for (String pnrPal:pnrs) {
+                    Query<String> query3 = session.createQuery("select m.name from Material m " +
+                            "join StoredOnPallet sop on m.id = sop.idProduct where sop.pnr = :pnr and m.name = :name");
+                    query3.setParameter("name", material);
+                    query3.setParameter("pnr", pnrPal);
+                    if (query3.getResultList().size() > 0) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
+    /***
+     * Method, that returns the list of materials that belong to a specific customer.
+     * @param customer The customer.
+     * @return The list of names of materials.
+     */
+    public List<String> getMaterials(Customer customer) {
+        try (Session session = sessionFactory.openSession()) {
+            List<Material> materials = session.createQuery("from Material m").list();
+            List<String> names = new ArrayList<>();
+            for (Material m : materials) {
+                if (hasMaterial(customer.getName(), m.getName())) {
+                    names.add(m.getName());
+                }
+            }
+            return names;
         }
     }
 }
