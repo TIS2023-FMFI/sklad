@@ -261,4 +261,22 @@ public class DatabaseHandler {
             return query.uniqueResult();
         }
     }
+
+    public int getNumberOfReservations(String customer, Date date){
+        try (Session session = sessionFactory.openSession()) {
+            int customerId = getCustomer(customer).getId();
+            Query<CustomerReservation> query = session.createQuery("from CustomerReservation r where r.idCustomer = :id");
+            query.setParameter("id", customerId);
+            List<CustomerReservation> reservations = query.getResultList();
+            int numberOfReservations = 0;
+            for (CustomerReservation r : reservations) {
+                Date from = r.getReservedFrom();
+                Date to = r.getReservedUntil();
+                if (date.after(from) && date.before(to) || date.equals(from) || date.equals(to)) {
+                    numberOfReservations++;
+                }
+            }
+            return numberOfReservations;
+        }
+    }
 }

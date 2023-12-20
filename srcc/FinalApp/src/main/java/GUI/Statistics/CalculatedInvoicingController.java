@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class CalculatedInvoicingController implements javafx.fxml.Initializable{
@@ -34,7 +35,15 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
         customerName.setText(customer);
         intervalFrom.setText(dateFrom.toString());
         intervalTo.setText(dateTo.toString());
-        calculatedPrice.setText(price + " €"); //price sa musi ešte vynásobiť počtom dní
+        var dbh = Warehouse.getInstance().getDatabaseHandler();
+        int finalPrice = 0;
+        for (LocalDate date = dateFrom.toLocalDate();
+             date.isBefore(dateTo.toLocalDate()) || date.isEqual(dateTo.toLocalDate());
+             date = date.plusDays(1)) {
+            finalPrice += dbh.getNumberOfReservations(customer, Date.valueOf(date))*price;
+        }
+
+        calculatedPrice.setText(finalPrice + " €");
 
     }
 
