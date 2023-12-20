@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-public class Pallete {
+public class Pallet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "pnr")
@@ -101,7 +101,7 @@ public class Pallete {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pallete pallete = (Pallete) o;
+        Pallet pallete = (Pallet) o;
         return weight == pallete.weight && isDamaged == pallete.isDamaged && idUser == pallete.idUser && Objects.equals(pnr, pallete.pnr) && Objects.equals(dateIncome, pallete.dateIncome) && Objects.equals(type, pallete.type) && Objects.equals(note, pallete.note) && Objects.equals(idPosition, pallete.idPosition);
     }
 
