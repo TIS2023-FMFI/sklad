@@ -13,11 +13,11 @@ public class PalletOnPosition {
 
     @Basic
     @Column(name = "id_pallet")
-    private int idPallet;
+    private String idPallet;
 
     @Basic
     @Column(name = "id_position")
-    private int idPosition;
+    private String idPosition;
 
     public PalletOnPosition() {}
 
@@ -29,19 +29,19 @@ public class PalletOnPosition {
         this.id = id;
     }
 
-    public int getIdPallet() {
+    public String getIdPallet() {
         return idPallet;
     }
 
-    public void setIdPallet(int idPallet) {
+    public void setIdPallet(String idPallet) {
         this.idPallet = idPallet;
     }
 
-    public int getIdPosition() {
+    public String getIdPosition() {
         return idPosition;
     }
 
-    public void setIdPosition(int idPosition) {
+    public void setIdPosition(String idPosition) {
         this.idPosition = idPosition;
     }
 
@@ -67,7 +67,7 @@ public class PalletOnPosition {
         return Objects.hash(id, idPallet, idPosition);
     }
 
-    public PalletOnPosition(int idPallet, int idPosition) {
+    public PalletOnPosition(String idPallet, String idPosition) {
         this.idPallet = idPallet;
         this.idPosition = idPosition;
     }

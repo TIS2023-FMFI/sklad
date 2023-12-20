@@ -30,6 +30,7 @@
         <mapping class="Entity.Position"/>
         <mapping class="Entity.StoredOnPallet"/>
         <mapping class="Entity.Users"/>
+        <mapping class="Entity.PalletOnPosition"/>
 
 
 

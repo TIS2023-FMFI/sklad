@@ -210,4 +210,55 @@ public class DatabaseHandler {
             return query.uniqueResult();
         }
     }
+
+    protected Pallet getPallet(String text){
+        try (Session session = sessionFactory.openSession()) {
+            Query<Pallet> query = session.createQuery("from Pallet p where p.pnr = :name");
+            query.setParameter("name", text);
+            if (query.list().size() == 0) {
+                return null;
+            }
+            return query.uniqueResult();
+        }
+    }
+
+    protected List<String> getPalletesOnPosition(String name){
+        try (Session session = sessionFactory.openSession()) {
+            Query<PalletOnPosition> query = session.createQuery("from PalletOnPosition pp where pp.idPosition = :name");
+            query.setParameter("name", name);
+            if (query.list().size() == 0) {
+                return new ArrayList<>();
+            }
+            List<PalletOnPosition> position = query.getResultList();
+            List<String> pallets = new ArrayList<>();
+            for (PalletOnPosition pp : position) {
+                pallets.add(pp.getIdPallet());
+            }
+            return pallets;
+        }
+    }
+
+    /***
+     * Method, that returns the list of records of materials that are stored on a given pallet.
+     * @param pnr The pallet number.
+     * @return The list of records of materials that are stored on a given pallet.
+     */
+    protected List<StoredOnPallet> getStoredOnPallet(String pnr){
+        try (Session session = sessionFactory.openSession()) {
+            Query<StoredOnPallet> query = session.createQuery("from StoredOnPallet sop where sop.pnr = :pnr");
+            query.setParameter("pnr", pnr);
+            if (query.list().size() == 0) {
+                return new ArrayList<>();
+            }
+            return query.getResultList();
+        }
+    }
+
+    protected Material getMaterial(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Material> query = session.createQuery("from Material m where m.id = :id");
+            query.setParameter("id", id);
+            return query.uniqueResult();
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package app;
 
+import Entity.Material;
+import Entity.Pallet;
 import Entity.Position;
 import Entity.StoredOnPallet;
 import javafx.scene.chart.XYChart;
@@ -41,26 +43,32 @@ public class Statistics {
 
     /***
      * This method takes data from database and fills in the table used for inventory check.
+     * @return List of maps with data.
      */
     public List<Map<String, Object>> setInventoryTable(){
         List<Map<String,Object>> res = new ArrayList<>();
         var data = Warehouse.getInstance().getWarehouseData();
+        var dbh = Warehouse.getInstance().getDatabaseHandler();
         for (List<Position> entry : data.values()) {
             for (Position position : entry) {
-                //if (position.getStoredOnPallet() == null) continue;
-
+                List<String> pnrsOnPosition = dbh.getPalletesOnPosition(position.getName());
+                for (String pnr : pnrsOnPosition) {
+                    Pallet pallet = dbh.getPallet(pnr);
+                    if (pallet == null) continue;
+                    var records = dbh.getStoredOnPallet(pallet.getPnr());
+                    for (StoredOnPallet record : records) {
+                        Material m = dbh.getMaterial(record.getIdProduct());
+                        res.add(Map.of(
+                                "PNR", pallet.getPnr(),
+                                "Pozícia", position.getName(),
+                                "Materiál", m.getName(),
+                                "Počet", record.getQuantity()
+                        ));
+                    }
+                }
             }
         }
-
-        res.add(Map.of(
-                "PNR", "45645",
-                "Pozícia", "A0001",
-                "Materiál", "Motor",
-                "Počet", 2
-        ));
-
         System.out.println(res);
-
         return res;
     }
 

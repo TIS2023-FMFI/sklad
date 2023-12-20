@@ -29,9 +29,6 @@ public class Pallet {
     @Basic
     @Column(name = "note")
     private String note;
-    @Basic
-    @Column(name = "id_position")
-    private String idPosition;
 
     public String getPnr() {
         return pnr;
@@ -89,24 +86,16 @@ public class Pallet {
         this.note = note;
     }
 
-    public String getIdPosition() {
-        return idPosition;
-    }
-
-    public void setIdPosition(String idPosition) {
-        this.idPosition = idPosition;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pallet pallete = (Pallet) o;
-        return weight == pallete.weight && isDamaged == pallete.isDamaged && idUser == pallete.idUser && Objects.equals(pnr, pallete.pnr) && Objects.equals(dateIncome, pallete.dateIncome) && Objects.equals(type, pallete.type) && Objects.equals(note, pallete.note) && Objects.equals(idPosition, pallete.idPosition);
+        return weight == pallete.weight && isDamaged == pallete.isDamaged && idUser == pallete.idUser && Objects.equals(pnr, pallete.pnr) && Objects.equals(dateIncome, pallete.dateIncome) && Objects.equals(type, pallete.type) && Objects.equals(note, pallete.note);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pnr, weight, dateIncome, isDamaged, idUser, type, note, idPosition);
+        return Objects.hash(pnr, weight, dateIncome, isDamaged, idUser, type, note);
     }
 }
