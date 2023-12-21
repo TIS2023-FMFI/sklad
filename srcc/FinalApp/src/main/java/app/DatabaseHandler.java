@@ -223,7 +223,7 @@ public class DatabaseHandler {
         }
     }
 
-    protected List<String> getPalletesOnPosition(String name){
+    protected List<Pallet> getPalletesOnPosition(String name){
         try (Session session = sessionFactory.openSession()) {
             Query<PalletOnPosition> query = session.createQuery("from PalletOnPosition pp where pp.idPosition = :name");
             query.setParameter("name", name);
@@ -231,9 +231,9 @@ public class DatabaseHandler {
                 return new ArrayList<>();
             }
             List<PalletOnPosition> position = query.getResultList();
-            List<String> pallets = new ArrayList<>();
+            List<Pallet> pallets = new ArrayList<>();
             for (PalletOnPosition pp : position) {
-                pallets.add(pp.getIdPallet());
+                pallets.add(session.get(Pallet.class, pp.getIdPallet()));
             }
             return pallets;
         }

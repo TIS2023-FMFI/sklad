@@ -70,6 +70,7 @@ public class OrderProductsController implements Initializable {
             OrderProduct op = new OrderProduct();
             if (!op.canCustomerOrder(customer, m, newMaterial.getValue())) {
                 errorMessage.setText("Nedostatok materiálu!");
+                materials.add(oldPair);
                 return;
             }
 

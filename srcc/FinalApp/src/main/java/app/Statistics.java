@@ -51,9 +51,8 @@ public class Statistics {
         var dbh = Warehouse.getInstance().getDatabaseHandler();
         for (List<Position> entry : data.values()) {
             for (Position position : entry) {
-                List<String> pnrsOnPosition = dbh.getPalletesOnPosition(position.getName());
-                for (String pnr : pnrsOnPosition) {
-                    Pallet pallet = dbh.getPallet(pnr);
+                List<Pallet> pnrsOnPosition = dbh.getPalletesOnPosition(position.getName());
+                for (Pallet pallet : pnrsOnPosition) {
                     if (pallet == null) continue;
                     var records = dbh.getStoredOnPallet(pallet.getPnr());
                     for (StoredOnPallet record : records) {
