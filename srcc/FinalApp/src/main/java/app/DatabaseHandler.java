@@ -4,6 +4,7 @@ import Entity.*;
 import Exceptions.MaterialNotAvailable;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.util.Pair;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -222,7 +223,7 @@ public class DatabaseHandler {
         }
     }
 
-    protected List<String> getPalletesOnPosition(String name){
+    protected List<Pallet> getPalletesOnPosition(String name){
         try (Session session = sessionFactory.openSession()) {
             Query<PalletOnPosition> query = session.createQuery("from PalletOnPosition pp where pp.idPosition = :name");
             query.setParameter("name", name);
@@ -230,9 +231,9 @@ public class DatabaseHandler {
                 return new ArrayList<>();
             }
             List<PalletOnPosition> position = query.getResultList();
-            List<String> pallets = new ArrayList<>();
+            List<Pallet> pallets = new ArrayList<>();
             for (PalletOnPosition pp : position) {
-                pallets.add(pp.getIdPallet());
+                pallets.add(session.get(Pallet.class, pp.getIdPallet()));
             }
             return pallets;
         }
@@ -277,6 +278,77 @@ public class DatabaseHandler {
                 }
             }
             return numberOfReservations;
+        }
+    }
+
+    /***
+     * Method, that returns the list of positions reserved by a given customer.
+     * @param customer The name of the customer.
+     * @return The list of positions reserved by a given customer.
+     */
+    public List<Position> getPositionsReservedByCustomer(String customer){
+        try (Session session = sessionFactory.openSession()) {
+            int customerId = getCustomer(customer).getId();
+            Query<Position> query = session.createQuery("from Position p " +
+                    "join CustomerReservation cr on p.id = cr.idPosition where cr.idCustomer = :id");
+            query.setParameter("id", customerId);
+            List<Position> positions = query.getResultList();
+            return positions;
+        }
+    }
+
+    private boolean hasMaterial(String customer, String material) {
+        try (Session session = sessionFactory.openSession()) {
+            List<Position> positions = getPositionsReservedByCustomer(customer);
+
+            for (Position pos : positions) {
+                String namePos = pos.getName();
+                Query<String> query2 = session.createQuery("select pop.idPallet from PalletOnPosition pop " +
+                        "where pop.idPosition = :name");
+                query2.setParameter("name", namePos);
+                List<String> pnrs = query2.getResultList();
+                for (String pnrPal:pnrs) {
+                    Query<String> query3 = session.createQuery("select m.name from Material m " +
+                            "join StoredOnPallet sop on m.id = sop.idProduct where sop.pnr = :pnr and m.name = :name");
+                    query3.setParameter("name", material);
+                    query3.setParameter("pnr", pnrPal);
+                    if (query3.getResultList().size() > 0) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
+    /***
+     * Method, that returns the list of materials that belong to a specific customer.
+     * @param customer The customer.
+     * @return The list of names of materials.
+     */
+    public List<String> getMaterials(Customer customer) {
+        try (Session session = sessionFactory.openSession()) {
+            List<Material> materials = session.createQuery("from Material m").list();
+            List<String> names = new ArrayList<>();
+            for (Material m : materials) {
+                if (hasMaterial(customer.getName(), m.getName())) {
+                    names.add(m.getName());
+                }
+            }
+            return names;
+        }
+    }
+
+    public Integer getMaterialQuantityOnPallet(Pallet pallet, Material material) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<StoredOnPallet> query = session.createQuery("from StoredOnPallet sop where sop.pnr = :pnr and sop.idProduct = :id");
+            query.setParameter("pnr", pallet.getPnr());
+            query.setParameter("id", material.getId());
+            Integer res = 0;
+            List<StoredOnPallet> storedOnPallets = query.getResultList();
+            for (StoredOnPallet sop : storedOnPallets) {
+                res += sop.getQuantity();
+            }
+            return res;
         }
     }
 }

@@ -3,10 +3,11 @@ package GUI.OrderProduct;
 import Entity.Customer;
 import Entity.Material;
 import Exceptions.MaterialNotAvailable;
+import app.OrderProduct;
 import app.Warehouse;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Pair;
@@ -19,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class OrderProductsController implements Initializable {
     @FXML
-    public TextField material;
+    public ChoiceBox<String> material;
     @FXML
     public TextField quantity;
     @FXML
@@ -37,23 +38,48 @@ public class OrderProductsController implements Initializable {
         OrderCustomerSelectionController cont = (OrderCustomerSelectionController) Warehouse.getInstance().
                 getController("OrderCustomerSelectionController");
         customer = cont.customer;
+        var dbh = Warehouse.getInstance().getDatabaseHandler();
+        var lm = dbh.getMaterials(customer);
+        for (String m : lm) {
+            material.getItems().add(m);
+        }
     }
 
     public void addProduct() {
         try {
-            Material m = Warehouse.getInstance().getDatabaseHandler().getMaterial(material.getText());
+            if (material.getValue() == null) {
+                errorMessage.setText("Vyberte materiál!");
+                return;
+            }
+            Material m = Warehouse.getInstance().getDatabaseHandler().getMaterial(material.getValue());
+            if (quantity.getText().length() == 0) {
+                errorMessage.setText("Zadajte počet!");
+                return;
+            }
+            Pair<Material, Integer> oldPair = null;
             var newMaterial = new Pair<>(m, Integer.parseInt(quantity.getText()));
             for (Pair<Material,Integer> p : materials) {
                 if (p.getKey().getName().equals(m.getName())) {
+                    oldPair = p;
                     newMaterial = new Pair<>(m, p.getValue() + Integer.parseInt(quantity.getText()));
                     materials.remove(p);
                     break;
                 }
             }
+
+            OrderProduct op = new OrderProduct();
+            if (!op.canCustomerOrder(customer, m, newMaterial.getValue())) {
+                errorMessage.setText("Nedostatok materiálu!");
+                materials.add(oldPair);
+                return;
+            }
+
             materials.add(newMaterial);
             writeMaterials();
         } catch (MaterialNotAvailable e) {
             errorMessage.setText(e.getMessage());
+        } catch (NumberFormatException e){
+            errorMessage.setText("Počet musí byť číslo!");
         }
     }
 
