@@ -26,10 +26,11 @@
         <mapping class="Entity.CustomerReservation"/>
         <mapping class="Entity.History"/>
         <mapping class="Entity.Material"/>
-        <mapping class="Entity.Pallete"/>
+        <mapping class="Entity.Pallet"/>
         <mapping class="Entity.Position"/>
         <mapping class="Entity.StoredOnPallet"/>
         <mapping class="Entity.Users"/>
+        <mapping class="Entity.PalletOnPosition"/>
 
 
 

@@ -47,18 +47,29 @@ public class StatisticMainPageContoller implements Initializable {
     public void backToMenu() throws IOException {
         Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
-    public void showGraph() throws IOException {
+
+    private boolean checkInputs(){
         if (dateFromValue == null || dateToValue == null) {
             invoicingLabel.setText("Zlý dátum");
         }else if (dateFromValue.after(dateToValue)) {
             invoicingLabel.setText("Dátum od je väčší ako dátum do");
+        }else if (customers.getValue() == null) {
+            invoicingLabel.setText("Vyberte zákazníka");
         }else {
+            return true;
+        }
+        return false;
+    }
+    public void showGraph() throws IOException {
+        if (checkInputs()) {
             Warehouse.getInstance().changeScene("Statistics/graphForm.fxml");
         }
     }
 
     public void showInventoryCheck() throws IOException {
-        Warehouse.getInstance().changeScene("Statistics/inventoryListForm.fxml");
+        if (checkInputs()) {
+            Warehouse.getInstance().changeScene("Statistics/inventoryCheckForm.fxml");
+        }
     }
 
     /***
@@ -67,7 +78,9 @@ public class StatisticMainPageContoller implements Initializable {
      */
     public void askForPriceForInvoicing() throws IOException {
         if (Warehouse.getInstance().getCurrentUser().getAdmin()) {
-            Warehouse.getInstance().changeScene("Statistics/priceForInvoicingForm.fxml");
+            if (checkInputs()) {
+                Warehouse.getInstance().changeScene("Statistics/priceForInvoicingForm.fxml");
+            }
         }else{
             invoicingLabel.setText("Pre prístup na túto stránku nemáte dostatočné oprávnenia");
         }

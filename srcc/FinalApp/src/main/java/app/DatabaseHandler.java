@@ -210,4 +210,73 @@ public class DatabaseHandler {
             return query.uniqueResult();
         }
     }
+
+    protected Pallet getPallet(String text){
+        try (Session session = sessionFactory.openSession()) {
+            Query<Pallet> query = session.createQuery("from Pallet p where p.pnr = :name");
+            query.setParameter("name", text);
+            if (query.list().size() == 0) {
+                return null;
+            }
+            return query.uniqueResult();
+        }
+    }
+
+    protected List<String> getPalletesOnPosition(String name){
+        try (Session session = sessionFactory.openSession()) {
+            Query<PalletOnPosition> query = session.createQuery("from PalletOnPosition pp where pp.idPosition = :name");
+            query.setParameter("name", name);
+            if (query.list().size() == 0) {
+                return new ArrayList<>();
+            }
+            List<PalletOnPosition> position = query.getResultList();
+            List<String> pallets = new ArrayList<>();
+            for (PalletOnPosition pp : position) {
+                pallets.add(pp.getIdPallet());
+            }
+            return pallets;
+        }
+    }
+
+    /***
+     * Method, that returns the list of records of materials that are stored on a given pallet.
+     * @param pnr The pallet number.
+     * @return The list of records of materials that are stored on a given pallet.
+     */
+    protected List<StoredOnPallet> getStoredOnPallet(String pnr){
+        try (Session session = sessionFactory.openSession()) {
+            Query<StoredOnPallet> query = session.createQuery("from StoredOnPallet sop where sop.pnr = :pnr");
+            query.setParameter("pnr", pnr);
+            if (query.list().size() == 0) {
+                return new ArrayList<>();
+            }
+            return query.getResultList();
+        }
+    }
+
+    protected Material getMaterial(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Material> query = session.createQuery("from Material m where m.id = :id");
+            query.setParameter("id", id);
+            return query.uniqueResult();
+        }
+    }
+
+    public int getNumberOfReservations(String customer, Date date){
+        try (Session session = sessionFactory.openSession()) {
+            int customerId = getCustomer(customer).getId();
+            Query<CustomerReservation> query = session.createQuery("from CustomerReservation r where r.idCustomer = :id");
+            query.setParameter("id", customerId);
+            List<CustomerReservation> reservations = query.getResultList();
+            int numberOfReservations = 0;
+            for (CustomerReservation r : reservations) {
+                Date from = r.getReservedFrom();
+                Date to = r.getReservedUntil();
+                if (date.after(from) && date.before(to) || date.equals(from) || date.equals(to)) {
+                    numberOfReservations++;
+                }
+            }
+            return numberOfReservations;
+        }
+    }
 }

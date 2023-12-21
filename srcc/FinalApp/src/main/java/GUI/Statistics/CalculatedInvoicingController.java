@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class CalculatedInvoicingController implements javafx.fxml.Initializable{
@@ -22,6 +24,27 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        PriceForInvoicingController cont = (PriceForInvoicingController) Warehouse.
+                getInstance().getController("priceForInvoicing");
+        int price = cont.getPrice();
+        StatisticMainPageContoller input = (StatisticMainPageContoller) Warehouse.getInstance().getController("statisticsMainPage");
+        Date dateFrom = input.dateFromValue;
+        Date dateTo = input.dateToValue;
+        String customer = input.customers.getValue();
+
+        customerName.setText(customer);
+        intervalFrom.setText(dateFrom.toString());
+        intervalTo.setText(dateTo.toString());
+        var dbh = Warehouse.getInstance().getDatabaseHandler();
+        int finalPrice = 0;
+        for (LocalDate date = dateFrom.toLocalDate();
+             date.isBefore(dateTo.toLocalDate()) || date.isEqual(dateTo.toLocalDate());
+             date = date.plusDays(1)) {
+            finalPrice += dbh.getNumberOfReservations(customer, Date.valueOf(date))*price;
+        }
+
+        calculatedPrice.setText(finalPrice + " €");
+
     }
 
     /***

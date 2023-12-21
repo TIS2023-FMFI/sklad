@@ -5,52 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aab55bb6-8901-4e6d-8626-8b4c8669833b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entity/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entity/DatabaseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/CalculatedInvoicingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Statistics/CalculatedInvoicingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/ChooseProductToMoveController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/RelocateProduct/ChooseProductToRelocateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/ConfirmMovingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/RelocateProduct/ConfirmMovingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/CustomerTruckNumberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/StoreInProduct/CustomerTruckNumberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GraphController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Statistics/GraphController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/InventoryConroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Statistics/InventoryConroller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/MoveProductFinalPositionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/RelocateProduct/MoveProductToPositionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/MoveProductFromController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/RelocateProduct/MoveProductFromPositionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/OrderCustomerSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/OrderProduct/OrderCustomerSelectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/OrderDownloadConfirmation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/OrderProduct/OrderDownloadConfirmation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/OrderProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/OrderProduct/OrderProductsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/OrderShowPositionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/OrderProduct/OrderShowPositionsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/PalletInformationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/StoreInProduct/PalletInformationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/Position.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/PriceForInvoicingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Statistics/PriceForInvoicingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/RowLayoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/WarehouseLayout/RowLayoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/StatisticMainPageContoller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Statistics/StatisticMainPageContoller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/StoreInPositionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/StoreInProduct/StoreInPositionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/WarehouseLayoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/WarehouseLayout/WarehouseLayoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Statistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Statistics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/StoreInProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/StoreInProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Warehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/calculatedInvoicing.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/Statistics/calculatedInvoicingForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/chooseProductToMoveForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/RelocateProduct/chooseProductToRelocateForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/confirmMovingForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/RelocateProduct/confirmMovingForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/customerTruckNumberForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/StoreInProduct/customerTruckNumberForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/graph.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/Statistics/graphForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/inventoryList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/Statistics/inventoryListForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/moveProductFinalPosition.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/RelocateProduct/moveProductToPositionForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/moveProductFromForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/RelocateProduct/moveProductFromPositionForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/orderCustomerSelectionForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/OrderProduct/orderCustomerSelectionForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/orderDownloadConfirmation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/OrderProduct/orderDownloadConfirmation.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/orderProductsForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/OrderProduct/orderProductsForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/orderShowPositionsForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/OrderProduct/orderShowPositionsForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/palletInformationForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/StoreInProduct/palletInformationForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/priceForInvoicing.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/Statistics/priceForInvoicingForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/rowLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/WarehouseLayout/rowLayoutForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/statisticsMainPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/Statistics/statisticsMainPageForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/storeInPositionForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/StoreInProduct/storeInPositionForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/warehouseLayoutRows.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/WarehouseLayout/warehouseLayoutRowsForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,27 +39,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "last_opened_file_path": "C:/Users/Lenovo/Desktop/Matej/AIN/LS 22-23/Java/Cvicenie_8",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Colors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lenovo/Desktop/Matej/AIN/LS 22-23/Java/Cvicenie_8&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Console Colors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\ssnid\Desktop\Matfyz\3.rocnik\zimny\TIS\sklad\sklad\srcc\FinalApp\src\main\resources\app\WarehouseLayout" />

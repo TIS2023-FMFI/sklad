@@ -9,8 +9,8 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Statistics.StatisticMainPageContoller">
    <children>
       <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
-      <Label layoutX="112.0" layoutY="92.0" text="Dátum od:" />
-      <Label layoutX="112.0" layoutY="127.0" text="Dátum do:" />
+      <Label layoutX="82.0" layoutY="92.0" prefHeight="18.0" prefWidth="112.0" text="Dátum od (vrátane):" />
+      <Label layoutX="82.0" layoutY="127.0" prefHeight="18.0" prefWidth="112.0" text="Dátum do (vrátane):" />
       <Label layoutX="112.0" layoutY="182.0" text="Zákazník:" />
       <DatePicker fx:id="dateFrom" layoutX="212.0" layoutY="88.0" onAction="#saveDateFrom" />
       <DatePicker fx:id="dateTo" layoutX="212.0" layoutY="123.0" onAction="#saveDateTo" />
