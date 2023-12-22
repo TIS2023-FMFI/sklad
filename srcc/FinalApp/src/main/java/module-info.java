@@ -4,6 +4,8 @@ module app.finalapp {
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
     requires java.naming;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
     opens Entity;
     opens GUI;
 

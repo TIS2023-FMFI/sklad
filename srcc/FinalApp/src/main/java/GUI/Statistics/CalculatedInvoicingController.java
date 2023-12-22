@@ -2,7 +2,6 @@ package GUI.Statistics;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -27,7 +26,7 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
         PriceForInvoicingController cont = (PriceForInvoicingController) Warehouse.
                 getInstance().getController("priceForInvoicing");
         int price = cont.getPrice();
-        StatisticMainPageContoller input = (StatisticMainPageContoller) Warehouse.getInstance().getController("statisticsMainPage");
+        StatisticMainPageController input = (StatisticMainPageController) Warehouse.getInstance().getController("statisticsMainPage");
         Date dateFrom = input.dateFromValue;
         Date dateTo = input.dateToValue;
         String customer = input.customers.getValue();

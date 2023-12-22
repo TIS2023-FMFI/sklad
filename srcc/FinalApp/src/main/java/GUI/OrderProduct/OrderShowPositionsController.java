@@ -3,6 +3,7 @@ package GUI.OrderProduct;
 import Entity.Customer;
 import Entity.Material;
 import Exceptions.MaterialNotAvailable;
+import app.FileExporter;
 import app.OrderProduct;
 import app.Warehouse;
 import javafx.collections.FXCollections;
@@ -21,6 +22,8 @@ import java.util.ResourceBundle;
 
 public class OrderShowPositionsController implements Initializable {
     public TableView orderTable;
+
+    private ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,7 +47,7 @@ public class OrderShowPositionsController implements Initializable {
         List<Pair<Material,Integer>> products = cont.materials;
         Customer customer = cont.customer;
         OrderProduct op = new OrderProduct();
-        ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();
+
         try {
             items.addAll(op.setOrderTable(customer, products));
         } catch (MaterialNotAvailable e) {
@@ -66,7 +69,8 @@ public class OrderShowPositionsController implements Initializable {
         Warehouse.getInstance().changeScene("OrderProduct/orderCustomerSelectionForm.fxml");
     }
     public void saveOrderAndContinue() throws IOException {
-
+        FileExporter fe = new FileExporter();
+        fe.exportExcel(items, "Objednávka");
         //export a vymazanie z databazy
 
         Warehouse.getInstance().changeScene("OrderProduct/orderDownloadConfirmation.fxml");
