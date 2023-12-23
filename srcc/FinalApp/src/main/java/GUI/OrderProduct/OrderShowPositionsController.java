@@ -21,7 +21,7 @@ import java.util.*;
 public class OrderShowPositionsController implements Initializable {
     public TableView orderTable;
 
-    private ObservableList<Map<String, String>> items = FXCollections.observableArrayList();;
+    private ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

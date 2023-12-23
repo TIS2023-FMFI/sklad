@@ -27,7 +27,6 @@ public class FileExporter {
         String[] columnsArr = columns.toArray(columns.toArray(new String[0]));
         //var columns = new Object[] { "Materiál", "Počet", "Pozícia", "PNR" };
         data.put("1", columnsArr);
-        System.out.println(data);
         for (int i = 0; i < items.size(); i++) {
             Map<String, String> row = items.get(i);
             List<String> roww = new ArrayList<>();
@@ -37,7 +36,6 @@ public class FileExporter {
             data.put(Integer.toString(i+2), roww.toArray(new String[0]));
         }
         Set<String> keyid = data.keySet();
-        System.out.println(data);
         int rowid = 0;
         XSSFRow row;
         for (String key : keyid) {
@@ -46,7 +44,6 @@ public class FileExporter {
             int cellid = 0;
 
             for (String obj : objectArr) {
-                System.out.println("Wrting: "+obj + " to cell: "+cellid + " in row: "+rowid);
                 Cell cell = row.createCell(cellid++);
                 cell.setCellValue(obj);
             }

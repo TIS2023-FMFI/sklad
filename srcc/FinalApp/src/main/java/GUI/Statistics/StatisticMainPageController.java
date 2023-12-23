@@ -66,9 +66,7 @@ public class StatisticMainPageController implements Initializable {
     }
 
     public void showInventoryCheck() throws IOException {
-        if (checkInputs()) {
-            Warehouse.getInstance().changeScene("Statistics/inventoryCheckForm.fxml");
-        }
+        Warehouse.getInstance().changeScene("Statistics/inventoryListForm.fxml");
     }
 
     /***
