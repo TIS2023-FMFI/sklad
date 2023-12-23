@@ -16,14 +16,12 @@ import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class OrderShowPositionsController implements Initializable {
     public TableView orderTable;
 
-    private ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();;
+    private ObservableList<Map<String, String>> items = FXCollections.observableArrayList();;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -70,7 +68,13 @@ public class OrderShowPositionsController implements Initializable {
     }
     public void saveOrderAndContinue() throws IOException {
         FileExporter fe = new FileExporter();
-        fe.exportExcel(items, "Objednávka");
+        List<String> columns = new ArrayList<>();
+        columns.add("Materiál");
+        columns.add("Počet");
+        columns.add("Pozícia");
+        columns.add("PNR");
+        fe.exportExcel(items, "Order", "Objednávka", columns);
+
         //export a vymazanie z databazy
 
         Warehouse.getInstance().changeScene("OrderProduct/orderDownloadConfirmation.fxml");

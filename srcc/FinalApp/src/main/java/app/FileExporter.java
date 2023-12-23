@@ -9,45 +9,51 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 public class FileExporter {
-    public void exportExcel(ObservableList<Map<String, Object>> items, String sheetname) {
+    /***
+     * Exports data to excel file
+     * @param items data to export
+     * @param filename name of the file
+     * @param sheetname name of the sheet in the file
+     * @param columns columns to export
+     */
+    public void exportExcel(ObservableList<Map<String, String>> items, String filename, String sheetname, List<String> columns) {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet spreadsheet = workbook.createSheet(sheetname);
 
-        Map<String, Object[]> data = new TreeMap<>();
-        var columns = items.get(0).keySet();
+        Map<String, String[]> data = new TreeMap<>();
+        String[] columnsArr = columns.toArray(columns.toArray(new String[0]));
         //var columns = new Object[] { "Materiál", "Počet", "Pozícia", "PNR" };
-        data.put("1", columns.toArray());
+        data.put("1", columnsArr);
+        System.out.println(data);
         for (int i = 0; i < items.size(); i++) {
-            Map<String, Object> row = items.get(i);
-            data.put(Integer.toString(i+2),
-                    new Object[] { row.get("Materiál"),
-                            row.get("Počet"),
-                            row.get("Pozícia"),
-                            row.get("PNR") });
+            Map<String, String> row = items.get(i);
+            List<String> roww = new ArrayList<>();
+            for (String colName:columns) {
+                 roww.add(row.get(colName));
+            }
+            data.put(Integer.toString(i+2), roww.toArray(new String[0]));
         }
         Set<String> keyid = data.keySet();
-
+        System.out.println(data);
         int rowid = 0;
         XSSFRow row;
         for (String key : keyid) {
             row = spreadsheet.createRow(rowid++);
-            Object[] objectArr = data.get(key);
+            String[] objectArr = data.get(key);
             int cellid = 0;
 
-            for (Object obj : objectArr) {
+            for (String obj : objectArr) {
+                System.out.println("Wrting: "+obj + " to cell: "+cellid + " in row: "+rowid);
                 Cell cell = row.createCell(cellid++);
-                cell.setCellValue((String)obj);
+                cell.setCellValue(obj);
             }
         }
         try {
             FileOutputStream out = new FileOutputStream(
-                    new File("exports/Order.xlsx"));
+                    new File("exports/"+filename+".xlsx"));
             workbook.write(out);
             out.close();
         } catch (IOException e) {

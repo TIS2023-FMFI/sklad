@@ -8,6 +8,7 @@ module app.finalapp {
     requires org.apache.poi.ooxml;
     opens Entity;
     opens GUI;
+    opens app;
 
 
     exports app;
@@ -19,5 +20,4 @@ module app.finalapp {
     opens GUI.StoreInProduct;
     opens GUI.Statistics;
     opens GUI.RelocateProduct;
-    opens app;
 }
