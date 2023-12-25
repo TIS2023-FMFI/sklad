@@ -1,8 +1,6 @@
 package GUI;
 
 import app.DatabaseHandler;
-import Exceptions.EmptyPassword;
-import Exceptions.EmptyUsername;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,10 +17,10 @@ public class LoginController {
     public void login(){
         try {
             if (username.getText() == null || username.getText().trim().isEmpty()) {
-                throw new EmptyUsername();
+                wrongLogin.setText("Nezadali ste používateľské meno");
             }
             if (password.getText() == null || password.getText().trim().isEmpty()){
-                throw new EmptyPassword();
+                wrongLogin.setText("Nezadali ste používateľské heslo");
             }
             Warehouse.getInstance().setCurrentUser(DatabaseHandler.checkUser(username.getText(), password.getText()));
             Warehouse.getInstance().loadDb();

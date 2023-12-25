@@ -2,6 +2,7 @@ package GUI.OrderProduct;
 
 import Entity.Customer;
 import app.Warehouse;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,17 +17,16 @@ import java.util.ResourceBundle;
 public class OrderCustomerSelectionController implements Initializable {
 
     @FXML
-    public ChoiceBox customerChoices;
+    public ChoiceBox<String> customerChoices;
 
     public Customer customer;
     public Label errorField;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        List<Customer> cust = Warehouse.getInstance().getDatabaseHandler().getCustomers();
-        for (Customer c : cust) {
-            customerChoices.getItems().add(c.getName());
-        }
+        ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
+        customerChoices.setItems(customers);
+        customerChoices.setValue(customers.get(0));
         Warehouse.getInstance().addController("OrderCustomerSelectionController", this);
     }
 

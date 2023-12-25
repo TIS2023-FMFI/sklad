@@ -23,7 +23,7 @@ public class StatisticMainPageContoller implements Initializable {
     @FXML
     public Label invoicingLabel;
     @FXML
-    public ChoiceBox<String> customers;
+    public ChoiceBox<String> customer;
     @FXML
     DatePicker dateFrom;
 
@@ -35,13 +35,10 @@ public class StatisticMainPageContoller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
+        customer.setItems(customers);
+        customer.setValue(customers.get(0));
         Warehouse.getInstance().addController("statisticsMainPage", this);
-        ObservableList<String> listInstance = FXCollections. observableArrayList();
-        List<Customer> choices = Warehouse.getInstance().getDatabaseHandler().getCustomers();
-        for (Customer customer : choices) {
-            listInstance.add(customer.getName());
-        }
-        customers.setItems(listInstance);
     }
 
     public void backToMenu() throws IOException {
@@ -53,7 +50,7 @@ public class StatisticMainPageContoller implements Initializable {
             invoicingLabel.setText("Zlý dátum");
         }else if (dateFromValue.after(dateToValue)) {
             invoicingLabel.setText("Dátum od je väčší ako dátum do");
-        }else if (customers.getValue() == null) {
+        }else if (customer.getValue() == null) {
             invoicingLabel.setText("Vyberte zákazníka");
         }else {
             return true;

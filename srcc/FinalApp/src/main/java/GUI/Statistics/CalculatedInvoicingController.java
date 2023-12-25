@@ -30,7 +30,7 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
         StatisticMainPageContoller input = (StatisticMainPageContoller) Warehouse.getInstance().getController("statisticsMainPage");
         Date dateFrom = input.dateFromValue;
         Date dateTo = input.dateToValue;
-        String customer = input.customers.getValue();
+        String customer = input.customer.getValue();
 
         customerName.setText(customer);
         intervalFrom.setText(dateFrom.toString());

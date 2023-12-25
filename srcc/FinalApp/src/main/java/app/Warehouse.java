@@ -15,8 +15,19 @@ import java.util.*;
 
 public class Warehouse extends Application {
     private static Warehouse INSTANCE;
+    public static Stage stage;
+    private DatabaseHandler databaseHandler;
 
+    /***
+     * Currently logged-in user.
+     */
+    private Users currentUser;
     Map<String, Object> controllers = new HashMap<>();
+
+    /***
+     * Map that maps rows in the warehouse to a list of positions in that row.
+     */
+    private Map<String, List<Position>> warehouseData;
 
     /***
      * Method that always returns the same instance of the Warehouse class.
@@ -36,28 +47,12 @@ public class Warehouse extends Application {
             e.printStackTrace();
         }
     }
-    public static Stage stage;
-    private DatabaseHandler databaseHandler;
 
     /***
-     * Currently logged-in user.
+     * Main method, that runs the application.
+     * @param primarystage
+     * @throws Exception
      */
-    private Users currentUser;
-
-    public void setCurrentUser(Users currentUser) {
-        this.currentUser = currentUser;
-    }
-
-    /***
-     * Map that maps rows in the warehouse to a list of positions in that row.
-     */
-    private Map<String, List<Position>> warehouseData;
-
-    /***
-     //     * Main method, that runs the application.
-     //     * @param primarystage
-     //     * @throws Exception
-     //     */
     @Override
     public void start(Stage primarystage) throws Exception {
         stage = primarystage;
@@ -67,16 +62,8 @@ public class Warehouse extends Application {
         primarystage.show();
     }
 
-
     /***
-     * Method, that loads data to the memory after a successful login.
-     */
-    public void loadDb(){
-        warehouseData = databaseHandler.getWarehouseData();
-    }
-
-    /***
-     * Metho, that changes the currently displayed scene based in the fxml file provided.
+     * Method, that changes the currently displayed scene based in the fxml file provided.
      * @param fxml Fxml that defines the new scene.
      * @throws IOException If there is an issue displaying the new scene.
      */
@@ -93,26 +80,42 @@ public class Warehouse extends Application {
         stage.getScene().getWindow().setHeight(newHeight);
     }
 
-    public Users getCurrentUser() {
-        return currentUser;
+    /***
+     * Method, that loads data to the memory after a successful login.
+     */
+    public void loadDb(){
+        warehouseData = databaseHandler.getWarehouseData();
     }
 
+    public void setCurrentUser(Users currentUser) {
+        this.currentUser = currentUser;
+    }
 
-    public static void main(String[] args) {
-        launch();
+    public Users getCurrentUser() {
+        return currentUser;
     }
 
     public DatabaseHandler getDatabaseHandler() {
         return databaseHandler;
     }
 
+    public Map<String, List<Position>> getWarehouseData() {
+        return warehouseData;
+    }
+
     public void addController(String name, Object controler) {
         controllers.put(name, controler);
     }
 
-    public Object getController(String name) {return controllers.get(name);}
+    public Object getController(String name) {
+        return controllers.get(name);
+    }
 
-    public Map<String, List<Position>> getWarehouseData() {
-        return warehouseData;
+    public static Stage getStage() {
+        return stage;
+    }
+
+    public static void main(String[] args) {
+        launch();
     }
 }

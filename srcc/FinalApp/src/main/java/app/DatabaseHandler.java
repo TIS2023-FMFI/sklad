@@ -4,7 +4,8 @@ import Entity.*;
 import Exceptions.MaterialNotAvailable;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.util.Pair;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -168,10 +169,10 @@ public class DatabaseHandler {
         }
     }
 
-    public List<Customer> getCustomers() {
+    public ObservableList<String> getCustomersNames() {
         try (Session session = sessionFactory.openSession()) {
-            Query<Customer> query = session.createQuery("from Customer");
-            return query.list();
+            Query<String> query = session.createQuery("SELECT c.name FROM Customer c", String.class);
+            return FXCollections.observableArrayList(query.list());
         }
         catch (Exception e) {
             e.printStackTrace();
