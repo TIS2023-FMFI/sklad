@@ -6,7 +6,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="384.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.StoreInPositionController">
    <children>
       <Label layoutX="37.0" layoutY="98.0" text="Zaskladniť na pozíciu:" />

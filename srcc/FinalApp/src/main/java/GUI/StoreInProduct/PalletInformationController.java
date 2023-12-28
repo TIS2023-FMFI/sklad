@@ -34,6 +34,8 @@ public class PalletInformationController implements Initializable {
     @FXML
     private CheckBox isDamaged;
     @FXML
+    private ToggleGroup weight;
+    @FXML
     private ChoiceBox<String> palletType;
     private final String[] palletTypeOptions = {"Europaleta", "Americká paleta", "GitterBox"};
 
@@ -45,77 +47,87 @@ public class PalletInformationController implements Initializable {
     private int currentPairCount = 0;
     private boolean isCountValid = true;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         palletType.getItems().addAll(palletTypeOptions);
         palletType.setValue("Europaleta");
+        Warehouse.getInstance().addController("palletInformation", this);
         addMaterial();
     }
 
     public void addMaterial() {
         if (currentPairCount < MAX_PAIRS && isCountValid) {
-            HBox lastMaterialPair = getLastMaterialPair();
+            if (getLastMaterialPair() == null || !isLastMaterialEmpty()) {
+                errorMessage.setText("");
+                currentPairCount++;
 
-            if (lastMaterialPair == null || (
-                    !((TextField) lastMaterialPair.getChildren().get(1)).getText().isEmpty() &&
-                    !((TextField) lastMaterialPair.getChildren().get(3)).getText().isEmpty())) {
-
-            errorMessage.setText("");
-            currentPairCount++;
-
-            Label materialLabel = new Label("Materiál:");
-            TextField materialTextField = new TextField();
-
-            Label countLabel = new Label("Počet kusov:");
-            TextField countTextField = new TextField();
-
-            HBox materialPair = new HBox(materialLabel, materialTextField, countLabel, countTextField);
-
-            Label placeholder = new Label();
-            placeholder.setMinWidth(23);
-
-            if (materialContainer.getChildren().size() > 0) {
-                Button removeButton = new Button("X");
-                removeButton.setOnAction(event -> removeMaterialPair(removeButton));
-                materialPair.getChildren().add(removeButton);
-            }
-            else {
-                materialPair.getChildren().add(placeholder);
-            }
-
-            materialPair.setSpacing(15);
-
-            materialContainer.getChildren().add(materialPair);
-            materialPair.setAlignment(Pos.CENTER);
-
-            if (currentPairCount == MAX_PAIRS) {
-                addMaterialButton.setDisable(true);
-            }
-
-            materialTextField.textProperty().addListener((observable, oldValue, newValue) ->
-                    updateMaterialMap(newValue, countTextField.getText()));
-                countTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    try {
-                        int count = Integer.parseInt(newValue);
-                        errorMessage.setText("");
-                        isCountValid = true;
-                        updateMaterialMap(materialTextField.getText(), newValue);
-                    } catch (NumberFormatException e) {
-                        errorMessage.setText("Počet kusov musí byť číslo");
-                        isCountValid = false;
-                    }
-                });
-            updateContainerHeights();
+                materialContainer.getChildren().add(createMaterialPair());
+                updateContainerHeights();
+                if (currentPairCount == MAX_PAIRS) {
+                    addMaterialButton.setDisable(true);
+                }
             }
             else {
                 errorMessage.setText("Nevyplnili ste materiál a jeho počet");
             }
         }
     }
+
+    private HBox createMaterialPair() {
+        Label materialLabel = new Label("Materiál:");
+        TextField materialTextField = new TextField();
+
+        Label countLabel = new Label("Počet kusov:");
+        TextField countTextField = new TextField();
+
+        HBox materialPair = new HBox(materialLabel, materialTextField, countLabel, countTextField);
+
+        if (materialContainer.getChildren().size() > 0) {
+            Button removeButton = new Button("X");
+            removeButton.setOnAction(event -> removeMaterialPair(removeButton));
+            materialPair.getChildren().add(removeButton);
+        }
+        else {
+            Label placeholder = new Label();
+            placeholder.setMinWidth(23);
+            materialPair.getChildren().add(placeholder);
+        }
+
+        materialPair.setSpacing(15);
+        materialPair.setAlignment(Pos.CENTER);
+
+        materialTextField.textProperty().addListener((observable, oldValue, newValue) ->
+                updateMaterialMap(newValue, countTextField.getText()));
+
+        countTextField.textProperty().addListener((observable, oldValue, newValue) -> handleCountTextField(materialTextField, newValue));
+
+        return materialPair;
+    }
+
+    private void handleCountTextField(TextField materialTextField, String newValue) {
+        try {
+            int count = Integer.parseInt(newValue);
+            if (count > 0) {
+                errorMessage.setText("");
+                isCountValid = true;
+                updateMaterialMap(materialTextField.getText(), newValue);
+            } else {
+                errorMessage.setText("Počet kusov musí byť aspoň 1");
+            }
+        } catch (NumberFormatException e) {
+            errorMessage.setText("Počet kusov musí byť číslo");
+            isCountValid = false;
+        }
+    }
+
     private HBox getLastMaterialPair() {
         int size = materialContainer.getChildren().size();
         return size > 0 ? (HBox) materialContainer.getChildren().get(size - 1) : null;
+    }
+
+    private boolean isLastMaterialEmpty() {
+        return ((TextField) Objects.requireNonNull(getLastMaterialPair()).getChildren().get(1)).getText().isEmpty() ||
+                ((TextField) getLastMaterialPair().getChildren().get(3)).getText().isEmpty();
     }
 
     private void updateMaterialMap(String material, String count) {
@@ -136,9 +148,7 @@ public class PalletInformationController implements Initializable {
             currentPairCount--;
         }
         updateContainerHeights();
-        HBox lastMaterialPair = getLastMaterialPair();
-        if ((!((TextField) lastMaterialPair.getChildren().get(1)).getText().isEmpty() &&
-                !((TextField) lastMaterialPair.getChildren().get(3)).getText().isEmpty())){
+        if (!isLastMaterialEmpty()){
             errorMessage.setText("");
         }
     }
@@ -151,12 +161,72 @@ public class PalletInformationController implements Initializable {
         Warehouse.getStage().setHeight(newHeight);
     }
 
-    public void backToCustomerTockaForm()throws IOException{
+    public void backToCustomerTruckNumberForm()throws IOException{
         Warehouse.getInstance().changeScene("StoreInProduct/customerTruckNumberForm.fxml");
     }
 
     public void nextToPositionForm() throws IOException {
-        Warehouse.getInstance().changeScene("StoreInProduct/storeInPositionForm.fxml");
+        if (materialMap.isEmpty()){
+            errorMessage.setText("Nezadali ste materiál a jeho počet na zaskladnenie");
+        }
+        else if (isLastMaterialEmpty()) {
+            errorMessage.setText("Nevyplnili ste posledný materiál a jeho počet");
+        }
+        else if (PNR.getText().isEmpty()) {
+            errorMessage.setText("Nezadali ste PNR číslo");
+        }
+        else if (weight.getSelectedToggle() == null){
+            errorMessage.setText("Nezadali ste hmotnosť");
+        }
+        else {
+            try {
+                int PNRnumber = Integer.parseInt(PNR.getText());
+                if (PNRnumber < 2000 || PNRnumber > 3500){
+                    errorMessage.setText("PNR musí byť v rozmedzí 2000-3500");
+                }
+                else {
+                    Warehouse.getInstance().changeScene("StoreInProduct/storeInPositionForm.fxml");
+                }
+            }
+            catch (NumberFormatException e){
+                errorMessage.setText("PNR musí byť číslo");
+            }
+        }
+    }
+
+    public String getPNR() {
+        return PNR.getText();
+    }
+
+    public boolean getIsTall() {
+        return isTall.isSelected();
+    }
+
+    public boolean getIsDamaged() {
+        return isDamaged.isSelected();
+    }
+
+    public Map<String, Integer> getMaterialMap() {
+        return materialMap;
+    }
+
+    public String getPalletType() {
+        return palletType.getValue();
+    }
+
+    public Integer getWeight(){
+        RadioButton selectedRadioButton = (RadioButton) weight.getSelectedToggle();
+        String weightID = selectedRadioButton.getId();
+        if (weightID.equals("first")){
+            return 500;
+        }
+        if (weightID.equals("second")){
+            return 1000;
+        }
+        if (weightID.equals("third")){
+            return 1000;
+        }
+        return 2000;
     }
 }
 

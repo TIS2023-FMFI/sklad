@@ -1,43 +1,47 @@
 package GUI.StoreInProduct;
 
+import app.StoreInProduct;
 import app.Warehouse;
-import Entity.Position;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import Entity.Position;
-
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
-public class StoreInPositionController {
+public class StoreInPositionController implements Initializable {
     @FXML
     private ChoiceBox<String> position;
-
     @FXML
     private TextField note;
 
-    // algoritmus nájde najvhodnejšiu pozíciu na uskladnenie
-    public Position findFreePosition(){
-        return null;
-    }
+    StoreInProduct storeInProduct;
 
-    // nájde všetky voľné pozície vhodné na uskladnenie palety
-    public Position[] findAllFreePositions(){
-        return null;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        storeInProduct = new StoreInProduct();
+        List<String> positions = storeInProduct.getFreePositionsNames();
+        position.setItems(FXCollections.observableArrayList(positions));
+        position.setValue(positions.get(0));
+        Warehouse.getInstance().addController("storeInPosition", this);
     }
-
-    // setne pozíciu, poznámku, dátum
-    // zaskladní paletu (pridá záznam do databázy)
-    // presunie na main menu
     public void storeInProduct() throws IOException {
+        storeInProduct.storeInProduct();
         Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
-
-    // vykoná storeInProduct a pokračuje v zaskladňovaní
-    // vynuluje doteraz zadané informácie okrem informácií z prvého formuláru (customerTockaForm)
-    // nezabudnúť na vynulovanie taktiež materialCount
     public void continueStoringIn() throws IOException{
         storeInProduct();
         Warehouse.getInstance().changeScene("StoreInProduct/palletInformationForm.fxml");
+    }
+
+    public String getPosition() {
+        return position.getValue();
+    }
+
+    public String getNote() {
+        return note.getText();
     }
 }

@@ -30,6 +30,8 @@ public class Pallet {
     @Column(name = "note")
     private String note;
 
+    public Pallet() {}
+
     public String getPnr() {
         return pnr;
     }
