@@ -19,6 +19,13 @@ class LoadPositionsTest {
     }
 
     @Test
+    void uploadTestDate() throws FileNotFound, WrongStringFormat {
+        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
+        System.out.println(load.addPositions());
+        assertTrue(load.saveToDB());
+    }
+
+    @Test
     void checkNameWrongFirstLetter() throws  FileNotFound {
         LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         assertFalse(load.checkName("G010A"));
