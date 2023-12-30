@@ -14,6 +14,8 @@
         <junit.version>5.9.1</junit.version>
     </properties>
 
+
+
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -65,8 +67,26 @@
             <version>1.2.1</version> <!-- Use the appropriate version -->
         </dependency>
 
+
         <dependency>
-            <groupId>org.slf4j</groupId>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.5</version> <!-- Use the latest version -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.5</version> <!-- Use the latest version -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.25.0</version> <!-- Use the latest version -->
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.slf4j</groupId>  <!-- Táto dependency a ďalšia spôsobujú to aby hibernate nelogoval v konzole -->
             <artifactId>slf4j-api</artifactId>
             <version>1.7.32</version>
         </dependency>

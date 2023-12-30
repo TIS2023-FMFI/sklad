@@ -15,11 +15,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Currency;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class StatisticMainPageContoller implements Initializable {
+public class StatisticMainPageController implements Initializable {
     @FXML
     public Label invoicingLabel;
     @FXML
@@ -64,9 +63,7 @@ public class StatisticMainPageContoller implements Initializable {
     }
 
     public void showInventoryCheck() throws IOException {
-        if (checkInputs()) {
-            Warehouse.getInstance().changeScene("Statistics/inventoryCheckForm.fxml");
-        }
+        Warehouse.getInstance().changeScene("Statistics/inventoryListForm.fxml");
     }
 
     /***

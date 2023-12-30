@@ -4,12 +4,20 @@ import Entity.Customer;
 import Entity.Material;
 import Entity.Pallet;
 import Entity.Position;
+import Exceptions.FileNotFound;
 import Exceptions.MaterialNotAvailable;
+import javafx.collections.ObservableList;
 import javafx.util.Pair;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
+
 
 public class OrderProduct {
     public OrderProduct() {}
@@ -47,8 +55,8 @@ public class OrderProduct {
      * @throws MaterialNotAvailable Exception that is thrown when the customer doesn't have enough material stored in
      * the warehouse.
      */
-    public List<Map<String, Object>> setOrderTable(Customer customer, List<Pair<Material, Integer>> products) throws MaterialNotAvailable {
-        List<Map<String,Object>> res = new ArrayList<>();
+    public List<Map<String, String>> setOrderTable(Customer customer, List<Pair<Material, Integer>> products) throws MaterialNotAvailable {
+        List<Map<String,String>> res = new ArrayList<>();
         Map<String, List<Position>> data = Warehouse.getInstance().getWarehouseData();
         var dbh = Warehouse.getInstance().getDatabaseHandler();
         List<Position> customersPositions = dbh.getPositionsReservedByCustomer(customer.getName());
@@ -62,18 +70,18 @@ public class OrderProduct {
                     int num = dbh.getMaterialQuantityOnPallet(pal, mat);
                     if (num >= quantity) {
                         enough = true;
-                        Map<String, Object> row = Map.of(
+                        Map<String, String> row = Map.of(
                                 "Materiál", mat.getName(),
-                                "Počet", quantity,
+                                "Počet", String.valueOf(quantity),
                                 "Pozícia", position.getName(),
                                 "PNR", pal.getPnr()
                         );
                         res.add(row);
                         break;
                     }else if (num > 0) {
-                        Map<String, Object> row = Map.of(
+                        Map<String, String> row = Map.of(
                                 "Materiál", mat.getName(),
-                                "Počet", num,
+                                "Počet", String.valueOf(num),
                                 "Pozícia", position.getName(),
                                 "PNR", pal.getPnr()
                         );
@@ -91,4 +99,6 @@ public class OrderProduct {
         }
         return res;
     }
+
+
 }

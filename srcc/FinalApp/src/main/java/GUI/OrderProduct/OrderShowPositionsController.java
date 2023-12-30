@@ -3,6 +3,7 @@ package GUI.OrderProduct;
 import Entity.Customer;
 import Entity.Material;
 import Exceptions.MaterialNotAvailable;
+import app.FileExporter;
 import app.OrderProduct;
 import app.Warehouse;
 import javafx.collections.FXCollections;
@@ -15,12 +16,12 @@ import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class OrderShowPositionsController implements Initializable {
     public TableView orderTable;
+
+    private ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,7 +45,7 @@ public class OrderShowPositionsController implements Initializable {
         List<Pair<Material,Integer>> products = cont.materials;
         Customer customer = cont.customer;
         OrderProduct op = new OrderProduct();
-        ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();
+
         try {
             items.addAll(op.setOrderTable(customer, products));
         } catch (MaterialNotAvailable e) {
@@ -66,6 +67,13 @@ public class OrderShowPositionsController implements Initializable {
         Warehouse.getInstance().changeScene("OrderProduct/orderCustomerSelectionForm.fxml");
     }
     public void saveOrderAndContinue() throws IOException {
+        FileExporter fe = new FileExporter();
+        List<String> columns = new ArrayList<>();
+        columns.add("Materiál");
+        columns.add("Počet");
+        columns.add("Pozícia");
+        columns.add("PNR");
+        fe.exportExcel(items, "Order", "Objednávka", columns);
 
         //export a vymazanie z databazy
 

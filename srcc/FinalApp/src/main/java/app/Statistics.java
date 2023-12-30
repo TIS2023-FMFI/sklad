@@ -45,8 +45,8 @@ public class Statistics {
      * This method takes data from database and fills in the table used for inventory check.
      * @return List of maps with data.
      */
-    public List<Map<String, Object>> setInventoryTable(){
-        List<Map<String,Object>> res = new ArrayList<>();
+    public List<Map<String, String>> setInventoryTable(){
+        List<Map<String,String>> res = new ArrayList<>();
         var data = Warehouse.getInstance().getWarehouseData();
         var dbh = Warehouse.getInstance().getDatabaseHandler();
         for (List<Position> entry : data.values()) {
@@ -61,7 +61,7 @@ public class Statistics {
                                 "PNR", pallet.getPnr(),
                                 "Pozícia", position.getName(),
                                 "Materiál", m.getName(),
-                                "Počet", record.getQuantity()
+                                "Počet", String.valueOf(record.getQuantity())
                         ));
                     }
                 }
