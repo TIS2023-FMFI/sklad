@@ -23,11 +23,11 @@ import java.util.Map;
 public class DatabaseHandler {
 
     private static SessionFactory sessionFactory;
-    public DatabaseHandler() throws Exception {
+    public DatabaseHandler(){
         setUpSessionFactory();
     }
 
-    private void setUpSessionFactory() throws Exception {
+    private void setUpSessionFactory(){
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
@@ -40,7 +40,14 @@ public class DatabaseHandler {
         }
     }
 
-    public static void saveToDB() {
+    /***
+     * A destructor that closes session factory after exiting application.
+     */
+    @Override
+    protected void finalize(){
+        if ( sessionFactory != null ) {
+            sessionFactory.close();
+        }
     }
 
     public static void savePositionsToDB(List<Position> positions) {
@@ -51,11 +58,7 @@ public class DatabaseHandler {
         }
         catch (Exception e) {
             e.printStackTrace();
-//            return null;
         }
-    }
-
-    public static void removeFromDB() {
     }
 
     /***
@@ -189,16 +192,6 @@ public class DatabaseHandler {
         catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    /***
-     * A destructor that closes session factory after exiting application.
-     */
-    @Override
-    protected void finalize(){
-        if ( sessionFactory != null ) {
-            sessionFactory.close();
         }
     }
 
@@ -381,6 +374,7 @@ public class DatabaseHandler {
      */
     public void savePalletToDB(String PNR, Integer weight, Date date, boolean damaged, Integer userId, String palletType, String note){
         try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
             Pallet pallet = new Pallet();
             pallet.setPnr(PNR);
             pallet.setWeight(weight);
@@ -390,8 +384,7 @@ public class DatabaseHandler {
             pallet.setType(palletType);
             pallet.setNote(note);
 
-            session.beginTransaction();
-            session.persist(pallet);
+            session.save(pallet);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
