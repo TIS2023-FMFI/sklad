@@ -6,7 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Statistics.StatisticMainPageContoller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Statistics.StatisticMainPageContoller">
    <children>
       <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
       <Label layoutX="82.0" layoutY="92.0" prefHeight="18.0" prefWidth="112.0" text="Dátum od (vrátane):" />
@@ -17,7 +17,7 @@
       <Button layoutX="257.0" layoutY="222.0" mnemonicParsing="false" onAction="#showGraph" text="Zobraziť graf" />
       <Button layoutX="266.0" layoutY="263.0" mnemonicParsing="false" onAction="#showInventoryCheck" text="Inventúra" />
       <Button layoutX="264.0" layoutY="329.0" mnemonicParsing="false" onAction="#askForPriceForInvoicing" prefHeight="0.0" prefWidth="70.0" text="Fakturácia" />
-      <ChoiceBox fx:id="customers" layoutX="224.0" layoutY="178.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="customer" layoutX="224.0" layoutY="178.0" prefWidth="150.0" />
       <Label fx:id="invoicingLabel" alignment="CENTER" layoutX="106.0" layoutY="303.0" prefHeight="18.0" prefWidth="388.0" textFill="RED" />
    </children>
 </AnchorPane>

@@ -2,18 +2,14 @@ package GUI.Statistics;
 
 import app.Statistics;
 import app.Warehouse;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,7 +27,7 @@ public class GraphController implements Initializable {
         StatisticMainPageContoller input = (StatisticMainPageContoller) Warehouse.getInstance().getController("statisticsMainPage");
         Date dateFrom = input.dateFromValue;
         Date dateTo = input.dateToValue;
-        String customer = input.customers.getValue();
+        String customer = input.customer.getValue();
 
         Statistics statistics = new Statistics();
 

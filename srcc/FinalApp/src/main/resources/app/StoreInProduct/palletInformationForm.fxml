@@ -8,29 +8,43 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="446.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.PalletInformationController">
-   <children>
-      <Button layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#backToCustomerTockaForm" text="Naspäť" />
-      <Button layoutX="321.0" layoutY="356.0" mnemonicParsing="false" onAction="#nextToPositionForm" text="Nájsť pozíciu" />
-      <Label layoutX="35.0" layoutY="121.0" text="PNR:" />
-      <TextField fx:id="PNR" layoutX="78.0" layoutY="117.0" prefHeight="25.0" prefWidth="86.0" />
-      <Label layoutX="26.0" layoutY="159.0" text="Nadrozmernosť:" />
-      <Label layoutX="33.0" layoutY="204.0" text="Poškodenosť:" />
-      <Label layoutX="34.0" layoutY="268.0" text="Hmotnosť:" />
-      <Label layoutX="235.0" layoutY="268.0" text="Typ palety:" />
-      <CheckBox fx:id="oversizedInHeight" layoutX="55.0" layoutY="179.0" mnemonicParsing="false" text="Paleta vyžaduje vysokú pozíciu" />
-      <CheckBox fx:id="damaged" layoutX="55.0" layoutY="231.0" mnemonicParsing="false" text="Paleta alebo tovar je poškodený" />
-      <ChoiceBox fx:id="palletType" layoutX="246.0" layoutY="295.0" prefWidth="150.0" />
-      <RadioButton fx:id="lessThan5OOkg" layoutX="48.0" layoutY="291.0" mnemonicParsing="false" text="&lt; 500kg">
-         <toggleGroup>
-            <ToggleGroup fx:id="weight" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="moreThan500lessThan1000" layoutX="48.0" layoutY="312.0" mnemonicParsing="false" text="&gt; 500kg a  &lt; 1000kg" toggleGroup="$weight" />
-      <RadioButton fx:id="moreThan1000lessThan1200" layoutX="48.0" layoutY="335.0" mnemonicParsing="false" text="&gt; 1000 kg a &lt; 1200kg" toggleGroup="$weight" />
-      <RadioButton fx:id="moreThan1200" layoutX="48.0" layoutY="359.0" mnemonicParsing="false" text="&gt; 1200kg" toggleGroup="$weight" />
-      <Button layoutX="181.0" layoutY="92.0" mnemonicParsing="false" onAction="#addMaterial" text="Pridať materiál" />
-      <VBox layoutX="20.0" layoutY="53.0" prefHeight="39.0" prefWidth="431.0" />
-   </children>
-</AnchorPane>
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.PalletInformationController">
+   <bottom>
+      <AnchorPane fx:id="informationContainer" prefHeight="400.0" prefWidth="586.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="28.0" layoutY="49.0" text="PNR:" />
+            <Button fx:id="addMaterialButton" layoutX="229.0" layoutY="2.0" mnemonicParsing="false" onAction="#addMaterial" text="Pridať materiál" />
+            <TextField fx:id="PNR" layoutX="74.0" layoutY="45.0" prefHeight="25.0" prefWidth="73.0" />
+            <Label layoutX="27.0" layoutY="96.0" prefHeight="17.0" prefWidth="78.0" text="Poškodenosť:" />
+            <CheckBox fx:id="isDamaged" layoutX="52.0" layoutY="125.0" mnemonicParsing="false" text="Paleta alebo tovar je poškodený" />
+            <Label layoutX="28.0" layoutY="228.0" text="Hmotnosť:" />
+            <RadioButton layoutX="54.0" layoutY="253.0" mnemonicParsing="false" text="&lt;500kg">
+               <toggleGroup>
+                  <ToggleGroup fx:id="weight" />
+               </toggleGroup></RadioButton>
+            <RadioButton layoutX="54.0" layoutY="277.0" mnemonicParsing="false" text="&gt;500kg a &lt;1000kg" toggleGroup="$weight" />
+            <RadioButton layoutX="54.0" layoutY="303.0" mnemonicParsing="false" text="&gt;1000kg a &lt;1200kg" toggleGroup="$weight" />
+            <RadioButton layoutX="54.0" layoutY="326.0" mnemonicParsing="false" text="&gt;1200kg" toggleGroup="$weight" />
+            <Label layoutX="275.0" layoutY="228.0" text="Typ palety:" />
+            <ChoiceBox fx:id="palletType" layoutX="275.0" layoutY="258.0" prefWidth="150.0" />
+            <Button layoutX="425.0" layoutY="331.0" mnemonicParsing="false" onAction="#nextToPositionForm" text="Nájsť pozíciu" />
+            <Label layoutX="23.0" layoutY="159.0" text="Nadrozmernosť:" />
+            <CheckBox fx:id="isTall" layoutX="52.0" layoutY="183.0" mnemonicParsing="false" text="Paleta vyžaduje vysokú pozíciu" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <top>
+      <AnchorPane fx:id="topContainer" prefHeight="70.0" prefWidth="550.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="22.0" layoutY="22.0" mnemonicParsing="false" onAction="#backToCustomerTockaForm" text="Naspäť" />
+            <Label fx:id="errorMessage" alignment="CENTER" layoutX="108.0" layoutY="27.0" prefHeight="17.0" prefWidth="397.0" textAlignment="CENTER" textFill="#ff0707" />
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <VBox fx:id="materialContainer" prefHeight="80.0" prefWidth="550.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
