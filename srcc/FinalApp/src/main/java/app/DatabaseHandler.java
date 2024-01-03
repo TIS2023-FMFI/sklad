@@ -9,16 +9,14 @@ import javafx.collections.ObservableList;
 import javafx.util.Pair;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DatabaseHandler {
 
@@ -50,14 +48,38 @@ public class DatabaseHandler {
         }
     }
 
-    public static void savePositionsToDB(List<Position> positions) {
+    public boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
-            for (Position p : positions) {
-                session.persist(p);
+            int counter = 0;
+            List <Position> newPositions = new ArrayList<>();
+            List <Position> updatePositions = new ArrayList<>();
+
+            for(Position p : positions){
+                if(session.get(Position.class, p.getName()) != null){
+                    updatePositions.add(p);
+                }
+                else {
+                    newPositions.add(p);
+                }
             }
-        }
-        catch (Exception e) {
+
+            Transaction transaction = session.beginTransaction();
+
+            for (Position p : newPositions) {
+                System.out.println(p.getName());
+                counter++;
+                Position pos = new Position(p.getName(), p.isTall());
+                session.save(pos);
+
+            }
+            transaction.commit();
+
+            System.out.println("Do databazy bolo pridanych " + counter + " udajov");
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
+
+            return false;
         }
     }
 

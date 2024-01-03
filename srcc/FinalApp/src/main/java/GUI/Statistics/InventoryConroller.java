@@ -1,6 +1,7 @@
 package GUI.Statistics;
 
 import Entity.StoredOnPallet;
+import app.FileExporter;
 import app.Statistics;
 import app.Warehouse;
 import javafx.collections.FXCollections;
@@ -13,6 +14,9 @@ import javafx.scene.control.cell.MapValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -20,6 +24,8 @@ public class InventoryConroller implements Initializable {
 
     @FXML
     public TableView inventoryTable;
+
+    private ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
 
     /***
      * This method is called when the page is opened. It fills the table with data.
@@ -30,6 +36,9 @@ public class InventoryConroller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Statistics statistics = new Statistics();
 
+        TableColumn<Map, String> positionColumn = new TableColumn<>("Pozícia");
+        positionColumn.setCellValueFactory(new MapValueFactory<>("Pozícia"));
+
         TableColumn<Map, String> PNRColumn = new TableColumn<>("PNR");
         PNRColumn.setCellValueFactory(new MapValueFactory<>("PNR"));
 
@@ -39,19 +48,22 @@ public class InventoryConroller implements Initializable {
         TableColumn<Map, String> quantityColumn = new TableColumn<>("Počet");
         quantityColumn.setCellValueFactory(new MapValueFactory<>("Počet"));
 
-        TableColumn<Map, String> positionColumn = new TableColumn<>("Pozícia");
-        positionColumn.setCellValueFactory(new MapValueFactory<>("Pozícia"));
+        inventoryTable.getColumns().addAll(positionColumn, PNRColumn, materialColumn, quantityColumn);
 
-        inventoryTable.getColumns().addAll(PNRColumn, materialColumn, quantityColumn, positionColumn);
-
-        ObservableList<Map<String, Object>> items =
-                FXCollections.<Map<String, Object>>observableArrayList();
         items.addAll(statistics.setInventoryTable());
 
         inventoryTable.getItems().addAll(items);
     }
 
     public void saveInventoryList(){
+        FileExporter fileExporter = new FileExporter();
+        List<String> columns = new ArrayList<>();
+        columns.add("Pozícia");
+        columns.add("PNR");
+        columns.add("Materiál");
+        columns.add("Počet");
+        fileExporter.exportExcel(items, "Inventory", "Inventúra " + LocalDate.now(), columns);
+
     }
 
     public void backToStatistics() throws IOException {

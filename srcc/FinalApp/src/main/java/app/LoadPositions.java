@@ -33,6 +33,7 @@ public class LoadPositions {
                 }
                 line = reader.readLine();
             }
+
         }
         catch (IOException e){
             throw new FileNotFound(fileName);
@@ -67,6 +68,16 @@ public class LoadPositions {
         return addedPosition;
     }
 
+    protected boolean saveToDB(){
+        DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
+        if(databaseHandler.savePositionsToDB(finalPositions)){
+            return true;
+        }
+        System.out.println("CHYBA PRI UPLOADOVANI UDAJOV");
+        return false;
+    }
+
+
     protected boolean savePosition(String name, boolean isTall) {
         if(!checkName(name)){
             return false;
@@ -96,4 +107,5 @@ public class LoadPositions {
         }
         return true;
     }
+    
 }

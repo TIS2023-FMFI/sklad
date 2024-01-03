@@ -30,12 +30,12 @@ public class Position {
         this.name = name;
     }
 
-    public boolean isHigh() {
+    public boolean isTall() {
         return isTall;
     }
 
-    public void setHigh(boolean high) {
-        isTall = high;
+    public void setTall(boolean tall) {
+        isTall = tall;
     }
 
     @Override
@@ -44,6 +44,14 @@ public class Position {
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
         return isTall == position.isTall && Objects.equals(name, position.name);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "name='" + name + '\'' +
+                ", isTall=" + isTall +
+                '}';
     }
 
     @Override

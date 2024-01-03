@@ -4,8 +4,11 @@ module app.finalapp {
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
     requires java.naming;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
     opens Entity;
     opens GUI;
+    opens app;
 
 
     exports app;
@@ -17,5 +20,4 @@ module app.finalapp {
     opens GUI.StoreInProduct;
     opens GUI.Statistics;
     opens GUI.RelocateProduct;
-    opens app;
 }
