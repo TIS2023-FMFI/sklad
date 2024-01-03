@@ -6,9 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="aab55bb6-8901-4e6d-8626-8b4c8669833b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loadPositionExample.txt" beforeDir="false" afterPath="$PROJECT_DIR$/loadPositionExample.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Entity/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entity/Position.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/DatabaseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/LoadPositions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/LoadPositions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Warehouse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/app/LoadPositionsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/app/LoadPositionsTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,7 +83,7 @@
       <recent name="app" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LoadPositions">
+  <component name="RunManager" selected="Application.Warehouse">
     <configuration name="LoadPositions" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="app.LoadPositions" />
       <module name="FinalApp" />
@@ -158,9 +159,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoadPositions" />
-        <item itemvalue="JUnit.LoadPositionsTest.uploadTestDate" />
         <item itemvalue="Application.Warehouse" />
+        <item itemvalue="JUnit.LoadPositionsTest.uploadTestDate" />
+        <item itemvalue="Application.LoadPositions" />
         <item itemvalue="JUnit.LoadPositionsTest" />
         <item itemvalue="JUnit.LoadPositionsTest.savePosition_validName_returnTrue" />
       </list>
@@ -212,16 +213,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/DatabaseHandler.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

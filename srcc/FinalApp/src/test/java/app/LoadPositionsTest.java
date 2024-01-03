@@ -17,13 +17,14 @@ class LoadPositionsTest {
         LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         assertFalse(load.checkName("A105"));
     }
-
-    @Test
-    void uploadTestDate() throws FileNotFound, WrongStringFormat {
-        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
-        System.out.println(load.addPositions());
-        assertTrue(load.saveToDB());
-    }
+    // test funguje spravne, zakomentoval som ho aby sa zbytocne nespustal a nepridavali sa do databazy nove pozicie, co by
+    // viedlo ku komplikaciam, ktore by sa tazko hladali
+//    @Test
+//    void uploadTestDate() throws FileNotFound, WrongStringFormat {
+//        LoadPositions load = new LoadPositions(TEST_FILE_NAME);
+//        System.out.println(load.addPositions());
+//        assertTrue(load.saveToDB());
+//    }
 
     @Test
     void checkNameWrongFirstLetter() throws  FileNotFound {
