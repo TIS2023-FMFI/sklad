@@ -41,7 +41,6 @@ public class StoreInProduct {
                 java.sql.Date.valueOf(LocalDate.now()), palletInformationController.getIsDamaged(), Warehouse.getInstance().getCurrentUser().getId(),
                 palletInformationController.getPalletType(), storeInPositionController.getNote());
 
-        /*
         // stores material to table material and also material and its count to table stored_on_pallet
         Map<String, Integer> materials = palletInformationController.getMaterialMap();
         for (String material : materials.keySet()){
@@ -54,6 +53,5 @@ public class StoreInProduct {
         for (String position : positions){
             databaseHandler.savePalletOnPositionToDB(palletInformationController.getPNR(), position);
         }
-         */
     }
 }

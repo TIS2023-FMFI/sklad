@@ -66,9 +66,6 @@ public class LoadPositions {
         }
         return addedPosition;
     }
-    protected boolean saveToDB(){
-        return false;
-    }
 
     protected boolean savePosition(String name, boolean isTall) {
         if(!checkName(name)){
