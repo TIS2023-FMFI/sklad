@@ -16,18 +16,18 @@
       <AnchorPane fx:id="informationContainer" prefHeight="400.0" prefWidth="586.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="28.0" layoutY="49.0" text="PNR:" />
-            <Button fx:id="addMaterialButton" layoutX="229.0" layoutY="2.0" mnemonicParsing="false" onAction="#addMaterial" text="Pridať materiál" />
+            <Button fx:id="addMaterialButton" layoutX="227.0" layoutY="4.0" mnemonicParsing="false" onAction="#addMaterial" text="Pridať materiál" />
             <TextField fx:id="PNR" layoutX="74.0" layoutY="45.0" prefHeight="25.0" prefWidth="73.0" />
             <Label layoutX="27.0" layoutY="96.0" prefHeight="17.0" prefWidth="78.0" text="Poškodenosť:" />
             <CheckBox fx:id="isDamaged" layoutX="52.0" layoutY="125.0" mnemonicParsing="false" text="Paleta alebo tovar je poškodený" />
             <Label layoutX="28.0" layoutY="228.0" text="Hmotnosť:" />
-            <RadioButton layoutX="54.0" layoutY="253.0" mnemonicParsing="false" text="&lt;500kg">
+            <RadioButton fx:id="first" layoutX="54.0" layoutY="253.0" mnemonicParsing="false" text="&lt;500kg">
                <toggleGroup>
                   <ToggleGroup fx:id="weight" />
                </toggleGroup></RadioButton>
-            <RadioButton layoutX="54.0" layoutY="277.0" mnemonicParsing="false" text="&gt;500kg a &lt;1000kg" toggleGroup="$weight" />
-            <RadioButton layoutX="54.0" layoutY="303.0" mnemonicParsing="false" text="&gt;1000kg a &lt;1200kg" toggleGroup="$weight" />
-            <RadioButton layoutX="54.0" layoutY="326.0" mnemonicParsing="false" text="&gt;1200kg" toggleGroup="$weight" />
+            <RadioButton fx:id="second" layoutX="54.0" layoutY="277.0" mnemonicParsing="false" text="&gt;500kg a &lt;1000kg" toggleGroup="$weight" />
+            <RadioButton fx:id="third" layoutX="54.0" layoutY="303.0" mnemonicParsing="false" text="&gt;1000kg a &lt;1200kg" toggleGroup="$weight" />
+            <RadioButton fx:id="fourth" layoutX="54.0" layoutY="326.0" mnemonicParsing="false" text="&gt;1200kg" toggleGroup="$weight" />
             <Label layoutX="275.0" layoutY="228.0" text="Typ palety:" />
             <ChoiceBox fx:id="palletType" layoutX="275.0" layoutY="258.0" prefWidth="150.0" />
             <Button layoutX="425.0" layoutY="331.0" mnemonicParsing="false" onAction="#nextToPositionForm" text="Nájsť pozíciu" />
@@ -39,7 +39,7 @@
    <top>
       <AnchorPane fx:id="topContainer" prefHeight="70.0" prefWidth="550.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="22.0" layoutY="22.0" mnemonicParsing="false" onAction="#backToCustomerTockaForm" text="Naspäť" />
+            <Button layoutX="22.0" layoutY="22.0" mnemonicParsing="false" onAction="#backToCustomerTruckNumberForm" text="Naspäť" />
             <Label fx:id="errorMessage" alignment="CENTER" layoutX="108.0" layoutY="27.0" prefHeight="17.0" prefWidth="397.0" textAlignment="CENTER" textFill="#ff0707" />
          </children>
       </AnchorPane>

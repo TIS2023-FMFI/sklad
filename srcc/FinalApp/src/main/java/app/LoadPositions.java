@@ -67,6 +67,7 @@ public class LoadPositions {
         }
         return addedPosition;
     }
+
     protected boolean saveToDB(){
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
         if(databaseHandler.savePositionsToDB(finalPositions)){
@@ -75,6 +76,7 @@ public class LoadPositions {
         System.out.println("CHYBA PRI UPLOADOVANI UDAJOV");
         return false;
     }
+
 
     protected boolean savePosition(String name, boolean isTall) {
         if(!checkName(name)){

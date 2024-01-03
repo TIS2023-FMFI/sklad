@@ -60,6 +60,7 @@ public class Warehouse extends Application {
         primarystage.setTitle("Skladovací systém");
         primarystage.setScene(new Scene(root, 400, 300));
         primarystage.show();
+
     }
 
     /***

@@ -15,6 +15,7 @@ public class CustomerTruckNumberController implements Initializable {
     private ChoiceBox<String> customer;
     @FXML
     private Spinner<Integer> truckNumber;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
@@ -34,5 +35,13 @@ public class CustomerTruckNumberController implements Initializable {
 
     public void backToMenu() throws IOException {
         Warehouse.getInstance().changeScene("mainMenu.fxml");
+    }
+
+    public String getCustomer() {
+        return customer.getValue();
+    }
+
+    public Integer getTruckNumber() {
+        return truckNumber.getValue();
     }
 }

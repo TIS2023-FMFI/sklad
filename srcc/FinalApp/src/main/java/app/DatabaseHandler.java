@@ -21,11 +21,11 @@ import java.util.*;
 public class DatabaseHandler {
 
     private static SessionFactory sessionFactory;
-    public DatabaseHandler() throws Exception {
+    public DatabaseHandler(){
         setUpSessionFactory();
     }
 
-    private void setUpSessionFactory() throws Exception {
+    private void setUpSessionFactory(){
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
@@ -38,7 +38,14 @@ public class DatabaseHandler {
         }
     }
 
-    public static void saveToDB() {
+    /***
+     * A destructor that closes session factory after exiting application.
+     */
+    @Override
+    protected void finalize(){
+        if ( sessionFactory != null ) {
+            sessionFactory.close();
+        }
     }
 
     public boolean savePositionsToDB(List<Position> positions) {
@@ -71,11 +78,9 @@ public class DatabaseHandler {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+
             return false;
         }
-    }
-
-    public static void removeFromDB() {
     }
 
     /***
@@ -213,21 +218,17 @@ public class DatabaseHandler {
     }
 
     /***
-     * A destructor that closes session factory after exiting application.
+     * Method, that returns a material record based on the material name.
+     * @param materialName The name of the material.
+     * @throws MaterialNotAvailable if the material is not found in the database.
+     * @return The material record.
      */
-    @Override
-    protected void finalize(){
-        if ( sessionFactory != null ) {
-            sessionFactory.close();
-        }
-    }
-
-    public Material getMaterial(String text) throws MaterialNotAvailable{
+    public Material getMaterial(String materialName) throws MaterialNotAvailable{
         try (Session session = sessionFactory.openSession()) {
             Query<Material> query = session.createQuery("from Material m where m.name = :name");
-            query.setParameter("name", text);
+            query.setParameter("name", materialName);
             if (query.list().size() == 0) {
-                throw new MaterialNotAvailable(text);
+                throw new MaterialNotAvailable(materialName);
             }
             return query.uniqueResult();
         }
@@ -370,6 +371,100 @@ public class DatabaseHandler {
                 res += sop.getQuantity();
             }
             return res;
+        }
+    }
+
+    // zatial vyberie iba všetky pozície treba dorobiť
+    // algoritmus bude brať do úvahy položky z formulárov:
+    //     či paleta vyžaduje vysokú pozíciu
+    //     koľko pozícií vyžaduje paleta - ak viacero vypísané možnosti budú n-tice oddelené '-'
+    public List<Position> getFreePositions() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Position p").list();
+        }
+    }
+
+    /***
+     * Method, that saves pallet information to the database.
+     * @param PNR The unique pallet number.
+     * @param weight The weight of the pallet.
+     * @param date The date when the pallet information is recorded.
+     * @param damaged Indicates whether the pallet or the product on it is damaged.
+     * @param userId The current user.
+     * @param palletType The type of pallet.
+     * @param note Additional note related to the pallet.
+     */
+    public void savePalletToDB(String PNR, Integer weight, Date date, boolean damaged, Integer userId, String palletType, String note){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Pallet pallet = new Pallet();
+            pallet.setPnr(PNR);
+            pallet.setWeight(weight);
+            pallet.setDateIncome(date);
+            pallet.setDamaged(damaged);
+            pallet.setIdUser(userId);
+            pallet.setType(palletType);
+            pallet.setNote(note);
+
+            session.save(pallet);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /***
+     * Method, that saves a record of a pallet on a specific position to the database.
+     * @param palletId The unique identifier for the pallet (PNR).
+     * @param positionId The unique identifier for the position (position name).
+     */
+    public void savePalletOnPositionToDB(String palletId, String positionId){
+        try (Session session = sessionFactory.openSession()) {
+            PalletOnPosition palletOnPosition = new PalletOnPosition();
+            palletOnPosition.setIdPallet(palletId);
+            palletOnPosition.setIdPosition(positionId);
+
+            session.beginTransaction();
+            session.persist(palletOnPosition);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /***
+     * Method, that saves a record of a pallet on a specific position to the database.
+     * @param materialName The name of the material.
+     */
+    public void saveMaterialToDB(String materialName){
+        try (Session session = sessionFactory.openSession()) {
+            try {
+                Material material = getMaterial(materialName);
+            } catch (MaterialNotAvailable e) {
+                Material material = new Material();
+                material.setName(materialName);
+
+                session.beginTransaction();
+                session.persist(material);
+                session.getTransaction().commit();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveMaterialAndCountToDB(String PRN, String materialName, Integer materialCount) {
+        try (Session session = sessionFactory.openSession()) {
+            StoredOnPallet materialAndCount = new StoredOnPallet();
+            materialAndCount.setPnr(PRN);
+            materialAndCount.setIdProduct(getMaterial(materialName).getId());
+            materialAndCount.setQuantity(materialCount);
+
+            session.beginTransaction();
+            session.persist(materialAndCount);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

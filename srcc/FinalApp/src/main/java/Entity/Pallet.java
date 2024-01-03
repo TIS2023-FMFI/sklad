@@ -7,7 +7,6 @@ import java.util.Objects;
 
 @Entity
 public class Pallet {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "pnr")
     private String pnr;
@@ -29,6 +28,8 @@ public class Pallet {
     @Basic
     @Column(name = "note")
     private String note;
+
+    public Pallet() {}
 
     public String getPnr() {
         return pnr;
