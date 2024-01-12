@@ -39,20 +39,59 @@ public class PalletInformationController implements Initializable {
     private ChoiceBox<String> palletType;
     private final String[] palletTypeOptions = {"Europaleta", "Americká paleta", "GitterBox"};
 
-    private Map<String, Integer> materialMap = new LinkedHashMap<>();
+    private final Map<String, Integer> materialMap = new LinkedHashMap<>();
 
     private static final int PAIR_HEIGHT = 25;
 
     private static final int MAX_PAIRS = 6;
-    private int currentPairCount = 0;
-    private boolean isCountValid = true;
+    private int currentPairCount;
+    private boolean isCountValid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        palletType.getItems().addAll(palletTypeOptions);
-        palletType.setValue("Europaleta");
+        PalletInformationDataSet dataSet = Warehouse.getInstance().getStoreInInstance().getPalletInformationDataSet();
+
+        currentPairCount = 0;
+        isCountValid = true;
+
+        if (dataSet == null){
+            palletType.getItems().addAll(palletTypeOptions);
+            palletType.setValue("Europaleta");
+            addMaterial();
+        }
+        else {
+            setupValuesFromDataSet(dataSet);
+        }
+
+        Warehouse.getStage().setMinWidth(550);
+        Warehouse.getStage().setMinHeight(550);
+
         Warehouse.getInstance().addController("palletInformation", this);
-        addMaterial();
+    }
+
+    public void setupValuesFromDataSet(PalletInformationDataSet dataSet){
+        PNR.setText(dataSet.PNR());
+        isDamaged.setSelected(dataSet.isDamaged());
+        isTall.setSelected(dataSet.isTall());
+        materialMap.clear();
+        materialMap.putAll(dataSet.materialMap());
+        palletType.setValue(dataSet.palletType());
+
+        setWeight(dataSet.weight());
+        materialContainer.getChildren().clear();
+        setUpMaterialContainer(dataSet.materialMap());
+    }
+
+    public void setUpMaterialContainer(Map<String, Integer> materialMap){
+        for (String name : materialMap.keySet()){
+            HBox materialPair = createMaterialPair();
+            ((TextField) materialPair.getChildren().get(1)).setText(name);
+            ((TextField) materialPair.getChildren().get(3)).setText(String.valueOf(materialMap.get(name)));
+            materialContainer.getChildren().add(materialPair);
+            currentPairCount++;
+            updateContainerHeights();
+        }
+        checkMaterialPairCount();
     }
 
     public void addMaterial() {
@@ -63,13 +102,17 @@ public class PalletInformationController implements Initializable {
 
                 materialContainer.getChildren().add(createMaterialPair());
                 updateContainerHeights();
-                if (currentPairCount == MAX_PAIRS) {
-                    addMaterialButton.setDisable(true);
-                }
+                checkMaterialPairCount();
             }
             else {
                 errorMessage.setText("Nevyplnili ste materiál a jeho počet");
             }
+        }
+    }
+
+    private void checkMaterialPairCount(){
+        if (currentPairCount == MAX_PAIRS) {
+            addMaterialButton.setDisable(true);
         }
     }
 
@@ -158,10 +201,13 @@ public class PalletInformationController implements Initializable {
         double newHeight = topContainer.getPrefHeight() + materialContainer.getPrefHeight() + informationContainer.getPrefHeight();
 
         borderPane.setPrefHeight(newHeight);
+        Warehouse.getStage().setMinHeight(newHeight);
         Warehouse.getStage().setHeight(newHeight);
     }
 
     public void backToCustomerTruckNumberForm()throws IOException{
+        Warehouse.getInstance().removeController("palletInformation");
+        Warehouse.getInstance().getStoreInInstance().removePalletInformationDataSet();
         Warehouse.getInstance().changeScene("StoreInProduct/customerTruckNumberForm.fxml");
     }
 
@@ -178,6 +224,9 @@ public class PalletInformationController implements Initializable {
         else if (weight.getSelectedToggle() == null){
             errorMessage.setText("Nezadali ste hmotnosť");
         }
+        else if (Warehouse.getInstance().getDatabaseHandler().PNRisUsed(PNR.getText())){
+            errorMessage.setText("Zadali ste PNR, ktoré sa už používa");
+        }
         else {
             try {
                 int PNRnumber = Integer.parseInt(PNR.getText());
@@ -185,6 +234,8 @@ public class PalletInformationController implements Initializable {
                     errorMessage.setText("PNR musí byť v rozmedzí 2000-3500");
                 }
                 else {
+                    Warehouse.getInstance().getStoreInInstance().initializePalletInformationDataSet(getPNR(),
+                            getIsDamaged(), getIsTall(), getMaterialMap(), getPalletType(), getWeight());
                     Warehouse.getInstance().changeScene("StoreInProduct/storeInPositionForm.fxml");
                 }
             }
@@ -198,12 +249,12 @@ public class PalletInformationController implements Initializable {
         return PNR.getText();
     }
 
-    public boolean getIsTall() {
-        return isTall.isSelected();
-    }
-
     public boolean getIsDamaged() {
         return isDamaged.isSelected();
+    }
+
+    public boolean getIsTall() {
+        return isTall.isSelected();
     }
 
     public Map<String, Integer> getMaterialMap() {
@@ -227,6 +278,18 @@ public class PalletInformationController implements Initializable {
             return 1000;
         }
         return 2000;
+    }
+
+    public void setWeight(Integer weightValue){
+        if (weightValue == 500) {
+            weight.getToggles().get(0).setSelected(true);
+        }
+        else if (weightValue == 1000) {
+            weight.getToggles().get(1).setSelected(true);
+        }
+        else {
+            weight.getToggles().get(2).setSelected(true);
+        }
     }
 }
 

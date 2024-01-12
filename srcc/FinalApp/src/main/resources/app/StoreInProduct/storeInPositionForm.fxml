@@ -6,13 +6,14 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="384.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.StoreInPositionController">
+<AnchorPane prefHeight="380.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.StoreInPositionController">
    <children>
-      <Label layoutX="37.0" layoutY="98.0" text="Zaskladniť na pozíciu:" />
-      <Label layoutX="37.0" layoutY="145.0" text="Poznámka:" />
-      <TextField fx:id="note" layoutX="37.0" layoutY="172.0" prefHeight="124.0" prefWidth="286.0" />
-      <ChoiceBox fx:id="position" layoutX="173.0" layoutY="94.0" prefWidth="150.0" />
+      <Label layoutX="47.0" layoutY="98.0" text="Zaskladniť na pozíciu:" />
+      <Label layoutX="47.0" layoutY="148.0" text="Poznámka:" />
+      <TextField fx:id="note" layoutX="47.0" layoutY="171.0" prefHeight="124.0" prefWidth="286.0" />
+      <ChoiceBox fx:id="position" layoutX="186.0" layoutY="94.0" prefWidth="150.0" />
       <Button layoutX="31.0" layoutY="312.0" mnemonicParsing="false" onAction="#storeInProduct" text="Ukončiť zaskladňovanie" />
       <Button layoutX="180.0" layoutY="312.0" mnemonicParsing="false" onAction="#continueStoringIn" text="Pokračovať v zaskladňovaní" />
+      <Button layoutX="31.0" layoutY="31.0" mnemonicParsing="false" onAction="#backToPalletInformationForm" text="Naspäť" />
    </children>
 </AnchorPane>

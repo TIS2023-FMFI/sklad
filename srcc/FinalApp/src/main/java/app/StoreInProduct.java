@@ -1,9 +1,7 @@
 package app;
 
 import Entity.Position;
-import GUI.StoreInProduct.CustomerTruckNumberController;
-import GUI.StoreInProduct.PalletInformationController;
-import GUI.StoreInProduct.StoreInPositionController;
+import GUI.StoreInProduct.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,8 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 public class StoreInProduct {
+    CustomerTruckNumberDataSet customerTruckNumberDataSet;
+    PalletInformationDataSet palletInformationDataSet;
+    HistoryRecord historyRecord;
 
-    public StoreInProduct() {}
+    public StoreInProduct() {
+        historyRecord = new HistoryRecord();
+    }
 
     /***
      * Method that finds all available positions that match the requirements from forms
@@ -32,7 +35,6 @@ public class StoreInProduct {
      */
     public void storeInProduct(){
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
-        CustomerTruckNumberController customerTruckNumberController = (CustomerTruckNumberController) Warehouse.getInstance().controllers.get("customerTruckNumber");
         PalletInformationController palletInformationController = (PalletInformationController) Warehouse.getInstance().controllers.get("palletInformation");
         StoreInPositionController storeInPositionController = (StoreInPositionController) Warehouse.getInstance().controllers.get("storeInPosition");
 
@@ -53,5 +55,41 @@ public class StoreInProduct {
         for (String position : positions){
             databaseHandler.savePalletOnPositionToDB(palletInformationController.getPNR(), position);
         }
+    }
+
+    public void saveHistoryRecord(){
+        DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
+        HistoryRecord historyRecord = Warehouse.getInstance().getStoreInInstance().getHistoryRecord();
+        databaseHandler.saveHistoryRecord(historyRecord.getCustomerID(), historyRecord.getNumberOfPallets(),
+                historyRecord.getTruckNumber());
+    }
+
+    public HistoryRecord getHistoryRecord() {
+        return historyRecord;
+    }
+
+    public CustomerTruckNumberDataSet getCustomerTruckNumberDataSet() {
+        return customerTruckNumberDataSet;
+    }
+
+    public void initializeCustomerTruckNumberDataSet(String customer, int truckNumber){
+        customerTruckNumberDataSet = new CustomerTruckNumberDataSet(customer, truckNumber);
+    }
+
+    public void removeCustomerTruckDataSet(){
+        customerTruckNumberDataSet = null;
+    }
+
+    public void initializePalletInformationDataSet(String PNR, boolean isDamaged, boolean isTall, Map<String, Integer> materialMap,
+                                                   String palletType, Integer weight){
+        palletInformationDataSet = new PalletInformationDataSet(PNR, isDamaged, isTall, materialMap, palletType, weight);
+    }
+
+    public void removePalletInformationDataSet(){
+        palletInformationDataSet = null;
+    }
+
+    public PalletInformationDataSet getPalletInformationDataSet(){
+        return palletInformationDataSet;
     }
 }

@@ -1,6 +1,5 @@
 package GUI.StoreInProduct;
 
-import app.StoreInProduct;
 import app.Warehouse;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -18,23 +17,46 @@ public class StoreInPositionController implements Initializable {
     @FXML
     private TextField note;
 
-    StoreInProduct storeInProduct;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        storeInProduct = new StoreInProduct();
-        List<String> positions = storeInProduct.getFreePositionsNames();
+        List<String> positions = Warehouse.getInstance().getStoreInInstance().getFreePositionsNames();
         position.setItems(FXCollections.observableArrayList(positions));
         position.setValue(positions.get(0));
+
+        Warehouse.getStage().setMinWidth(380);
+        Warehouse.getStage().setMinHeight(380);
+
         Warehouse.getInstance().addController("storeInPosition", this);
     }
+
+    public void backToPalletInformationForm()throws IOException{
+        Warehouse.getInstance().changeScene("StoreInProduct/PalletInformationForm.fxml");
+    }
+
     public void storeInProduct() throws IOException {
-        storeInProduct.storeInProduct();
-        Warehouse.getInstance().changeScene("mainMenu.fxml");
+        Warehouse warehouse = Warehouse.getInstance();
+
+        warehouse.getStoreInInstance().storeInProduct();
+        warehouse.getStoreInInstance().getHistoryRecord().addPallet();
+        warehouse.getStoreInInstance().saveHistoryRecord();
+
+        warehouse.removeController("customerTruckNumber");
+        warehouse.removeController("palletInformation");
+        warehouse.removeController("storeInPosition");
+
+        warehouse.deleteStoreInProductInstance();
+
+        warehouse.changeScene("mainMenu.fxml");
     }
     public void continueStoringIn() throws IOException{
-        storeInProduct();
-        Warehouse.getInstance().changeScene("StoreInProduct/palletInformationForm.fxml");
+        Warehouse warehouse = Warehouse.getInstance();
+        warehouse.getStoreInInstance().storeInProduct();
+        warehouse.getStoreInInstance().getHistoryRecord().addPallet();
+
+        warehouse.removeController("palletInformation");
+        warehouse.removeController("storeInPosition");
+
+        warehouse.changeScene("StoreInProduct/palletInformationForm.fxml");
     }
 
     public String getPosition() {

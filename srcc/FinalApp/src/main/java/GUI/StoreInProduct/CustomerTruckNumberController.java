@@ -18,6 +18,21 @@ public class CustomerTruckNumberController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        CustomerTruckNumberDataSet dataSet = Warehouse.getInstance().getStoreInInstance().getCustomerTruckNumberDataSet();
+        if (dataSet == null){
+            setupDefaultvalues();
+        }
+        else {
+            setupValuesFromDataSet(dataSet);
+        }
+
+        Warehouse.getStage().setMinWidth(500);
+        Warehouse.getStage().setMinHeight(450);
+
+        Warehouse.getInstance().addController("customerTruckNumber", this);
+    }
+
+    public void setupDefaultvalues(){
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customer.setItems(customers);
         customer.setValue(customers.get(0));
@@ -25,15 +40,28 @@ public class CustomerTruckNumberController implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5);
         valueFactory.setValue(1);
         truckNumber.setValueFactory(valueFactory);
-
-        Warehouse.getInstance().addController("customerTruckNumber", this);
     }
 
+    private void setupValuesFromDataSet(CustomerTruckNumberDataSet dataSet) {
+        customer.setValue(dataSet.customer());
+
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5);
+        valueFactory.setValue(dataSet.truckNumber());
+        truckNumber.setValueFactory(valueFactory);
+    }
+
+
     public void nextToInformationForm() throws IOException{
+        Warehouse.getInstance().getStoreInInstance().initializeCustomerTruckNumberDataSet(getCustomer(), getTruckNumber());
+        HistoryRecord historyRecord = Warehouse.getInstance().getStoreInInstance().getHistoryRecord();
+        historyRecord.setCustomerID(Warehouse.getInstance().getDatabaseHandler().getCustomer(customer.getValue()).getId());
+        historyRecord.setTruckNumber(getTruckNumber());
         Warehouse.getInstance().changeScene("StoreInProduct/palletInformationForm.fxml");
     }
 
     public void backToMenu() throws IOException {
+        Warehouse.getInstance().removeController("customerTruckNumber");
+        Warehouse.getInstance().getStoreInInstance().removeCustomerTruckDataSet();
         Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
 
@@ -41,7 +69,7 @@ public class CustomerTruckNumberController implements Initializable {
         return customer.getValue();
     }
 
-    public Integer getTruckNumber() {
+    public int getTruckNumber() {
         return truckNumber.getValue();
     }
 }
