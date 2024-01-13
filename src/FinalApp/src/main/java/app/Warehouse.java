@@ -1,5 +1,7 @@
 package app;
 
+import Entity.Material;
+import Entity.Pallet;
 import Entity.Position;
 import Entity.Users;
 
@@ -26,12 +28,24 @@ public class Warehouse extends Application {
      * Currently logged-in user.
      */
     private Users currentUser;
-    Map<String, Object> controllers = new HashMap<>();
+    private Map<String, Object> controllers = new HashMap<>();
 
     /***
      * Map that maps rows in the warehouse to a list of positions in that row.
      */
     private Map<String, List<Position>> warehouseData;
+
+    /***
+     * Map that maps rows in the warehouse to map of and its positions.
+     */
+    private Map<String, Map<Integer, List<Position>>> positionsInRows;
+
+    /***
+     * Map that stores pallets on positions.
+     */
+    private Map<Position, Map<Pallet, Map<Material, Integer>>> palletsOnPosition;
+
+
 
     /***
      * Method that always returns the same instance of the Warehouse class.
@@ -90,6 +104,14 @@ public class Warehouse extends Application {
      */
     public void loadDb(){
         warehouseData = databaseHandler.getWarehouseData();
+
+        positionsInRows = databaseHandler.loadPositionsInRows();
+        palletsOnPosition = databaseHandler.loadPalletsOnPositions();
+
+    }
+
+    public Map<String, List<Position>> getWarehouseData() {
+        return warehouseData;
     }
 
     public void setCurrentUser(Users currentUser) {
@@ -110,10 +132,8 @@ public class Warehouse extends Application {
         storeInProduct = new StoreInProduct();
     }
 
-    public void deleteStoreInProductInstance(){storeInProduct = null;}
-
-    public Map<String, List<Position>> getWarehouseData() {
-        return warehouseData;
+    public void deleteStoreInProductInstance(){
+        storeInProduct = null;
     }
 
     public Object getController(String name) {

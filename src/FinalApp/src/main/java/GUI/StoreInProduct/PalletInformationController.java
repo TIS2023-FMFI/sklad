@@ -82,6 +82,7 @@ public class PalletInformationController implements Initializable {
         setWeight(dataSet.weight());
         materialContainer.getChildren().clear();
         setUpMaterialContainer(dataSet.materialMap());
+
     }
 
     public void setUpMaterialContainer(Map<String, Integer> materialMap){

@@ -35,8 +35,8 @@ public class StoreInProduct {
      */
     public void storeInProduct(){
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
-        PalletInformationController palletInformationController = (PalletInformationController) Warehouse.getInstance().controllers.get("palletInformation");
-        StoreInPositionController storeInPositionController = (StoreInPositionController) Warehouse.getInstance().controllers.get("storeInPosition");
+        PalletInformationController palletInformationController = (PalletInformationController) Warehouse.getInstance().getController("palletInformation");
+        StoreInPositionController storeInPositionController = (StoreInPositionController) Warehouse.getInstance().getController("storeInPosition");
 
         // stores pallet to table pallet
         databaseHandler.savePalletToDB(palletInformationController.getPNR(), palletInformationController.getWeight(),

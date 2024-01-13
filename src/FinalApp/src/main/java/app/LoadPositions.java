@@ -11,7 +11,6 @@ import java.util.List;
 
 public class LoadPositions {
 
-
     private static final int POSTION_NAME_LENGTH = 5;
 
     public List<String> rows = new ArrayList<>();

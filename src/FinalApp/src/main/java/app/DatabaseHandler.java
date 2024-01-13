@@ -108,6 +108,88 @@ public class DatabaseHandler {
         }
     }
 
+
+    /***
+     * Method, that loads data to the memory.
+     * @return The map of rows and positions.
+     */
+    public Map<String, Map<Integer, List<Position>>> loadPositionsInRows(){
+        try (Session session = sessionFactory.openSession()) {
+            Map<String, Map<Integer, List<Position>>> positionsOnRows = new TreeMap<>();
+            Query query = session.createQuery("from Position");
+            List<Position> positions = query.list();
+
+            for (Position position : positions) {
+                String row = getRowName(position.getName());
+
+                if (!positionsOnRows.containsKey(row)){
+                    Map<Integer, List<Position>> rowAndPositions = new TreeMap<>(Comparator.reverseOrder());
+                    positionsOnRows.put(row, rowAndPositions);
+                }
+
+                int shelfNumber = Integer.parseInt(String.valueOf(position.getName().charAt(4)));
+
+                if (!positionsOnRows.get(row).containsKey(shelfNumber)){
+                    positionsOnRows.get(row).put(shelfNumber, new ArrayList<>());
+                }
+
+                positionsOnRows.get(row).get(shelfNumber).add(position);
+            }
+            return positionsOnRows;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /***
+     * Method that returns the row name based on its even/odd parity.
+     * @param row The name of the row.
+     * @return The row name based on its even/odd parity (format: "Ap", "An"...).
+     */
+    public String getRowName(String row){
+        if (Integer.parseInt(row.substring(3, 4)) % 2 == 0) {
+            return row.charAt(0) + "p";
+        }
+        return row.charAt(0) + "n";
+    }
+
+    /***
+     * Method, that loads data to the memory.
+     * @return The map of pallets on positions.
+     */
+    public Map<Position, Map<Pallet, Map<Material, Integer>>> loadPalletsOnPositions(){
+        try (Session session = sessionFactory.openSession()) {
+            Map<Position, Map<Pallet, Map<Material, Integer>>> palletsOnPosition = new HashMap<>();
+            Query query = session.createQuery("from Position");
+            List<Position> positions = query.list();
+
+            for (Position position : positions) {
+                List<Pallet> pallets = getPalletesOnPosition(position.getName());
+                Map<Pallet, Map<Material, Integer>> materialsOnPallet = new HashMap<>();
+
+                for (Pallet pallet : pallets){
+                    Map<Material, Integer> materialAndItsCount = new HashMap<>();
+                    List<StoredOnPallet> storedOnPallet = getStoredOnPallet(pallet.getPnr());
+
+                    for (StoredOnPallet product : storedOnPallet){
+                        Material material = getMaterial(product.getIdProduct());
+                        materialAndItsCount.put(material, product.getQuantity());
+                    }
+                    materialsOnPallet.put(pallet, materialAndItsCount);
+                }
+                palletsOnPosition.put(position, materialsOnPallet);
+            }
+            return palletsOnPosition;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     /***
      * Method, that checks if the user exists in the database.
      * @param login The login provided by the user.
@@ -125,15 +207,19 @@ public class DatabaseHandler {
 
                 if (user.getPassword().equals(password)) {
                     return user;
-                } else {
+                }
+                else {
                     throw new WrongPassword(login);
                 }
-            } else {
+            }
+            else {
                 throw new UserDoesNotExist(login);
             }
-        } catch (UserDoesNotExist | WrongPassword e) {
+        }
+        catch (UserDoesNotExist | WrongPassword e) {
             throw e;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -222,22 +308,16 @@ public class DatabaseHandler {
         }
     }
 
-    protected Pallet getPallet(String text) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Pallet> query = session.createQuery("from Pallet p where p.pnr = :name");
-            query.setParameter("name", text);
-            if (query.list().size() == 0) {
-                return null;
-            }
-            return query.uniqueResult();
-        }
-    }
-
-    protected List<Pallet> getPalletesOnPosition(String name) {
+    /***
+     * Method that returns a list of records of pallets stored on a given position.
+     * @param positionName The position name.
+     * @return The list of records of pallets that are stored on the given position.
+     */
+    protected List<Pallet> getPalletesOnPosition(String positionName) {
         try (Session session = sessionFactory.openSession()) {
             Query<PalletOnPosition> query = session.createQuery("from PalletOnPosition pp where pp.idPosition = :name");
-            query.setParameter("name", name);
-            if (query.list().size() == 0) {
+            query.setParameter("name", positionName);
+            if (query.list().isEmpty()) {
                 return new ArrayList<>();
             }
             List<PalletOnPosition> position = query.getResultList();
@@ -385,7 +465,6 @@ public class DatabaseHandler {
      */
     public void savePalletToDB(String PNR, Integer weight, Date date, boolean damaged, Integer userId, String palletType, String note) {
         try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
             Pallet pallet = new Pallet();
             pallet.setPnr(PNR);
             pallet.setWeight(weight);
@@ -395,7 +474,8 @@ public class DatabaseHandler {
             pallet.setType(palletType);
             pallet.setNote(note);
 
-            session.save(pallet);
+            session.beginTransaction();
+            session.persist(pallet);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
