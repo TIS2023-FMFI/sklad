@@ -51,7 +51,7 @@ public class DatabaseHandler {
         }
     }
 
-    public boolean savePositionsToDB(List<Position> positions) {
+    protected boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
             int counter = 0;
             List<Position> newPositions = new ArrayList<>();
@@ -67,20 +67,14 @@ public class DatabaseHandler {
 
             Transaction transaction = session.beginTransaction();
 
-            for (Position p : newPositions) {
-                System.out.println(p.getName());
-                counter++;
-                Position pos = new Position(p.getName(), p.isTall());
-                session.save(pos);
-
+            for (Position p : positions) {
+                session.merge(p);
             }
-            transaction.commit();
 
-            System.out.println("Do databazy bolo pridanych " + counter + " udajov");
+            transaction.commit();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-
             return false;
         }
     }

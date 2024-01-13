@@ -3,6 +3,8 @@ package app;
 import Entity.Position;
 import Entity.Users;
 
+import Exceptions.FileNotFound;
+import Exceptions.WrongStringFormat;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +19,8 @@ public class Warehouse extends Application {
     public static Stage stage;
     private DatabaseHandler databaseHandler;
     private StoreInProduct storeInProduct;
+    private static final String FILE_NAME = "warehouse_layout.txt";
+
 
     /***
      * Currently logged-in user.
@@ -126,8 +130,22 @@ public class Warehouse extends Application {
     public static Stage getStage() {
         return stage;
     }
+    protected boolean loadPosition() {
+        try {
+            LoadPositions load = new LoadPositions(FILE_NAME);
+            load.addPositions();
+            return load.saveToDB();
+        } catch (FileNotFound | WrongStringFormat e) {
+            e.printStackTrace();
+            return false;
+    }
+    }
 
     public static void main(String[] args) {
+        boolean loadNewPositions = false;
+        if(loadNewPositions) {
+            getInstance().loadPosition();
+        }
         launch();
     }
 }
