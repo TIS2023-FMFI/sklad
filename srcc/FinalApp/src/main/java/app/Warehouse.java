@@ -1,6 +1,5 @@
 package app;
 
-
 import Entity.Position;
 import Entity.Users;
 
@@ -19,6 +18,7 @@ public class Warehouse extends Application {
     private static Warehouse INSTANCE;
     public static Stage stage;
     private DatabaseHandler databaseHandler;
+    private StoreInProduct storeInProduct;
     private static final String FILE_NAME = "warehouse_layout.txt";
 
 
@@ -103,17 +103,28 @@ public class Warehouse extends Application {
     public DatabaseHandler getDatabaseHandler() {
         return databaseHandler;
     }
+    public StoreInProduct getStoreInInstance() {
+        return storeInProduct;
+    }
+    public void initializeStoreInProduct(){
+        storeInProduct = new StoreInProduct();
+    }
+
+    public void deleteStoreInProductInstance(){storeInProduct = null;}
 
     public Map<String, List<Position>> getWarehouseData() {
         return warehouseData;
     }
 
+    public Object getController(String name) {
+        return controllers.get(name);
+    }
     public void addController(String name, Object controler) {
         controllers.put(name, controler);
     }
 
-    public Object getController(String name) {
-        return controllers.get(name);
+    public void removeController(String name){
+        controllers.remove(name);
     }
 
     public static Stage getStage() {

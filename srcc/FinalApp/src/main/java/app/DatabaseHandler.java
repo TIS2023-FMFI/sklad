@@ -16,23 +16,26 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class DatabaseHandler {
 
     private static SessionFactory sessionFactory;
-    public DatabaseHandler(){
+
+    public DatabaseHandler() {
         setUpSessionFactory();
     }
 
-    private void setUpSessionFactory(){
+    private void setUpSessionFactory() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
         try {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
             throw e;
         }
@@ -42,14 +45,26 @@ public class DatabaseHandler {
      * A destructor that closes session factory after exiting application.
      */
     @Override
-    protected void finalize(){
-        if ( sessionFactory != null ) {
+    protected void finalize() {
+        if (sessionFactory != null) {
             sessionFactory.close();
         }
     }
 
     protected boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
+            int counter = 0;
+            List<Position> newPositions = new ArrayList<>();
+            List<Position> updatePositions = new ArrayList<>();
+
+            for (Position p : positions) {
+                if (session.get(Position.class, p.getName()) != null) {
+                    updatePositions.add(p);
+                } else {
+                    newPositions.add(p);
+                }
+            }
+
             Transaction transaction = session.beginTransaction();
 
             for (Position p : positions) {
@@ -76,9 +91,9 @@ public class DatabaseHandler {
             Map<String, List<Position>> data = new HashMap<>();
             for (Position p : positions) {
                 String row = p.getName().substring(0, 1);
-                if (Integer.parseInt(p.getName().substring(3,4))%2==0){
+                if (Integer.parseInt(p.getName().substring(3, 4)) % 2 == 0) {
                     row = row + "p";
-                }else {
+                } else {
                     row = row + "n";
                 }
                 if (!data.containsKey(row)) {
@@ -110,19 +125,15 @@ public class DatabaseHandler {
 
                 if (user.getPassword().equals(password)) {
                     return user;
-                }
-                else {
+                } else {
                     throw new WrongPassword(login);
                 }
-            }
-            else {
+            } else {
                 throw new UserDoesNotExist(login);
             }
-        }
-        catch (UserDoesNotExist | WrongPassword e) {
+        } catch (UserDoesNotExist | WrongPassword e) {
             throw e;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -136,11 +147,11 @@ public class DatabaseHandler {
      * @return The map of dates and pairs of numbers (number of palets going in and number of
      *         palets going out for that date).
      */
-    public Map<Date, Pair<Integer,Integer>> getStatistics(Date dateFrom,
-                                                          Date dateTo,
-                                                          String customerName) {
+    public Map<Date, Pair<Integer, Integer>> getStatistics(Date dateFrom,
+                                                           Date dateTo,
+                                                           String customerName) {
         try (Session session = sessionFactory.openSession()) {
-             Query q = session.createQuery("select c.id from Customer c where name=:customerName");
+            Query q = session.createQuery("select c.id from Customer c where name=:customerName");
             int customerId = (int) q.setParameter("customerName", customerName).uniqueResult();
 
             Query query = session.createQuery("select h from History h " +
@@ -152,24 +163,22 @@ public class DatabaseHandler {
             List<History> result = query.list();
             System.out.println(result.size());
 
-            Map<Date, Pair<Integer,Integer>> statistics = new HashMap<>();
+            Map<Date, Pair<Integer, Integer>> statistics = new HashMap<>();
             for (History h : result) {
                 Date date = h.getDate();
-                Pair<Integer,Integer> pair = statistics.get(date);
+                Pair<Integer, Integer> pair = statistics.get(date);
                 if (pair == null) {
-                    pair = new Pair<>(0,0);
+                    pair = new Pair<>(0, 0);
                 }
                 if (h.isTruckIncome()) {
                     pair = new Pair<>(pair.getKey() + h.getNumberOfPallets(), pair.getValue());
-                }
-                else {
+                } else {
                     pair = new Pair<>(pair.getKey(), pair.getValue() + h.getNumberOfPallets());
                 }
                 statistics.put(date, pair);
             }
             return statistics;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -179,8 +188,7 @@ public class DatabaseHandler {
         try (Session session = sessionFactory.openSession()) {
             Query<String> query = session.createQuery("SELECT c.name FROM Customer c", String.class);
             return FXCollections.observableArrayList(query.list());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -191,8 +199,7 @@ public class DatabaseHandler {
             Query<Customer> query = session.createQuery("from Customer c where c.name = :name");
             query.setParameter("name", toString);
             return query.uniqueResult();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -204,7 +211,7 @@ public class DatabaseHandler {
      * @throws MaterialNotAvailable if the material is not found in the database.
      * @return The material record.
      */
-    public Material getMaterial(String materialName) throws MaterialNotAvailable{
+    public Material getMaterial(String materialName) throws MaterialNotAvailable {
         try (Session session = sessionFactory.openSession()) {
             Query<Material> query = session.createQuery("from Material m where m.name = :name");
             query.setParameter("name", materialName);
@@ -215,7 +222,7 @@ public class DatabaseHandler {
         }
     }
 
-    protected Pallet getPallet(String text){
+    protected Pallet getPallet(String text) {
         try (Session session = sessionFactory.openSession()) {
             Query<Pallet> query = session.createQuery("from Pallet p where p.pnr = :name");
             query.setParameter("name", text);
@@ -226,7 +233,7 @@ public class DatabaseHandler {
         }
     }
 
-    protected List<Pallet> getPalletesOnPosition(String name){
+    protected List<Pallet> getPalletesOnPosition(String name) {
         try (Session session = sessionFactory.openSession()) {
             Query<PalletOnPosition> query = session.createQuery("from PalletOnPosition pp where pp.idPosition = :name");
             query.setParameter("name", name);
@@ -247,7 +254,7 @@ public class DatabaseHandler {
      * @param pnr The pallet number.
      * @return The list of records of materials that are stored on a given pallet.
      */
-    protected List<StoredOnPallet> getStoredOnPallet(String pnr){
+    protected List<StoredOnPallet> getStoredOnPallet(String pnr) {
         try (Session session = sessionFactory.openSession()) {
             Query<StoredOnPallet> query = session.createQuery("from StoredOnPallet sop where sop.pnr = :pnr");
             query.setParameter("pnr", pnr);
@@ -266,7 +273,7 @@ public class DatabaseHandler {
         }
     }
 
-    public int getNumberOfReservations(String customer, Date date){
+    public int getNumberOfReservations(String customer, Date date) {
         try (Session session = sessionFactory.openSession()) {
             int customerId = getCustomer(customer).getId();
             Query<CustomerReservation> query = session.createQuery("from CustomerReservation r where r.idCustomer = :id");
@@ -289,7 +296,7 @@ public class DatabaseHandler {
      * @param customer The name of the customer.
      * @return The list of positions reserved by a given customer.
      */
-    public List<Position> getPositionsReservedByCustomer(String customer){
+    public List<Position> getPositionsReservedByCustomer(String customer) {
         try (Session session = sessionFactory.openSession()) {
             int customerId = getCustomer(customer).getId();
             Query<Position> query = session.createQuery("from Position p " +
@@ -310,7 +317,7 @@ public class DatabaseHandler {
                         "where pop.idPosition = :name");
                 query2.setParameter("name", namePos);
                 List<String> pnrs = query2.getResultList();
-                for (String pnrPal:pnrs) {
+                for (String pnrPal : pnrs) {
                     Query<String> query3 = session.createQuery("select m.name from Material m " +
                             "join StoredOnPallet sop on m.id = sop.idProduct where sop.pnr = :pnr and m.name = :name");
                     query3.setParameter("name", material);
@@ -323,6 +330,7 @@ public class DatabaseHandler {
             return false;
         }
     }
+
     /***
      * Method, that returns the list of materials that belong to a specific customer.
      * @param customer The customer.
@@ -375,7 +383,7 @@ public class DatabaseHandler {
      * @param palletType The type of pallet.
      * @param note Additional note related to the pallet.
      */
-    public void savePalletToDB(String PNR, Integer weight, Date date, boolean damaged, Integer userId, String palletType, String note){
+    public void savePalletToDB(String PNR, Integer weight, Date date, boolean damaged, Integer userId, String palletType, String note) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Pallet pallet = new Pallet();
@@ -399,7 +407,7 @@ public class DatabaseHandler {
      * @param palletId The unique identifier for the pallet (PNR).
      * @param positionId The unique identifier for the position (position name).
      */
-    public void savePalletOnPositionToDB(String palletId, String positionId){
+    public void savePalletOnPositionToDB(String palletId, String positionId) {
         try (Session session = sessionFactory.openSession()) {
             PalletOnPosition palletOnPosition = new PalletOnPosition();
             palletOnPosition.setIdPallet(palletId);
@@ -417,7 +425,7 @@ public class DatabaseHandler {
      * Method, that saves a record of a pallet on a specific position to the database.
      * @param materialName The name of the material.
      */
-    public void saveMaterialToDB(String materialName){
+    public void saveMaterialToDB(String materialName) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 Material material = getMaterial(materialName);
@@ -434,6 +442,12 @@ public class DatabaseHandler {
         }
     }
 
+    /***
+     * Method, that saves a record of a material and its count to the database.
+     * @param PRN The unique pallet number.
+     * @param materialName The name of the material.
+     * @param materialCount The count of the material.
+     */
     public void saveMaterialAndCountToDB(String PRN, String materialName, Integer materialCount) {
         try (Session session = sessionFactory.openSession()) {
             StoredOnPallet materialAndCount = new StoredOnPallet();
@@ -443,6 +457,46 @@ public class DatabaseHandler {
 
             session.beginTransaction();
             session.persist(materialAndCount);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /***
+     * Method, that checks whether the PNR is already in use.
+     * @param PNR The unique pallet number.
+     * @return True if the PNR is already used, otherwise false.
+     */
+    public boolean PNRisUsed(String PNR){
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("SELECT COUNT(*) FROM Pallet p WHERE p.pnr = :pnr");
+            query.setParameter("pnr", PNR);
+            return (Long) query.uniqueResult() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /***
+     * Method, that saves a history record to database.
+     * @param customerId The unique identifier for customer.
+     * @param numberOfPallets The number of pallets that were stored.
+     * @param truckNumber The sequential number representing the arrival order of the truck.
+     */
+    public void saveHistoryRecord(int customerId, int numberOfPallets, int truckNumber){
+        try (Session session = sessionFactory.openSession()) {
+            History history = new History();
+            history.setIdCustomer(customerId);
+            history.setDate(Date.valueOf(LocalDate.now()));
+            history.setTime(Time.valueOf(LocalTime.now()));
+            history.setTruckIncome(true);
+            history.setNumberOfPallets(numberOfPallets);
+            history.setTruckNumber(truckNumber);
+
+            session.beginTransaction();
+            session.persist(history);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

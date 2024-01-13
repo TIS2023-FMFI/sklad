@@ -9,6 +9,7 @@ public class MainMenuController {
     }
 
     public void storeInProduct() throws IOException {
+        Warehouse.getInstance().initializeStoreInProduct();
         Warehouse.getInstance().changeScene("StoreInProduct/customerTruckNumberForm.fxml");
     }
 

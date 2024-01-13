@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="457.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.CustomerTruckNumberController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.CustomerTruckNumberController">
    <children>
       <Button layoutX="39.0" layoutY="32.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
-      <Button layoutX="223.0" layoutY="381.0" mnemonicParsing="false" onAction="#nextToInformationForm" text="Ďalej" />
+      <Button layoutX="223.0" layoutY="365.0" mnemonicParsing="false" onAction="#nextToInformationForm" text="Ďalej" />
       <Label layoutX="75.0" layoutY="141.0" text="Zákazník:">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="41.0" layoutY="204.0" text="Číslo točky za dnes:">
+      <Label layoutX="67.0" layoutY="204.0" prefHeight="26.0" prefWidth="149.0" text="Číslo točky za dnes:">
          <font>
             <Font size="16.0" />
          </font>

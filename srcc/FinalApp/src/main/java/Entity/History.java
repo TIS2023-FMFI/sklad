@@ -7,12 +7,13 @@ import java.sql.Time;
 import java.util.Objects;
 
 @Entity
+@Table(name = "history", schema = "public", catalog = "storage")
 public class History {
-    @Basic
-    @Column(name = "id")
-    private int id;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column(name = "id")
+    private int id;
+    @Basic
     @Column(name = "id_customer")
     private int idCustomer;
     @Basic
@@ -29,7 +30,7 @@ public class History {
     private int numberOfPallets;
     @Basic
     @Column(name = "truck_number")
-    private int orderNumber;
+    private int truckNumber;
 
     public int getId() {
         return id;
@@ -39,16 +40,8 @@ public class History {
         this.id = id;
     }
 
-    public int getIdCustomer() {
-        return idCustomer;
-    }
-
     public void setIdCustomer(int idCustomer) {
         this.idCustomer = idCustomer;
-    }
-
-    public Time getTime() {
-        return time;
     }
 
     public void setTime(Time time) {
@@ -79,12 +72,8 @@ public class History {
         this.numberOfPallets = numberOfPallets;
     }
 
-    public int getOrderNumber() {
-        return orderNumber;
-    }
-
-    public void setOrderNumber(int orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setTruckNumber(int orderNumber) {
+        this.truckNumber = orderNumber;
     }
 
     @Override
@@ -92,11 +81,11 @@ public class History {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         History history = (History) o;
-        return id == history.id && idCustomer == history.idCustomer && truckIncome == history.truckIncome && numberOfPallets == history.numberOfPallets && orderNumber == history.orderNumber && Objects.equals(time, history.time) && Objects.equals(date, history.date);
+        return id == history.id && idCustomer == history.idCustomer && truckIncome == history.truckIncome && numberOfPallets == history.numberOfPallets && truckNumber == history.truckNumber && Objects.equals(time, history.time) && Objects.equals(date, history.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, idCustomer, time, date, truckIncome, numberOfPallets, orderNumber);
+        return Objects.hash(id, idCustomer, time, date, truckIncome, numberOfPallets, truckNumber);
     }
 }
