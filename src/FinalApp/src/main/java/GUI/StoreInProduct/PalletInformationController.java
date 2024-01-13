@@ -75,6 +75,8 @@ public class PalletInformationController implements Initializable {
         isTall.setSelected(dataSet.isTall());
         materialMap.clear();
         materialMap.putAll(dataSet.materialMap());
+
+        palletType.getItems().addAll(palletTypeOptions);
         palletType.setValue(dataSet.palletType());
 
         setWeight(dataSet.weight());
@@ -275,7 +277,7 @@ public class PalletInformationController implements Initializable {
             return 1000;
         }
         if (weightID.equals("third")){
-            return 1000;
+            return 1200;
         }
         return 2000;
     }
@@ -287,8 +289,11 @@ public class PalletInformationController implements Initializable {
         else if (weightValue == 1000) {
             weight.getToggles().get(1).setSelected(true);
         }
-        else {
+        else if (weightValue == 1200){
             weight.getToggles().get(2).setSelected(true);
+        }
+        else{
+            weight.getToggles().get(3).setSelected(true);
         }
     }
 }
