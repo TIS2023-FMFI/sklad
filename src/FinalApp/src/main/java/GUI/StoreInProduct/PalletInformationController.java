@@ -68,7 +68,6 @@ public class PalletInformationController implements Initializable {
 
         Warehouse.getInstance().addController("palletInformation", this);
     }
-
     public void setupValuesFromDataSet(PalletInformationDataSet dataSet){
         PNR.setText(dataSet.PNR());
         isDamaged.setSelected(dataSet.isDamaged());
