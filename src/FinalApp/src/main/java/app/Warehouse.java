@@ -31,11 +31,6 @@ public class Warehouse extends Application {
     private Map<String, Object> controllers = new HashMap<>();
 
     /***
-     * Map that maps rows in the warehouse to a list of positions in that row.
-     */
-    private Map<String, List<Position>> warehouseData;
-
-    /***
      * Map that maps rows in the warehouse to map of and its positions.
      */
     private Map<String, Map<Integer, List<Position>>> positionsInRows;
@@ -103,15 +98,10 @@ public class Warehouse extends Application {
      * Method, that loads data to the memory after a successful login.
      */
     public void loadDb(){
-        warehouseData = databaseHandler.getWarehouseData();
-
         positionsInRows = databaseHandler.loadPositionsInRows();
         palletsOnPosition = databaseHandler.loadPalletsOnPositions();
     }
 
-    public Map<String, List<Position>> getWarehouseData() {
-        return warehouseData;
-    }
 
     public Map<String, Map<Integer, List<Position>>> getPositionsInRows() {
         return positionsInRows;
@@ -154,6 +144,14 @@ public class Warehouse extends Application {
         controllers.remove(name);
     }
 
+    public Map<String, Map<Integer, List<Position>>> getPositionsInRows() {
+        return positionsInRows;
+    }
+
+    public Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPosition() {
+        return palletsOnPosition;
+    }
+
     public static Stage getStage() {
         return stage;
     }
@@ -165,7 +163,7 @@ public class Warehouse extends Application {
         } catch (FileNotFound | WrongStringFormat e) {
             e.printStackTrace();
             return false;
-    }
+        }
     }
 
     public static void main(String[] args) {

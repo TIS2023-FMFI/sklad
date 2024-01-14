@@ -57,7 +57,6 @@ public class OrderProduct {
      */
     public List<Map<String, String>> setOrderTable(Customer customer, List<Pair<Material, Integer>> products) throws MaterialNotAvailable {
         List<Map<String,String>> res = new ArrayList<>();
-        Map<String, List<Position>> data = Warehouse.getInstance().getWarehouseData();
         var dbh = Warehouse.getInstance().getDatabaseHandler();
         List<Position> customersPositions = dbh.getPositionsReservedByCustomer(customer.getName());
         for (Pair<Material, Integer> product:products) {
