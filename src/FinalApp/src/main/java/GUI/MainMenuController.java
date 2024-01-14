@@ -25,6 +25,10 @@ public class MainMenuController {
         Warehouse.getInstance().changeScene("Statistics/statisticsMainPageForm.fxml");
     }
 
+    public void reservationsMain() throws IOException {
+        Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
+    }
+
     public void logout() throws IOException {
          Warehouse.getInstance().changeScene("login.fxml");
     }

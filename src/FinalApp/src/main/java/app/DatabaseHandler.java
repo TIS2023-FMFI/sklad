@@ -53,7 +53,6 @@ public class DatabaseHandler {
 
     protected boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
-            int counter = 0;
             List<Position> newPositions = new ArrayList<>();
             List<Position> updatePositions = new ArrayList<>();
 
