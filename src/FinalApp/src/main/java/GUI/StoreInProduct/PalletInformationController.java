@@ -4,6 +4,7 @@ import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -141,9 +142,6 @@ public class PalletInformationController implements Initializable {
         materialPair.setSpacing(15);
         materialPair.setAlignment(Pos.CENTER);
 
-        materialTextField.textProperty().addListener((observable, oldValue, newValue) ->
-                updateMaterialMap(newValue, countTextField.getText()));
-
         countTextField.textProperty().addListener((observable, oldValue, newValue) -> handleCountTextField(materialTextField, newValue));
 
         return materialPair;
@@ -155,7 +153,6 @@ public class PalletInformationController implements Initializable {
             if (count > 0) {
                 errorMessage.setText("");
                 isCountValid = true;
-                updateMaterialMap(materialTextField.getText(), newValue);
             } else {
                 errorMessage.setText("Počet kusov musí byť aspoň 1");
             }
@@ -175,9 +172,16 @@ public class PalletInformationController implements Initializable {
                 ((TextField) getLastMaterialPair().getChildren().get(3)).getText().isEmpty();
     }
 
-    private void updateMaterialMap(String material, String count) {
-        if (!material.isEmpty() && !count.isEmpty()) {
-            materialMap.put(material, Integer.parseInt(count));
+    private void updateMaterialMap() {
+        materialMap.clear();
+        for (Node materialPairNode : materialContainer.getChildren()) {
+            if (materialPairNode instanceof HBox) {
+                HBox materialPairHBox = (HBox) materialPairNode;
+
+                String material = ((TextField) materialPairHBox.getChildren().get(1)).getText();
+                int count = Integer.parseInt(((TextField) materialPairHBox.getChildren().get(3)).getText());
+                materialMap.put(material, count);
+            }
         }
     }
 
@@ -214,10 +218,7 @@ public class PalletInformationController implements Initializable {
     }
 
     public void nextToPositionForm() throws IOException {
-        if (materialMap.isEmpty()){
-            errorMessage.setText("Nezadali ste materiál a jeho počet na zaskladnenie");
-        }
-        else if (isLastMaterialEmpty()) {
+        if (isLastMaterialEmpty()) {
             errorMessage.setText("Nevyplnili ste posledný materiál a jeho počet");
         }
         else if (PNR.getText().isEmpty()) {
@@ -236,6 +237,7 @@ public class PalletInformationController implements Initializable {
                     errorMessage.setText("PNR musí byť v rozmedzí 2000-3500");
                 }
                 else {
+                    updateMaterialMap();
                     Warehouse.getInstance().getStoreInInstance().initializePalletInformationDataSet(getPNR(),
                             getIsDamaged(), getIsTall(), getMaterialMap(), getPalletType(), getWeight());
                     Warehouse.getInstance().changeScene("StoreInProduct/storeInPositionForm.fxml");

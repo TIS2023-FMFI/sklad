@@ -115,33 +115,67 @@ public class DatabaseHandler {
      */
     public Map<String, Map<Integer, List<Position>>> loadPositionsInRows(){
         try (Session session = sessionFactory.openSession()) {
-            Map<String, Map<Integer, List<Position>>> positionsOnRows = new TreeMap<>();
+            Map<String, Map<Integer, List<Position>>> positionsInRows = new TreeMap<>(new RowNameComparator());
             Query query = session.createQuery("from Position");
             List<Position> positions = query.list();
 
             for (Position position : positions) {
                 String row = getRowName(position.getName());
 
-                if (!positionsOnRows.containsKey(row)){
+                if (!positionsInRows.containsKey(row)){
                     Map<Integer, List<Position>> rowAndPositions = new TreeMap<>(Comparator.reverseOrder());
-                    positionsOnRows.put(row, rowAndPositions);
+                    positionsInRows.put(row, rowAndPositions);
                 }
 
                 int shelfNumber = Integer.parseInt(String.valueOf(position.getName().charAt(4)));
 
-                if (!positionsOnRows.get(row).containsKey(shelfNumber)){
-                    positionsOnRows.get(row).put(shelfNumber, new ArrayList<>());
+                if (!positionsInRows.get(row).containsKey(shelfNumber)){
+                    positionsInRows.get(row).put(shelfNumber, new ArrayList<>());
                 }
 
-                positionsOnRows.get(row).get(shelfNumber).add(position);
+                positionsInRows.get(row).get(shelfNumber).add(position);
             }
-            return positionsOnRows;
+            return positionsInRows;
         }
         catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
+    public class PositionNumberComparator implements Comparator<Position> {
+        @Override
+        public int compare(Position position1, Position position2) {
+            int number1 = Integer.parseInt(position1.getName().substring(1, 5));
+            int number2 = Integer.parseInt(position2.getName().substring(1, 5));
+
+            return Integer.compare(number2, number1);
+        }
+    }
+
+
+    /***
+     * Comparator for the map positionsInRows. It sorts the map firstly by the alphabetical order and then if two
+     * rows have the same name it sorts them by parity, first goes the odd one (n) and then the even (p)
+     */
+    public class RowNameComparator implements Comparator<String> {
+        @Override
+        public int compare(String row1, String row2) {
+            char firstChar1 = row1.charAt(0);
+            char secondChar1 = row1.charAt(1);
+
+            char firstChar2 = row2.charAt(0);
+            char secondChar2 = row2.charAt(1);
+
+            int result = Character.compare(firstChar1, firstChar2);
+
+            if (result == 0) {
+                result = Character.compare(secondChar1, secondChar2);
+            }
+            return result;
+        }
+    }
+
 
     /***
      * Method that returns the row name based on its even/odd parity.
