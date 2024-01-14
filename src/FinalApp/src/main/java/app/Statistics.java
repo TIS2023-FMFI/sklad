@@ -24,7 +24,7 @@ public class Statistics {
     public List<XYChart.Series<String,Number>> setBarChart(Date dateFrom, Date dateTo, String customerName) {
         Map<Date, Pair<Integer,Integer>> data = Warehouse.getInstance().getDatabaseHandler()
                                                 .getStatistics(dateFrom, dateTo, customerName);
-        System.out.println(data);
+
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("Import");
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
@@ -47,24 +47,23 @@ public class Statistics {
      */
     public List<Map<String, String>> setInventoryTable(){
         List<Map<String,String>> res = new ArrayList<>();
-        var data = Warehouse.getInstance().getWarehouseData();
-        var dbh = Warehouse.getInstance().getDatabaseHandler();
-        for (List<Position> entry : data.values()) {
-            for (Position position : entry) {
-                List<Pallet> pnrsOnPosition = dbh.getPalletesOnPosition(position.getName());
-                for (Pallet pallet : pnrsOnPosition) {
-                    if (pallet == null) continue;
-                    var records = dbh.getStoredOnPallet(pallet.getPnr());
-                    for (StoredOnPallet record : records) {
-                        Material m = dbh.getMaterial(record.getIdProduct());
-                        res.add(Map.of(
-                                "PNR", pallet.getPnr(),
-                                "Pozícia", position.getName(),
-                                "Materiál", m.getName(),
-                                "Počet", String.valueOf(record.getQuantity())
-                        ));
-                    }
+        //var data = Warehouse.getInstance().getWarehouseData();
+        var data = Warehouse.getInstance().getPalletsOnPosition();
+        //var dbh = Warehouse.getInstance().getDatabaseHandler();
+        //Map<Position, Map<Pallet, Map<Material, Integer>>> palletsOnPosition;
+        for (Position position : data.keySet()) {
+            var pallets = data.get(position);
+            for (Pallet pallet : pallets.keySet()){
+                var materials = pallets.get(pallet);
+                for (Material material : materials.keySet()) {
+                    res.add(Map.of(
+                            "Pozícia", position.getName(),
+                            "PNR", pallet.getPnr(),
+                            "Materiál", material.getName(),
+                            "Počet", String.valueOf(materials.get(material))
+                    ));
                 }
+
             }
         }
         return res;
