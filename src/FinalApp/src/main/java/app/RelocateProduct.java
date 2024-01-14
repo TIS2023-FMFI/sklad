@@ -1,6 +1,10 @@
 package app;
 
+import Entity.Material;
+import Entity.Pallet;
 import Entity.Position;
+
+import java.util.Map;
 
 public class RelocateProduct {
     Position relocateFrom;

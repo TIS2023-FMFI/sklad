@@ -107,11 +107,18 @@ public class Warehouse extends Application {
 
         positionsInRows = databaseHandler.loadPositionsInRows();
         palletsOnPosition = databaseHandler.loadPalletsOnPositions();
-
     }
 
     public Map<String, List<Position>> getWarehouseData() {
         return warehouseData;
+    }
+
+    public Map<String, Map<Integer, List<Position>>> getPositionsInRows() {
+        return positionsInRows;
+    }
+
+    public Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPosition() {
+        return palletsOnPosition;
     }
 
     public void setCurrentUser(Users currentUser) {

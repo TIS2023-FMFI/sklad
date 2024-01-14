@@ -347,7 +347,7 @@ public class DatabaseHandler {
      * @param positionName The position name.
      * @return The list of records of pallets that are stored on the given position.
      */
-    protected List<Pallet> getPalletesOnPosition(String positionName) {
+    public List<Pallet> getPalletesOnPosition(String positionName) {
         try (Session session = sessionFactory.openSession()) {
             Query<PalletOnPosition> query = session.createQuery("from PalletOnPosition pp where pp.idPosition = :name");
             query.setParameter("name", positionName);
@@ -383,6 +383,14 @@ public class DatabaseHandler {
         try (Session session = sessionFactory.openSession()) {
             Query<Material> query = session.createQuery("from Material m where m.id = :id");
             query.setParameter("id", id);
+            return query.uniqueResult();
+        }
+    }
+    public Position getPosition(String name) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Position> query = session.createQuery("from Position p where p.name = :name");
+            query.setParameter("name", name);
+            System.out.println(query.uniqueResult() + " " + name);
             return query.uniqueResult();
         }
     }
