@@ -43,13 +43,14 @@ public class CustomerTruckNumberController implements Initializable {
     }
 
     private void setupValuesFromDataSet(CustomerTruckNumberDataSet dataSet) {
+        ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
+        customer.setItems(customers);
         customer.setValue(dataSet.customer());
 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5);
         valueFactory.setValue(dataSet.truckNumber());
         truckNumber.setValueFactory(valueFactory);
     }
-
 
     public void nextToInformationForm() throws IOException{
         Warehouse.getInstance().getStoreInInstance().initializeCustomerTruckNumberDataSet(getCustomer(), getTruckNumber());

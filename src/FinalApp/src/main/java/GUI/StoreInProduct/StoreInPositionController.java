@@ -55,6 +55,7 @@ public class StoreInPositionController implements Initializable {
 
         warehouse.removeController("palletInformation");
         warehouse.removeController("storeInPosition");
+        warehouse.getStoreInInstance().removePalletInformationDataSet();
 
         warehouse.changeScene("StoreInProduct/palletInformationForm.fxml");
     }
