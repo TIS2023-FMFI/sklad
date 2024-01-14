@@ -14,16 +14,18 @@ public class MoveProductFromPositionController {
     }
     public void confirmInitialPosition() throws IOException {
         if (!checkIfPositionIsCorrect(position.getText())){
-
+            System.out.println("Position does not exist");
         }
         else {
             System.out.println(position.getText());
+            Warehouse.getInstance().addController("MoveProductFromPositionController", this);
             Warehouse.getInstance().changeScene("RelocateProduct/chooseProductToRelocateForm.fxml");
             //fillProductList();
         }
     }
 
     private boolean checkIfPositionIsCorrect(String position){
+        //checks memory if position exists
         return true;
     }
 }
