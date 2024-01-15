@@ -143,6 +143,36 @@ public class DatabaseHandler {
         }
     }
 
+    /***
+     * Method, that removes a material from databse after a successful order.
+     * @param material The material to be removed.
+     * @param quantity The quantity of the material to be removed.
+     * @param position The position from which the material is removed.
+     * @param pallet The pnr of the pallet from which the material is removed.
+     */
+    public void removeItem(Position position, Pallet pallet, Material material, int quantity, boolean removePallet) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Query<StoredOnPallet> query = session.createQuery("from StoredOnPallet sop where sop.pnr = :pnr and sop.idProduct = :id");
+            query.setParameter("pnr", pallet.getPnr());
+            query.setParameter("id", material.getId());
+            StoredOnPallet sop = query.getSingleResult();
+            if (sop.getQuantity() == quantity){
+                session.detach(sop);
+                if (removePallet) {
+                    session.delete(pallet);
+                }
+            }else {
+                int quantityOnPallet = getMaterialQuantityOnPallet(pallet, material);
+                sop.setQuantity(quantityOnPallet - quantity);
+                session.update(sop);
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public class PositionNumberComparator implements Comparator<Position> {
         @Override
         public int compare(Position position1, Position position2) {
@@ -391,6 +421,14 @@ public class DatabaseHandler {
             Query<Position> query = session.createQuery("from Position p where p.name = :name");
             query.setParameter("name", name);
             System.out.println(query.uniqueResult() + " " + name);
+            return query.uniqueResult();
+        }
+    }
+
+    public Pallet getPallet(String pnr) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Pallet> query = session.createQuery("from Pallet p where p.pnr = :pnr");
+            query.setParameter("pnr", pnr);
             return query.uniqueResult();
         }
     }

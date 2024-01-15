@@ -39,7 +39,7 @@ public class OrderCustomerSelectionController implements Initializable {
             errorField.setText("Vyberte zákazníka!");
             return;
         }
-        customer = Warehouse.getInstance().getDatabaseHandler().getCustomer(customerChoices.getValue().toString());
+        customer = Warehouse.getInstance().getDatabaseHandler().getCustomer(customerChoices.getValue());
         if (customer != null) {
             Warehouse.getInstance().changeScene("OrderProduct/orderProductsForm.fxml");
         }

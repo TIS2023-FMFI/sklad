@@ -20,7 +20,6 @@ public class FileExporter {
      * @param columns columns to export
      */
     public void exportExcel(ObservableList<Map<String, String>> items, String filename, String sheetname, List<String> columns) {
-        System.out.println("Exporting to excel");
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet spreadsheet = workbook.createSheet(sheetname);
 
