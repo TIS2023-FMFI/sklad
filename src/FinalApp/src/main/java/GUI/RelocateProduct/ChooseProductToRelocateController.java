@@ -83,6 +83,7 @@ public class ChooseProductToRelocateController implements Initializable {
         finalQuantity = Integer.parseInt(quantityText.getText());
         finalPallet = finalString.substring(0, finalString.indexOf(":"));
         finalMaterial = finalString.substring(finalString.indexOf(":") + 2, finalString.indexOf(" (max. "));
+        Warehouse.getInstance().addController("ChooseProductToRelocateController", this);
         Warehouse.getInstance().changeScene("RelocateProduct/moveProductToPositionForm.fxml");
     }
 }
