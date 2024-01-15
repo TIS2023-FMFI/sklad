@@ -144,14 +144,6 @@ public class Warehouse extends Application {
         controllers.remove(name);
     }
 
-    public Map<String, Map<Integer, List<Position>>> getPositionsInRows() {
-        return positionsInRows;
-    }
-
-    public Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPosition() {
-        return palletsOnPosition;
-    }
-
     public static Stage getStage() {
         return stage;
     }
