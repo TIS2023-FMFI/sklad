@@ -4,12 +4,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.CreateNewCustomerController">
    <children>
-      <Button layoutX="61.0" layoutY="53.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
-      <Label layoutX="135.0" layoutY="154.0" prefHeight="36.0" prefWidth="83.0" text="zadajte meno:" />
-      <TextField layoutX="283.0" layoutY="159.0" />
+      <Button layoutX="61.0" layoutY="53.0" mnemonicParsing="false" onAction="#backToMainReservations" text="Naspäť" />
+      <Label layoutX="135.0" layoutY="154.0" prefHeight="36.0" prefWidth="83.0" text="zadajte meno:">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <TextField fx:id="customerName" layoutX="283.0" layoutY="159.0" />
+      <Button layoutX="257.0" layoutY="226.0" mnemonicParsing="false" onAction="#addNewCustomer" text="Uložiť" />
+      <Label fx:id="errorMessage" layoutX="190.0" layoutY="100.0" prefHeight="18.0" prefWidth="252.0" textAlignment="CENTER" textFill="red" />
    </children>
 </AnchorPane>

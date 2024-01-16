@@ -21,6 +21,7 @@ public class Warehouse extends Application {
     public static Stage stage;
     private DatabaseHandler databaseHandler;
     private StoreInProduct storeInProduct;
+    private Reservation reservation;
     private static final String FILE_NAME = "warehouse_layout.txt";
 
 
@@ -117,6 +118,9 @@ public class Warehouse extends Application {
     }
     public StoreInProduct getStoreInInstance() {
         return storeInProduct;
+    }
+    public Reservation getReservationInstance() {
+        return reservation;
     }
     public void initializeStoreInProduct(){
         storeInProduct = new StoreInProduct();

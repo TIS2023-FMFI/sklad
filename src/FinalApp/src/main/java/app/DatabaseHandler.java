@@ -615,4 +615,19 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+
+    public boolean saveCustomer(String name){
+        try (Session session = sessionFactory.openSession()) {
+            Customer customer = new Customer(name);
+
+            session.beginTransaction();
+            session.persist(customer);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return false;
+        }
+    }
+
 }
