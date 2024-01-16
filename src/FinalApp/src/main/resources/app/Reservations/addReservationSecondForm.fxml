@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.AddReservationSecondController">
+   <children>
+      <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToFirstForm" text="Naspäť" />
+      <Label layoutX="134.0" layoutY="131.0" text="Počet voľných pozícií:" />
+      <Label layoutX="134.0" layoutY="163.0" text="Z toho vysokých:" />
+      <Label layoutX="134.0" layoutY="200.0" text="Vyberte počet pozícií:" />
+      <Label layoutX="134.0" layoutY="231.0" text="Z toho vysokých:" />
+      <Button layoutX="280.0" layoutY="279.0" mnemonicParsing="false" text="Ulož" />
+      <Label fx:id="numberOfAllFreePositions" layoutX="335.0" layoutY="131.0" />
+      <Label fx:id="numberOfAllTallPositions" layoutX="335.0" layoutY="163.0" />
+      <Label fx:id="numberOfFreePositions" layoutX="335.0" layoutY="200.0" />
+      <Label fx:id="numberOfTallPositions" layoutX="335.0" layoutY="231.0" />
+   </children>
+</AnchorPane>
