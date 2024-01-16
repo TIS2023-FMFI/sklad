@@ -1,6 +1,9 @@
 import Entity.Material;
+import Entity.Position;
 import Entity.Users;
 import app.DatabaseHandler;
+import app.RelocateProduct;
+import app.Warehouse;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -84,5 +87,10 @@ public class Tests {
             session.beginTransaction();
             session.getTransaction().commit();
         }
+    }
+
+    @Test
+    public void relocation() {
+
     }
 }

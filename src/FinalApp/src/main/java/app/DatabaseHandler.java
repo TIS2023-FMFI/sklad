@@ -173,6 +173,41 @@ public class DatabaseHandler {
         }
     }
 
+    public Customer getCustomerThatReservedPosition(Position position) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Customer> query = session.createQuery("from Customer c join CustomerReservation cr " +
+                    "on c.id = cr.idCustomer where cr.idPosition = :position");
+            query.setParameter("position", position.getName());
+            Customer customer = query.getSingleResult();
+            return customer;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void persistMaterialOnPallet(Pallet pallet, Material material, int quantity) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Query<StoredOnPallet> query = session.createQuery("from StoredOnPallet sop where sop.pnr = :pnr and sop.idProduct = :id");
+            query.setParameter("pnr", pallet.getPnr());
+            query.setParameter("id", material.getId());
+            if (query.getResultList().size() > 0) {
+                StoredOnPallet sop = query.getSingleResult();
+                sop.setQuantity(sop.getQuantity() + quantity);
+                session.update(sop);
+            } else {
+                StoredOnPallet sop = new StoredOnPallet();
+                sop.setPnr(pallet.getPnr());
+                sop.setIdProduct(material.getId());
+                sop.setQuantity(quantity);
+                session.save(sop);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public class PositionNumberComparator implements Comparator<Position> {
         @Override
         public int compare(Position position1, Position position2) {
@@ -462,8 +497,7 @@ public class DatabaseHandler {
             Query<Position> query = session.createQuery("from Position p " +
                     "join CustomerReservation cr on p.id = cr.idPosition where cr.idCustomer = :id");
             query.setParameter("id", customerId);
-            List<Position> positions = query.getResultList();
-            return positions;
+            return query.getResultList();
         }
     }
 
@@ -576,6 +610,7 @@ public class DatabaseHandler {
             session.beginTransaction();
             session.persist(palletOnPosition);
             session.getTransaction().commit();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

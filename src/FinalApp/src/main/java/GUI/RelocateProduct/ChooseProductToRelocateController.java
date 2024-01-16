@@ -26,6 +26,8 @@ public class ChooseProductToRelocateController implements Initializable {
 
     private Map<String, Integer> productsOnPalletMap = new HashMap<>();
 
+    public Position initialPosition;
+
     public String finalMaterial;
     public int finalQuantity;
     public String finalPallet;
@@ -42,6 +44,7 @@ public class ChooseProductToRelocateController implements Initializable {
         //fills productsOnPallet with products on position
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
         Position pos = databaseHandler.getPosition(position);
+        initialPosition = pos;
         var palletsOnPos = Warehouse.getInstance().getPalletsOnPosition().get(pos);
         for (var pallet : palletsOnPos.keySet()){
             for (var material : palletsOnPos.get(pallet).keySet()){

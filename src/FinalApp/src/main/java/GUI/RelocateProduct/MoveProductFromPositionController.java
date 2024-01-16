@@ -29,7 +29,7 @@ public class MoveProductFromPositionController {
         }
     }
 
-    private boolean checkIfPositionIsCorrect(String position){
+    public boolean checkIfPositionIsCorrect(String position){
         //checks memory if position exists
         var positions = Warehouse.getInstance().getPositionsInRows();
         for (var regals : positions.values()){
