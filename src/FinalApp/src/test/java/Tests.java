@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Tests {
@@ -91,6 +92,6 @@ public class Tests {
 
     @Test
     public void relocation() {
-
+        System.out.println(Arrays.toString("okl".split(",")));
     }
 }

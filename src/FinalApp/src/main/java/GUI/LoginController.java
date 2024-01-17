@@ -32,9 +32,9 @@ public class LoginController {
             Warehouse w = Warehouse.getInstance();
             RelocateProduct relocateProduct = new RelocateProduct();
             Position initPos = db.getPosition("A0001");
-            Position finalPos = db.getPosition("A0100");
-            relocateProduct.relocateProduct(finalPos, initPos,
-                    "Test material", 2, "2000", "2222");
+            //Position finalPos = db.getPosition("A0100");
+            //relocateProduct.relocateProduct("A0100", initPos,
+              //      "Test material", 2, "2000", "2222");
 
 
             Warehouse.getInstance().changeScene("mainMenu.fxml");

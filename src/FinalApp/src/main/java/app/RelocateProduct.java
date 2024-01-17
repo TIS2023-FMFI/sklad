@@ -3,22 +3,63 @@ package app;
 import Entity.Material;
 import Entity.Pallet;
 import Entity.Position;
+import Exceptions.MaterialNotAvailable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RelocateProduct {
 
-    /** skontroluje, ci na danu poziciu sa moze preskladnit tovar**/
-    public boolean checkPositionIsEmpty(Position p){return false;};
-    public void relocateProduct(Position finalPos, Position initialPos,
+    public void relocatePallet(Position initialPos, List<String> finalPos, String palletFrom){
+        DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
+        for (String pos : finalPos){
+            db.updatePalletPosition(palletFrom, pos);
+        }
+        Pallet beingMoved = Warehouse.getInstance().getPalletsOnPosition().get(initialPos).keySet().stream()
+                .filter(p -> p.getPnr().equals(palletFrom)).findFirst().get();
+        var materialsStored = Warehouse.getInstance().getPalletsOnPosition().get(initialPos).remove(beingMoved);
+        for (String pos : finalPos){
+            Position newPos = db.getPosition(pos);
+            Warehouse.getInstance().getPalletsOnPosition().get(newPos).put(beingMoved, materialsStored);
+        }
+    }
+
+
+    public void relocateProduct(String finalPos, Position initialPos,
                                 String product, int quantity, String palletFrom, String palletTo){
 
-        addItem(finalPos, product, quantity, palletTo, palletFrom);
-        //removeItem(initialPos, product, quantity, palletFrom);
+        DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
+        Position finalPosition = db.getPosition(finalPos);
+        Pallet pallet = null;
+        for (Pallet p : Warehouse.getInstance().getPalletsOnPosition().get(initialPos).keySet()){
+            if (p.getPnr().equals(palletTo)){
+                pallet = p;
+                break;
+            }
+        }
+
+        if (pallet == null){
+            pallet = new Pallet();
+            pallet.setPnr(palletTo);
+            pallet.setWeight(500);
+            pallet.setDamaged(false);
+            pallet.setNote("");
+            pallet.setIdUser(Warehouse.getInstance().currentUser.getId());
+            pallet.setType("europaleta");
+            pallet.setDateIncome(Date.valueOf(LocalDate.now()));
+            Warehouse.getInstance().getPalletsOnPosition().get(initialPos)
+                    .put(pallet, new HashMap<Material, Integer>());
+        }
+
+        addItem(finalPosition, product, quantity, pallet);
+        removeItem(initialPos, product, quantity, palletFrom);
     }
 
     private void removeItem(Position initialPos, String product, int quantity, String palletFrom){
@@ -31,19 +72,22 @@ public class RelocateProduct {
         op.removeOrderedItems(items);
     }
 
-    private void addItem(Position finalPos, String product, int quantity, String palletTo, String palletFrom){
-        //zistit v pamati ci je na tej pozicii dana paleta
-        //Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPosition
-        
-
-        //ak nie je, vytvorit novu paletu
-
-        //ak je, skontrolovat ci an nej je taky produkt
-        //ak nie je, pridat ho
-
-        //ak je, zvysit pocet kusov
-
-
+    private void addItem(Position finalPos, String product, int quantity, Pallet palletTo){
+        DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
+        Material material;
+        try{
+            material = db.getMaterial(product);
+        } catch (MaterialNotAvailable e){
+            System.out.println("Material not available");
+            return;
+        }
+        if (Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo).containsKey(material)){
+            int oldQuantity = Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo).get(material);
+            Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo).put(material, oldQuantity + quantity);
+        } else{
+            Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo).put(material, quantity);
+        }
+        db.persistMaterialOnPallet(palletTo, material, quantity);
     }
 
 

@@ -2,6 +2,7 @@ package GUI.RelocateProduct;
 import Entity.Position;
 import app.Warehouse;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -9,6 +10,10 @@ import java.util.List;
 import java.util.Set;
 
 public class MoveProductFromPositionController {
+    @FXML
+    public CheckBox wholePallet;
+
+    boolean isWholePallet = false;
     @FXML
     private TextField position;
 
@@ -23,6 +28,7 @@ public class MoveProductFromPositionController {
             System.out.println("Position does not exist");
         }
         else {
+            isWholePallet = wholePallet.isSelected();
             Warehouse.getInstance().addController("MoveProductFromPositionController", this);
             positionName = position.getText();
             Warehouse.getInstance().changeScene("RelocateProduct/chooseProductToRelocateForm.fxml");

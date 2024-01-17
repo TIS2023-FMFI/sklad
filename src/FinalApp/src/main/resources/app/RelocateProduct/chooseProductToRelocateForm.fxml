@@ -22,10 +22,11 @@
          </font>
       </Label>
       <TextField fx:id="quantityText" layoutX="336.0" layoutY="174.0" prefHeight="26.0" prefWidth="89.0" />
-      <Button layoutX="223.0" layoutY="279.0" mnemonicParsing="false" onAction="#confirmProductToMove" prefHeight="26.0" prefWidth="119.0" text="Nájsť pozíciu">
+      <Button layoutX="223.0" layoutY="281.0" mnemonicParsing="false" onAction="#confirmProductToMove" prefHeight="26.0" prefWidth="119.0" text="Nájsť pozíciu">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="47.0" layoutY="229.0" prefHeight="26.0" prefWidth="471.0" textFill="RED" />
    </children>
 </AnchorPane>

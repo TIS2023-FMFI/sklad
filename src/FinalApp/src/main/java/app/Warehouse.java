@@ -27,7 +27,7 @@ public class Warehouse extends Application {
     /***
      * Currently logged-in user.
      */
-    private Users currentUser;
+    public Users currentUser;
     private Map<String, Object> controllers = new HashMap<>();
 
     /***

@@ -11,14 +11,16 @@ public class ConfirmMovingController {
     public void backToMenu() throws IOException {
         MoveProductToPositionController controller = (MoveProductToPositionController)
                 Warehouse.getInstance().getController("MoveProductToPositionController");
-        DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
-        Position initialPosition = controller.initialPosition;
-        Position finalPosition = databaseHandler.getPosition(controller.finalPosition);
 
         RelocateProduct rp = new RelocateProduct();
-        rp.relocateProduct(finalPosition, initialPosition, controller.product,
+        System.out.println(controller.finalPositions);
+        if (controller.isWholePallet){
+            rp.relocatePallet(controller.initialPosition, controller.finalPositions, controller.palletFrom);
+        } else{
+            //staci prvy prvok z finalPositions lebo ked premiestnujem jeden material, tak sa to premiestni na jednu poziciu
+            rp.relocateProduct(controller.finalPositions.get(0), controller.initialPosition, controller.product,
                 controller.quantity, controller.palletFrom, controller.palletTo);
-
+        }
 
 
         Warehouse.getInstance().changeScene("mainMenu.fxml");

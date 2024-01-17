@@ -208,6 +208,22 @@ public class DatabaseHandler {
         }
     }
 
+    public void updatePalletPosition(String pallet, String pos) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Query<PalletOnPosition> query = session.createQuery("from PalletOnPosition pop " +
+                    "where pop.idPallet = :pnr and pop.idPosition = :pos");
+            query.setParameter("pnr", pallet);
+            query.setParameter("pos", pos);
+            PalletOnPosition pops = query.getResultList().get(0);
+            pops.setIdPosition(pos);
+            session.update(pops);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public class PositionNumberComparator implements Comparator<Position> {
         @Override
         public int compare(Position position1, Position position2) {

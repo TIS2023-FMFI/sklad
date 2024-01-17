@@ -5,6 +5,7 @@ import Entity.Pallet;
 import Entity.Position;
 import app.DatabaseHandler;
 import app.Warehouse;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -14,31 +15,52 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class MoveProductToPositionController implements Initializable {
+    @FXML
     public ChoiceBox<String> newPositionsChoice;
+    @FXML
     public Label errorLabel;
+    @FXML
     public TextField newPNR;
     String product;
     int quantity;
     String palletFrom;
     Position initialPosition;
-    String finalPosition;
+    boolean isWholePallet;
+    List<String> finalPositions;
+    //public String finalPosition;
     String palletTo;
+    public int palletWeigh = 500;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ChooseProductToRelocateController controller = (ChooseProductToRelocateController)
                 Warehouse.getInstance().getController("ChooseProductToRelocateController");
-        product = controller.finalMaterial;
-        quantity = controller.finalQuantity;
         palletFrom = controller.finalPallet;
         initialPosition = controller.initialPosition;
-
-        fillNewPositionsChoice();
-
+        isWholePallet = controller.isWholePallet;
+        if (isWholePallet){
+            newPNR.setDisable(true);
+            var palsOnPos = Warehouse.getInstance().getPalletsOnPosition().get(initialPosition);
+            for (var pallet : palsOnPos.keySet()){
+                if (pallet.getPnr().equals(palletFrom)){
+                    palletWeigh = pallet.getWeight();
+                    break;
+                }
+            }
+        } else{
+            product = controller.finalMaterial;
+            quantity = controller.finalQuantity;
+        }
+        if (palletWeigh == 500) fillNewPositionsChoice();
+        if (palletWeigh == 1000) fillNew2PositionsChoice();
+        if (palletWeigh == 1200) fillNew3PositionsChoice();
+        if (palletWeigh == 2000) fillNew4PositionsChoice();
     }
 
     private void fillNewPositionsChoice(){
@@ -46,10 +68,20 @@ public class MoveProductToPositionController implements Initializable {
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
         List<Position> positions = dbh.getPositionsReservedByCustomer(customer.getName());
+        boolean tall = initialPosition.isTall();
         for (Position position : positions){
-            if (!position.equals(initialPosition))
+            if (!position.equals(initialPosition) && position.isTall() == tall)
                 newPositionsChoice.getItems().add(position.getName());
         }
+    }
+    private void fillNew2PositionsChoice(){
+        newPositionsChoice.getItems().add("C0001,C0011");
+    }
+    private void fillNew3PositionsChoice(){
+        newPositionsChoice.getItems().add("C0001,C0011,C0021");
+    }
+    private void fillNew4PositionsChoice(){
+        newPositionsChoice.getItems().add("C0001,C0011,C0021,C0031");
     }
 
     public void backToProductChoice() throws IOException {
@@ -57,18 +89,24 @@ public class MoveProductToPositionController implements Initializable {
     }
 
     public void confirmFinalPosition() throws IOException {
-        finalPosition = newPositionsChoice.getValue();
-        if (finalPosition == null){
+        finalPositions = Arrays.asList(newPositionsChoice.getValue().split(","));
+        if (finalPositions.size() == 0){
             errorLabel.setText("No position chosen");
-        } else if (!checkIfPNRCorrect(newPNR.getText())){
-            errorLabel.setText("PNR incorrect");
-        } else if (!checkIfPNRFree(newPNR.getText())) {
-            errorLabel.setText("PNR already used on a different position");
-        } else {
-            palletTo = newPNR.getText();
-            Warehouse.getInstance().addController("MoveProductToPositionController", this);
-            Warehouse.getInstance().changeScene("RelocateProduct/confirmMovingForm.fxml");
+            return;
         }
+        if (!isWholePallet) {
+            if (!checkIfPNRCorrect(newPNR.getText())) {
+                errorLabel.setText("PNR incorrect");
+                return;
+            }
+            if (!checkIfPNRFree(newPNR.getText())) {
+                errorLabel.setText("PNR already used on a different position");
+                return;
+            }
+            palletTo = newPNR.getText();
+        }
+        Warehouse.getInstance().addController("MoveProductToPositionController", this);
+        Warehouse.getInstance().changeScene("RelocateProduct/confirmMovingForm.fxml");
     }
 
     public void checkIfPositionFilled(KeyEvent keyEvent) {
@@ -94,7 +132,7 @@ public class MoveProductToPositionController implements Initializable {
             return true;
         }
         Pallet pallet = Warehouse.getInstance().getDatabaseHandler().getPallet(PNR);
-        Position position = Warehouse.getInstance().getDatabaseHandler().getPosition(finalPosition);
+        Position position = Warehouse.getInstance().getDatabaseHandler().getPosition(finalPositions.get(0));
         return Warehouse.getInstance().getPalletsOnPosition().get(position).containsKey(pallet);
     }
 
