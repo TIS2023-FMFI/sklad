@@ -4,6 +4,7 @@ import Entity.Material;
 import Entity.Pallet;
 import Entity.Position;
 import Exceptions.MaterialNotAvailable;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -38,14 +39,18 @@ public class RelocateProduct {
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
         Position finalPosition = db.getPosition(finalPos);
         Pallet pallet = null;
-        for (Pallet p : Warehouse.getInstance().getPalletsOnPosition().get(initialPos).keySet()){
+        System.out.println("Pallets on pos: " + finalPosition.getName() + " are: ");
+        for (Pallet p : Warehouse.getInstance().getPalletsOnPosition().get(finalPosition).keySet()){
+            System.out.println(p.getPnr());
             if (p.getPnr().equals(palletTo)){
                 pallet = p;
                 break;
             }
         }
+        System.out.println();
 
         if (pallet == null){
+            System.out.println("Pallet not found");
             pallet = new Pallet();
             pallet.setPnr(palletTo);
             pallet.setWeight(500);
@@ -54,8 +59,9 @@ public class RelocateProduct {
             pallet.setIdUser(Warehouse.getInstance().currentUser.getId());
             pallet.setType("europaleta");
             pallet.setDateIncome(Date.valueOf(LocalDate.now()));
-            Warehouse.getInstance().getPalletsOnPosition().get(initialPos)
+            Warehouse.getInstance().getPalletsOnPosition().get(finalPosition)
                     .put(pallet, new HashMap<Material, Integer>());
+            db.addPallet(pallet, finalPosition);
         }
 
         addItem(finalPosition, product, quantity, pallet);
@@ -72,23 +78,26 @@ public class RelocateProduct {
         op.removeOrderedItems(items);
     }
 
-    private void addItem(Position finalPos, String product, int quantity, Pallet palletTo){
+    private void addItem(Position finalPos, String product, int quantity, Pallet palletTo) {
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
         Material material;
-        try{
+        try {
             material = db.getMaterial(product);
-        } catch (MaterialNotAvailable e){
+        } catch (MaterialNotAvailable e) {
             System.out.println("Material not available");
             return;
         }
-        if (Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo).containsKey(material)){
-            int oldQuantity = Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo).get(material);
-            Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo).put(material, oldQuantity + quantity);
-        } else{
-            Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo).put(material, quantity);
+        System.out.println("Finalpos: " + finalPos.getName() + " palletTo: " + palletTo.getPnr() + " material: " + material.getName() + " quantity: " + quantity);
+        var matOnPallet = Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo);
+        for (Material m : matOnPallet.keySet()) {
+            if (m.getName().equals(product)) {
+                int oldQuantity = matOnPallet.get(m);
+                System.out.println("result quantity: " + oldQuantity + "+" + quantity);
+                db.persistMaterialOnPallet(palletTo, m, quantity);
+                return;
+            }
         }
+        Warehouse.getInstance().getPalletsOnPosition().get(finalPos).get(palletTo).put(material, quantity);
         db.persistMaterialOnPallet(palletTo, material, quantity);
     }
-
-
 }

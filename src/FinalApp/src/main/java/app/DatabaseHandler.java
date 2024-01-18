@@ -203,7 +203,9 @@ public class DatabaseHandler {
                 sop.setQuantity(quantity);
                 session.save(sop);
             }
+            transaction.commit();
         } catch (Exception e) {
+            setUpSessionFactory();
             e.printStackTrace();
         }
     }
@@ -212,12 +214,25 @@ public class DatabaseHandler {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Query<PalletOnPosition> query = session.createQuery("from PalletOnPosition pop " +
-                    "where pop.idPallet = :pnr and pop.idPosition = :pos");
+                    "where pop.idPallet = :pnr");
             query.setParameter("pnr", pallet);
-            query.setParameter("pos", pos);
             PalletOnPosition pops = query.getResultList().get(0);
             pops.setIdPosition(pos);
             session.update(pops);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addPallet(Pallet pallet, Position finalPosition) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(pallet);
+            PalletOnPosition pops = new PalletOnPosition();
+            pops.setIdPallet(pallet.getPnr());
+            pops.setIdPosition(finalPosition.getName());
+            session.save(pops);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -471,8 +486,12 @@ public class DatabaseHandler {
         try (Session session = sessionFactory.openSession()) {
             Query<Position> query = session.createQuery("from Position p where p.name = :name");
             query.setParameter("name", name);
-            System.out.println(query.uniqueResult() + " " + name);
+            //System.out.println(query.uniqueResult() + " " + name);
             return query.uniqueResult();
+        }catch (Exception e){
+            e.printStackTrace();
+            setUpSessionFactory();
+            return getPosition(name);
         }
     }
 
@@ -511,7 +530,7 @@ public class DatabaseHandler {
         try (Session session = sessionFactory.openSession()) {
             int customerId = getCustomer(customer).getId();
             Query<Position> query = session.createQuery("from Position p " +
-                    "join CustomerReservation cr on p.id = cr.idPosition where cr.idCustomer = :id");
+                    "join CustomerReservation cr on p.name = cr.idPosition where cr.idCustomer = :id");
             query.setParameter("id", customerId);
             return query.getResultList();
         }
@@ -681,10 +700,12 @@ public class DatabaseHandler {
      */
     public boolean PNRisUsed(String PNR){
         try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery("SELECT COUNT(*) FROM Pallet p WHERE p.pnr = :pnr");
+            Query<Long> query = session.createQuery("SELECT COUNT(*) FROM Pallet p WHERE p.pnr = :pnr");
             query.setParameter("pnr", PNR);
-            return (Long) query.uniqueResult() > 0;
+            return query.uniqueResult() > 0;
         } catch (Exception e) {
+            sessionFactory.close();
+            setUpSessionFactory();
             e.printStackTrace();
             return false;
         }
