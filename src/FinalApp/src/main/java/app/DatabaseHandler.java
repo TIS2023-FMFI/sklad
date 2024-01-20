@@ -48,6 +48,7 @@ public class DatabaseHandler {
     @Override
     protected void finalize() {
         if (sessionFactory != null) {
+            System.out.println("Closing sessionFactory");
             //sessionFactory.close();
         }
     }
