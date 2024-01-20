@@ -20,6 +20,7 @@ public class Warehouse extends Application {
     private static Warehouse INSTANCE;
     public static Stage stage;
     private DatabaseHandler databaseHandler;
+    private WarehouseLayout warehouseLayout;
     private StoreInProduct storeInProduct;
     private Reservation reservation;
     private static final String FILE_NAME = "warehouse_layout.txt";
@@ -29,7 +30,7 @@ public class Warehouse extends Application {
      * Currently logged-in user.
      */
     private Users currentUser;
-    private Map<String, Object> controllers = new HashMap<>();
+    private final Map<String, Object> controllers = new HashMap<>();
 
     /***
      * Map that maps rows in the warehouse to map of and its positions.
@@ -63,17 +64,18 @@ public class Warehouse extends Application {
     }
 
     /***
-     * Main method, that runs the application.
-     * @param primarystage
-     * @throws Exception
+     * The main method that launches and initializes the application.
+     *
+     * @param primaryStage The primary stage for the JavaFX application.
+     * @throws Exception If there is an error during application startup.
      */
     @Override
-    public void start(Stage primarystage) throws Exception {
-        stage = primarystage;
+    public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
-        primarystage.setTitle("Skladovací systém");
-        primarystage.setScene(new Scene(root, 400, 300));
-        primarystage.show();
+        primaryStage.setTitle("Skladovací systém");
+        primaryStage.setScene(new Scene(root, 400, 300));
+        primaryStage.show();
 
     }
 
@@ -93,6 +95,23 @@ public class Warehouse extends Application {
 
         stage.getScene().getWindow().setWidth(newWidth);
         stage.getScene().getWindow().setHeight(newHeight);
+
+        centerStage(stage);
+    }
+
+    /***
+     * Method that centers the stage in the middle of the computer screen.
+     * @param stage The JavaFX stage to be centered.
+     */
+    private void centerStage(Stage stage) {
+        double screenWidth = javafx.stage.Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = javafx.stage.Screen.getPrimary().getVisualBounds().getHeight();
+
+        double centerX = screenWidth/2 - stage.getWidth()/2;
+        double centerY = screenHeight/2 - stage.getHeight()/2;
+
+        stage.setX(centerX);
+        stage.setY(centerY);
     }
 
     /***
@@ -101,7 +120,6 @@ public class Warehouse extends Application {
     public void loadDb(){
         positionsInRows = databaseHandler.loadPositionsInRows();
         palletsOnPosition = databaseHandler.loadPalletsOnPositions();
-
     }
 
 
@@ -116,6 +134,19 @@ public class Warehouse extends Application {
     public DatabaseHandler getDatabaseHandler() {
         return databaseHandler;
     }
+
+    public void initializeWarehouseLayout(){
+        warehouseLayout = new WarehouseLayout();
+    }
+
+    public WarehouseLayout getWarehouseLayoutInstance() {
+        return warehouseLayout;
+    }
+
+    public void deleteWarehouseLayoutInstance(){
+        warehouseLayout = null;
+    }
+
     public StoreInProduct getStoreInInstance() {
         return storeInProduct;
     }
@@ -141,12 +172,20 @@ public class Warehouse extends Application {
         controllers.remove(name);
     }
 
-    public Map<String, Map<Integer, List<Position>>> getPositionsInRows() {
-        return positionsInRows;
+    public List<String> getRowNames(){
+        return new ArrayList<>(positionsInRows.keySet());
+    }
+
+    public Map<Integer, List<Position>> getRowMap(String rowName){
+        return positionsInRows.get(rowName);
     }
 
     public Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPosition() {
         return palletsOnPosition;
+    }
+
+    public boolean isPalletOnPosition(Position position){
+        return palletsOnPosition.get(position).isEmpty();
     }
 
     public static Stage getStage() {

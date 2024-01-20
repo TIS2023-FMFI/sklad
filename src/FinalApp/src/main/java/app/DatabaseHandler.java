@@ -476,6 +476,17 @@ public class DatabaseHandler {
         }
     }
 
+    //----------------------------------------TU SOM SKONCILA TREBA SPRAVIT TUTO FUNKCIU--------------------------------------
+    public boolean isPositionReserved(String PNR) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("SELECT COUNT(*) FROM CustomerReservation cr WHERE cr.idPosition = :idPosition");
+            query.setParameter("idPosition", PNR);
+            return (Long) query.uniqueResult() > 0;
+        }
+    }
+    //-------------------------------------------------------------------------------------------------------------------------
+
+
     // zatial vyberie iba všetky pozície treba dorobiť
     // algoritmus bude brať do úvahy položky z formulárov:
     //     či paleta vyžaduje vysokú pozíciu
