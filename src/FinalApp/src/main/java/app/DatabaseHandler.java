@@ -615,7 +615,11 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
-
+    /***
+     * Method, that creates new customer and saves him to the database.
+     * @param name Unique customer name.
+     * @return true when new customer was added to database.
+     */
     public boolean saveCustomer(String name){
         try (Session session = sessionFactory.openSession()) {
             Customer customer = new Customer(name);
@@ -629,5 +633,18 @@ public class DatabaseHandler {
             return false;
         }
     }
+
+    public List<CustomerReservation> getReservationRecords(int customerId){
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM CustomerReservation r WHERE r.idCustomer = :idCustomer");
+            query.setParameter("idCustomer", customerId);
+
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
 
 }

@@ -30,4 +30,5 @@ public class AddReservationSecondController implements Initializable {
     public void backToFirstForm() throws IOException {
         Warehouse.getInstance().changeScene("Reservations/addReservationFirstForm.fxml");
     }
+
 }

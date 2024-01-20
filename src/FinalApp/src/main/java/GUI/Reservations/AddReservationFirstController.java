@@ -23,10 +23,11 @@ public class AddReservationFirstController implements Initializable {
     Date dateToValue;
     @FXML
     Label customerName;
+    Warehouse warehouse;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       Warehouse warehouse = Warehouse.getInstance();
+       warehouse = Warehouse.getInstance();
        warehouse.addController("addReservation", this);
         ChoiceBox<String> nameController = (ChoiceBox<String>)warehouse.getController("customerReservationName");
         String name = nameController.getValue();
@@ -43,10 +44,19 @@ public class AddReservationFirstController implements Initializable {
     public void saveDateFrom(ActionEvent actionEvent) {
         LocalDate localDate = dateFrom.getValue();
         dateFromValue = Date.valueOf(localDate);
+        if(warehouse.getController("dateFrom") != null){
+            warehouse.removeController("dateFrom");
+        }
+        warehouse.addController("dateFrom", dateFromValue);
+
     }
 
     public void saveDateTo(ActionEvent actionEvent) {
         LocalDate localDate = dateTo.getValue();
         dateToValue = Date.valueOf(localDate);
+        if(warehouse.getController("dateTo") != null){
+            warehouse.removeController("dateTo");
+        }
+        warehouse.addController("dateTo", dateToValue);
     }
 }

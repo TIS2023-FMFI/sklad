@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="420.0" prefWidth="555.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationsMainController">
+<AnchorPane prefHeight="420.0" prefWidth="555.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationsMainController">
    <children>
       <Button layoutX="293.0" layoutY="104.0" mnemonicParsing="false" onAction="#createNewCustomerScene" prefHeight="28.0" prefWidth="115.0" text="Pridať zákazníka" />
       <Label layoutX="94.0" layoutY="182.0" text="Vyberte zákazníka:">
@@ -16,7 +16,7 @@
       </Label>
       <ChoiceBox fx:id="customer" layoutX="276.0" onAction="#saveCustomerName" layoutY="179.0" prefWidth="150.0" />
       <Button layoutX="89.0" layoutY="236.0" mnemonicParsing="false" prefHeight="28.0" onAction="#addNewReservation" prefWidth="115.0" text="Pridať rezerváciu" />
-      <Button layoutX="278.0" layoutY="236.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" text="Zobraziť rezervácie" />
+      <Button layoutX="278.0" layoutY="236.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" onAction="#showReservationRecords" text="Zobraziť rezervácie" />
       <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
    </children>
 </AnchorPane>

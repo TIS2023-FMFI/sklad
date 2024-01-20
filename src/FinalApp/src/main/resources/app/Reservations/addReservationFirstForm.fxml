@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.AddReservationFirstController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.AddReservationFirstController">
    <children>
       <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMainReservations" text="Naspäť" />
       <Label layoutX="102.0" layoutY="109.0" text="Meno zákazníka:" />

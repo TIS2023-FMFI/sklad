@@ -27,7 +27,7 @@ public class ReservationsMainController implements Initializable {
 
     public void saveCustomerName(){
         Warehouse warehouse = Warehouse.getInstance();
-        if(warehouse.getController("customerReservationName") == null){
+        if(warehouse.getController("customerReservationName") != null){
             warehouse.removeController("customerReservationName");
         }
         warehouse.addController("customerReservationName", customer);
@@ -35,6 +35,11 @@ public class ReservationsMainController implements Initializable {
 
     public void createNewCustomerScene() throws IOException {
         Warehouse.getInstance().changeScene("Reservations/createNewCustomer.fxml");
+    }
+
+    public void showReservationRecords() throws IOException {
+        saveCustomerName();
+        Warehouse.getInstance().changeScene("Reservations/reservationsView.fxml");
     }
 
     public void addNewReservation() throws IOException {
