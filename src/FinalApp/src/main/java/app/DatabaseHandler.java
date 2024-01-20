@@ -35,6 +35,7 @@ public class DatabaseHandler {
                 .build();
         try {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+            sessionFactory.createEntityManager();
         } catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
             throw e;
@@ -47,7 +48,7 @@ public class DatabaseHandler {
     @Override
     protected void finalize() {
         if (sessionFactory != null) {
-            sessionFactory.close();
+            //sessionFactory.close();
         }
     }
 
@@ -342,17 +343,21 @@ public class DatabaseHandler {
                 Users user = users.get(0);
 
                 if (user.getPassword().equals(password)) {
+                    session.close();
                     return user;
                 }
                 else {
+                    session.close();
                     throw new WrongPassword(login);
                 }
             }
             else {
+                session.close();
                 throw new UserDoesNotExist(login);
             }
         }
         catch (UserDoesNotExist | WrongPassword e) {
+
             throw e;
         }
         catch (Exception e) {
@@ -399,6 +404,7 @@ public class DatabaseHandler {
                 }
                 statistics.put(date, pair);
             }
+            session.close();
             return statistics;
         } catch (Exception e) {
             e.printStackTrace();
@@ -496,8 +502,7 @@ public class DatabaseHandler {
             return query.uniqueResult();
         }catch (Exception e){
             e.printStackTrace();
-            setUpSessionFactory();
-            return getPosition(name);
+            return null;
         }
     }
 
@@ -510,6 +515,7 @@ public class DatabaseHandler {
     }
 
     public int getNumberOfReservations(String customer, Date date) {
+
         try (Session session = sessionFactory.openSession()) {
             int customerId = getCustomer(customer).getId();
             Query<CustomerReservation> query = session.createQuery("from CustomerReservation r where r.idCustomer = :id");
@@ -710,8 +716,6 @@ public class DatabaseHandler {
             query.setParameter("pnr", PNR);
             return query.uniqueResult() > 0;
         } catch (Exception e) {
-            sessionFactory.close();
-            setUpSessionFactory();
             e.printStackTrace();
             return false;
         }
