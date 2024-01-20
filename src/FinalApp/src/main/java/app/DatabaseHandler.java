@@ -158,8 +158,13 @@ public class DatabaseHandler {
             query.setParameter("id", material.getId());
             StoredOnPallet sop = query.getSingleResult();
             if (sop.getQuantity() == quantity){
-                session.detach(sop);
+                session.delete(sop);
                 if (removePallet) {
+                    Query<PalletOnPosition> popQ = session.createQuery("from PalletOnPosition pop where pop.idPallet = :pnr and pop.idPosition = :id");
+                    popQ.setParameter("pnr", pallet.getPnr());
+                    popQ.setParameter("id", position.getName());
+                    PalletOnPosition pop = popQ.getSingleResult();
+                    session.delete(pop);
                     session.delete(pallet);
                 }
             }else {
@@ -182,7 +187,8 @@ public class DatabaseHandler {
             return customer;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            setUpSessionFactory();
+            return getCustomerThatReservedPosition(position);
         }
     }
 
