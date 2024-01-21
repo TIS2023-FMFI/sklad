@@ -1,10 +1,14 @@
 package app;
 
+import Entity.Material;
+import Entity.Pallet;
 import Entity.Position;
+import Exceptions.MaterialNotAvailable;
 import GUI.StoreInProduct.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,27 +37,47 @@ public class StoreInProduct {
     /***
      * Method that stores in product
      */
-    public void storeInProduct(){
-        DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
-        PalletInformationController palletInformationController = (PalletInformationController) Warehouse.getInstance().getController("palletInformation");
-        StoreInPositionController storeInPositionController = (StoreInPositionController) Warehouse.getInstance().getController("storeInPosition");
+    public void storeInProduct() {
+        Warehouse warehouse = Warehouse.getInstance();
+        DatabaseHandler databaseHandler = warehouse.getDatabaseHandler();
+        PalletInformationController palletInformationController = (PalletInformationController) warehouse.getController("palletInformation");
+        StoreInPositionController storeInPositionController = (StoreInPositionController) warehouse.getController("storeInPosition");
+
+        // creates a pallet for saving into memory
+        Pallet pallet = new Pallet();
+        pallet.setPnr(palletInformationController.getPNR());
+        pallet.setWeight(palletInformationController.getWeight());
+        pallet.setDateIncome(java.sql.Date.valueOf(LocalDate.now()));
+        pallet.setDamaged(palletInformationController.getIsDamaged());
+        pallet.setIdUser(warehouse.getCurrentUser().getId());
+        pallet.setType(palletInformationController.getPalletType());
+        pallet.setNote(storeInPositionController.getNote());
 
         // stores pallet to table pallet
-        databaseHandler.savePalletToDB(palletInformationController.getPNR(), palletInformationController.getWeight(),
-                java.sql.Date.valueOf(LocalDate.now()), palletInformationController.getIsDamaged(), Warehouse.getInstance().getCurrentUser().getId(),
-                palletInformationController.getPalletType(), storeInPositionController.getNote());
+        databaseHandler.savePalletToDB(pallet);
 
         // stores material to table material and also material and its count to table stored_on_pallet
+        // creates material Map for saving into memory
         Map<String, Integer> materials = palletInformationController.getMaterialMap();
+        Map<Material, Integer> materialMap = new HashMap<>();
+
         for (String material : materials.keySet()){
             databaseHandler.saveMaterialToDB(material);
             databaseHandler.saveMaterialAndCountToDB(palletInformationController.getPNR(), material, materials.get(material));
+
+            try {
+                materialMap.put(warehouse.getDatabaseHandler().getMaterial(material), materials.get(material));
+            } catch (MaterialNotAvailable e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // stores pallet and its position to table pallet_on_position
+        // saves the pallet to the palletsOnPosition map
         String[] positions = storeInPositionController.getPosition().split("-");
         for (String position : positions){
             databaseHandler.savePalletOnPositionToDB(palletInformationController.getPNR(), position);
+            warehouse.getPalletsOnPosition().get(warehouse.getDatabaseHandler().getPosition(position)).put(pallet, materialMap);
         }
     }
 
