@@ -75,7 +75,8 @@ public class OrderShowPositionsController implements Initializable {
         columns.add("PNR");
         fe.exportExcel(items, "Order", "Objednávka", columns);
 
-        //export a vymazanie z databazy
+        OrderProduct op = new OrderProduct();
+        op.removeOrderedItems(items);
 
         Warehouse.getInstance().changeScene("OrderProduct/orderDownloadConfirmation.fxml");
     }

@@ -1,4 +1,5 @@
 package GUI.Statistics;
+import app.FileExporter;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -7,6 +8,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+
 
 public class CalculatedInvoicingController implements javafx.fxml.Initializable{
     @FXML
@@ -39,7 +41,7 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
         for (LocalDate date = dateFrom.toLocalDate();
              date.isBefore(dateTo.toLocalDate()) || date.isEqual(dateTo.toLocalDate());
              date = date.plusDays(1)) {
-            finalPrice += dbh.getNumberOfReservations(customer, Date.valueOf(date))*price;
+             finalPrice += dbh.getNumberOfReservations(customer, Date.valueOf(date))*price;
         }
 
         calculatedPrice.setText(finalPrice + " €");
@@ -63,6 +65,9 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
     /***
      * This method is used to save the calculated invoicing price
      */
-    public void saveInvoicingPrice(){
+    public void saveInvoicingPrice() {
+        FileExporter fe = new FileExporter();
+        fe.exportInvoicingPDF(customerName.getText(), intervalFrom.getText(),
+                intervalTo.getText(), calculatedPrice.getText());
     }
 }

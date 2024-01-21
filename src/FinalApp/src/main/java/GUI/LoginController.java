@@ -1,6 +1,8 @@
 package GUI;
 
+import Entity.Position;
 import app.DatabaseHandler;
+import app.RelocateProduct;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -24,6 +26,17 @@ public class LoginController {
             }
             Warehouse.getInstance().setCurrentUser(DatabaseHandler.checkUser(username.getText(), password.getText()));
             Warehouse.getInstance().loadDb();
+
+
+            DatabaseHandler db = new DatabaseHandler();
+            Warehouse w = Warehouse.getInstance();
+            RelocateProduct relocateProduct = new RelocateProduct();
+            Position initPos = db.getPosition("A0001");
+            //Position finalPos = db.getPosition("A0100");
+            //relocateProduct.relocateProduct("A0100", initPos,
+              //      "Test material", 2, "2000", "2222");
+
+
             Warehouse.getInstance().changeScene("mainMenu.fxml");
         }
         catch (Exception e){

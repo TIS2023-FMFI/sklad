@@ -6,6 +6,8 @@ module app.finalapp {
     requires java.naming;
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
+    requires itextpdf;
+
     opens Entity;
     opens GUI;
     opens app;

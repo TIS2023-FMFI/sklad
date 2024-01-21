@@ -29,9 +29,10 @@ public class Warehouse extends Application {
     /***
      * Currently logged-in user.
      */
-    private Users currentUser;
-    private final Map<String, Object> controllers = new HashMap<>();
 
+    public Users currentUser;
+    private final Map<String, Object> controllers = new HashMap<>();
+  
     /***
      * Map that maps rows in the warehouse to map of and its positions.
      */
@@ -121,7 +122,14 @@ public class Warehouse extends Application {
         positionsInRows = databaseHandler.loadPositionsInRows();
         palletsOnPosition = databaseHandler.loadPalletsOnPositions();
     }
+  
+    public Map<String, Map<Integer, List<Position>>> getPositionsInRows() {
+        return positionsInRows;
+    }
 
+    public Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPosition() {
+        return palletsOnPosition;
+    }
 
     public void setCurrentUser(Users currentUser) {
         this.currentUser = currentUser;

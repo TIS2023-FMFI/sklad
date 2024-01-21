@@ -58,6 +58,7 @@ public class OrderProductsController implements Initializable {
             }
             Pair<Material, Integer> oldPair = null;
             var newMaterial = new Pair<>(m, Integer.parseInt(quantity.getText()));
+            System.out.println(materials);
             for (Pair<Material,Integer> p : materials) {
                 if (p.getKey().getName().equals(m.getName())) {
                     oldPair = p;
@@ -70,7 +71,7 @@ public class OrderProductsController implements Initializable {
             OrderProduct op = new OrderProduct();
             if (!op.canCustomerOrder(customer, m, newMaterial.getValue())) {
                 errorMessage.setText("Nedostatok materiálu!");
-                materials.add(oldPair);
+                if (oldPair != null) materials.add(oldPair);
                 return;
             }
 
@@ -95,6 +96,10 @@ public class OrderProductsController implements Initializable {
         Warehouse.getInstance().changeScene("OrderProduct/orderCustomerSelectionForm.fxml");
     }
     public void confirmOrderProducts() throws IOException {
+        if (materials.size() == 0) {
+            errorMessage.setText("Musíte pridať aspoň jeden materiál!");
+            return;
+        }
         Warehouse.getInstance().changeScene("OrderProduct/orderShowPositionsForm.fxml");
     }
 
