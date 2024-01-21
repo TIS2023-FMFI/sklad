@@ -4,9 +4,7 @@ import Entity.Customer;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Test;
@@ -122,13 +120,17 @@ public class ExportTest {
 
     private static void addInvoiceContent(Document document) throws DocumentException {
         // Add a title to the document
-        Paragraph title = new Paragraph("Faktúračťšľýáíjl", FontFactory.getFont(FontFactory.defaultEncoding, 18));
+        Font customFont = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
+        Font customFontSmall = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 10);
+        Font customFontBig = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 15, Font.BOLD);
+        Font customFontBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12, Font.BOLD);
+
+        Paragraph title = new Paragraph("Faktúra", customFontBig);
         title.setAlignment(Element.ALIGN_CENTER);
         document.add(title);
 
         // Add provider information
-        document.add(new Paragraph("Informácie o sprostredkovateľovi:",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+        document.add(new Paragraph("Informácie o sprostredkovateľovi:",customFontBold));
         PdfPTable tableProvider = new PdfPTable(2);
         tableProvider.setWidthPercentage(100);
 
@@ -137,7 +139,7 @@ public class ExportTest {
                       Názov: CEVA Logistics
                       Adresa: 123 Hlavná ulica
                       Mesto: Strecno
-                      """, FontFactory.getFont(FontFactory.HELVETICA, 12));
+                      """, customFontSmall);
         providerInfo.setSpacingAfter(30);
         PdfPCell providerCell = new PdfPCell(providerInfo);
 
@@ -162,14 +164,14 @@ public class ExportTest {
 
         document.add(tableProvider);
 
-        document.add(new Paragraph("Informácie o zákazníkovi:                                  " +
+        document.add(new Paragraph("Informácie o zákazníkovi:                             " +
                 "Informácie o faktúre:",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+                customFontBold));
 
         PdfPTable tableCustomer = new PdfPTable(2);
         tableCustomer.setWidthPercentage(100);
 
-        Paragraph customerInfo = new Paragraph("Názov: Formula 1");
+        Paragraph customerInfo = new Paragraph("Názov: Formula 1", customFontSmall);
         customerInfo.add("\nAdresa: 345 Vedľajšia ulica");
         customerInfo.add("\nMesto: Ružomberok");
         PdfPCell customerCell = new PdfPCell(customerInfo);
@@ -178,7 +180,7 @@ public class ExportTest {
         tableCustomer.addCell(customerCell);
 
 
-        Paragraph invoicingInfo = new Paragraph("Císlo faktúry: 12345\n");
+        Paragraph invoicingInfo = new Paragraph("Číslo faktúry: 12345\n", customFontSmall);
         invoicingInfo.add("Dátum vystavenia: " + LocalDate.now().format(
                 DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
@@ -190,23 +192,23 @@ public class ExportTest {
 
 
         // Step 4: Add items to the invoice (example)
-        document.add(Chunk.NEWLINE);
+        //document.add(Chunk.NEWLINE);
         document.add(new Paragraph("Produkty faktúry:",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+                customFontBold));
         document.add(Chunk.NEWLINE);
         PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100);
-        table.addCell("Položka");
-        table.addCell("Pocet");
-        table.addCell("Cena za kus");
-        table.addCell("Pozícia v sklade");
-        table.addCell("123");
-        table.addCell("10.00 €");
+        table.addCell(new Paragraph("Položka", customFontBold));
+        table.addCell(new Paragraph("Počet", customFontBold));
+        table.addCell(new Paragraph("Cena za kus", customFontBold));
+        table.addCell(new Paragraph("Pozícia v sklade", customFont));
+        table.addCell(new Paragraph("123", customFont));
+        table.addCell(new Paragraph("10 €", customFont));
         document.add(table);
 
         document.add(Chunk.NEWLINE);
         document.add(new Paragraph("Celková suma: 1230 €",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 15)));
+                customFontBig));
     }
 
     @Test
