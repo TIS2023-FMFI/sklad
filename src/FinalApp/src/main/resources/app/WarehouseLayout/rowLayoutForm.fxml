@@ -2,10 +2,27 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WarehouseLayout.RowLayoutController">
-   <children>
-      <Button layoutX="32.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToRows" text="Naspäť" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="582.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WarehouseLayout.RowLayoutController">
+   <top>
+      <AnchorPane prefHeight="63.0" prefWidth="776.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="22.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToRows" text="Naspäť" />
+         </children>
+      </AnchorPane>
+   </top>
+   <left>
+      <AnchorPane prefHeight="330.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
+   <bottom>
+      <AnchorPane prefHeight="107.0" prefWidth="776.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <VBox fx:id="positionsVBox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

@@ -30,6 +30,13 @@ public class Customer {
         this.name = name;
     }
 
+    public Customer() {
+    }
+
+    public Customer(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

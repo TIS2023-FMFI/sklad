@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public class MainMenuController {
     public void showWarehouseLayout() throws IOException {
+        Warehouse.getInstance().initializeWarehouseLayout();
         Warehouse.getInstance().changeScene("WarehouseLayout/warehouseLayoutRowsForm.fxml");
     }
 
@@ -23,6 +24,10 @@ public class MainMenuController {
 
     public void showStatistics() throws IOException {
         Warehouse.getInstance().changeScene("Statistics/statisticsMainPageForm.fxml");
+    }
+
+    public void reservationsMain() throws IOException {
+        Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
     }
 
     public void logout() throws IOException {
