@@ -5,6 +5,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -195,6 +196,143 @@ public class FileExporter {
             PdfWriter.getInstance(document, new FileOutputStream("exports/Dodací list.pdf"));
             document.open();
 
+            PdfPTable table = new PdfPTable(4);
+            table.setWidthPercentage(100);
+            PdfPCell c = new PdfPCell(new Paragraph("Dodací list č:"));
+            c.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c);
+            PdfPCell c1 = new PdfPCell(new Paragraph("25440"));
+            c1.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c1);
+            PdfPCell c2 = new PdfPCell(new Paragraph("Dátum:"));
+            c2.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c2);
+            PdfPCell c3 = new PdfPCell(new Paragraph(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+            c3.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c3);
+
+            document.add(table);
+
+
+            PdfPTable table2 = new PdfPTable(2);
+            table2.setWidthPercentage(100);
+            PdfPCell cellFrom = new PdfPCell(new Paragraph("""
+                    Poskytovatel:
+                    
+                        CEVA Logistics
+                        Hlavná 103
+                        Strecno
+                        06871
+                    """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 10)));
+            table2.addCell(cellFrom);
+
+            PdfPCell cellTo = new PdfPCell(new Paragraph("""
+                    Odoberatel:
+                    
+                   """ + "    " + customer.getName() + """
+                        
+                        Vedľajšia 356
+                        Prievidza
+                        77877
+                    """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 10)));
+            table2.addCell(cellTo);
+
+            document.add(table2);
+
+
+
+            PdfPTable contentTable = new PdfPTable(6);
+            contentTable.setWidthPercentage(100);
+            PdfPCell cell = new PdfPCell(new Paragraph("Císlo:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell);
+
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Pozícia:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell2);
+
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Paleta:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell3);
+
+
+            PdfPCell cell4 = new PdfPCell(new Paragraph("Materiál:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell4);
+
+
+            PdfPCell cell5 = new PdfPCell(new Paragraph("Množstvo:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell5);
+
+
+            PdfPCell cell1 = new PdfPCell(new Paragraph("Poznámka:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell1);
+
+            int num = 1;
+
+            for (Map<String, String> item:items) {
+                contentTable.addCell(String.valueOf(num));
+                contentTable.addCell(item.get("Pozícia"));
+                contentTable.addCell(item.get("PNR"));
+                contentTable.addCell(item.get("Materiál"));
+                contentTable.addCell(item.get("Počet"));
+                contentTable.addCell("");
+                num++;
+            }
+            document.add(contentTable);
+
+
+            PdfPTable signTable = new PdfPTable(3);
+            signTable.setWidthPercentage(100);
+
+            PdfPCell gave = new PdfPCell(new Paragraph("Odovzdal:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8)));
+            signTable.addCell(gave);
+
+            PdfPCell transported = new PdfPCell(new Paragraph("Prepravil:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8)));
+            signTable.addCell(transported);
+
+            PdfPCell accepted = new PdfPCell(new Paragraph("Prevzal:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8)));
+            signTable.addCell(accepted);
+
+
+            PdfPCell gaveSign = new PdfPCell(new Paragraph("""
+                               
+                               
+                               
+                               
+                               (meno,peciatka,podpis) 
+                               """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            signTable.addCell(gaveSign);
+
+            PdfPCell transportedSign = new PdfPCell(new Paragraph("""
+                               
+                               
+                               
+                               
+                               (meno,peciatka,podpis) 
+                               """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            signTable.addCell(transportedSign);
+
+            PdfPCell acceptedSign = new PdfPCell(new Paragraph("""
+                               
+                               
+                               
+                               
+                               (meno,peciatka,podpis) 
+                               """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            signTable.addCell(acceptedSign);
+
+            document.add(signTable);
 
 
             document.close();
