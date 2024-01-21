@@ -13,8 +13,10 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -617,19 +619,28 @@ public class DatabaseHandler {
     }
     /***
      * Method, that creates new customer and saves him to the database.
-     * @param name Unique customer name.
+     * @param customer save this customer to database.
      * @return true when new customer was added to database.
      */
-    public boolean saveCustomer(String name){
+    public boolean saveCustomer(Customer customer){
         try (Session session = sessionFactory.openSession()) {
-            Customer customer = new Customer(name);
 
             session.beginTransaction();
             session.persist(customer);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            //e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean checkCustomerExist(String name){
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("SELECT COUNT(*) FROM Customer c WHERE c.name = :name");
+            query.setParameter("name", name);
+            return ! ((Long) query.uniqueResult() > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -645,6 +656,7 @@ public class DatabaseHandler {
             return new ArrayList<>();
         }
     }
+
 
 
 }

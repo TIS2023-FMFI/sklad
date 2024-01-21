@@ -9,12 +9,43 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.CreateNewCustomerController">
    <children>
       <Button layoutX="61.0" layoutY="53.0" mnemonicParsing="false" onAction="#backToMainReservations" text="Naspäť" />
-      <Label layoutX="135.0" layoutY="154.0" prefHeight="36.0" prefWidth="83.0" text="zadajte meno:">
+      <Label layoutX="165.0" layoutY="91.0" prefHeight="36.0" prefWidth="83.0" text="meno:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <TextField fx:id="customerName" layoutX="283.0" layoutY="159.0" />
-      <Button layoutX="257.0" layoutY="226.0" mnemonicParsing="false" onAction="#addNewCustomer" text="Uložiť" />
-      <Label fx:id="errorMessage" layoutX="190.0" layoutY="100.0" prefHeight="18.0" prefWidth="252.0" textAlignment="CENTER" textFill="red" />
+      <TextField fx:id="customerNameT" layoutX="281.0" layoutY="97.0" />
+      <Button layoutX="256.0" layoutY="325.0" mnemonicParsing="false" onAction="#addNewCustomer" text="Uložiť" />
+      <Label fx:id="errorMessage" layoutX="186.0" layoutY="56.0" prefHeight="18.0" prefWidth="252.0" textAlignment="CENTER" textFill="red" />
+      <Label layoutX="165.0" layoutY="127.0" prefHeight="36.0" prefWidth="83.0" text="adresa:" textAlignment="RIGHT">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorMessage1" layoutX="280.0" layoutY="136.0" prefHeight="18.0" prefWidth="159.0" textAlignment="CENTER" textFill="red" />
+      <Label layoutX="165.0" layoutY="163.0" prefHeight="36.0" prefWidth="83.0" text="mesto:" textAlignment="RIGHT">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="165.0" layoutY="199.0" prefHeight="36.0" prefWidth="42.0" text="PSČ:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="165.0" layoutY="235.0" prefHeight="36.0" prefWidth="83.0" text="*IČO:" textAlignment="RIGHT">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="165.0" layoutY="266.0" prefHeight="36.0" prefWidth="83.0" text="*DIČ:" textAlignment="RIGHT">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="addressT" layoutX="281.0" layoutY="133.0" />
+      <TextField fx:id="cityT" layoutX="281.0" layoutY="169.0" />
+      <TextField fx:id="postCodeT" layoutX="281.0" layoutY="205.0" />
+      <TextField fx:id="ICOT" layoutX="281.0" layoutY="241.0" />
+      <TextField fx:id="DICT" layoutX="281.0" layoutY="271.0" />
    </children>
 </AnchorPane>
