@@ -1,5 +1,6 @@
 package app;
 
+import Entity.Customer;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -100,7 +101,7 @@ public class ExportTest {
             document.open();
 
             // Step 4: Add content to the document
-            addMetaData(document);
+            //addMetaData(document);
             addInvoiceContent(document);
 
             // Step 5: Close the document
@@ -121,7 +122,7 @@ public class ExportTest {
 
     private static void addInvoiceContent(Document document) throws DocumentException {
         // Add a title to the document
-        Paragraph title = new Paragraph("Faktúra", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18));
+        Paragraph title = new Paragraph("Faktúračťšľýáíjl", FontFactory.getFont(FontFactory.defaultEncoding, 18));
         title.setAlignment(Element.ALIGN_CENTER);
         document.add(title);
 
@@ -190,7 +191,7 @@ public class ExportTest {
 
         // Step 4: Add items to the invoice (example)
         document.add(Chunk.NEWLINE);
-        document.add(new Paragraph("Invoice Items:",
+        document.add(new Paragraph("Produkty faktúry:",
                 FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
         document.add(Chunk.NEWLINE);
         PdfPTable table = new PdfPTable(3);
@@ -206,5 +207,90 @@ public class ExportTest {
         document.add(Chunk.NEWLINE);
         document.add(new Paragraph("Celková suma: 1230 €",
                 FontFactory.getFont(FontFactory.HELVETICA_BOLD, 15)));
+    }
+
+    @Test
+    public void exportOrderPDF() {
+        ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
+        Customer customer = new Customer();
+        customer.setName("Zákazník");
+        Map<String, String> row = Map.of(
+                "Materiál", "Skrina",
+                "Počet", "5",
+                "Pozícia", "A0001",
+                "PNR", "2314"
+        );
+        items.add(row);
+
+        try {
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream("exports/Dodací list.pdf"));
+            document.open();
+
+            PdfPTable table = new PdfPTable(4);
+            table.setWidthPercentage(100);
+            PdfPCell c = new PdfPCell(new Paragraph("Dodací list č:"));
+            c.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c);
+            PdfPCell c1 = new PdfPCell(new Paragraph("25440"));
+            c1.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c1);
+            PdfPCell c2 = new PdfPCell(new Paragraph("Dátum:"));
+            c2.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c2);
+            PdfPCell c3 = new PdfPCell(new Paragraph(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+            c3.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c3);
+
+            document.add(table);
+
+
+            PdfPTable table2 = new PdfPTable(2);
+            table2.setWidthPercentage(100);
+            table2.addCell("""
+                    Poskytovatel
+                        MY
+                        Hlavná 103
+                        Strečno
+                        06871
+                    """);
+            table2.addCell("""
+                    Odoberatel
+                        VY
+                        Vedľajšia 356
+                        Prievidza
+                        77877
+                    """);
+
+            document.add(table2);
+
+            PdfPTable contentTable = new PdfPTable(6);
+            contentTable.setWidthPercentage(100);
+            contentTable.addCell("p.c.");
+            contentTable.addCell("pozícia");
+            contentTable.addCell("paleta");
+            contentTable.addCell("materiál");
+            contentTable.addCell("mnozstvo");
+            contentTable.addCell("poznámka");
+
+            int num = 1;
+
+            for (Map<String, String> item:items) {
+                contentTable.addCell(String.valueOf(num));
+                contentTable.addCell(item.get("Pozícia"));
+                contentTable.addCell(item.get("PNR"));
+                contentTable.addCell(item.get("Materiál"));
+                contentTable.addCell(item.get("Počet"));
+                contentTable.addCell("");
+                num++;
+            }
+            document.add(contentTable);
+
+
+            document.close();
+            System.out.println("Order.pdf generated successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
