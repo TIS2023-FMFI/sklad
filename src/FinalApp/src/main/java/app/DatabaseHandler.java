@@ -55,7 +55,6 @@ public class DatabaseHandler {
 
     protected boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
-            int counter = 0;
             List<Position> newPositions = new ArrayList<>();
             List<Position> updatePositions = new ArrayList<>();
 
@@ -605,6 +604,17 @@ public class DatabaseHandler {
         }
     }
 
+    //----------------------------------------TU SOM SKONCILA TREBA SPRAVIT TUTO FUNKCIU--------------------------------------
+    public boolean isPositionReserved(String PNR) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("SELECT COUNT(*) FROM CustomerReservation cr WHERE cr.idPosition = :idPosition");
+            query.setParameter("idPosition", PNR);
+            return (Long) query.uniqueResult() > 0;
+        }
+    }
+    //-------------------------------------------------------------------------------------------------------------------------
+
+
     // zatial vyberie iba všetky pozície treba dorobiť
     // algoritmus bude brať do úvahy položky z formulárov:
     //     či paleta vyžaduje vysokú pozíciu
@@ -745,4 +755,36 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+    /***
+     * Method, that creates new customer and saves him to the database.
+     * @param name Unique customer name.
+     * @return true when new customer was added to database.
+     */
+    public boolean saveCustomer(String name){
+        try (Session session = sessionFactory.openSession()) {
+            Customer customer = new Customer(name);
+
+            session.beginTransaction();
+            session.persist(customer);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<CustomerReservation> getReservationRecords(int customerId){
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM CustomerReservation r WHERE r.idCustomer = :idCustomer");
+            query.setParameter("idCustomer", customerId);
+
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+
 }
