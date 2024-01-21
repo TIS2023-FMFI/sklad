@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 
@@ -19,6 +20,8 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
     public Label intervalTo;
     @FXML
     public Label customerName;
+
+    int totalReservations = 0;
 
     /***
      * This method is used to calculate the invoicing price and set the labels.
@@ -37,14 +40,14 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
         intervalFrom.setText(dateFrom.toString());
         intervalTo.setText(dateTo.toString());
         var dbh = Warehouse.getInstance().getDatabaseHandler();
-        int finalPrice = 0;
         for (LocalDate date = dateFrom.toLocalDate();
-             date.isBefore(dateTo.toLocalDate()) || date.isEqual(dateTo.toLocalDate());
-             date = date.plusDays(1)) {
-             finalPrice += dbh.getNumberOfReservations(customer, Date.valueOf(date))*price;
+            date.isBefore(dateTo.toLocalDate()) || date.isEqual(dateTo.toLocalDate());
+            date = date.plusDays(1)) {
+            int days = dbh.getNumberOfReservations(customer, Date.valueOf(date));
+            totalReservations += days;
         }
 
-        calculatedPrice.setText(finalPrice + " €");
+        calculatedPrice.setText(totalReservations *price + " €");
 
     }
 
@@ -67,7 +70,8 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
      */
     public void saveInvoicingPrice() {
         FileExporter fe = new FileExporter();
+
         fe.exportInvoicingPDF(customerName.getText(), intervalFrom.getText(),
-                intervalTo.getText(), calculatedPrice.getText());
+                intervalTo.getText(), calculatedPrice.getText(), totalReservations);
     }
 }

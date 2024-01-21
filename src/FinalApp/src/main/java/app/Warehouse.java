@@ -188,10 +188,6 @@ public class Warehouse extends Application {
         return positionsInRows.get(rowName);
     }
 
-    public Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPosition() {
-        return palletsOnPosition;
-    }
-
     public boolean isPalletOnPosition(Position position){
         return palletsOnPosition.get(position).isEmpty();
     }

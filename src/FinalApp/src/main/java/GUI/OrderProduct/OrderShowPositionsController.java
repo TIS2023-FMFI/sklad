@@ -21,7 +21,9 @@ import java.util.*;
 public class OrderShowPositionsController implements Initializable {
     public TableView orderTable;
 
-    private ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
+    protected ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
+
+    Customer cust;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,6 +46,7 @@ public class OrderShowPositionsController implements Initializable {
 
         List<Pair<Material,Integer>> products = cont.materials;
         Customer customer = cont.customer;
+        cust = cont.customer;
         OrderProduct op = new OrderProduct();
 
         try {
@@ -66,7 +69,7 @@ public class OrderShowPositionsController implements Initializable {
     public void backToCustomerSelection() throws IOException {
         Warehouse.getInstance().changeScene("OrderProduct/orderCustomerSelectionForm.fxml");
     }
-    public void saveOrderAndContinue() throws IOException {
+    public void saveOrderExcel() throws IOException {
         FileExporter fe = new FileExporter();
         List<String> columns = new ArrayList<>();
         columns.add("Materiál");
@@ -75,9 +78,16 @@ public class OrderShowPositionsController implements Initializable {
         columns.add("PNR");
         fe.exportExcel(items, "Order", "Objednávka", columns);
 
+    }
+
+    public void saveOrdersPdf(){
+        FileExporter fe = new FileExporter();
+        fe.exportOrderPDF(items, cust);
+    }
+
+    public void backToMenu() throws IOException {
         OrderProduct op = new OrderProduct();
         op.removeOrderedItems(items);
-
-        Warehouse.getInstance().changeScene("OrderProduct/orderDownloadConfirmation.fxml");
+        Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
 }

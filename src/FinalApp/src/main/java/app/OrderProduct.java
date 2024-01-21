@@ -130,5 +130,6 @@ public class OrderProduct {
             }
             dbh.removeItem(position, pnr, material, quantity, removePallet);
         }
+
     }
 }

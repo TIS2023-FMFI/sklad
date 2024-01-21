@@ -1,11 +1,10 @@
 package app;
 
+import Entity.Customer;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Test;
@@ -100,7 +99,7 @@ public class ExportTest {
             document.open();
 
             // Step 4: Add content to the document
-            addMetaData(document);
+            //addMetaData(document);
             addInvoiceContent(document);
 
             // Step 5: Close the document
@@ -121,13 +120,17 @@ public class ExportTest {
 
     private static void addInvoiceContent(Document document) throws DocumentException {
         // Add a title to the document
-        Paragraph title = new Paragraph("Faktúra", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18));
+        Font customFont = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
+        Font customFontSmall = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 10);
+        Font customFontBig = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 15, Font.BOLD);
+        Font customFontBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12, Font.BOLD);
+
+        Paragraph title = new Paragraph("Faktúra", customFontBig);
         title.setAlignment(Element.ALIGN_CENTER);
         document.add(title);
 
         // Add provider information
-        document.add(new Paragraph("Informácie o sprostredkovateľovi:",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+        document.add(new Paragraph("Informácie o sprostredkovateľovi:",customFontBold));
         PdfPTable tableProvider = new PdfPTable(2);
         tableProvider.setWidthPercentage(100);
 
@@ -136,7 +139,7 @@ public class ExportTest {
                       Názov: CEVA Logistics
                       Adresa: 123 Hlavná ulica
                       Mesto: Strecno
-                      """, FontFactory.getFont(FontFactory.HELVETICA, 12));
+                      """, customFontSmall);
         providerInfo.setSpacingAfter(30);
         PdfPCell providerCell = new PdfPCell(providerInfo);
 
@@ -161,14 +164,14 @@ public class ExportTest {
 
         document.add(tableProvider);
 
-        document.add(new Paragraph("Informácie o zákazníkovi:                                  " +
+        document.add(new Paragraph("Informácie o zákazníkovi:                             " +
                 "Informácie o faktúre:",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+                customFontBold));
 
         PdfPTable tableCustomer = new PdfPTable(2);
         tableCustomer.setWidthPercentage(100);
 
-        Paragraph customerInfo = new Paragraph("Názov: Formula 1");
+        Paragraph customerInfo = new Paragraph("Názov: Formula 1", customFontSmall);
         customerInfo.add("\nAdresa: 345 Vedľajšia ulica");
         customerInfo.add("\nMesto: Ružomberok");
         PdfPCell customerCell = new PdfPCell(customerInfo);
@@ -177,7 +180,7 @@ public class ExportTest {
         tableCustomer.addCell(customerCell);
 
 
-        Paragraph invoicingInfo = new Paragraph("Císlo faktúry: 12345\n");
+        Paragraph invoicingInfo = new Paragraph("Číslo faktúry: 12345\n", customFontSmall);
         invoicingInfo.add("Dátum vystavenia: " + LocalDate.now().format(
                 DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
@@ -189,22 +192,185 @@ public class ExportTest {
 
 
         // Step 4: Add items to the invoice (example)
-        document.add(Chunk.NEWLINE);
-        document.add(new Paragraph("Invoice Items:",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+        //document.add(Chunk.NEWLINE);
+        document.add(new Paragraph("Produkty faktúry:",
+                customFontBold));
         document.add(Chunk.NEWLINE);
         PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100);
-        table.addCell("Položka");
-        table.addCell("Pocet");
-        table.addCell("Cena za kus");
-        table.addCell("Pozícia v sklade");
-        table.addCell("123");
-        table.addCell("10.00 €");
+        table.addCell(new Paragraph("Položka", customFontBold));
+        table.addCell(new Paragraph("Počet", customFontBold));
+        table.addCell(new Paragraph("Cena za kus", customFontBold));
+        table.addCell(new Paragraph("Pozícia v sklade", customFont));
+        table.addCell(new Paragraph("123", customFont));
+        table.addCell(new Paragraph("10 €", customFont));
         document.add(table);
 
         document.add(Chunk.NEWLINE);
         document.add(new Paragraph("Celková suma: 1230 €",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 15)));
+                customFontBig));
+    }
+
+    @Test
+    public void exportOrderPDF() {
+        ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
+        Customer customer = new Customer();
+        customer.setName("Zákazník");
+        Map<String, String> row = Map.of(
+                "Materiál", "Skrina",
+                "Počet", "5",
+                "Pozícia", "A0001",
+                "PNR", "2314"
+        );
+        items.add(row);
+
+        try {
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream("exports/Dodací list.pdf"));
+            document.open();
+
+            PdfPTable table = new PdfPTable(4);
+            table.setWidthPercentage(100);
+            PdfPCell c = new PdfPCell(new Paragraph("Dodací list č:"));
+            c.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c);
+            PdfPCell c1 = new PdfPCell(new Paragraph("25440"));
+            c1.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c1);
+            PdfPCell c2 = new PdfPCell(new Paragraph("Dátum:"));
+            c2.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c2);
+            PdfPCell c3 = new PdfPCell(new Paragraph(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+            c3.setBorder(Rectangle.NO_BORDER);
+            table.addCell(c3);
+
+            document.add(table);
+
+
+            PdfPTable table2 = new PdfPTable(2);
+            table2.setWidthPercentage(100);
+            PdfPCell cellFrom = new PdfPCell(new Paragraph("""
+                    Poskytovatel:
+                    
+                        MY
+                        Hlavná 103
+                        Strecno
+                        06871
+                    """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 10)));
+            table2.addCell(cellFrom);
+
+            PdfPCell cellTo = new PdfPCell(new Paragraph("""
+                    Odoberatel:
+                    
+                        VY
+                        Vedľajšia 356
+                        Prievidza
+                        77877
+                    """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 10)));
+            table2.addCell(cellTo);
+
+            document.add(table2);
+
+
+
+            PdfPTable contentTable = new PdfPTable(6);
+            contentTable.setWidthPercentage(100);
+            PdfPCell cell = new PdfPCell(new Paragraph("Císlo:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell);
+
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Pozícia:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell2);
+
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Paleta:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell3);
+
+
+            PdfPCell cell4 = new PdfPCell(new Paragraph("Materiál:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell4);
+
+
+            PdfPCell cell5 = new PdfPCell(new Paragraph("Množstvo:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell5);
+
+
+            PdfPCell cell1 = new PdfPCell(new Paragraph("Poznámka:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+            contentTable.addCell(cell1);
+
+            int num = 1;
+
+            for (Map<String, String> item:items) {
+                contentTable.addCell(String.valueOf(num));
+                contentTable.addCell(item.get("Pozícia"));
+                contentTable.addCell(item.get("PNR"));
+                contentTable.addCell(item.get("Materiál"));
+                contentTable.addCell(item.get("Počet"));
+                contentTable.addCell("");
+                num++;
+            }
+            document.add(contentTable);
+
+
+            PdfPTable signTable = new PdfPTable(3);
+            signTable.setWidthPercentage(100);
+
+            PdfPCell gave = new PdfPCell(new Paragraph("Odovzdal:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8)));
+            signTable.addCell(gave);
+
+            PdfPCell transported = new PdfPCell(new Paragraph("Prepravil:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8)));
+            signTable.addCell(transported);
+
+            PdfPCell accepted = new PdfPCell(new Paragraph("Prevzal:",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8)));
+            signTable.addCell(accepted);
+
+
+            PdfPCell gaveSign = new PdfPCell(new Paragraph("""
+                               
+                               
+                               
+                               
+                               (meno,peciatka,podpis) 
+                               """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            signTable.addCell(gaveSign);
+
+            PdfPCell transportedSign = new PdfPCell(new Paragraph("""
+                               
+                               
+                               
+                               
+                               (meno,peciatka,podpis) 
+                               """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            signTable.addCell(transportedSign);
+
+            PdfPCell acceptedSign = new PdfPCell(new Paragraph("""
+                               
+                               
+                               
+                               
+                               (meno,peciatka,podpis) 
+                               """,
+                    FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            signTable.addCell(acceptedSign);
+
+            document.add(signTable);
+
+
+            document.close();
+            System.out.println("Order.pdf generated successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
