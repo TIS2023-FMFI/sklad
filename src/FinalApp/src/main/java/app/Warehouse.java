@@ -127,7 +127,7 @@ public class Warehouse extends Application {
         return positionsInRows;
     }
 
-    public Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPosition() {
+    public Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPositionMap() {
         return palletsOnPosition;
     }
 
@@ -190,6 +190,10 @@ public class Warehouse extends Application {
 
     public boolean isPalletOnPosition(Position position){
         return palletsOnPosition.get(position).isEmpty();
+    }
+
+    public Map<Pallet, Map<Material, Integer>> getPalletsOnPosition(Position position){
+        return palletsOnPosition.get(position);
     }
 
     public static Stage getStage() {

@@ -77,7 +77,7 @@ public class StoreInProduct {
         String[] positions = storeInPositionController.getPosition().split("-");
         for (String position : positions){
             databaseHandler.savePalletOnPositionToDB(palletInformationController.getPNR(), position);
-            warehouse.getPalletsOnPosition().get(warehouse.getDatabaseHandler().getPosition(position)).put(pallet, materialMap);
+            warehouse.getPalletsOnPositionMap().get(warehouse.getDatabaseHandler().getPosition(position)).put(pallet, materialMap);
         }
     }
 
