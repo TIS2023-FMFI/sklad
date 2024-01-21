@@ -4,18 +4,10 @@ import Entity.Customer;
 import Entity.Material;
 import Entity.Pallet;
 import Entity.Position;
-import Exceptions.FileNotFound;
 import Exceptions.MaterialNotAvailable;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.*;
 
 
@@ -118,15 +110,15 @@ public class OrderProduct {
             }
             int quantity = Integer.parseInt(item.get("Počet"));
             boolean removePallet = false;
-            int numOnPos = Warehouse.getInstance().getPalletsOnPosition().get(position).get(pnr).get(material);
+            int numOnPos = Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).get(material);
             if (numOnPos == quantity) {
-                Warehouse.getInstance().getPalletsOnPosition().get(position).get(pnr).remove(material);
-                if (Warehouse.getInstance().getPalletsOnPosition().get(position).get(pnr).isEmpty()) {
-                    Warehouse.getInstance().getPalletsOnPosition().get(position).remove(pnr);
+                Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).remove(material);
+                if (Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).isEmpty()) {
+                    Warehouse.getInstance().getPalletsOnPositionMap().get(position).remove(pnr);
                     removePallet = true;
                 }
             } else {
-                Warehouse.getInstance().getPalletsOnPosition().get(position).get(pnr).put(material, numOnPos - quantity);
+                Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).put(material, numOnPos - quantity);
             }
             dbh.removeItem(position, pnr, material, quantity, removePallet);
         }

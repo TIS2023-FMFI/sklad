@@ -1,11 +1,7 @@
 package GUI.RelocateProduct;
-import Entity.Pallet;
 import Entity.Position;
 import app.DatabaseHandler;
-import app.OrderProduct;
-import app.RelocateProduct;
 import app.Warehouse;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -14,7 +10,6 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -52,7 +47,7 @@ public class ChooseProductToRelocateController implements Initializable {
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
         Position pos = databaseHandler.getPosition(position);
         initialPosition = pos;
-        var palletsOnPos = Warehouse.getInstance().getPalletsOnPosition().get(pos);
+        var palletsOnPos = Warehouse.getInstance().getPalletsOnPositionMap().get(pos);
         for (var pallet : palletsOnPos.keySet()){
             for (var material : palletsOnPos.get(pallet).keySet()){
                 int quantity = palletsOnPos.get(pallet).get(material);
@@ -74,7 +69,7 @@ public class ChooseProductToRelocateController implements Initializable {
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
         Position pos = databaseHandler.getPosition(position);
         initialPosition = pos;
-        var palletsOnPos = Warehouse.getInstance().getPalletsOnPosition().get(pos);
+        var palletsOnPos = Warehouse.getInstance().getPalletsOnPositionMap().get(pos);
         for (var pallet : palletsOnPos.keySet()){
             String sb = pallet.getPnr();
             productsOnPallet.getItems().add(sb);

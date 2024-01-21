@@ -3,7 +3,6 @@ package app;
 import Entity.Material;
 import Entity.Pallet;
 import Entity.Position;
-import Entity.StoredOnPallet;
 import javafx.scene.chart.XYChart;
 import javafx.util.Pair;
 
@@ -48,7 +47,7 @@ public class Statistics {
     public List<Map<String, String>> setInventoryTable(){
         List<Map<String,String>> res = new ArrayList<>();
         //var data = Warehouse.getInstance().getWarehouseData();
-        var data = Warehouse.getInstance().getPalletsOnPosition();
+        var data = Warehouse.getInstance().getPalletsOnPositionMap();
         //var dbh = Warehouse.getInstance().getDatabaseHandler();
         //Map<Position, Map<Pallet, Map<Material, Integer>>> palletsOnPosition;
         for (Position position : data.keySet()) {

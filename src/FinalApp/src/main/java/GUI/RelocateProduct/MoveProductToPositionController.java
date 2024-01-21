@@ -15,7 +15,6 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -46,7 +45,7 @@ public class MoveProductToPositionController implements Initializable {
         isWholePallet = controller.isWholePallet;
         if (isWholePallet){
             newPNR.setDisable(true);
-            var palsOnPos = Warehouse.getInstance().getPalletsOnPosition().get(initialPosition);
+            var palsOnPos = Warehouse.getInstance().getPalletsOnPositionMap().get(initialPosition);
             for (var pallet : palsOnPos.keySet()){
                 if (pallet.getPnr().equals(palletFrom)){
                     palletWeigh = pallet.getWeight();
@@ -134,7 +133,7 @@ public class MoveProductToPositionController implements Initializable {
         }
         Pallet pallet = Warehouse.getInstance().getDatabaseHandler().getPallet(PNR);
         Position position = Warehouse.getInstance().getDatabaseHandler().getPosition(finalPositions.get(0));
-        return Warehouse.getInstance().getPalletsOnPosition().get(position).containsKey(pallet);
+        return Warehouse.getInstance().getPalletsOnPositionMap().get(position).containsKey(pallet);
     }
 
     public void resetPallet(MouseEvent mouseEvent) {

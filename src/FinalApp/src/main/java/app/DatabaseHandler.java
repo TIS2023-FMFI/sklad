@@ -627,25 +627,10 @@ public class DatabaseHandler {
 
     /***
      * Method, that saves pallet information to the database.
-     * @param PNR The unique pallet number.
-     * @param weight The weight of the pallet.
-     * @param date The date when the pallet information is recorded.
-     * @param damaged Indicates whether the pallet or the product on it is damaged.
-     * @param userId The current user.
-     * @param palletType The type of pallet.
-     * @param note Additional note related to the pallet.
+     * @param pallet The pallet.
      */
-    public void savePalletToDB(String PNR, Integer weight, Date date, boolean damaged, Integer userId, String palletType, String note) {
+    public void savePalletToDB(Pallet pallet) {
         try (Session session = sessionFactory.openSession()) {
-            Pallet pallet = new Pallet();
-            pallet.setPnr(PNR);
-            pallet.setWeight(weight);
-            pallet.setDateIncome(date);
-            pallet.setDamaged(damaged);
-            pallet.setIdUser(userId);
-            pallet.setType(palletType);
-            pallet.setNote(note);
-
             session.beginTransaction();
             session.persist(pallet);
             session.getTransaction().commit();
