@@ -147,7 +147,7 @@ public class DatabaseHandler {
     }
 
     /***
-     * Method, that removes a material from databse after a successful order.
+     * Method, that removes a material from database after a successful order.
      * @param material The material to be removed.
      * @param quantity The quantity of the material to be removed.
      * @param position The position from which the material is removed.
@@ -424,10 +424,10 @@ public class DatabaseHandler {
         }
     }
 
-    public Customer getCustomer(String toString) {
+    public Customer getCustomer(String customerName) {
         try (Session session = sessionFactory.openSession()) {
             Query<Customer> query = session.createQuery("from Customer c where c.name = :name");
-            query.setParameter("name", toString);
+            query.setParameter("name", customerName);
             return query.uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
@@ -606,16 +606,18 @@ public class DatabaseHandler {
         }
     }
 
-    //----------------------------------------TU SOM SKONCILA TREBA SPRAVIT TUTO FUNKCIU--------------------------------------
-    public boolean isPositionReserved(String PNR) {
+    /***
+     * Method, that returns whether the position is reserved or not .
+     * @param positionName The position name.
+     * @return True if the PNR is already used, otherwise false.
+     */
+    public boolean isPositionReserved(String positionName) {
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("SELECT COUNT(*) FROM CustomerReservation cr WHERE cr.idPosition = :idPosition");
-            query.setParameter("idPosition", PNR);
+            query.setParameter("idPosition", positionName);
             return (Long) query.uniqueResult() > 0;
         }
     }
-    //-------------------------------------------------------------------------------------------------------------------------
-
 
     // zatial vyberie iba všetky pozície treba dorobiť
     // algoritmus bude brať do úvahy položky z formulárov:
@@ -742,6 +744,39 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+
+    /***
+     * Method, that returns a record for a given position name.
+     * @param positionName The position name.
+     * @return The CustomerReservation record associated with the provided position name,
+     */
+    public CustomerReservation getReservation(String positionName){
+        try (Session session = sessionFactory.openSession()) {
+            Query<CustomerReservation> query = session.createQuery("FROM CustomerReservation WHERE idPosition = :position");
+            query.setParameter("position", positionName);
+
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Method, that returns the username for a given userId.
+     * @param userId The unique identifier of the user.
+     * @return The username associated with the provided userId.
+     */
+    public String getUsername(int userId){
+        try (Session session = sessionFactory.openSession()) {
+            Users user = session.get(Users.class, userId);
+            return user.getName();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /***
      * Method, that creates new customer and saves him to the database.
      * @param customer save this customer to database.
@@ -749,7 +784,6 @@ public class DatabaseHandler {
      */
     public boolean saveCustomer(Customer customer){
         try (Session session = sessionFactory.openSession()) {
-
             session.beginTransaction();
             session.persist(customer);
             session.getTransaction().commit();
@@ -781,7 +815,4 @@ public class DatabaseHandler {
             return new ArrayList<>();
         }
     }
-
-
-
 }

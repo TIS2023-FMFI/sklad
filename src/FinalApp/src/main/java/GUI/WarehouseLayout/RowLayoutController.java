@@ -1,17 +1,24 @@
 package GUI.WarehouseLayout;
 
+import Entity.CustomerReservation;
 import Entity.Material;
 import Entity.Pallet;
+import app.DatabaseHandler;
 import app.Warehouse;
 import Entity.Position;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.*;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -31,6 +38,9 @@ public class RowLayoutController implements Initializable {
 
     @FXML
     private VBox informationContainer2;
+
+    @FXML
+    private AnchorPane materialCountTable;
 
     private static final String RED_COLOR = "#CF1616";
     private static final String ORANGE_COLOR = "#FF8D00";
@@ -52,11 +62,11 @@ public class RowLayoutController implements Initializable {
         palletsHBox.setAlignment(Pos.CENTER);
         palletsHBox.setSpacing(10);
 
-        informationContainer1.setAlignment(Pos.CENTER_LEFT);
-        informationContainer2.setAlignment(Pos.CENTER_LEFT);
+        informationContainer1.setAlignment(Pos.TOP_LEFT);
+        informationContainer2.setAlignment(Pos.TOP_LEFT);
 
-        informationContainer1.setSpacing(10);
-        informationContainer2.setSpacing(10);
+        informationContainer1.setSpacing(20);
+        informationContainer2.setSpacing(20);
 
         createGrid();
     }
@@ -141,7 +151,7 @@ public class RowLayoutController implements Initializable {
             positionWithPallets(position, palletsOnPosition);
         }
         else if (warehouse.getDatabaseHandler().isPositionReserved(position.getName())) {
-            reservedPosition();
+            reservedPosition(position);
         }
         else {
             freePosition();
@@ -160,27 +170,59 @@ public class RowLayoutController implements Initializable {
 
     private void handlePalletButtonClick(Position position, Pallet pallet, Map<Material, Integer> materialsAndCount) {
         clearInformationContainers();
+        DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
 
         Label positionName = new Label("Názov pozície: " + position.getName());
-        Label customer = new Label("Zakázník: ???????????");
+        Label customer = new Label("Zakázník: " + databaseHandler.getCustomerThatReservedPosition(position).getName());
         Label palletType = new Label("Typ palety: " + pallet.getType());
-        Label date = new Label("Dátum zaskladnenia: " + pallet.getDateIncome());
-        Label truckNumber = new Label("Číslo točky: ????????");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String dateSK = dateFormat.format(pallet.getDateIncome());
+        Label date = new Label("Dátum zaskladnenia: " + dateSK);
+        Label isTall = new Label("Nadrozmernosť: " + (position.isTall() ? "áno" : "nie"));
 
-        informationContainer1.getChildren().addAll(positionName, customer, palletType, date, truckNumber);
+        informationContainer1.getChildren().addAll(positionName, customer, palletType, date, isTall);
 
-        Label isTall = new Label("Nadrozmernosť: " + (position.isTall() ? "áno": "nie"));
         Label weight = new Label("Hmotnosť: " + pallet.getWeight());
-        Label user = new Label("Meno skladníka: ??????");
-        Label isDamaged = new Label("Poškodenosť: " + (pallet.isDamaged() ? "áno": "nie"));
+        Label user = new Label("Meno skladníka: " + databaseHandler.getUsername(pallet.getIdUser()));
+        Label isDamaged = new Label("Poškodenosť: " + (pallet.isDamaged() ? "áno" : "nie"));
         Label note = new Label("Poznámka: " + pallet.getNote());
 
-        informationContainer2.getChildren().addAll(isTall, weight, user, isDamaged, note);
+        informationContainer2.getChildren().addAll(weight, user, isDamaged, note);
 
+        TableView<Map.Entry<Material, Integer>> table = new TableView<>();
+        TableColumn<Map.Entry<Material, Integer>, String> materialColumn = new TableColumn<>("Material");
+        TableColumn<Map.Entry<Material, Integer>, Integer> countColumn = new TableColumn<>("Count");
+
+        materialColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey().getName()));
+        countColumn.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getValue()).asObject());
+
+        materialColumn.setMinWidth(170);
+        countColumn.setMinWidth(50);
+        table.getColumns().addAll(materialColumn, countColumn);
+
+        table.setPrefWidth(225);
+        table.setMaxHeight(170);
+
+        for (Map.Entry<Material, Integer> entry : materialsAndCount.entrySet()) {
+            table.getItems().add(entry);
+        }
+        materialCountTable.getChildren().add(table);
     }
 
-    public void reservedPosition(){
 
+    public void reservedPosition(Position position){
+        DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
+        CustomerReservation reservation = databaseHandler.getReservation(position.getName());
+
+        Label positionName = new Label("Názov pozície: " + position.getName());
+        Label reservedFor = new Label("Rezervované pre: " + databaseHandler.getCustomerThatReservedPosition(position).getName());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String dateFrom = dateFormat.format(reservation.getReservedFrom());
+        String dateUntil = dateFormat.format(reservation.getReservedUntil());
+        Label reservationDate = new Label("Dátum rezervácie: " + dateFrom + "-" + dateUntil);
+
+        informationContainer1.getChildren().addAll(positionName, reservedFor, reservationDate);
     }
 
     public void freePosition(){
@@ -191,6 +233,7 @@ public class RowLayoutController implements Initializable {
     public void clearInformationContainers(){
         informationContainer1.getChildren().clear();
         informationContainer2.getChildren().clear();
+        materialCountTable.getChildren().clear();
     }
 
     public void backToRows() throws IOException {
