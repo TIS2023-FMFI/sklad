@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.AddReservationFirstController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.AddReservationFirstController">
    <children>
       <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMainReservations" text="Naspäť" />
       <Label layoutX="102.0" layoutY="109.0" text="Meno zákazníka:" />
@@ -20,6 +20,6 @@
       <DatePicker fx:id="dateFrom" layoutX="232.0" layoutY="139.0" onAction="#saveDateFrom" />
       <DatePicker fx:id="dateTo" layoutX="232.0" layoutY="174.0" onAction="#saveDateTo" />
       <Button layoutX="268.0" layoutY="241.0" mnemonicParsing="false" onAction="#nextForm" prefHeight="26.0" prefWidth="64.0" text="Ďalej" />
-      <Label fx:id="errorMessage" textFill="red" layoutX="228.0" layoutY="69.0" prefHeight="18.0" prefWidth="143.0" textAlignment="CENTER" />
+      <Label fx:id="errorMessage" textFill="red" layoutX="228.0" layoutY="69.0" prefHeight="18.0" prefWidth="200.0" textAlignment="CENTER" />
    </children>
 </AnchorPane>

@@ -804,6 +804,28 @@ public class DatabaseHandler {
         }
     }
 
+    public List<Position> getAllPositions(){
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM Position p");
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<CustomerReservation> getAllReservaions(){
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM CustomerReservation");
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public List<CustomerReservation> getReservationRecords(int customerId){
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("FROM CustomerReservation r WHERE r.idCustomer = :idCustomer");

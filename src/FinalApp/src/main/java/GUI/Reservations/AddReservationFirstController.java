@@ -80,6 +80,6 @@ public class AddReservationFirstController implements Initializable {
         if(warehouse.getController("dateTo") != null){
             warehouse.removeController("dateTo");
         }
-        warehouse.addController("dateTo", dateTo);
+        warehouse.addController("dateTo", dateToValue);
     }
 }
