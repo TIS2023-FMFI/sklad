@@ -23,7 +23,7 @@ public class Reservation {
 
     }
 
-    protected int getNumberOfFreePositions(Date dateFrom, Date dateTo){
+    public int getAllFreePositions(Date dateFrom, Date dateTo){
         int counter = 0;
         return counter;
     }
