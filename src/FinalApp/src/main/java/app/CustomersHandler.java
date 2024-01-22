@@ -1,8 +1,13 @@
 package app;
 
+import Entity.Customer;
+
 public class CustomersHandler {
 
-     public boolean saveCustomer(String name){
-         return Warehouse.getInstance().getDatabaseHandler().saveCustomer(name);
+    public boolean checkCustomerName(String name){
+        return Warehouse.getInstance().getDatabaseHandler().checkCustomerExist(name);
+    }
+     public boolean saveCustomer(Customer customer){
+         return Warehouse.getInstance().getDatabaseHandler().saveCustomer(customer);
      }
 }

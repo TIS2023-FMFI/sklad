@@ -18,7 +18,9 @@ public class ReservationsMainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customer.setItems(customers);
-        customer.setValue(customers.get(0));
+        if(customers.size() > 0) {
+            customer.setValue(customers.get(0));
+        }
         Warehouse.getInstance().addController("reservationMain", this);
     }
     public void backToMenu() throws IOException {
