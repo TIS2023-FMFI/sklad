@@ -1,6 +1,9 @@
 import Entity.Material;
+import Entity.Position;
 import Entity.Users;
 import app.DatabaseHandler;
+import app.RelocateProduct;
+import app.Warehouse;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -11,6 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Tests {
@@ -84,5 +88,10 @@ public class Tests {
             session.beginTransaction();
             session.getTransaction().commit();
         }
+    }
+
+    @Test
+    public void relocation() {
+        System.out.println(Arrays.toString("okl".split(",")));
     }
 }

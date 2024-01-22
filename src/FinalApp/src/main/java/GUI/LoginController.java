@@ -16,15 +16,16 @@ public class LoginController {
     private PasswordField password;
     public void login(){
         try {
+            Warehouse warehouse = Warehouse.getInstance();
             if (username.getText() == null || username.getText().trim().isEmpty()) {
                 wrongLogin.setText("Nezadali ste používateľské meno");
             }
-            if (password.getText() == null || password.getText().trim().isEmpty()){
+            if (password.getText() == null || password.getText().trim().isEmpty()) {
                 wrongLogin.setText("Nezadali ste používateľské heslo");
             }
-            Warehouse.getInstance().setCurrentUser(DatabaseHandler.checkUser(username.getText(), password.getText()));
-            Warehouse.getInstance().loadDb();
-            Warehouse.getInstance().changeScene("mainMenu.fxml");
+            warehouse.setCurrentUser(DatabaseHandler.checkUser(username.getText(), password.getText()));
+            warehouse.loadDb();
+            warehouse.changeScene("mainMenu.fxml");
         }
         catch (Exception e){
             wrongLogin.setText(e.getMessage());

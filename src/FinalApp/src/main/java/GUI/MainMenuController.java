@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public class MainMenuController {
     public void showWarehouseLayout() throws IOException {
+        Warehouse.getInstance().initializeWarehouseLayout();
         Warehouse.getInstance().changeScene("WarehouseLayout/warehouseLayoutRowsForm.fxml");
     }
 

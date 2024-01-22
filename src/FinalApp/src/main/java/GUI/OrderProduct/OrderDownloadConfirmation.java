@@ -1,5 +1,6 @@
 package GUI.OrderProduct;
 
+import app.FileExporter;
 import app.Warehouse;
 
 import java.io.IOException;
@@ -7,6 +8,9 @@ import java.io.IOException;
 public class OrderDownloadConfirmation {
 
     public void backToMenu() throws IOException {
-        Warehouse.getInstance().changeScene("mainMenu.fxml");
+        OrderShowPositionsController cont = (OrderShowPositionsController)
+                Warehouse.getInstance().getController("OrderShowPositionsController");
+
+
     }
 }

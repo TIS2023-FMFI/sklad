@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WarehouseLayout.WarehouseLayoutController">
-   <children>
-      <Button layoutX="29.0" layoutY="27.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WarehouseLayout.WarehouseLayoutRowsController">
+   <top>
+      <AnchorPane prefHeight="50.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="22.0" layoutY="12.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
+            <Label layoutX="729.0" layoutY="17.0" text="p - párne" />
+            <Label layoutX="799.0" layoutY="17.0" text="n - nepárne" />
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <HBox fx:id="rowsContainer" prefHeight="400.0" prefWidth="900.0" BorderPane.alignment="CENTER" />
+   </center>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <AnchorPane prefHeight="150.0" prefWidth="900.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

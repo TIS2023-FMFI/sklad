@@ -99,4 +99,18 @@ public class Pallet {
     public int hashCode() {
         return Objects.hash(pnr, weight, dateIncome, isDamaged, idUser, type, note);
     }
+
+    /***
+     * Copy constructor
+     * @param pallet pallet to copy
+     */
+    public Pallet(Pallet pallet) {
+        this.pnr = pallet.pnr;
+        this.weight = pallet.weight;
+        this.dateIncome = pallet.dateIncome;
+        this.isDamaged = pallet.isDamaged;
+        this.idUser = pallet.idUser;
+        this.type = pallet.type;
+        this.note = pallet.note;
+    }
 }
