@@ -189,9 +189,7 @@ public class DatabaseHandler {
             Customer customer = query.getSingleResult();
             return customer;
         } catch (Exception e) {
-            e.printStackTrace();
-            setUpSessionFactory();
-            return getCustomerThatReservedPosition(position);
+            return null;
         }
     }
 
