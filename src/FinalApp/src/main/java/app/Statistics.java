@@ -7,10 +7,7 @@ import javafx.scene.chart.XYChart;
 import javafx.util.Pair;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Statistics {
     /***
@@ -29,7 +26,11 @@ public class Statistics {
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("Export");
 
-        for (Map.Entry<Date, Pair<Integer,Integer>> entry : data.entrySet()) {
+        List<Map.Entry<Date, Pair<Integer, Integer>>> stats = new ArrayList<>(data.entrySet());
+        stats.sort(new StatsDateComparator());
+
+
+        for (Map.Entry<Date, Pair<Integer,Integer>> entry : stats) {
             series1.getData().add(new XYChart.Data<>(entry.getKey().toString(), entry.getValue().getKey()));
             series2.getData().add(new XYChart.Data<>(entry.getKey().toString(), entry.getValue().getValue()));
         }
@@ -66,6 +67,17 @@ public class Statistics {
             }
         }
         return res;
+    }
+
+    public class StatsDateComparator implements Comparator<Map.Entry<Date, Pair<Integer,Integer>>> {
+        @Override
+        public int compare(Map.Entry<Date, Pair<Integer,Integer>> entry1,
+                           Map.Entry<Date, Pair<Integer,Integer>> entry2) {
+            Date d1 = entry1.getKey();
+            Date d2 = entry2.getKey();
+
+            return d1.compareTo(d2);
+        }
     }
 
 }
