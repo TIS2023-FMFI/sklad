@@ -85,7 +85,7 @@ public class StoreInProduct {
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
         HistoryRecord historyRecord = Warehouse.getInstance().getStoreInInstance().getHistoryRecord();
         databaseHandler.saveHistoryRecord(historyRecord.getCustomerID(), historyRecord.getNumberOfPallets(),
-                historyRecord.getTruckNumber());
+                historyRecord.getTruckNumber(), true);
     }
 
     public HistoryRecord getHistoryRecord() {

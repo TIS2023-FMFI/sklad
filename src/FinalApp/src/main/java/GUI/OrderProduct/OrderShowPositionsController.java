@@ -88,6 +88,7 @@ public class OrderShowPositionsController implements Initializable {
     public void backToMenu() throws IOException {
         OrderProduct op = new OrderProduct();
         op.removeOrderedItems(items);
-        Warehouse.getInstance().changeScene("mainMenu.fxml");
+        Warehouse.getInstance().addController("OrderShowPositionsController", this);
+        Warehouse.getInstance().changeScene("OrderProduct/OrderDownloadConfirmation.fxml");
     }
 }
