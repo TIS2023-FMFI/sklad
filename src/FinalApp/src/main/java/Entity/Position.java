@@ -33,6 +33,17 @@ public class Position {
         return isTall;
     }
 
+    public int getIndex(){
+        String n = name.substring(1, 4);
+        int index = Integer.parseInt(n);
+        if(index % 2 == 0){
+            index--;
+        }
+        index /= 2;
+        index /= 4;
+        return index;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

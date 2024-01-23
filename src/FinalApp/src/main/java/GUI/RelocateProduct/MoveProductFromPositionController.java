@@ -41,9 +41,7 @@ public class MoveProductFromPositionController {
         for (var regals : positions.values()){
             for (List<Position> positionList : regals.values()){
                 for (Position position1 : positionList){
-                    if (position1.getName().equals(position)){
-                        return true;
-                    }
+
                 }
             }
         }
