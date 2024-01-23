@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.createCustomerConfirmationController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.CreateCustomerConfirmationController">
    <children>
       <Button layoutX="62.0" layoutY="63.0" mnemonicParsing="false" onAction="#backToForm" text="Naspäť" />
       <Label layoutX="222.0" layoutY="147.0" text="Zázník bol úspešne vytvorený" />
