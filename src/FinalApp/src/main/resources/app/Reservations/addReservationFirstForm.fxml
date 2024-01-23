@@ -19,6 +19,7 @@
       <Label layoutX="102.0" layoutY="178.0" prefHeight="18.0" prefWidth="112.0" text="Dátum do (vrátane):" />
       <DatePicker fx:id="dateFrom" layoutX="232.0" layoutY="139.0" onAction="#saveDateFrom" />
       <DatePicker fx:id="dateTo" layoutX="232.0" layoutY="174.0" onAction="#saveDateTo" />
-      <Button layoutX="248.0" layoutY="239.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" onAction="#nextForm" text="Ďalej" />
+      <Button layoutX="268.0" layoutY="241.0" mnemonicParsing="false" onAction="#nextForm" prefHeight="26.0" prefWidth="64.0" text="Ďalej" />
+      <Label fx:id="errorMessage" textFill="red" layoutX="228.0" layoutY="69.0" prefHeight="18.0" prefWidth="200.0" textAlignment="CENTER" />
    </children>
 </AnchorPane>

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AddReservationFirstController implements Initializable {
@@ -23,23 +24,45 @@ public class AddReservationFirstController implements Initializable {
     Date dateToValue;
     @FXML
     Label customerName;
+    @FXML
+    Label errorMessage;
     Warehouse warehouse;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        warehouse = Warehouse.getInstance();
-       warehouse.addController("addReservation", this);
         ChoiceBox<String> nameController = (ChoiceBox<String>)warehouse.getController("customerReservationName");
         String name = nameController.getValue();
         customerName.setText(name);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if(warehouse.getController("dateFrom") != null){
+            dateFrom.setValue(LocalDate.parse(warehouse.getController("dateFrom").toString(), formatter));
+            dateFromValue = Date.valueOf(dateFrom.getValue());
+        }
+        if(warehouse.getController("dateTo") != null){
+            dateTo.setValue(LocalDate.parse(warehouse.getController("dateTo").toString(), formatter));
+            dateToValue = Date.valueOf(dateTo.getValue());
+        }
     }
 
     public void backToMainReservations() throws IOException {
         Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
     }
+    private boolean checkInputs(){
+        if (dateFromValue == null || dateToValue == null) {
+            errorMessage.setText("Prázdny dátum");
+            return false;
+        }else if (dateFromValue.after(dateToValue)) {
+            errorMessage.setText("Dátum od je väčší ako dátum do");
+            return false;
+        }
+       return true;
+    }
 
     public void nextForm() throws IOException {
-        Warehouse.getInstance().changeScene("Reservations/addReservationSecondForm.fxml");
+        if(checkInputs()) {
+            Warehouse.getInstance().changeScene("Reservations/addReservationSecondForm.fxml");
+        }
     }
     public void saveDateFrom(ActionEvent actionEvent) {
         LocalDate localDate = dateFrom.getValue();

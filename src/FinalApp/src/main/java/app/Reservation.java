@@ -6,26 +6,35 @@ import javafx.util.Pair;
 import java.util.*;
 
 public class Reservation {
-    class DatePair {
-        private Date startDate;
-        private Date endDate;
+    Date dateFrom;
+    Date dateTo;
 
-        public DatePair(Date startDate, Date endDate) {
-            this.startDate = startDate;
-            this.endDate = endDate;
+    protected boolean overlapDate(Date dateFrom, Date dateTo){
+        if (this.dateTo.before(dateFrom) || this.dateFrom.after(dateTo)) {
+            return false;  // No intersection
         }
-        public Date getStartDate() {
-            return startDate;
-        }
-        public Date getEndDate() {
-            return endDate;
-        }
-
+        return true;
     }
 
-    protected int getNumberOfFreePositions(Date dateFrom, Date dateTo){
-        int counter = 0;
-        return counter;
+    public Pair<Integer, Integer> countAllFreePositions(Date dateFrom, Date dateTo){
+        int tallCounter = 0;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
+        Set<Position> allPositions = new HashSet<>(databaseHandler.getAllPositions());
+        Set<CustomerReservation> allReservations = new HashSet<>(databaseHandler.getAllReservaions());
+        for(CustomerReservation customerReservation : allReservations){
+            if(overlapDate(customerReservation.getReservedFrom(), customerReservation.getReservedUntil())){
+                allPositions.remove(databaseHandler.getPosition(customerReservation.getIdPosition()));
+            }
+        }
+        for(Position p : allPositions){
+            if(p.isTall()){
+                tallCounter++;
+            }
+        }
+
+        return new Pair<>(allPositions.size(), tallCounter);
     }
 
     protected List<CustomerReservation> getCustomerReservation(int id){
@@ -59,6 +68,15 @@ public class Reservation {
         }
 
         return result;
+    }
+
+    public static void main(String[] args) {
+        Reservation reservation = new Reservation();
+        Date from = new Date(2024, 1, 13);
+        Date to = new Date(2024, 1, 14);
+        reservation.countAllFreePositions(from, to);
+        //System.out.println(reservation.betweenDate(new Date(2024, 1, 13)));
+
     }
 
 }
