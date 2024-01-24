@@ -110,9 +110,10 @@ public class FileExporter {
 
         Paragraph providerInfo = new Paragraph(
                 """
-                      Názov: CEVA Logistics
-                      Adresa: 123 Hlavná ulica
-                      Mesto: Strecno
+                      Názov: Gefco Slovakia s.r.o.
+                               Distribution Center, logistická hala DC1
+                      Adresa: SNP 811/168
+                      Mesto: 013 24 Strečno
                       """, customFontSmall);
         providerInfo.setSpacingAfter(30);
         PdfPCell providerCell = new PdfPCell(providerInfo);
@@ -146,8 +147,8 @@ public class FileExporter {
         tableCustomer.setWidthPercentage(100);
 
         Paragraph customerInfo = new Paragraph("Názov: " + customer.getName(), customFontSmall);
-        customerInfo.add("\nAdresa: 345 Vedľajšia ulica");
-        customerInfo.add("\nMesto: Ružomberok");
+        customerInfo.add("\nAdresa: " + customer.getAddress());
+        customerInfo.add("\nMesto:" + customer.getPostalCode() + " " + customer.getCity() + "\n");
         PdfPCell customerCell = new PdfPCell(customerInfo);
         customerCell.setHorizontalAlignment(Element.ALIGN_LEFT);
         customerCell.setBorder(Rectangle.NO_BORDER);
@@ -221,25 +222,30 @@ public class FileExporter {
 
             PdfPTable table2 = new PdfPTable(2);
             table2.setWidthPercentage(100);
+
+
             PdfPCell cellFrom = new PdfPCell(new Paragraph("""
-                    Poskytovatel:
+                   Sprostredkovateľ:
                     
-                        CEVA Logistics
-                        Hlavná 103
-                        Strecno
-                        06871
+                      Gefco Slovakia s.r.o.
+                      Distribution Center, logistická hala DC1
+                      SNP 811/168
+                      013 24 Strečno
                     """,
                     customFont));
             table2.addCell(cellFrom);
 
+
             PdfPCell cellTo = new PdfPCell(new Paragraph("""
-                    Odoberatel:
+                    Odoberateľ:
                     
                    """ + "    " + customer.getName() + """
                         
-                        Vedľajšia 356
-                        Prievidza
-                        77877
+                    """ + "    " + customer.getAddress() + """
+                    
+                    """ + "    " + customer.getCity() + """
+                    
+                    """ + "    " + customer.getPostalCode() + """
                     """,
                     customFont));
             table2.addCell(cellTo);

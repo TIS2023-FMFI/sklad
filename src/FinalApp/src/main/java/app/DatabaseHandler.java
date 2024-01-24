@@ -189,9 +189,7 @@ public class DatabaseHandler {
             Customer customer = query.getSingleResult();
             return customer;
         } catch (Exception e) {
-            e.printStackTrace();
-            setUpSessionFactory();
-            return getCustomerThatReservedPosition(position);
+            return null;
         }
     }
 
@@ -727,13 +725,13 @@ public class DatabaseHandler {
      * @param numberOfPallets The number of pallets that were stored.
      * @param truckNumber The sequential number representing the arrival order of the truck.
      */
-    public void saveHistoryRecord(int customerId, int numberOfPallets, int truckNumber){
+    public void saveHistoryRecord(int customerId, int numberOfPallets, int truckNumber, boolean truckIncome) {
         try (Session session = sessionFactory.openSession()) {
             History history = new History();
             history.setIdCustomer(customerId);
             history.setDate(Date.valueOf(LocalDate.now()));
             history.setTime(Time.valueOf(LocalTime.now()));
-            history.setTruckIncome(true);
+            history.setTruckIncome(truckIncome);
             history.setNumberOfPallets(numberOfPallets);
             history.setTruckNumber(truckNumber);
 
@@ -742,6 +740,29 @@ public class DatabaseHandler {
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /***
+     * Method, that returns the order of the truck that is currently being loaded.
+     * @param id The unique identifier for the customer.
+     *           @param now The current date.
+     */
+    public int getTruckNum(int id, LocalDate now, boolean truckIncome) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Integer> query = session.createQuery("SELECT MAX(h.truckNumber) FROM History h WHERE h.idCustomer = :id AND h.date = :date AND h.truckIncome = :truckIncome");
+            query.setParameter("id", id);
+            query.setParameter("date", now);
+            query.setParameter("truckIncome", truckIncome);
+            Integer result = query.uniqueResult();
+            if (result == null) {
+                return 1;
+            } else {
+                return result + 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 1;
         }
     }
 
