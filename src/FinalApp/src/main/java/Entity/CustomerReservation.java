@@ -9,6 +9,7 @@ import java.util.Objects;
 @Table(name = "customer_reservation", schema = "public", catalog = "storage")
 public class CustomerReservation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic
     @Column(name = "id")
     private int id;
@@ -21,6 +22,17 @@ public class CustomerReservation {
     @Basic
     @Column(name = "reserved_until")
     private Date reservedUntil;
+
+    public CustomerReservation() {
+    }
+
+    public CustomerReservation(int idCustomer, Date reservedFrom, Date reservedUntil, String idPosition) {
+        this.idCustomer = idCustomer;
+        this.reservedFrom = reservedFrom;
+        this.reservedUntil = reservedUntil;
+        this.idPosition = idPosition;
+    }
+
     @Basic
     @Column(name = "id_position")
     private String idPosition;
