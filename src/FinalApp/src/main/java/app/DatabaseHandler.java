@@ -118,7 +118,41 @@ public class DatabaseHandler {
      */
     public Map<String, Map<Integer, List<Position>>> loadPositionsInRows(){
         try (Session session = sessionFactory.openSession()) {
-            Map<String, Map<Integer, List<Position>>> positionsInRows = new TreeMap<>(new RowNameComparator());
+            Map<String, Map<Integer, List<Position>>> positionsInGroups = new TreeMap<>(new RowNameComparator());
+            Query query = session.createQuery("from Position");
+            List<Position> positions = query.list();
+
+            for (Position position : positions) {
+                String row = getRowName(position.getName());
+
+                if (!positionsInGroups.containsKey(row)){
+                    Map<Integer, List<Position>> rowAndPositions = new TreeMap<>(Comparator.reverseOrder());
+                    positionsInGroups.put(row, rowAndPositions);
+                }
+
+                int shelfNumber = Integer.parseInt(String.valueOf(position.getName().charAt(4)));
+
+                if (!positionsInGroups.get(row).containsKey(shelfNumber)){
+                    positionsInGroups.get(row).put(shelfNumber, new ArrayList<>());
+                }
+
+                positionsInGroups.get(row).get(shelfNumber).add(position);
+            }
+            return positionsInGroups;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /***
+     * Method, that loads data to the memory.
+     * @return The map of rows and positions.
+     */
+    public Map<String, Map<Integer, Map<Integer, List<Position>>>> getPositionInGroups(){
+        try (Session session = sessionFactory.openSession()) {
+            Map<String, Map<Integer, Map<Integer, List<Position>>>> positionsInRows = new TreeMap<>(new RowNameComparator());
             Query query = session.createQuery("from Position");
             List<Position> positions = query.list();
 
@@ -126,17 +160,22 @@ public class DatabaseHandler {
                 String row = getRowName(position.getName());
 
                 if (!positionsInRows.containsKey(row)){
-                    Map<Integer, List<Position>> rowAndPositions = new TreeMap<>(Comparator.reverseOrder());
+                    Map<Integer, Map<Integer, List<Position>>> rowAndPositions = new TreeMap<>(Comparator.reverseOrder());
                     positionsInRows.put(row, rowAndPositions);
                 }
 
                 int shelfNumber = Integer.parseInt(String.valueOf(position.getName().charAt(4)));
 
                 if (!positionsInRows.get(row).containsKey(shelfNumber)){
-                    positionsInRows.get(row).put(shelfNumber, new ArrayList<>());
+                    positionsInRows.get(row).put(shelfNumber, new TreeMap<>(Comparator.reverseOrder()));
+                }
+                int index = position.getIndex();
+
+                if (!positionsInRows.get(row).get(shelfNumber).containsKey(index)){
+                    positionsInRows.get(row).get(shelfNumber).put(index, new ArrayList<>());
                 }
 
-                positionsInRows.get(row).get(shelfNumber).add(position);
+                positionsInRows.get(row).get(shelfNumber).get(index).add(position);
             }
             return positionsInRows;
         }
@@ -857,5 +896,9 @@ public class DatabaseHandler {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    public boolean reservePositionForCustomer(int customerId, Date from, Date until, Position position){
+        return true;
     }
 }

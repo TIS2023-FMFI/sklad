@@ -30,18 +30,18 @@ public class AddReservationSecondController implements Initializable {
     int allFreePosition;
     int allTallPosition;
 
+    Reservation reservation;
+    Warehouse warehouse;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Warehouse warehouse = Warehouse.getInstance();
-        Reservation reservation = new Reservation();
+        warehouse = Warehouse.getInstance();
+        reservation = new Reservation();
         warehouse.addController("addReservationSecond", this);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Date dateFrom =(Date) warehouse.getController("dateFrom");
         Date dateTo = (Date) warehouse.getController("dateTo");
-
-
-        ChoiceBox<String> nameController = (ChoiceBox<String>)warehouse.getController("customerReservationName");
 
         Pair<Integer, Integer> counter = reservation.countAllFreePositions(dateFrom, dateTo);
         allFreePosition = counter.getKey();
@@ -83,7 +83,13 @@ public class AddReservationSecondController implements Initializable {
             return;
         }
 
+        String nameCustomer = ((ChoiceBox<String>)warehouse.getController("customerReservationName")).getValue();
+
+        //System.out.println(nameCustomer);
+
+        reservation.reservePositions(getPosition-getTall, getTall, nameCustomer);
         Warehouse.getInstance().changeScene("Reservations/createReservationConfirmation.fxml");
     }
+
 
 }
