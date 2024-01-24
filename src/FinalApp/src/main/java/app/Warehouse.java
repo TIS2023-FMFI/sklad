@@ -94,8 +94,8 @@ public class Warehouse extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent pane = loader.load();
 
-        double newWidth = pane.prefWidth(-1);
-        double newHeight = pane.prefHeight(-1);
+        double newWidth = pane.prefWidth(0);
+        double newHeight = pane.prefHeight(0);
 
         stage.getScene().setRoot(pane);
 
