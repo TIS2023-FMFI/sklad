@@ -6,13 +6,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
+<AnchorPane prefHeight="350.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
    <children>
-      <Label layoutX="52.0" layoutY="108.0" prefHeight="25.0" prefWidth="124.0" text="Prihlasovacie meno:" />
-      <Label layoutX="52.0" layoutY="166.0" prefHeight="24.0" prefWidth="63.0" text="Heslo:" />
-      <TextField fx:id="username" layoutX="202.0" layoutY="108.0" promptText="meno" text="admin" />
-      <PasswordField fx:id="password" layoutX="202.0" layoutY="166.0" promptText="heslo" text="admin" />
-      <Button layoutX="156.0" layoutY="219.0" mnemonicParsing="false" onAction="#login" text="Prihlásiť sa" />
-      <Label fx:id="wrongLogin" alignment="CENTER" layoutX="1.0" layoutY="64.0" prefHeight="26.0" prefWidth="385.0" textAlignment="JUSTIFY" textFill="RED" />
+      <Label layoutX="73.0" layoutY="150.0" prefHeight="25.0" prefWidth="124.0" text="Prihlasovacie meno:" />
+      <Label layoutX="73.0" layoutY="203.0" prefHeight="24.0" prefWidth="63.0" text="Heslo:" />
+      <TextField fx:id="username" layoutX="225.0" layoutY="150.0" promptText="meno" text="admin" />
+      <PasswordField fx:id="password" layoutX="225.0" layoutY="202.0" promptText="heslo" text="admin" />
+      <Button layoutX="188.0" layoutY="276.0" mnemonicParsing="false" onAction="#login" text="Prihlásiť sa" />
+      <Label fx:id="wrongLogin" alignment="CENTER" layoutX="33.0" layoutY="65.0" prefHeight="26.0" prefWidth="385.0" textAlignment="JUSTIFY" textFill="RED" />
    </children>
 </AnchorPane>

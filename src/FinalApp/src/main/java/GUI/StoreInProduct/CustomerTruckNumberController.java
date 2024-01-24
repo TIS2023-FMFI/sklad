@@ -25,10 +25,6 @@ public class CustomerTruckNumberController implements Initializable {
         else {
             setupValuesFromDataSet(dataSet);
         }
-
-        Warehouse.getStage().setMinWidth(500);
-        Warehouse.getStage().setMinHeight(450);
-
         Warehouse.getInstance().addController("customerTruckNumber", this);
     }
 

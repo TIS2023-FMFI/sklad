@@ -63,10 +63,6 @@ public class PalletInformationController implements Initializable {
         else {
             setupValuesFromDataSet(dataSet);
         }
-
-        Warehouse.getStage().setMinWidth(550);
-        Warehouse.getStage().setMinHeight(550);
-
         Warehouse.getInstance().addController("palletInformation", this);
     }
     public void setupValuesFromDataSet(PalletInformationDataSet dataSet){

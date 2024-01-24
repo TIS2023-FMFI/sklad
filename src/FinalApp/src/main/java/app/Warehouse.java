@@ -79,7 +79,8 @@ public class Warehouse extends Application {
         stage = primaryStage;
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         primaryStage.setTitle("Skladovací systém");
-        primaryStage.setScene(new Scene(root, 400, 300));
+        primaryStage.setScene(new Scene(root, 450, 350));
+        setMaxMinStageSize(450, 350);
         primaryStage.show();
 
     }
@@ -101,7 +102,16 @@ public class Warehouse extends Application {
         stage.getScene().getWindow().setWidth(newWidth);
         stage.getScene().getWindow().setHeight(newHeight);
 
+        setMaxMinStageSize(newWidth, newHeight);
+
         centerStage(stage);
+    }
+
+    private void setMaxMinStageSize(double width, double height){
+        stage.setMinWidth(width);
+        stage.setMinHeight(height);
+        stage.setMaxWidth(width);
+        stage.setMaxHeight(height);
     }
 
     /***
