@@ -36,9 +36,6 @@ public class WarehouseLayoutRowsReservationsController implements Initializable 
         isTall = false;
 
         Warehouse.getInstance().initializeWarehouseLayout();
-        Warehouse.getStage().setMinWidth(900);
-        Warehouse.getStage().setMinHeight(600);
-        
         getChangedRows();
         loadRows();
 

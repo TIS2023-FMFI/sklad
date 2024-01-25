@@ -265,7 +265,7 @@ public class PalletInformationController implements Initializable {
         return palletType.getValue();
     }
 
-    public Integer getWeight(){
+    public int getWeight(){
         RadioButton selectedRadioButton = (RadioButton) weight.getSelectedToggle();
         String weightID = selectedRadioButton.getId();
         if (weightID.equals("first")){

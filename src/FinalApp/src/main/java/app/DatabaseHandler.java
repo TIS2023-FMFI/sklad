@@ -671,13 +671,24 @@ public class DatabaseHandler {
         }
     }
 
-    // zatial vyberie iba všetky pozície treba dorobiť
-    // algoritmus bude brať do úvahy položky z formulárov:
-    //     či paleta vyžaduje vysokú pozíciu
-    //     koľko pozícií vyžaduje paleta - ak viacero vypísané možnosti budú n-tice oddelené '-'
-    public List<Position> getFreePositions() {
+    /***
+     * Method, that returns all the positions that are reserved by customer and are/aren´t tall.
+     * @param customerId The unique identifier for the customer.
+     * @param isTall If the positions should be tall.
+     */
+    public List<Position> getFreePositions(int customerId, boolean isTall) {
+        LocalDate today = LocalDate.now();
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Position p").list();
+            Query<Position> query = session.createQuery("FROM Position p " +
+                    "WHERE p.name IN (SELECT cr.idPosition FROM CustomerReservation cr WHERE cr.idCustomer = :customerId AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil) " +
+                    "AND p.isTall = :isTall " +
+                    "AND p.name NOT IN (SELECT pop.idPosition FROM PalletOnPosition pop)"
+            );
+
+            query.setParameter("customerId", customerId);
+            query.setParameter("isTall", isTall);
+            query.setParameter("today", today);
+            return query.list();
         }
     }
 

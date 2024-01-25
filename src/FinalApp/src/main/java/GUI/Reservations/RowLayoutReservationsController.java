@@ -61,9 +61,6 @@ public class RowLayoutReservationsController implements Initializable {
         warehouse = Warehouse.getInstance();
         warehouse.addController("rowLayout", this);
 
-        Warehouse.getStage().setMinWidth(1300);
-        Warehouse.getStage().setMinHeight(700);
-
         positionsVBox.setAlignment(Pos.TOP_CENTER);
         palletsHBox.setAlignment(Pos.CENTER);
         palletsHBox.setSpacing(10);
