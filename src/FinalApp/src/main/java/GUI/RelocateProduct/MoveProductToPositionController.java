@@ -79,7 +79,7 @@ public class MoveProductToPositionController implements Initializable {
     private void fillNew2PositionsChoice(){
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        List<Position> emptyPositions = dbh.getEmptyPositionsReservedByCustomer(customer.getName());
+        List<Position> emptyPositions = dbh.getPositionsReservedByCustomer(customer.getName());
         List<String> posNames = emptyPositions.stream().map(Position::getName).toList();
         for (String positionName : posNames){
             String Wrow = positionName.substring(0, 1);
@@ -98,7 +98,7 @@ public class MoveProductToPositionController implements Initializable {
     private void fillNew3PositionsChoice(){
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        List<Position> emptyPositions = dbh.getEmptyPositionsReservedByCustomer(customer.getName());
+        List<Position> emptyPositions = dbh.getPositionsReservedByCustomer(customer.getName());
         List<String> posNames = emptyPositions.stream().map(Position::getName).toList();
         for (String positionName : posNames){
             String Wrow = positionName.substring(0, 1);
@@ -123,7 +123,7 @@ public class MoveProductToPositionController implements Initializable {
     private void fillNew4PositionsChoice(){
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        List<Position> emptyPositions = dbh.getEmptyPositionsReservedByCustomer(customer.getName());
+        List<Position> emptyPositions = dbh.getPositionsReservedByCustomer(customer.getName());
         List<String> posNames = emptyPositions.stream().map(Position::getName).toList();
         for (String positionName : posNames){
             String Wrow = positionName.substring(0, 1);
