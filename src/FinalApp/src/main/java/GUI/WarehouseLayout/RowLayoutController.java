@@ -131,7 +131,7 @@ public class RowLayoutController implements Initializable {
         if (!warehouse.isPalletOnPosition(position)) {
             return RED_COLOR;
         }
-        else if (warehouse.getDatabaseHandler().isPositionReserved(position.getName())) {
+        else if (warehouse.getDatabaseHandler().isPositionReservedToday(position.getName())) {
             return ORANGE_COLOR;
         }
         return GREEN_COLOR;
@@ -147,7 +147,7 @@ public class RowLayoutController implements Initializable {
         if (!palletsOnPosition.isEmpty()) {
             positionWithPallets(position, palletsOnPosition);
         }
-        else if (warehouse.getDatabaseHandler().isPositionReserved(position.getName())) {
+        else if (warehouse.getDatabaseHandler().isPositionReservedToday(position.getName())) {
             reservedPosition(position);
         }
         else {

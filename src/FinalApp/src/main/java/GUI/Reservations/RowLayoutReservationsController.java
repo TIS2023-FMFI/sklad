@@ -17,8 +17,6 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class RowLayoutReservationsController implements Initializable {
@@ -169,7 +167,7 @@ public class RowLayoutReservationsController implements Initializable {
         if (!palletsOnPosition.isEmpty()) {
             positionWithPallets(position, palletsOnPosition);
         }
-        else if (warehouse.getDatabaseHandler().isPositionReserved(position.getName())) {
+        else if (warehouse.getDatabaseHandler().isPositionReservedToday(position.getName())) {
             reservedPosition(position);
         }
         else {

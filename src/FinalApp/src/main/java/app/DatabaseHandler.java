@@ -13,10 +13,8 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -221,12 +219,20 @@ public class DatabaseHandler {
     }
 
     public Customer getCustomerThatReservedPosition(Position position) {
+        LocalDate today = LocalDate.now();
+
         try (Session session = sessionFactory.openSession()) {
-            Query<Customer> query = session.createQuery("from Customer c join CustomerReservation cr " +
-                    "on c.id = cr.idCustomer where cr.idPosition = :position");
+            Query<Customer> query = session.createQuery(
+                    "SELECT c FROM Customer c " +
+                            "JOIN CustomerReservation cr ON c.id = cr.idCustomer " +
+                            "WHERE cr.idPosition = :position " +
+                            "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil"
+            );
+
             query.setParameter("position", position.getName());
-            Customer customer = query.getSingleResult();
-            return customer;
+            query.setParameter("today", today);
+
+            return query.getSingleResult();
         } catch (Exception e) {
             return null;
         }
@@ -648,10 +654,19 @@ public class DatabaseHandler {
      * @param positionName The position name.
      * @return True if the PNR is already used, otherwise false.
      */
-    public boolean isPositionReserved(String positionName) {
+    public boolean isPositionReservedToday(String positionName) {
+        LocalDate today = LocalDate.now();
+
         try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery("SELECT COUNT(*) FROM CustomerReservation cr WHERE cr.idPosition = :idPosition");
+            Query query = session.createQuery(
+                    "SELECT COUNT(*) FROM CustomerReservation cr " +
+                            "WHERE cr.idPosition = :idPosition " +
+                            "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil"
+            );
+
             query.setParameter("idPosition", positionName);
+            query.setParameter("today", today);
+
             return (Long) query.uniqueResult() > 0;
         }
     }
@@ -811,9 +826,17 @@ public class DatabaseHandler {
      * @return The CustomerReservation record associated with the provided position name,
      */
     public CustomerReservation getReservation(String positionName){
+        LocalDate today = LocalDate.now();
+
         try (Session session = sessionFactory.openSession()) {
-            Query<CustomerReservation> query = session.createQuery("FROM CustomerReservation WHERE idPosition = :position");
+            Query<CustomerReservation> query = session.createQuery(
+                    "FROM CustomerReservation cr " +
+                            "WHERE cr.idPosition = :position " +
+                            "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil"
+            );
+
             query.setParameter("position", positionName);
+            query.setParameter("today", today);
 
             return query.uniqueResult();
         } catch (Exception e) {
