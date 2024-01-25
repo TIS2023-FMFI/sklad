@@ -680,7 +680,8 @@ public class DatabaseHandler {
         LocalDate today = LocalDate.now();
         try (Session session = sessionFactory.openSession()) {
             Query<Position> query = session.createQuery("FROM Position p " +
-                    "WHERE p.name IN (SELECT cr.idPosition FROM CustomerReservation cr WHERE cr.idCustomer = :customerId AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil) " +
+                    "WHERE p.name IN (SELECT cr.idPosition FROM CustomerReservation cr WHERE cr.idCustomer = :customerId " +
+                    "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil) " +
                     "AND p.isTall = :isTall " +
                     "AND p.name NOT IN (SELECT pop.idPosition FROM PalletOnPosition pop)"
             );
@@ -884,6 +885,19 @@ public class DatabaseHandler {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public List<String> getPositionsWithPallet(String PNR){
+        try (Session session = sessionFactory.openSession()) {
+            Query<String> query = session.createQuery("SELECT pop.idPosition FROM PalletOnPosition pop " +
+                    "WHERE pop.idPallet = :pnr");
+
+            query.setParameter("pnr", PNR);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

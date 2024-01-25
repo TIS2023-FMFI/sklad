@@ -169,7 +169,8 @@ public class RowLayoutController implements Initializable {
         clearInformationContainers();
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
 
-        Label positionName = new Label("Názov pozície: " + position.getName());
+        String allPositionNames = String.join(", ", databaseHandler.getPositionsWithPallet(pallet.getPnr()));
+        Label positionName = new Label("Názov pozície: " + allPositionNames);
         Label customer = new Label("Zakázník: " + databaseHandler.getCustomerThatReservedPosition(position).getName());
         Label palletType = new Label("Typ palety: " + pallet.getType());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
