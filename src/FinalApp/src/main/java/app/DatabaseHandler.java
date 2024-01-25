@@ -263,6 +263,7 @@ public class DatabaseHandler {
                     "where pop.idPallet = :pnr");
             query.setParameter("pnr", pallet);
             PalletOnPosition pops = query.getResultList().get(0);
+            System.out.println(pops.getIdPosition() + " " + pos);
             pops.setIdPosition(pos);
             session.update(pops);
             transaction.commit();
@@ -285,6 +286,19 @@ public class DatabaseHandler {
         }
     }
 
+    public List<Position> getPositionsOfPallet(String palletFrom) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Position> query1 = session.createQuery("from Position p join " +
+                    "PalletOnPosition pop on pop.idPosition=p.name where pop.idPallet = :name");
+            query1.setParameter("name", palletFrom);
+            return query1.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     public class PositionNumberComparator implements Comparator<Position> {
         @Override
         public int compare(Position position1, Position position2) {
@@ -303,6 +317,7 @@ public class DatabaseHandler {
     public class RowNameComparator implements Comparator<String> {
         @Override
         public int compare(String row1, String row2) {
+            System.out.println("Comparing: " + row1 + " " + row2);
             char firstChar1 = row1.charAt(0);
             char secondChar1 = row1.charAt(1);
 
@@ -582,6 +597,17 @@ public class DatabaseHandler {
             int customerId = getCustomer(customer).getId();
             Query<Position> query = session.createQuery("from Position p " +
                     "join CustomerReservation cr on p.name = cr.idPosition where cr.idCustomer = :id");
+            query.setParameter("id", customerId);
+            return query.getResultList();
+        }
+    }
+
+    public List<Position> getEmptyPositionsReservedByCustomer(String customer) {
+        try (Session session = sessionFactory.openSession()) {
+            int customerId = getCustomer(customer).getId();
+            Query<Position> query = session.createQuery("from Position p " +
+                    "join CustomerReservation cr on p.name = cr.idPosition where cr.idCustomer = :id and" +
+                    "(SELECT COUNT(*) FROM PalletOnPosition pop WHERE pop.idPosition = p.name) = 0");
             query.setParameter("id", customerId);
             return query.getResultList();
         }
