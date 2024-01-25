@@ -849,6 +849,31 @@ public class DatabaseHandler {
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /***
+     * Method, that updates customer information and saves him to the database.
+     * @param customer which customer should be updated.
+     * @return true when data were updated.
+     */
+    public boolean updateCustomer(Customer customer, int id){
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Customer customerOld = session.get(Customer.class, id);
+            customerOld.setName(customer.getName());
+            customerOld.setAddress(customer.getAddress());
+            customerOld.setCity(customer.getCity());
+            customerOld.setPostalCode(customer.getPostalCode());
+            customerOld.setIco(customerOld.getIco());
+            customerOld.setDic(customer.getDic());
+            session.saveOrUpdate(customerOld);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

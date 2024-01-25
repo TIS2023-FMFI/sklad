@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="660.0" prefWidth="500.0" style="-fx-background-color: #f1eff1;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainMenuController">
+<AnchorPane prefHeight="720.0" prefWidth="500.0" style="-fx-background-color: #f1eff1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainMenuController">
    <children>
-      <Button layoutX="205.0" layoutY="568.0" mnemonicParsing="false" onAction="#logout" prefHeight="35.0" prefWidth="90.0" text="Odhlásiť sa">
+      <Button layoutX="205.0" layoutY="641.0" mnemonicParsing="false" onAction="#logout" prefHeight="35.0" prefWidth="90.0" text="Odhlásiť sa">
          <font>
             <Font size="14.0" />
          </font></Button>
@@ -45,5 +45,16 @@
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </JFXButton>
+
+      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="460.0" onAction="#reservationsMain" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #000000;" text="Rezervácie" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
+<!--      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="548.0" onAction="#customerManagement" prefHeight="62.0" prefWidth="220.0" ripplerFill="#4ea17b" style="-fx-background-color: #365486;" text="Management zákazníkov" textAlignment="CENTER" textFill="WHITE">-->
+<!--         <font>-->
+<!--            <Font name="Calibri Bold" size="18.0" />-->
+<!--         </font>-->
+<!--      </JFXButton>-->
    </children>
 </AnchorPane>
