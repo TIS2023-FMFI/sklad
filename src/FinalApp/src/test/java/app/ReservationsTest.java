@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ReservationsTest {
 
     @Test
-    void betweenDates(){
+    void overlapDates(){
         Reservation reservation = new Reservation();
         Date from = new Date(2024, 1, 13);
         Date to = new Date(2024, 1, 15);

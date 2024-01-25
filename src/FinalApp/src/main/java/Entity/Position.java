@@ -35,6 +35,7 @@ public class Position {
 
     public int getIndex(){
         String n = name.substring(1, 4);
+
         int index = Integer.parseInt(n);
         if(index % 2 == 0){
             index--;

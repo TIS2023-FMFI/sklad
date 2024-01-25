@@ -25,31 +25,31 @@ import java.util.ResourceBundle;
 
 public class RowLayoutController implements Initializable {
     @FXML
-    private VBox positionsVBox;
+    protected VBox positionsVBox;
 
     @FXML
-    private Label positionName;
+    protected Label positionName;
 
     @FXML
-    private HBox palletsHBox;
+    protected HBox palletsHBox;
 
     @FXML
-    private VBox informationContainer1;
+    protected VBox informationContainer1;
 
     @FXML
-    private VBox informationContainer2;
+    protected VBox informationContainer2;
 
     @FXML
-    private AnchorPane materialCountTable;
+    protected AnchorPane materialCountTable;
 
-    private static final String RED_COLOR = "#CF1616";
-    private static final String ORANGE_COLOR = "#FF8D00";
-    private static final String GREEN_COLOR = "#008000";
+    protected static final String RED_COLOR = "#CF1616";
+    protected static final String ORANGE_COLOR = "#FF8D00";
+    protected static final String GREEN_COLOR = "#008000";
 
-    private static final int POSITION_BUTTON_WIDTH = 35;
-    private static final int POSITION_BUTTON_HEIGHT = 35;
-    private static final int TALL_POSITION_BUTTON_HEIGHT = 60;
-    private static final int POSITION_BUTTON_SPACING = 3;
+    protected static final int POSITION_BUTTON_WIDTH = 35;
+    protected static final int POSITION_BUTTON_HEIGHT = 35;
+    protected static final int TALL_POSITION_BUTTON_HEIGHT = 60;
+    protected static final int POSITION_BUTTON_SPACING = 3;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -103,7 +103,7 @@ public class RowLayoutController implements Initializable {
         return shelf;
     }
 
-    private Button createPositionButton(Position position) {
+    protected Button createPositionButton(Position position) {
         Button positionButton = new Button();
         positionButton.setPrefWidth(POSITION_BUTTON_WIDTH);
         positionButton.setPrefHeight(position.isTall() ? TALL_POSITION_BUTTON_HEIGHT : POSITION_BUTTON_HEIGHT);
@@ -113,20 +113,20 @@ public class RowLayoutController implements Initializable {
         return positionButton;
     }
 
-    private void addDoorPlaceholders(HBox shelf, int count) {
+    protected void addDoorPlaceholders(HBox shelf, int count) {
         for (int i = 0; i < count; i++) {
             Region doorPlaceholder = createDoorPlaceholder();
             shelf.getChildren().add(doorPlaceholder);
         }
     }
 
-    private Region createDoorPlaceholder() {
+    protected Region createDoorPlaceholder() {
         Region doorPlaceholder = new Region();
         doorPlaceholder.setPrefSize(POSITION_BUTTON_WIDTH, POSITION_BUTTON_HEIGHT);
         return doorPlaceholder;
     }
 
-    private String getColor(Position position) {
+    protected String getColor(Position position) {
         Warehouse warehouse = Warehouse.getInstance();
         if (!warehouse.isPalletOnPosition(position)) {
             return RED_COLOR;
@@ -137,7 +137,7 @@ public class RowLayoutController implements Initializable {
         return GREEN_COLOR;
     }
 
-    private void handlePositionButtonClick(Position position) {
+    protected void handlePositionButtonClick(Position position) {
         Warehouse warehouse = Warehouse.getInstance();
         Map<Pallet, Map<Material, Integer>> palletsOnPosition = warehouse.getPalletsOnPosition(position);
 
@@ -165,7 +165,7 @@ public class RowLayoutController implements Initializable {
         }
     }
 
-    private void handlePalletButtonClick(Position position, Pallet pallet, Map<Material, Integer> materialsAndCount) {
+    protected void handlePalletButtonClick(Position position, Pallet pallet, Map<Material, Integer> materialsAndCount) {
         clearInformationContainers();
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
 

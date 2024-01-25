@@ -15,14 +15,16 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class WarehouseLayoutRowsController implements Initializable {
+
+
     @FXML
-    private HBox rowsContainer;
+    protected HBox rowsContainer;
 
-    private static final int ROW_BUTTON_HEIGHT = 150;
-    private static final int ROW_BUTTON_TALL_HEIGHT = 250;
-    private static final int ROW_BUTTON_WIDTH = 50;
+    protected static final int ROW_BUTTON_HEIGHT = 150;
+    protected static final int ROW_BUTTON_TALL_HEIGHT = 250;
+    protected static final int ROW_BUTTON_WIDTH = 50;
 
-    private boolean isTall;
+    protected boolean isTall;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,20 +59,20 @@ public class WarehouseLayoutRowsController implements Initializable {
         }
     }
 
-    private Button createRowButton(String rowName) {
+    protected Button createRowButton(String rowName) {
         Button rowButton = new Button(rowName);
         rowButton.setPrefWidth(ROW_BUTTON_WIDTH);
         rowsContainer.setAlignment(Pos.BOTTOM_CENTER);
         return rowButton;
     }
 
-    private void addHorizontalSpacer() {
+    protected void addHorizontalSpacer() {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         rowsContainer.getChildren().add(spacer);
     }
 
-    private void setRowButtonSize(Button rowButton) {
+    protected void setRowButtonSize(Button rowButton) {
         if (isTall) {
             rowButton.setPrefHeight(ROW_BUTTON_TALL_HEIGHT);
         } else {

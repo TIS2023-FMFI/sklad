@@ -16,7 +16,4 @@ public class CreateReservationConfirmationController implements Initializable {
         Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
     }
 
-    public void backToForm() throws IOException {
-        Warehouse.getInstance().changeScene("Reservations/addReservationSecondForm.fxml");
-    }
 }

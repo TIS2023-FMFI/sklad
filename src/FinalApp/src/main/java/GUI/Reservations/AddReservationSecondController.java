@@ -12,7 +12,6 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 public class AddReservationSecondController implements Initializable {
@@ -37,8 +36,6 @@ public class AddReservationSecondController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         warehouse = Warehouse.getInstance();
         reservation = new Reservation();
-        warehouse.addController("addReservationSecond", this);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Date dateFrom =(Date) warehouse.getController("dateFrom");
         Date dateTo = (Date) warehouse.getController("dateTo");
@@ -48,6 +45,9 @@ public class AddReservationSecondController implements Initializable {
         allTallPosition = counter.getValue();
         numberOfAllFreePositions.setText(String.valueOf(counter.getKey()));
         numberOfAllTallPositions.setText(String.valueOf(counter.getValue()));
+        if(warehouse.getController("positionsToSave") != null){
+            warehouse.removeController("positionsToSave");
+        }
     }
     public void backToFirstForm() throws IOException {
         Warehouse.getInstance().changeScene("Reservations/addReservationFirstForm.fxml");
@@ -65,7 +65,7 @@ public class AddReservationSecondController implements Initializable {
             return;
         }
         if(getPosition == 0){
-            errorMessage.setText("Musíte vybrať vaic miest ako 0");
+            errorMessage.setText("Musíte vybrať viac miest ako 0");
             return;
         }
         if(getPosition > allFreePosition){
@@ -83,10 +83,21 @@ public class AddReservationSecondController implements Initializable {
             return;
         }
 
+        int getLow = getPosition - getTall;
+        if(getLow > allFreePosition - allTallPosition){
+            int difference = (getLow - (allFreePosition - allTallPosition));
+            getTall += difference;
+            getLow -= difference;
+        }
+
         String nameCustomer = ((ChoiceBox<String>)warehouse.getController("customerReservationName")).getValue();
+        if(warehouse.getController("numberOfPosition") != null){
+            warehouse.removeController("numberOfPosition");
+        }
 
+        warehouse.addController("numberOfPosition", getLow + getTall);
 
-        reservation.reservePositions(getPosition-getTall, getTall, nameCustomer);
+        reservation.findPotisionsToReserve(getLow, getTall, nameCustomer);
         Warehouse.getInstance().changeScene("Reservations/warehouseLayoutRowsReservationForm.fxml");
     }
 
