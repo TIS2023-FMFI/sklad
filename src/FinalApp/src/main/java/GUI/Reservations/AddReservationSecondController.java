@@ -85,10 +85,9 @@ public class AddReservationSecondController implements Initializable {
 
         String nameCustomer = ((ChoiceBox<String>)warehouse.getController("customerReservationName")).getValue();
 
-        //System.out.println(nameCustomer);
 
         reservation.reservePositions(getPosition-getTall, getTall, nameCustomer);
-        Warehouse.getInstance().changeScene("Reservations/createReservationConfirmation.fxml");
+        Warehouse.getInstance().changeScene("Reservations/warehouseLayoutRowsReservationForm.fxml");
     }
 
 

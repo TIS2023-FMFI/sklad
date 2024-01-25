@@ -898,7 +898,43 @@ public class DatabaseHandler {
         }
     }
 
-    public boolean reservePositionForCustomer(int customerId, Date from, Date until, Position position){
-        return true;
+    public boolean reservePositionForCustomer(int customerId, Date reservedFrom, Date reservedUntil, Position position){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            CustomerReservation customerReservation = new CustomerReservation(customerId, reservedFrom, reservedUntil, position.getName());
+            session.persist(customerReservation);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
+
+    public List<Customer> getCustomerFromReservedPosition(Date reservedFrom, Date reservedUntil, Position position){
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("SELECT idCustomer FROM CustomerReservation r WHERE r.idPosition = :idPostion AND r.reservedFrom = :reservedFrom" +
+                    " and r.reservedUntil = :reservedUntil");
+            query.setParameter("idPosition", position.getName());
+            query.setParameter("reservedFrom", reservedFrom);
+            query.setParameter("reservedUntil", reservedUntil);
+            return query.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public boolean isPositionReseredByCustomer(Date reservedFrom, Date reservedUntil, Position position, Customer c){
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM CustomerReservation r WHERE r.idPosition = :idPostion AND r.reservedFrom = :reservedFrom" +
+                    " and r.reservedUntil = :reservedUntil and r.idCustomer = :idCustomer");
+            query.setParameter("idPosition", position.getName());
+            query.setParameter("reservedFrom", reservedFrom);
+            query.setParameter("reservedUntil", reservedUntil);
+            query.setParameter("idCustomer", c.getId());
+            return query.getResultList().size() > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

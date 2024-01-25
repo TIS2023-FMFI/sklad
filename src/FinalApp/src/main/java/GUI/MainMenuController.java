@@ -27,6 +27,7 @@ public class MainMenuController {
     }
 
     public void reservationsMain() throws IOException {
+        //Warehouse.getInstance().initializeWarehouseLayout();
         Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
     }
 
