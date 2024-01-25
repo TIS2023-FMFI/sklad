@@ -55,9 +55,6 @@ public class RowLayoutController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Warehouse.getInstance().addController("rowLayout", this);
 
-        Warehouse.getStage().setMinWidth(1300);
-        Warehouse.getStage().setMinHeight(700);
-
         positionsVBox.setAlignment(Pos.TOP_CENTER);
         palletsHBox.setAlignment(Pos.CENTER);
         palletsHBox.setSpacing(10);

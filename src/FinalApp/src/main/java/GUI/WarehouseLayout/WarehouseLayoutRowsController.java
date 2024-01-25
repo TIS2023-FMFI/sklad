@@ -28,10 +28,6 @@ public class WarehouseLayoutRowsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Warehouse.getInstance().addController("warehouseLayout", this);
         isTall = false;
-
-        Warehouse.getStage().setMinWidth(900);
-        Warehouse.getStage().setMinHeight(600);
-
         loadRows();
     }
 
