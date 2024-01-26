@@ -317,7 +317,6 @@ public class DatabaseHandler {
     public class RowNameComparator implements Comparator<String> {
         @Override
         public int compare(String row1, String row2) {
-            System.out.println("Comparing: " + row1 + " " + row2);
             char firstChar1 = row1.charAt(0);
             char secondChar1 = row1.charAt(1);
 
