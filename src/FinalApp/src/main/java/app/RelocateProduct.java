@@ -36,18 +36,14 @@ public class RelocateProduct {
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
         Position finalPosition = db.getPosition(finalPos);
         Pallet pallet = null;
-        System.out.println("Pallets on pos: " + finalPosition.getName() + " are: ");
         for (Pallet p : Warehouse.getInstance().getPalletsOnPositionMap().get(finalPosition).keySet()){
-            System.out.println(p.getPnr());
             if (p.getPnr().equals(palletTo)){
                 pallet = p;
                 break;
             }
         }
-        System.out.println();
 
         if (pallet == null){
-            System.out.println("Pallet not found");
             pallet = new Pallet();
             pallet.setPnr(palletTo);
             pallet.setWeight(500);
@@ -84,12 +80,9 @@ public class RelocateProduct {
             System.out.println("Material not available");
             return;
         }
-        System.out.println("Finalpos: " + finalPos.getName() + " palletTo: " + palletTo.getPnr() + " material: " + material.getName() + " quantity: " + quantity);
         var matOnPallet = Warehouse.getInstance().getPalletsOnPositionMap().get(finalPos).get(palletTo);
         for (Material m : matOnPallet.keySet()) {
             if (m.getName().equals(product)) {
-                int oldQuantity = matOnPallet.get(m);
-                System.out.println("result quantity: " + oldQuantity + "+" + quantity);
                 db.persistMaterialOnPallet(palletTo, m, quantity);
                 return;
             }

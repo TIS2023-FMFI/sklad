@@ -13,7 +13,6 @@ public class ConfirmMovingController {
                 Warehouse.getInstance().getController("MoveProductToPositionController");
 
         RelocateProduct rp = new RelocateProduct();
-        System.out.println(controller.finalPositions);
         if (controller.isWholePallet){
             rp.relocatePallet(controller.initialPosition, controller.finalPositions, controller.palletFrom);
         } else{

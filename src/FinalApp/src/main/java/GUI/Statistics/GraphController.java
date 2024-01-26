@@ -40,8 +40,6 @@ public class GraphController implements Initializable {
 
         List<XYChart.Series<String, Number>> series = statistics.setBarChart(dateFrom, dateTo, customer);
         barChart.getData().addAll(series);
-        System.out.println(series);
-
 
         for (XYChart.Series<String, Number> dataSeries : barChart.getData()) {
             for (XYChart.Data<String, Number> data : dataSeries.getData()) {

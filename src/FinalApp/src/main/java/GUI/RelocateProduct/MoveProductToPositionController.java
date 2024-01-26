@@ -66,7 +66,6 @@ public class MoveProductToPositionController implements Initializable {
         //fills newPositionsChoice with positions that can store product
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        System.out.println(initialPosition + " reserved by: " + customer);
         List<Position> positions = dbh.getPositionsReservedByCustomer(customer.getName());
         boolean tall = initialPosition.isTall();
         for (Position position : positions){
@@ -89,6 +88,9 @@ public class MoveProductToPositionController implements Initializable {
     }
 
     public void confirmFinalPosition() throws IOException {
+        if (newPositionsChoice.getValue() == null){
+            errorLabel.setText("No position chosen");
+        }
         finalPositions = Arrays.asList(newPositionsChoice.getValue().split(","));
         if (finalPositions.size() == 0){
             errorLabel.setText("No position chosen");

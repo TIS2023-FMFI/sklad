@@ -36,7 +36,6 @@ public class StatisticMainPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customer.setItems(customers);
-        System.out.println(customers);
         customer.setValue(customers.get(0));
         Warehouse.getInstance().addController("statisticsMainPage", this);
     }
