@@ -12,7 +12,7 @@
       <Label layoutX="134.0" layoutY="163.0" text="Z toho vysokých:" />
       <Label layoutX="134.0" layoutY="200.0" text="Vyberte počet pozícií:" />
       <Label layoutX="134.0" layoutY="231.0" text="Z toho aspoň vysokých:" />
-      <Button layoutX="280.0" layoutY="279.0" mnemonicParsing="false" onAction="#findPositionsToSave" text="Ulož" />
+      <Button layoutX="280.0" layoutY="279.0" mnemonicParsing="false" onAction="#findPositionsToSave" text="Zobraziť navrhované pozície" />
       <Label fx:id="numberOfAllFreePositions" layoutX="335.0" layoutY="131.0" />
       <Label fx:id="numberOfAllTallPositions" layoutX="335.0" layoutY="163.0" />
       <TextField fx:id="numberOfFreeField" alignment="CENTER_RIGHT" layoutX="300.0" layoutY="196.0" prefHeight="25.0" prefWidth="55.0"/>
