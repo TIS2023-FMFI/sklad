@@ -38,7 +38,7 @@ public class Warehouse extends Application {
     private Map<String, Map<Integer, List<Position>>> positionsInRows;
 
     /***
-     * Map that maps rows in the warehouse to map of and its positions whitvh are grouped to the foursome based on their names.
+     * Map that maps rows in the warehouse to map of and its positions which are grouped to the foursome based on their names.
      */
     private Map<String, Map<Integer, Map<Integer, List<Position>>>> positionsInGroups;
 
@@ -141,10 +141,10 @@ public class Warehouse extends Application {
     public Map<String, Map<Integer, List<Position>>> getPositionsInRows() {
         return positionsInRows;
     }
+
     public Map<String, Map<Integer, Map<Integer, List<Position>>>> getPositionsInGroups() {
         return positionsInGroups;
     }
-
     public Map<Position, Map<Pallet, Map<Material, Integer>>> getPalletsOnPositionMap() {
         return palletsOnPosition;
     }
