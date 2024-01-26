@@ -11,7 +11,7 @@
    <children>
       <Button layoutX="34.0" layoutY="23.0" mnemonicParsing="false" onAction="#backToInitialPosition" text="Naspäť" />
       <ChoiceBox fx:id="productsOnPallet" layoutX="336.0" layoutY="105.0" prefHeight="26.0" prefWidth="180.0" />
-      <Label layoutX="97.0" layoutY="105.0" text="Materiál na preskladnenie:">
+      <Label fx:id="materialToMoveLabel" layoutX="97.0" layoutY="105.0" text="Materiál na preskladnenie:">
          <font>
             <Font size="16.0" />
          </font>

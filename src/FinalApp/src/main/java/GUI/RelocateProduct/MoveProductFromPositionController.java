@@ -3,6 +3,7 @@ import Entity.Position;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.Set;
 public class MoveProductFromPositionController {
     @FXML
     public CheckBox wholePallet;
+    public Label errorLabel;
 
     boolean isWholePallet = false;
     @FXML
@@ -25,7 +27,7 @@ public class MoveProductFromPositionController {
 
     public void confirmInitialPosition() throws IOException {
         if (!checkIfPositionIsCorrect(position.getText())){
-            System.out.println("Position does not exist");
+            errorLabel.setText("Pozícia neexistuje");
         }
         else {
             isWholePallet = wholePallet.isSelected();
@@ -41,7 +43,9 @@ public class MoveProductFromPositionController {
         for (var regals : positions.values()){
             for (List<Position> positionList : regals.values()){
                 for (Position position1 : positionList){
-
+                    if (position1.getName().equals(position)){
+                        return true;
+                    }
                 }
             }
         }

@@ -46,6 +46,7 @@ public class Statistics {
      * @return List of maps with data.
      */
     public List<Map<String, String>> setInventoryTable(){
+        Set<Pallet> usedPallets = new HashSet<>();
         List<Map<String,String>> res = new ArrayList<>();
         //var data = Warehouse.getInstance().getWarehouseData();
         var data = Warehouse.getInstance().getPalletsOnPositionMap();
@@ -54,6 +55,10 @@ public class Statistics {
         for (Position position : data.keySet()) {
             var pallets = data.get(position);
             for (Pallet pallet : pallets.keySet()){
+                if (usedPallets.contains(pallet)) {
+                    continue;
+                }
+                usedPallets.add(pallet);
                 var materials = pallets.get(pallet);
                 for (Material material : materials.keySet()) {
                     res.add(Map.of(
