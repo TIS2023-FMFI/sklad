@@ -11,7 +11,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Statistics.GraphController">
    <children>
       <Button layoutX="49.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToStatistics" text="Naspäť" />
-      <BarChart fx:id="barChart" layoutX="49.0" layoutY="82.0" prefHeight="289.0" prefWidth="502.0">
+      <BarChart fx:id="barChart" barGap="1.0" layoutX="49.0" layoutY="82.0" prefHeight="289.0" prefWidth="502.0" style="-fx-min-width: 30;">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
