@@ -1,6 +1,7 @@
 package GUI.Reservations;
 
 import Entity.Position;
+import GUI.WarehouseLayout.WarehouseLayoutRowsController;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,29 +19,29 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class WarehouseLayoutRowsReservationsController implements Initializable {
-    @FXML
-    private HBox rowsContainer;
-
-    private static final int ROW_BUTTON_HEIGHT = 150;
-    private static final int ROW_BUTTON_TALL_HEIGHT = 250;
-    private static final int ROW_BUTTON_WIDTH = 50;
-
-    private boolean isTall;
-
+public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRowsController implements Initializable {
     Set<String> changedRows = new HashSet<>();
+    Set<Position> positionsToSave;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Warehouse.getInstance().addController("warehouseLayout", this);
         isTall = false;
+        positionsToSave = new HashSet<>();
 
         Warehouse.getInstance().initializeWarehouseLayout();
+
+      //dalsie tri riadky boli konflikt
+        Warehouse.getStage().setMinWidth(900);
+        Warehouse.getStage().setMinHeight(600);
+        positionsToSave = getPostionsToSave();
+      
         getChangedRows();
         loadRows();
 
+
     }
 
+    @Override
     public void loadRows() {
         Warehouse warehouse = Warehouse.getInstance();
         List<String> rowNames = warehouse.getRowNames();
@@ -50,7 +51,6 @@ public class WarehouseLayoutRowsReservationsController implements Initializable 
 
             if(changedRows.contains(rowName)) {
                 rowButton.setTextFill(Color.RED);
-                System.out.println(rowName);
             }
 
             if (rowName.equals("Cp")) {
@@ -73,27 +73,7 @@ public class WarehouseLayoutRowsReservationsController implements Initializable 
         }
     }
 
-    private Button createRowButton(String rowName) {
-        Button rowButton = new Button(rowName);
-        rowButton.setPrefWidth(ROW_BUTTON_WIDTH);
-        rowsContainer.setAlignment(Pos.BOTTOM_CENTER);
-        return rowButton;
-    }
-
-    private void addHorizontalSpacer() {
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-        rowsContainer.getChildren().add(spacer);
-    }
-
-    private void setRowButtonSize(Button rowButton) {
-        if (isTall) {
-            rowButton.setPrefHeight(ROW_BUTTON_TALL_HEIGHT);
-        } else {
-            rowButton.setPrefHeight(ROW_BUTTON_HEIGHT);
-        }
-    }
-
+    @Override
     public void nextToRowLayout() {
         try {
             Warehouse.getInstance().changeScene("Reservations/rowLayoutReservationsForm.fxml");
@@ -102,11 +82,25 @@ public class WarehouseLayoutRowsReservationsController implements Initializable 
         }
     }
 
-    public void getChangedRows(){
+    protected Set<Position> getPostionsToSave(){
+        if(Warehouse.getInstance().getController("positionsToSave") != null){
+            return (Set<Position>) Warehouse.getInstance().getController("positionsToSave");
+        }
         List<Position> bestPositions = (List<Position>) Warehouse.getInstance().getController("bestLowPositions");
         bestPositions.addAll((List<Position>) Warehouse.getInstance().getController("bestTallPositions"));
-
+        Set<Position> result = new HashSet<>();
         for(Position p : bestPositions){
+            result.add(p);
+        }
+        Warehouse.getInstance().addController("positionsToSave", result);
+        return result;
+    }
+
+    public void getChangedRows(){
+        /*List<Position> bestPositions = (List<Position>) Warehouse.getInstance().getController("bestLowPositions");
+        bestPositions.addAll((List<Position>) Warehouse.getInstance().getController("bestTallPositions"));*/
+
+        for(Position p : positionsToSave){
 
             String row = p.getName().substring(0, 1);
 
@@ -116,8 +110,9 @@ public class WarehouseLayoutRowsReservationsController implements Initializable 
 
             changedRows.add(row);
         }
-    }
 
+    }
+    @Override
     public void backToMenu() throws IOException {
         Warehouse warehouse = Warehouse.getInstance();
         warehouse.deleteWarehouseLayoutInstance();

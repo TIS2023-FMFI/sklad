@@ -41,6 +41,10 @@ public class Reservation {
             }
         }
         aviablePositions = allPositions;
+
+        if(Warehouse.getInstance().getController("aviablePositions") != null){
+            Warehouse.getInstance().removeController("aviablePositions");
+        }
         Warehouse.getInstance().addController("aviablePositions", aviablePositions);
 
         return new Pair<>(allPositions.size(), tallCounter);
@@ -54,6 +58,9 @@ public class Reservation {
             }
             if(res1.getKey() > res2.getKey()){
                 return -1;
+            }
+            if(res1.getValue().size() == 0 || res2.getValue().size() == 0 ){
+                return 0;
             }
             String firstPos = res1.getValue().get(0).getName();
             String secondPos = res2.getValue().get(0).getName();
@@ -74,7 +81,7 @@ public class Reservation {
      * @param customerName whose customer reserves positions
      * @return flag which represents success of function
      */
-    public boolean reservePositions(int smallPositions, int tallPositions, String customerName) {
+    public boolean findPotisionsToReserve(int smallPositions, int tallPositions, String customerName) {
         PriorityQueue<Pair<Integer, List<Position>>> priorityQueue = new PriorityQueue<>(new PositionComparator());
         PriorityQueue<Pair<Integer, List<Position>>> priorityQueueTallPositions = new PriorityQueue<>(new PositionComparator());
         int counter;
@@ -94,7 +101,7 @@ public class Reservation {
                             counter++;
                             isTall = position.isTall();
                         }
-                        else {
+                        /*else {
                             List<Customer> customerList = databaseHandler.getCustomerFromReservedPosition((java.sql.Date) dateFrom, (java.sql.Date) dateTo, position);
                             if (customerList != null) {
                                 Customer c = customerList.get(0);
@@ -103,7 +110,7 @@ public class Reservation {
                                     System.out.println(c.getName() + " " + position.getName());
                                 }
                             }
-                        }
+                        }*/
                     }
                     Collections.sort(positionList, Comparator.comparing(Position::getName));
                     if(isTall){
@@ -117,17 +124,17 @@ public class Reservation {
         }
         List<Position> bestLowPositions = getBestFitPositions(smallPositions, priorityQueue);
         List<Position> bestTallPositions = getBestFitPositions(tallPositions, priorityQueueTallPositions);
+
+        if(Warehouse.getInstance().getController("bestLowPositions") != null){
+            Warehouse.getInstance().removeController("bestLowPositions");
+        }
         Warehouse.getInstance().addController("bestLowPositions", bestLowPositions);
+
+        if(Warehouse.getInstance().getController("bestTallPositions") != null){
+            Warehouse.getInstance().removeController("bestTallPositions");
+        }
         Warehouse.getInstance().addController("bestTallPositions", bestTallPositions);
 
-        /*databaseHandler = Warehouse.getInstance().getDatabaseHandler();
-        int customerId = databaseHandler.getCustomer(customerName).getId();
-        if(! saveCustomerReservations(tallPositions, priorityQueueTallPositions, customerId)) {
-            return false;
-        }
-        if(!saveCustomerReservations(smallPositions, priorityQueue, customerId)){
-            return false;
-        }*/
 
         return true;
     }
@@ -144,16 +151,10 @@ public class Reservation {
         return bestPositions;
     }
 
-    protected boolean saveCustomerReservations(int numberOfPorsitions, PriorityQueue<Pair<Integer, List<Position>>> priorityQueue, int customerId){
-        while (numberOfPorsitions > 0){
-            var free = Objects.requireNonNull(priorityQueue.poll()).getValue();
-            for(Position position : free) {
-                if(numberOfPorsitions == 0){break;}
-                if(! databaseHandler.reservePositionForCustomer(customerId, (java.sql.Date) dateFrom, (java.sql.Date) dateTo, position)){
-                    return false;
-                }
-                numberOfPorsitions--;
-                System.out.println(numberOfPorsitions + " " + position.getName());
+    public boolean saveCustomerReservations(Set<Position> positions, Customer customer, Date dateFrom, Date dateTo){
+        for(Position position : positions) {
+            if(! Warehouse.getInstance().getDatabaseHandler().reservePositionForCustomer(customer.getId(), (java.sql.Date) dateFrom, (java.sql.Date) dateTo, position)){
+                return false;
             }
         }
         return true;

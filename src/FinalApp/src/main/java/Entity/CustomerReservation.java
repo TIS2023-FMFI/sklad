@@ -23,6 +23,20 @@ public class CustomerReservation {
     @Column(name = "reserved_until")
     private Date reservedUntil;
 
+    @Override
+    public String toString() {
+        return "CustomerReservation{" +
+                "idCustomer=" + idCustomer +
+                ", reservedFrom=" + reservedFrom +
+                ", reservedUntil=" + reservedUntil +
+                ", idPosition='" + idPosition + '\'' +
+                '}';
+    }
+
+    @Basic
+    @Column(name = "id_position")
+    private String idPosition;
+
     public CustomerReservation() {
     }
 
@@ -32,10 +46,6 @@ public class CustomerReservation {
         this.reservedUntil = reservedUntil;
         this.idPosition = idPosition;
     }
-
-    @Basic
-    @Column(name = "id_position")
-    private String idPosition;
 
     public int getId() {
         return id;

@@ -11,11 +11,11 @@
       <Label layoutX="134.0" layoutY="131.0" text="Počet voľných pozícií:" />
       <Label layoutX="134.0" layoutY="163.0" text="Z toho vysokých:" />
       <Label layoutX="134.0" layoutY="200.0" text="Vyberte počet pozícií:" />
-      <Label layoutX="134.0" layoutY="231.0" text="Z toho vysokých:" />
+      <Label layoutX="134.0" layoutY="231.0" text="Z toho aspoň vysokých:" />
       <Button layoutX="280.0" layoutY="279.0" mnemonicParsing="false" onAction="#findPositionsToSave" text="Ulož" />
       <Label fx:id="numberOfAllFreePositions" layoutX="335.0" layoutY="131.0" />
       <Label fx:id="numberOfAllTallPositions" layoutX="335.0" layoutY="163.0" />
-      <TextField fx:id="numberOfFreeField" alignment="CENTER_RIGHT" layoutX="300.0" layoutY="196.0" prefHeight="25.0" prefWidth="55.0" />
+      <TextField fx:id="numberOfFreeField" alignment="CENTER_RIGHT" layoutX="300.0" layoutY="196.0" prefHeight="25.0" prefWidth="55.0"/>
       <TextField fx:id="numberOfTallField" alignment="CENTER_RIGHT" layoutX="300.0" layoutY="227.0" prefHeight="25.0" prefWidth="55.0" text="0" />
       <Label fx:id="errorMessage" layoutX="250.0" layoutY="69.0" prefHeight="18.0" prefWidth="300.0" textAlignment="CENTER" textFill="red" />
    </children>

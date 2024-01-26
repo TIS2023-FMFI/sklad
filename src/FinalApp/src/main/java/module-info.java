@@ -23,4 +23,5 @@ module app.finalapp {
     opens GUI.Statistics;
     opens GUI.RelocateProduct;
     opens GUI.Reservations;
+    opens GUI.CustomerManagement;
 }

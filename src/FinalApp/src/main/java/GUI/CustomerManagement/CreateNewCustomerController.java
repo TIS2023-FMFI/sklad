@@ -1,10 +1,11 @@
-package GUI.Reservations;
+package GUI.CustomerManagement;
 
 import Entity.Customer;
 import app.CustomersHandler;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.hibernate.exception.ConstraintViolationException;
@@ -31,19 +32,33 @@ public class CreateNewCustomerController implements Initializable {
     CustomersHandler customersHandler;
     final String EMPTY_NAME = "Zadajte meno zákazníka";
     final String USED_NAME = "Zadané meno existuje";
+    private boolean fillData = false;
+    private int id;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customersHandler = new CustomersHandler();
+        fillData = Warehouse.getInstance().getController("customerName") != null;
+        if(fillData){
+            String name = ((ChoiceBox<String>) Warehouse.getInstance().getController("customerName")).getValue();
+            Customer customer = Warehouse.getInstance().getDatabaseHandler().getCustomer(name);
+            id = customer.getId();
+            customerNameT.setText(customer.getName());
+            addressT.setText(customer.getAddress());
+            cityT.setText(customer.getCity());
+            postCodeT.setText(customer.getPostalCode());
+            ICOT.setText(customer.getPostalCode());
+            DICT.setText(customer.getDic());
+        }
     }
-    public void backToMainReservations() throws IOException {
-        Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
+    public void backToMainCusMan() throws IOException {
+        Warehouse.getInstance().changeScene("CustomerManagement/customerManagementMain.fxml");
     }
 
 
 
     public void addNewCustomer() throws IOException {
-        customerName = String.valueOf(customerNameT.getText());
+        customerName = String.valueOf(customerNameT.getText()).trim();
         address = String.valueOf(addressT.getText());
         city = String.valueOf(cityT.getText());
         postCode = String.valueOf(postCodeT.getText());
@@ -54,7 +69,7 @@ public class CreateNewCustomerController implements Initializable {
             return;
         }
 
-        if(! customersHandler.checkCustomerName(customerName)){
+        if(! customersHandler.checkCustomerName(customerName) && !fillData){
             errorMessage.setText(USED_NAME);
             return;
         }
@@ -73,12 +88,16 @@ public class CreateNewCustomerController implements Initializable {
             return;
         }
         Customer newCustomer = new Customer(customerName, address, city, postCode, ICO, DIC);
-        if(customersHandler.saveCustomer(newCustomer)) {
-            Warehouse.getInstance().changeScene("Reservations/createCustomerConfirmation.fxml");
+        if(!fillData)
+        {
+            Warehouse.getInstance().getDatabaseHandler().saveCustomer(newCustomer);
+            Warehouse.getInstance().changeScene("CustomerManagement/createCustomerConfirmation.fxml");
+        }
+        else{
+            Warehouse.getInstance().getDatabaseHandler().updateCustomer(newCustomer, id);
+            Warehouse.getInstance().changeScene("CustomerManagement/createCustomerConfirmation.fxml");
         }
 
         errorMessage.setText("Údaje sa nepodarilo uložiť");
-
-
     }
 }
