@@ -5,12 +5,14 @@ import Entity.Pallet;
 import Entity.Position;
 import Exceptions.MaterialNotAvailable;
 import GUI.StoreInProduct.*;
+import javafx.scene.control.RadioButton;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class StoreInProduct {
     CustomerTruckNumberDataSet customerTruckNumberDataSet;
@@ -26,13 +28,56 @@ public class StoreInProduct {
      * @return list of available positions
      */
     public List<String> getFreePositionsNames(){
-        List<Position> freePositions = Warehouse.getInstance().getDatabaseHandler().getFreePositions();
-        List<String> freePositionNames = new ArrayList<>();
-        for (Position p : freePositions){
-            freePositionNames.add(p.getName());
+        Warehouse warehouse = Warehouse.getInstance();
+        CustomerTruckNumberController customerTruckNumberController = (CustomerTruckNumberController) warehouse.getController("customerTruckNumber");
+        PalletInformationController palletInformationController = (PalletInformationController) warehouse.getController("palletInformation");
+
+        int customerId = warehouse.getDatabaseHandler().getCustomer(customerTruckNumberController.getCustomer()).getId();
+        boolean isTall = palletInformationController.getIsTall();
+
+        List<Position> freePositions = Warehouse.getInstance().getDatabaseHandler().getFreePositions(customerId, isTall);
+        List<String> freePositionNames = freePositions.stream().map(Position::getName).toList();
+
+        int numberOfPositions = getNumberOfNeededPositions(palletInformationController.getWeight());
+
+        List<String> result = new ArrayList<>();
+        for (String p : freePositionNames){
+            StringBuilder nPositions = new StringBuilder(p);
+            char row = p.charAt(0);
+            int positionNumber = Integer.parseInt(p.substring(1, 4));
+            char shelf = p.charAt(4);
+
+            boolean areAllFree = true;
+            for (int i = 1; i < numberOfPositions; i++){
+                String neighbouringPosition = String.format("%s%03d%s", row, positionNumber + i * 2, shelf);
+                if (freePositionNames.contains(neighbouringPosition)){
+                    nPositions.insert(0, neighbouringPosition + "-");
+                }
+                else{
+                    areAllFree = false;
+                    break;
+                }
+            }
+            if (areAllFree){
+                result.add(nPositions.toString());
+            }
         }
-        return freePositionNames;
+        return result;
     }
+
+    public int getNumberOfNeededPositions(int weight){
+        if (weight == 500){
+            return 1;
+        }
+        if (weight == 1000){
+            return 2;
+        }
+        if (weight == 1200){
+            return 3;
+        }
+        return 4;
+    }
+
 
     /***
      * Method that stores in product

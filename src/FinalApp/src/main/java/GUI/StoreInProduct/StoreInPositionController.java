@@ -4,7 +4,9 @@ import app.Warehouse;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
@@ -17,15 +19,28 @@ public class StoreInPositionController implements Initializable {
     @FXML
     private TextField note;
 
+    @FXML
+    private Label errorMessage;
+
+    @FXML
+    private Button storeInProductButton;
+
+    @FXML
+    private Button continueStoringInButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<String> positions = Warehouse.getInstance().getStoreInInstance().getFreePositionsNames();
-        position.setItems(FXCollections.observableArrayList(positions));
-        position.setValue(positions.get(0));
 
-        Warehouse.getStage().setMinWidth(380);
-        Warehouse.getStage().setMinHeight(380);
-
+        if (positions.isEmpty()){
+            errorMessage.setText("Nenašli sa žiadne pozície, vyhovujúce kritériam");
+            storeInProductButton.setDisable(true);
+            continueStoringInButton.setDisable(true);
+        }
+        else {
+            position.setItems(FXCollections.observableArrayList(positions));
+            position.setValue(positions.get(0));
+        }
         Warehouse.getInstance().addController("storeInPosition", this);
     }
 

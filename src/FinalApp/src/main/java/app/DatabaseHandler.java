@@ -13,10 +13,8 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -221,12 +219,20 @@ public class DatabaseHandler {
     }
 
     public Customer getCustomerThatReservedPosition(Position position) {
+        LocalDate today = LocalDate.now();
+
         try (Session session = sessionFactory.openSession()) {
-            Query<Customer> query = session.createQuery("from Customer c join CustomerReservation cr " +
-                    "on c.id = cr.idCustomer where cr.idPosition = :position");
+            Query<Customer> query = session.createQuery(
+                    "SELECT c FROM Customer c " +
+                            "JOIN CustomerReservation cr ON c.id = cr.idCustomer " +
+                            "WHERE cr.idPosition = :position " +
+                            "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil"
+            );
+
             query.setParameter("position", position.getName());
-            Customer customer = query.getSingleResult();
-            return customer;
+            query.setParameter("today", today);
+
+            return query.getSingleResult();
         } catch (Exception e) {
             return null;
         }
@@ -648,21 +654,42 @@ public class DatabaseHandler {
      * @param positionName The position name.
      * @return True if the PNR is already used, otherwise false.
      */
-    public boolean isPositionReserved(String positionName) {
+    public boolean isPositionReservedToday(String positionName) {
+        LocalDate today = LocalDate.now();
+
         try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery("SELECT COUNT(*) FROM CustomerReservation cr WHERE cr.idPosition = :idPosition");
+            Query query = session.createQuery(
+                    "SELECT COUNT(*) FROM CustomerReservation cr " +
+                            "WHERE cr.idPosition = :idPosition " +
+                            "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil"
+            );
+
             query.setParameter("idPosition", positionName);
+            query.setParameter("today", today);
+
             return (Long) query.uniqueResult() > 0;
         }
     }
 
-    // zatial vyberie iba všetky pozície treba dorobiť
-    // algoritmus bude brať do úvahy položky z formulárov:
-    //     či paleta vyžaduje vysokú pozíciu
-    //     koľko pozícií vyžaduje paleta - ak viacero vypísané možnosti budú n-tice oddelené '-'
-    public List<Position> getFreePositions() {
+    /***
+     * Method, that returns all the positions that are reserved by customer and are/aren´t tall.
+     * @param customerId The unique identifier for the customer.
+     * @param isTall If the positions should be tall.
+     */
+    public List<Position> getFreePositions(int customerId, boolean isTall) {
+        LocalDate today = LocalDate.now();
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Position p").list();
+            Query<Position> query = session.createQuery("FROM Position p " +
+                    "WHERE p.name IN (SELECT cr.idPosition FROM CustomerReservation cr WHERE cr.idCustomer = :customerId " +
+                    "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil) " +
+                    "AND p.isTall = :isTall " +
+                    "AND p.name NOT IN (SELECT pop.idPosition FROM PalletOnPosition pop)"
+            );
+
+            query.setParameter("customerId", customerId);
+            query.setParameter("isTall", isTall);
+            query.setParameter("today", today);
+            return query.list();
         }
     }
 
@@ -811,9 +838,17 @@ public class DatabaseHandler {
      * @return The CustomerReservation record associated with the provided position name,
      */
     public CustomerReservation getReservation(String positionName){
+        LocalDate today = LocalDate.now();
+
         try (Session session = sessionFactory.openSession()) {
-            Query<CustomerReservation> query = session.createQuery("FROM CustomerReservation WHERE idPosition = :position");
+            Query<CustomerReservation> query = session.createQuery(
+                    "FROM CustomerReservation cr " +
+                            "WHERE cr.idPosition = :position " +
+                            "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil"
+            );
+
             query.setParameter("position", positionName);
+            query.setParameter("today", today);
 
             return query.uniqueResult();
         } catch (Exception e) {
@@ -875,6 +910,19 @@ public class DatabaseHandler {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public List<String> getPositionsWithPallet(String PNR){
+        try (Session session = sessionFactory.openSession()) {
+            Query<String> query = session.createQuery("SELECT pop.idPosition FROM PalletOnPosition pop " +
+                    "WHERE pop.idPallet = :pnr");
+
+            query.setParameter("pnr", PNR);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

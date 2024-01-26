@@ -138,12 +138,12 @@ public class PalletInformationController implements Initializable {
         materialPair.setSpacing(15);
         materialPair.setAlignment(Pos.CENTER);
 
-        countTextField.textProperty().addListener((observable, oldValue, newValue) -> handleCountTextField(materialTextField, newValue));
+        countTextField.textProperty().addListener((observable, oldValue, newValue) -> handleCountTextField(newValue));
 
         return materialPair;
     }
 
-    private void handleCountTextField(TextField materialTextField, String newValue) {
+    private void handleCountTextField(String newValue) {
         try {
             int count = Integer.parseInt(newValue);
             if (count > 0) {
@@ -265,7 +265,7 @@ public class PalletInformationController implements Initializable {
         return palletType.getValue();
     }
 
-    public Integer getWeight(){
+    public int getWeight(){
         RadioButton selectedRadioButton = (RadioButton) weight.getSelectedToggle();
         String weightID = selectedRadioButton.getId();
         if (weightID.equals("first")){

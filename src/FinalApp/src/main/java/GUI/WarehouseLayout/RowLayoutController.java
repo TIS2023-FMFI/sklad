@@ -131,7 +131,7 @@ public class RowLayoutController implements Initializable {
         if (!warehouse.isPalletOnPosition(position)) {
             return RED_COLOR;
         }
-        else if (warehouse.getDatabaseHandler().isPositionReserved(position.getName())) {
+        else if (warehouse.getDatabaseHandler().isPositionReservedToday(position.getName())) {
             return ORANGE_COLOR;
         }
         return GREEN_COLOR;
@@ -147,7 +147,7 @@ public class RowLayoutController implements Initializable {
         if (!palletsOnPosition.isEmpty()) {
             positionWithPallets(position, palletsOnPosition);
         }
-        else if (warehouse.getDatabaseHandler().isPositionReserved(position.getName())) {
+        else if (warehouse.getDatabaseHandler().isPositionReservedToday(position.getName())) {
             reservedPosition(position);
         }
         else {
@@ -169,7 +169,8 @@ public class RowLayoutController implements Initializable {
         clearInformationContainers();
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
 
-        Label positionName = new Label("Názov pozície: " + position.getName());
+        String allPositionNames = String.join(", ", databaseHandler.getPositionsWithPallet(pallet.getPnr()));
+        Label positionName = new Label("Názov pozície: " + allPositionNames);
         Label customer = new Label("Zakázník: " + databaseHandler.getCustomerThatReservedPosition(position).getName());
         Label palletType = new Label("Typ palety: " + pallet.getType());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");

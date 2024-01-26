@@ -12,6 +12,8 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+
 import java.util.*;
 
 public class RowLayoutReservationsController extends RowLayoutController implements Initializable {
@@ -41,9 +43,6 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         warehouse = Warehouse.getInstance();
-
-        Warehouse.getStage().setMinWidth(1300);
-        Warehouse.getStage().setMinHeight(700);
 
         positionsVBox.setAlignment(Pos.TOP_CENTER);
         palletsHBox.setAlignment(Pos.CENTER);
@@ -106,7 +105,7 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
         if (!palletsOnPosition.isEmpty()) {
             positionWithPallets(position, palletsOnPosition);
         }
-        else if (warehouse.getDatabaseHandler().isPositionReserved(position.getName())) {
+        else if (warehouse.getDatabaseHandler().isPositionReservedToday(position.getName())) {
             reservedPosition(position);
         }
         else {
