@@ -27,8 +27,7 @@ public class MoveProductFromPositionController {
 
     public void confirmInitialPosition() throws IOException {
         if (!checkIfPositionIsCorrect(position.getText())){
-            System.out.println("Position does not exist");
-            errorLabel.setText("Position does not exist");
+            errorLabel.setText("Pozícia neexistuje");
         }
         else {
             isWholePallet = wholePallet.isSelected();

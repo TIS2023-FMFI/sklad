@@ -40,6 +40,7 @@ public class GraphController implements Initializable {
 
         List<XYChart.Series<String, Number>> series = statistics.setBarChart(dateFrom, dateTo, customer);
         barChart.getData().addAll(series);
+        System.out.println(series);
 
 
         for (XYChart.Series<String, Number> dataSeries : barChart.getData()) {
@@ -57,6 +58,7 @@ public class GraphController implements Initializable {
                 });
             }
         }
+        //barChart.setStyle("-fx-bar-gap: 10; -fx-bar-width: 60;");
     }
 
     public void backToStatistics() throws IOException {

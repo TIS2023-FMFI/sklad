@@ -19,6 +19,7 @@ public class ChooseProductToRelocateController implements Initializable {
     public TextField quantityText;
     @FXML
     public Label errorLabel;
+    public Label materialToMoveLabel;
     @FXML
     private ChoiceBox<String> productsOnPallet;
     private Map<String, Integer> productsOnPalletMap = new HashMap<>();
@@ -35,6 +36,7 @@ public class ChooseProductToRelocateController implements Initializable {
         String position = controller.positionName;
         isWholePallet = controller.isWholePallet;
         if (isWholePallet){
+            materialToMoveLabel.setText("Vyberte paletu na preskladnenie:");
             quantityText.setDisable(true);
             fillPalletsOnPosition(position);
         }else {

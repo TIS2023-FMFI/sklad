@@ -158,7 +158,8 @@ public class RowLayoutController implements Initializable {
     public void positionWithPallets(Position position, Map<Pallet, Map<Material, Integer>> palletsOnPosition){
         int count = 1;
         for (Pallet pallet : palletsOnPosition.keySet()){
-            Button palletButton = new Button("Paleta-" + count);
+            //Button palletButton = new Button("Paleta-" + count);
+            Button palletButton = new Button("Paleta-" + pallet.getPnr());
             palletsHBox.getChildren().add(palletButton);
             palletButton.setOnAction(event -> handlePalletButtonClick(position, pallet, palletsOnPosition.get(pallet)));
             count++;
