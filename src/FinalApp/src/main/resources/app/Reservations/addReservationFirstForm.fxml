@@ -15,7 +15,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="102.0" layoutY="143.0" prefHeight="18.0" prefWidth="112.0" text="Dátum od (vrátane):" />
+      <Label layoutX="102.0" layoutY="143.0" prefHeight="18.0" prefWidth="112.0" text="Dátum od (vrátane):"/>
       <Label layoutX="102.0" layoutY="178.0" prefHeight="18.0" prefWidth="112.0" text="Dátum do (vrátane):" />
       <DatePicker fx:id="dateFrom" layoutX="232.0" layoutY="139.0" onAction="#saveDateFrom" />
       <DatePicker fx:id="dateTo" layoutX="232.0" layoutY="174.0" onAction="#saveDateTo" />

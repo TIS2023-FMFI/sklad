@@ -1,4 +1,4 @@
-package GUI.Reservations;
+package GUI.CustomerManagement;
 
 import app.Warehouse;
 import javafx.fxml.Initializable;
@@ -13,10 +13,10 @@ public class CreateCustomerConfirmationController implements Initializable {
     }
 
     public void backToMainReservations() throws IOException {
-        Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
+        Warehouse.getInstance().changeScene("CustomerManagement/customerManagementMain.fxml");
     }
 
     public void backToForm() throws IOException {
-        Warehouse.getInstance().changeScene("Reservations/CreateNewCustomer.fxml");
+        Warehouse.getInstance().changeScene("CustomerManagement/CreateNewCustomer.fxml");
     }
 }

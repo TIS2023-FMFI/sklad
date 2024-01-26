@@ -849,6 +849,31 @@ public class DatabaseHandler {
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /***
+     * Method, that updates customer information and saves him to the database.
+     * @param customer which customer should be updated.
+     * @return true when data were updated.
+     */
+    public boolean updateCustomer(Customer customer, int id){
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Customer customerOld = session.get(Customer.class, id);
+            customerOld.setName(customer.getName());
+            customerOld.setAddress(customer.getAddress());
+            customerOld.setCity(customer.getCity());
+            customerOld.setPostalCode(customer.getPostalCode());
+            customerOld.setIco(customerOld.getIco());
+            customerOld.setDic(customer.getDic());
+            session.saveOrUpdate(customerOld);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -906,6 +931,7 @@ public class DatabaseHandler {
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -919,22 +945,24 @@ public class DatabaseHandler {
             query.setParameter("reservedUntil", reservedUntil);
             return query.getResultList();
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
 
-    public boolean isPositionReseredByCustomer(Date reservedFrom, Date reservedUntil, Position position, Customer c){
+    public boolean isPositionReserevedByCustomer(Date reservedFrom, Date reservedUntil, Position position, Customer c){
         try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery("FROM CustomerReservation r WHERE r.idPosition = :idPostion AND r.reservedFrom = :reservedFrom" +
+            Query query = session.createQuery("SELECT idCustomer FROM CustomerReservation r WHERE r.idPosition = :idPosition AND r.reservedFrom = :reservedFrom" +
                     " and r.reservedUntil = :reservedUntil and r.idCustomer = :idCustomer");
             query.setParameter("idPosition", position.getName());
             query.setParameter("reservedFrom", reservedFrom);
             query.setParameter("reservedUntil", reservedUntil);
             query.setParameter("idCustomer", c.getId());
-            return query.getResultList().size() > 0;
+            return query.getResultList().size()>0;
         } catch (Exception e) {
             return false;
         }
     }
+
 
 }

@@ -34,7 +34,9 @@ public class AddReservationFirstController implements Initializable {
         ChoiceBox<String> nameController = (ChoiceBox<String>)warehouse.getController("customerReservationName");
         String name = nameController.getValue();
         customerName.setText(name);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         if(warehouse.getController("dateFrom") != null){
             dateFrom.setValue(LocalDate.parse(warehouse.getController("dateFrom").toString(), formatter));
             dateFromValue = Date.valueOf(dateFrom.getValue());
