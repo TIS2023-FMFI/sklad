@@ -17,12 +17,19 @@ public class RelocateProduct {
 
     public void relocatePallet(Position initialPos, List<String> finalPos, String palletFrom){
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
+        List<Position> posList = db.getPositionsOfPallet(palletFrom);
+
         for (String pos : finalPos){
             db.updatePalletPosition(palletFrom, pos);
         }
         Pallet beingMoved = Warehouse.getInstance().getPalletsOnPositionMap().get(initialPos).keySet().stream()
                 .filter(p -> p.getPnr().equals(palletFrom)).findFirst().get();
         var materialsStored = Warehouse.getInstance().getPalletsOnPositionMap().get(initialPos).remove(beingMoved);
+
+        for (Position pos : posList){
+            Warehouse.getInstance().getPalletsOnPositionMap().get(pos).remove(beingMoved);
+        }
+
         for (String pos : finalPos){
             Position newPos = db.getPosition(pos);
             Warehouse.getInstance().getPalletsOnPositionMap().get(newPos).put(beingMoved, materialsStored);
@@ -77,7 +84,6 @@ public class RelocateProduct {
         try {
             material = db.getMaterial(product);
         } catch (MaterialNotAvailable e) {
-            System.out.println("Material not available");
             return;
         }
         var matOnPallet = Warehouse.getInstance().getPalletsOnPositionMap().get(finalPos).get(palletTo);
