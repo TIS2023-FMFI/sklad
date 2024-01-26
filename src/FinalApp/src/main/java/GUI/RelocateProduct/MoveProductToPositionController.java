@@ -5,6 +5,7 @@ import Entity.Pallet;
 import Entity.Position;
 import app.DatabaseHandler;
 import app.Warehouse;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -56,7 +57,7 @@ public class MoveProductToPositionController implements Initializable {
             product = controller.finalMaterial;
             quantity = controller.finalQuantity;
         }
-        if (palletWeigh == 500) fillNewPositionsChoice();
+        if (palletWeigh == 500) fillNewPositionsChoice(); //if i am relocating single material, the weight is 500
         if (palletWeigh == 1000) fillNew2PositionsChoice();
         if (palletWeigh == 1200) fillNew3PositionsChoice();
         if (palletWeigh == 2000) fillNew4PositionsChoice();
@@ -74,14 +75,80 @@ public class MoveProductToPositionController implements Initializable {
                 newPositionsChoice.getItems().add(position.getName());
         }
     }
+
     private void fillNew2PositionsChoice(){
-        newPositionsChoice.getItems().add("C0001,C0011");
+        DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
+        Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
+        List<Position> emptyPositions = dbh.getPositionsReservedByCustomer(customer.getName());
+        List<String> posNames = emptyPositions.stream().map(Position::getName).toList();
+        for (String positionName : posNames){
+            String Wrow = positionName.substring(0, 1);
+            String col = positionName.substring(1, 4);
+            String row = positionName.substring(4, 5);
+            int colInt = Integer.parseInt(col);
+            int colInt1 = colInt + 2;
+            StringBuilder zeroes = new StringBuilder();
+            zeroes.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt1).length())));
+            String neighPos = Wrow + zeroes + colInt1 + row;
+            if (posNames.contains(neighPos)){
+                newPositionsChoice.getItems().add(positionName + "," + neighPos);
+            }
+        }
     }
     private void fillNew3PositionsChoice(){
-        newPositionsChoice.getItems().add("C0001,C0011,C0021");
+        DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
+        Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
+        List<Position> emptyPositions = dbh.getPositionsReservedByCustomer(customer.getName());
+        List<String> posNames = emptyPositions.stream().map(Position::getName).toList();
+        for (String positionName : posNames){
+            String Wrow = positionName.substring(0, 1);
+            String col = positionName.substring(1, 4);
+            String row = positionName.substring(4, 5);
+            int colInt = Integer.parseInt(col);
+            int colInt1 = colInt + 2;
+            int colInt2 = colInt + 4;
+            StringBuilder zeroes1 = new StringBuilder();
+            zeroes1.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt1).length())));
+            String neighPos1 = Wrow + zeroes1 + colInt1 + row;
+
+            StringBuilder zeroes2 = new StringBuilder();
+            zeroes2.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt2).length())));
+            String neighPos2 = Wrow + zeroes2 + colInt2 + row;
+
+            if (posNames.contains(neighPos1) && posNames.contains(neighPos2)){
+                newPositionsChoice.getItems().add(positionName + "," + neighPos1 + "," + neighPos2);
+            }
+        }
     }
     private void fillNew4PositionsChoice(){
-        newPositionsChoice.getItems().add("C0001,C0011,C0021,C0031");
+        DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
+        Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
+        List<Position> emptyPositions = dbh.getPositionsReservedByCustomer(customer.getName());
+        List<String> posNames = emptyPositions.stream().map(Position::getName).toList();
+        for (String positionName : posNames){
+            String Wrow = positionName.substring(0, 1);
+            String col = positionName.substring(1, 4);
+            String row = positionName.substring(4, 5);
+            int colInt = Integer.parseInt(col);
+            int colInt1 = colInt + 2;
+            int colInt2 = colInt + 4;
+            int colInt3 = colInt + 6;
+            StringBuilder zeroes1 = new StringBuilder();
+            zeroes1.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt1).length())));
+            String neighPos1 = Wrow + zeroes1 + colInt1 + row;
+
+            StringBuilder zeroes2 = new StringBuilder();
+            zeroes2.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt2).length())));
+            String neighPos2 = Wrow + zeroes2 + colInt2 + row;
+
+            StringBuilder zeroes3 = new StringBuilder();
+            zeroes3.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt3).length())));
+            String neighPos3 = Wrow + zeroes3 + colInt3 + row;
+
+            if (posNames.contains(neighPos1) && posNames.contains(neighPos2) && posNames.contains(neighPos3)){
+                newPositionsChoice.getItems().add(positionName + "," + neighPos1 + "," + neighPos2 + "," + neighPos3);
+            }
+        }
     }
 
     public void backToProductChoice() throws IOException {
@@ -89,6 +156,10 @@ public class MoveProductToPositionController implements Initializable {
     }
 
     public void confirmFinalPosition() throws IOException {
+        if (newPositionsChoice.getValue() == null){
+            errorLabel.setText("No position chosen");
+            return;
+        }
         finalPositions = Arrays.asList(newPositionsChoice.getValue().split(","));
         if (finalPositions.size() == 0){
             errorLabel.setText("No position chosen");
