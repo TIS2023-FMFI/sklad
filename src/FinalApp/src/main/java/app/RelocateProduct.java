@@ -89,7 +89,6 @@ public class RelocateProduct {
         var matOnPallet = Warehouse.getInstance().getPalletsOnPositionMap().get(finalPos).get(palletTo);
         for (Material m : matOnPallet.keySet()) {
             if (m.getName().equals(product)) {
-                int oldQuantity = matOnPallet.get(m);
                 db.persistMaterialOnPallet(palletTo, m, quantity);
                 return;
             }

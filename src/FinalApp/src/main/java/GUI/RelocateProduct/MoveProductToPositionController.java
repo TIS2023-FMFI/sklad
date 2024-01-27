@@ -67,7 +67,6 @@ public class MoveProductToPositionController implements Initializable {
         //fills newPositionsChoice with positions that can store product
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        System.out.println(initialPosition + " reserved by: " + customer);
         List<Position> positions = dbh.getPositionsReservedByCustomer(customer.getName());
         boolean tall = initialPosition.isTall();
         for (Position position : positions){

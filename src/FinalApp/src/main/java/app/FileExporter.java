@@ -89,7 +89,6 @@ public class FileExporter {
             addInvoiceContent(document, cust, dateFrom, dateTo, intPrice, totalReservations);
 
             document.close();
-            System.out.println("Invoice generated successfully.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -334,7 +333,6 @@ public class FileExporter {
             document.add(signTable);
 
             document.close();
-            System.out.println("Order.pdf generated successfully.");
         } catch (Exception e) {
             e.printStackTrace();
         }

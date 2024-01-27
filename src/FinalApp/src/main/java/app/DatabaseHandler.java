@@ -45,13 +45,14 @@ public class DatabaseHandler {
     /***
      * A destructor that closes session factory after exiting application.
      */
+    /*
     @Override
     protected void finalize() {
         if (sessionFactory != null) {
-            System.out.println("Closing sessionFactory");
             //sessionFactory.close();
         }
     }
+     */
 
     protected boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
@@ -447,7 +448,6 @@ public class DatabaseHandler {
             query.setParameter("customerId", customerId);
 
             List<History> result = query.list();
-            System.out.println(result.size());
 
             Map<Date, Pair<Integer, Integer>> statistics = new HashMap<>();
             for (History h : result) {
@@ -557,7 +557,6 @@ public class DatabaseHandler {
         try (Session session = sessionFactory.openSession()) {
             Query<Position> query = session.createQuery("from Position p where p.name = :name");
             query.setParameter("name", name);
-            //System.out.println(query.uniqueResult() + " " + name);
             return query.uniqueResult();
         }catch (Exception e){
             e.printStackTrace();
