@@ -20,19 +20,21 @@
             <TextField fx:id="PNR" layoutX="74.0" layoutY="45.0" prefHeight="25.0" prefWidth="73.0" />
             <Label layoutX="27.0" layoutY="96.0" prefHeight="17.0" prefWidth="78.0" text="Poškodenosť:" />
             <CheckBox fx:id="isDamaged" layoutX="52.0" layoutY="125.0" mnemonicParsing="false" text="Paleta alebo tovar je poškodený" />
-            <Label layoutX="28.0" layoutY="228.0" text="Hmotnosť:" />
-            <RadioButton fx:id="first" layoutX="54.0" layoutY="253.0" mnemonicParsing="false" text="&lt;500kg">
+            <Label layoutX="28.0" layoutY="228.0" text="Počet pozícií:" />
+            <RadioButton fx:id="onePosition" layoutX="54.0" layoutY="253.0" mnemonicParsing="false" text="1 pozícia">
                <toggleGroup>
-                  <ToggleGroup fx:id="weight" />
+                  <ToggleGroup fx:id="numberOfPositions" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="second" layoutX="54.0" layoutY="277.0" mnemonicParsing="false" text="&gt;500kg a &lt;1000kg" toggleGroup="$weight" />
-            <RadioButton fx:id="third" layoutX="54.0" layoutY="303.0" mnemonicParsing="false" text="&gt;1000kg a &lt;1200kg" toggleGroup="$weight" />
-            <RadioButton fx:id="fourth" layoutX="54.0" layoutY="326.0" mnemonicParsing="false" text="&gt;1200kg" toggleGroup="$weight" />
+            <RadioButton fx:id="twoPositions" layoutX="54.0" layoutY="277.0" mnemonicParsing="false" text="2 pozície" toggleGroup="$numberOfPositions" />
+            <RadioButton fx:id="threePositions" layoutX="54.0" layoutY="303.0" mnemonicParsing="false" text="3 pozície" toggleGroup="$numberOfPositions" />
+            <RadioButton fx:id="fourPositions" layoutX="54.0" layoutY="326.0" mnemonicParsing="false" text="4 pozície" toggleGroup="$numberOfPositions" />
             <Label layoutX="275.0" layoutY="228.0" text="Typ palety:" />
             <ChoiceBox fx:id="palletType" layoutX="275.0" layoutY="258.0" prefWidth="150.0" />
             <Button layoutX="425.0" layoutY="331.0" mnemonicParsing="false" onAction="#nextToPositionForm" text="Nájsť pozíciu" />
             <Label layoutX="23.0" layoutY="159.0" text="Nadrozmernosť:" />
             <CheckBox fx:id="isTall" layoutX="52.0" layoutY="183.0" mnemonicParsing="false" text="Paleta vyžaduje vysokú pozíciu" />
+            <Label layoutX="290.0" layoutY="49.0" text="Hmotnosť:" />
+            <TextField fx:id="weight" layoutX="367.0" layoutY="45.0" prefHeight="25.0" prefWidth="116.0" />
          </children>
       </AnchorPane>
    </bottom>

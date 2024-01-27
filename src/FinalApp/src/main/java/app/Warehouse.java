@@ -8,6 +8,7 @@ import Entity.Users;
 import Exceptions.FileNotFound;
 import Exceptions.WrongStringFormat;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +19,7 @@ import java.util.*;
 
 public class Warehouse extends Application {
     private static Warehouse INSTANCE;
-    public static Stage stage;
+    private static Stage stage;
     private DatabaseHandler databaseHandler;
     private WarehouseLayout warehouseLayout;
     private StoreInProduct storeInProduct;
@@ -80,7 +81,7 @@ public class Warehouse extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         primaryStage.setTitle("Skladovací systém");
         primaryStage.setScene(new Scene(root, 700, 500));
-        setMaxMinStageSize(700, 500);
+        stage.setResizable(false);
         primaryStage.show();
 
     }
@@ -102,16 +103,9 @@ public class Warehouse extends Application {
         stage.getScene().getWindow().setWidth(newWidth);
         stage.getScene().getWindow().setHeight(newHeight);
 
-        setMaxMinStageSize(newWidth, newHeight);
+        stage.setResizable(false);
 
         centerStage(stage);
-    }
-
-    private void setMaxMinStageSize(double width, double height){
-        stage.setMinWidth(width);
-        stage.setMinHeight(height);
-        stage.setMaxWidth(width);
-        stage.setMaxHeight(height);
     }
 
     /***
