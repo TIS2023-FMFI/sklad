@@ -47,7 +47,7 @@ public class CreateNewCustomerController implements Initializable {
             addressT.setText(customer.getAddress());
             cityT.setText(customer.getCity());
             postCodeT.setText(customer.getPostalCode());
-            ICOT.setText(customer.getPostalCode());
+            ICOT.setText(customer.getIco());
             DICT.setText(customer.getDic());
         }
     }

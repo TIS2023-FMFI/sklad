@@ -35,7 +35,7 @@ public class MoveProductToPositionController implements Initializable {
     List<String> finalPositions;
     //public String finalPosition;
     String palletTo;
-    public int palletWeigh = 500;
+    public double palletWeigh = 500;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
