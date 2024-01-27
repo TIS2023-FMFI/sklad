@@ -1036,5 +1036,34 @@ public class DatabaseHandler {
         }
     }
 
+    public boolean deleteReservationRecord(Customer customer, Date dateFrom, Date dateUntil){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+//            session.getTransaction();
+            Query query = session.createQuery("DELETE FROM CustomerReservation r WHERE r.reservedFrom = :reservedFrom" +
+                    " and r.reservedUntil = :reservedUntil and r.idCustomer = :idCustomer");
+            query.setParameter("reservedFrom", dateFrom);
+            query.setParameter("reservedUntil", dateUntil);
+            query.setParameter("idCustomer", customer.getId());
+            query.executeUpdate();
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    protected List<String> getAllUsedPositions(){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("SELECT pop.idPosition FROM PalletOnPosition pop");
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

@@ -34,9 +34,9 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
     int numberOfPosition;
     private final String REMOVE_FROM_ADDED = "Pozícia bola odstránená z pridaných na zarezervovanie.";
     private final String ADD_TO_ADDED = "Pozícia zvolená na uloženie.";
-    private final String ENOUGH_CHOOSEN_POSITIONS = "Nemôžno pridať ďaľšiu pozíciu";
-    private final String RESERVED_BY_SAME_CUSTOMER = "Nemôžno rezervovať pozíciu. Pozn: Pozícia je rezervoná zákazníkom v danom intervale.";
-    private final String CANNOT_SAVE = "Nemôžno rezervovať zvolenú pozíciu.";
+    private final String ENOUGH_CHOOSEN_POSITIONS = "Nemožno pridať ďaľšiu pozíciu";
+    private final String RESERVED_BY_SAME_CUSTOMER = "Nemožno rezervovať pozíciu. Pozn: Pozícia je rezervoná zákazníkom v danom intervale.";
+    private final String CANNOT_SAVE = "Nemožno rezervovať zvolenú pozíciu.";
     private final String NOT_ENOUGH_POSITIONS = "Málo zvolených pozícií.";
     private final String DB_FAIL = "Chyba pri nahrávaní do DB";
 
@@ -182,7 +182,7 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
         }
         Reservation reservation = new Reservation();
         if(reservation.saveCustomerReservations(positionsToSave, customer, dateFrom, dateTo)) {
-            Warehouse.getInstance().changeScene("Reservations/createReservationConfirmation.fxml");
+            Warehouse.getInstance().changeScene("Reservations/reservationConfirmation.fxml");
             return;
         }
         errorMessage.setText(DB_FAIL);

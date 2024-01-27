@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationConfirmationController">
+    <children>
+        <Label fx:id="messageTop" alignment="TOP_CENTER" layoutX="113.0" layoutY="102.0" prefHeight="55.0" prefWidth="374.0" />
+        <Button layoutX="280.0" layoutY="272.0" mnemonicParsing="false" onAction="#backToMainReservations" text="Okej" />
+      <Button layoutX="75.0" layoutY="60.0" mnemonicParsing="false" onAction="#backToForm" text="Naspäť" />
+      <Label fx:id="messageBottom" alignment="TOP_CENTER" layoutX="121.0" layoutY="157.0" prefHeight="110.0" prefWidth="374.0" />
+    </children>
+</AnchorPane>

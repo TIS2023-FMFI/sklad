@@ -1,8 +1,11 @@
 package app;
 
 import Entity.*;
+import GUI.Reservations.ReservationViewController;
+import javafx.scene.control.Button;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Reservation {
@@ -160,7 +163,7 @@ public class Reservation {
         return true;
     }
 
-    public List<Map<String, String>> setReservationTable(Customer customer){
+    public List<Map<String, Object>> setReservationTable(Customer customer){
         List<CustomerReservation> records = Warehouse.getInstance().getDatabaseHandler().getReservationRecords(customer.getId());
         Map<Pair<Date, Date>, List<String>> sortedRecords = new HashMap<>();
         for(CustomerReservation record : records){
@@ -172,23 +175,47 @@ public class Reservation {
             temp.add(record.getIdPosition());
             sortedRecords.put(pair, temp);
         }
-        List<Map<String,String>> result = new ArrayList<>();
+        List<Map<String,Object>> result = new ArrayList<>();
+
         for (Pair date : sortedRecords.keySet()) {
             int numberOfPositions = sortedRecords.get(date).size();
+            Button edit = new Button("Zmazať");
+            edit.setOnAction(event ->{
+                if(Warehouse.getInstance().getController("cannotRemove") != null){
+                    Warehouse.getInstance().removeController("cannotRemove");
+                }
+                if(Warehouse.getInstance().getController("DeletedReservation") != null){
+                    Warehouse.getInstance().removeController("DeletedReservation");
+                }
+                findUsedPositions(new HashSet<>(sortedRecords.get(date)));
+                if(((Set<String>) Warehouse.getInstance().getController("cannotRemove")).isEmpty()) {
+                    Warehouse.getInstance().getDatabaseHandler().deleteReservationRecord(customer, (java.sql.Date) date.getKey(), (java.sql.Date) date.getValue());
+                    Warehouse.getInstance().addController("DeletedReservation", true);
+                }
+                try {
+                    Warehouse.getInstance().changeScene("Reservations/reservationConfirmation.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
             result.add(Map.of(
-                    "Od", String.valueOf(date.getKey()),
+                    "Od",  String.valueOf(date.getKey()),
                     "Do", String.valueOf(date.getValue()),
-                    "Počet pozícií", String.valueOf(numberOfPositions)
+                    "Počet pozícií", numberOfPositions,
+                    "Edit", edit
             ));
         }
 
         return result;
     }
 
-    public static void main(String[] args) {
-        Reservation reservation = new Reservation();
-        //reservation.reservePositions();
-        System.out.println("A0475".compareTo("A0455"));
+
+    private void findUsedPositions(HashSet<String> reservedPositions){
+        Set<String> usedPosition = new HashSet<>(Warehouse.getInstance().getDatabaseHandler().getAllUsedPositions());
+        reservedPositions.retainAll(usedPosition);
+        Warehouse.getInstance().addController("cannotRemove", reservedPositions);
     }
+
 
 }
