@@ -7,12 +7,13 @@ import java.util.Objects;
 
 @Entity
 public class Pallet {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "pnr")
     private String pnr;
     @Basic
     @Column(name = "weight")
-    private int weight;
+    private double weight;
     @Basic
     @Column(name = "date_income")
     private Date dateIncome;
@@ -28,8 +29,26 @@ public class Pallet {
     @Basic
     @Column(name = "note")
     private String note;
+    @Basic
+    @Column(name = "number_of_positions")
+    private int numberOfPositions;
 
     public Pallet() {}
+
+    /***
+     * Copy constructor
+     * @param pallet pallet to copy
+     */
+    public Pallet(Pallet pallet) {
+        this.pnr = pallet.pnr;
+        this.weight = pallet.weight;
+        this.dateIncome = pallet.dateIncome;
+        this.isDamaged = pallet.isDamaged;
+        this.idUser = pallet.idUser;
+        this.type = pallet.type;
+        this.note = pallet.note;
+        this.numberOfPositions = pallet.numberOfPositions;
+    }
 
     public String getPnr() {
         return pnr;
@@ -39,8 +58,12 @@ public class Pallet {
         this.pnr = pnr;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
     public void setWeight(int weight) {
@@ -100,17 +123,11 @@ public class Pallet {
         return Objects.hash(pnr, weight, dateIncome, isDamaged, idUser, type, note);
     }
 
-    /***
-     * Copy constructor
-     * @param pallet pallet to copy
-     */
-    public Pallet(Pallet pallet) {
-        this.pnr = pallet.pnr;
-        this.weight = pallet.weight;
-        this.dateIncome = pallet.dateIncome;
-        this.isDamaged = pallet.isDamaged;
-        this.idUser = pallet.idUser;
-        this.type = pallet.type;
-        this.note = pallet.note;
+    public int getNumberOfPositions() {
+        return numberOfPositions;
+    }
+
+    public void setNumberOfPositions(int numberOfPositions) {
+        this.numberOfPositions = numberOfPositions;
     }
 }
