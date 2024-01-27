@@ -1064,6 +1064,17 @@ public class DatabaseHandler {
             return null;
         }
     }
-
+    public void changeUserActivity(int id, String palletFrom) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("UPDATE Pallet p SET p.idUser = :idUser WHERE p.pnr = :idPallet");
+            query.setParameter("idUser", id);
+            query.setParameter("idPallet", palletFrom);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

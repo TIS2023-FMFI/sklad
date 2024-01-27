@@ -35,7 +35,7 @@ public class MoveProductToPositionController implements Initializable {
     List<String> finalPositions;
     //public String finalPosition;
     String palletTo;
-    public double palletWeigh = 500;
+    public double palletWidth = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,7 +49,7 @@ public class MoveProductToPositionController implements Initializable {
             var palsOnPos = Warehouse.getInstance().getPalletsOnPositionMap().get(initialPosition);
             for (var pallet : palsOnPos.keySet()){
                 if (pallet.getPnr().equals(palletFrom)){
-                    palletWeigh = pallet.getWeight();
+                    palletWidth = pallet.getNumberOfPositions();
                     break;
                 }
             }
@@ -57,10 +57,11 @@ public class MoveProductToPositionController implements Initializable {
             product = controller.finalMaterial;
             quantity = controller.finalQuantity;
         }
-        if (palletWeigh == 500) fillNewPositionsChoice(); //if i am relocating single material, the weight is 500
-        if (palletWeigh == 1000) fillNew2PositionsChoice();
-        if (palletWeigh == 1200) fillNew3PositionsChoice();
-        if (palletWeigh == 2000) fillNew4PositionsChoice();
+        System.out.println("palletWidth: " + palletWidth);
+        if (palletWidth == 1) fillNewPositionsChoice(); //if i am relocating single material, the weight is 500
+        if (palletWidth == 2) fillNew2PositionsChoice();
+        if (palletWidth == 3) fillNew3PositionsChoice();
+        if (palletWidth == 4) fillNew4PositionsChoice();
     }
 
     private void fillNewPositionsChoice(){
