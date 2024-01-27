@@ -15,6 +15,11 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AddReservationSecondController implements Initializable {
+    private static final String MORE_THAN_ZERO = "Musíte vybrať viac miest ako 0";
+    private static final String MORE_THAN_AVAIABLE = "Nemožno rezervovať viac miest ako ";
+    private static final String MORE_THAN_TALL_AVIABLE = "Nemožno rezervovať viac vysokých miest ako ";
+    private static final String MORE_TALL_THAN_LOW = "Počet vysokých miest nesmie byť väčší ako celkový počet miest.";
+    private static final String NUMBER_CONTAINS_CHAR = "Číslo obsahuje nepovolené znaky";
     @FXML
     Label numberOfAllFreePositions;
     @FXML
@@ -61,25 +66,25 @@ public class AddReservationSecondController implements Initializable {
             getTall = Integer.parseInt(numberOfTallField.getText());
         }
         catch (NumberFormatException e){
-            errorMessage.setText("Číslo obsahuje nepovolené znaky");
+            errorMessage.setText(NUMBER_CONTAINS_CHAR);
             return;
         }
         if(getPosition == 0){
-            errorMessage.setText("Musíte vybrať viac miest ako 0");
+            errorMessage.setText(MORE_THAN_ZERO);
             return;
         }
         if(getPosition > allFreePosition){
-            errorMessage.setText("Nemožno rezervovať viac miest ako " + allFreePosition);
+            errorMessage.setText(MORE_THAN_AVAIABLE + allFreePosition);
             return;
         }
 
         if(getTall > allTallPosition){
-            errorMessage.setText("Nemožno rezervovať viac vysokých miest ako " + allTallPosition);
+            errorMessage.setText(MORE_THAN_TALL_AVIABLE + allTallPosition);
             return;
         }
 
         if(getTall > getPosition){
-            errorMessage.setText("Nemožno rezervovať viac vysokých miest ako obyčaných.");
+            errorMessage.setText(MORE_TALL_THAN_LOW);
             return;
         }
 
@@ -91,11 +96,15 @@ public class AddReservationSecondController implements Initializable {
         }
 
         String nameCustomer = ((ChoiceBox<String>)warehouse.getController("customerReservationName")).getValue();
-        if(warehouse.getController("numberOfPosition") != null){
-            warehouse.removeController("numberOfPosition");
+        if(warehouse.getController("tallPositions") != null){
+            warehouse.removeController("tallPositions");
+        }
+        if(warehouse.getController("lowPositions") != null){
+            warehouse.removeController("lowPositions");
         }
 
-        warehouse.addController("numberOfPosition", getLow + getTall);
+        warehouse.addController("tallPositions", getTall);
+        warehouse.addController("lowPositions", getLow);
 
         reservation.findPotisionsToReserve(getLow, getTall, nameCustomer);
         Warehouse.getInstance().changeScene("Reservations/warehouseLayoutRowsReservationForm.fxml");
