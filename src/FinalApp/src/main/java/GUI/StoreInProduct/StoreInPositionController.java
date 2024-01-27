@@ -65,6 +65,7 @@ public class StoreInPositionController implements Initializable {
     }
     public void continueStoringIn() throws IOException{
         Warehouse warehouse = Warehouse.getInstance();
+
         warehouse.getStoreInInstance().storeInProduct();
         warehouse.getStoreInInstance().getHistoryRecord().addPallet();
 

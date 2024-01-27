@@ -1,5 +1,6 @@
 package GUI.StoreInProduct;
 
+import Exceptions.ValidationException;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,11 +32,13 @@ public class PalletInformationController implements Initializable {
     @FXML
     private TextField PNR;
     @FXML
+    private TextField weight;
+    @FXML
     private CheckBox isTall;
     @FXML
     private CheckBox isDamaged;
     @FXML
-    private ToggleGroup weight;
+    private ToggleGroup numberOfPositions;
     @FXML
     private ChoiceBox<String> palletType;
     private final String[] palletTypeOptions = {"Europaleta", "Americká paleta", "GitterBox"};
@@ -67,6 +70,7 @@ public class PalletInformationController implements Initializable {
     }
     public void setupValuesFromDataSet(PalletInformationDataSet dataSet){
         PNR.setText(dataSet.PNR());
+        weight.setText(String.valueOf(dataSet.weight()));
         isDamaged.setSelected(dataSet.isDamaged());
         isTall.setSelected(dataSet.isTall());
         materialMap.clear();
@@ -75,7 +79,7 @@ public class PalletInformationController implements Initializable {
         palletType.getItems().addAll(palletTypeOptions);
         palletType.setValue(dataSet.palletType());
 
-        setWeight(dataSet.weight());
+        setNumberOfPositions(dataSet.numberOfPositions());
         materialContainer.getChildren().clear();
         setUpMaterialContainer(dataSet.materialMap());
 
@@ -208,9 +212,11 @@ public class PalletInformationController implements Initializable {
     }
 
     public void backToCustomerTruckNumberForm()throws IOException{
-        Warehouse.getInstance().removeController("palletInformation");
-        Warehouse.getInstance().getStoreInInstance().removePalletInformationDataSet();
-        Warehouse.getInstance().changeScene("StoreInProduct/customerTruckNumberForm.fxml");
+        Warehouse warehouse = Warehouse.getInstance();
+
+        warehouse.removeController("palletInformation");
+        warehouse.getStoreInInstance().removePalletInformationDataSet();
+        warehouse.changeScene("StoreInProduct/customerTruckNumberForm.fxml");
     }
 
     public void nextToPositionForm() throws IOException {
@@ -220,31 +226,52 @@ public class PalletInformationController implements Initializable {
         else if (PNR.getText().isEmpty()) {
             errorMessage.setText("Nezadali ste PNR číslo");
         }
-        else if (weight.getSelectedToggle() == null){
+        else if (weight.getText().isEmpty()) {
+            errorMessage.setText("Nezadali ste hmotnosť palety");
+        }
+        else if (numberOfPositions.getSelectedToggle() == null) {
             errorMessage.setText("Nezadali ste hmotnosť");
         }
-        else if (Warehouse.getInstance().getDatabaseHandler().PNRisUsed(PNR.getText())){
+        else if (Warehouse.getInstance().getDatabaseHandler().PNRisUsed(PNR.getText())) {
             errorMessage.setText("Zadali ste PNR, ktoré sa už používa");
         }
         else {
             try {
-                int PNRnumber = Integer.parseInt(PNR.getText());
-                if (PNRnumber < 2000 || PNRnumber > 3500){
-                    errorMessage.setText("PNR musí byť v rozmedzí 2000-3500");
-                }
-                else {
-                    updateMaterialMap();
-                    Warehouse.getInstance().getStoreInInstance().initializePalletInformationDataSet(getPNR(),
-                            getIsDamaged(), getIsTall(), getMaterialMap(), getPalletType(), getWeight());
-                    Warehouse.getInstance().changeScene("StoreInProduct/storeInPositionForm.fxml");
-                }
-            }
-            catch (NumberFormatException e){
-                errorMessage.setText("PNR musí byť číslo");
+                validatePNR();
+                validateWeight();
+
+                updateMaterialMap();
+                Warehouse.getInstance().getStoreInInstance().initializePalletInformationDataSet(getPNR(), getWeight(),
+                        getIsDamaged(), getIsTall(), getMaterialMap(), getPalletType(), getNumberOfPositions());
+                Warehouse.getInstance().changeScene("StoreInProduct/storeInPositionForm.fxml");
+            } catch (ValidationException e) {
+                errorMessage.setText(e.getMessage());
             }
         }
     }
 
+    public void validateWeight() throws ValidationException {
+        try {
+            double weightValue = getWeight();
+            if (weightValue <= 0) {
+                throw new ValidationException("Hmotnosť musí byť číslo väčšie ako 0");
+            }
+        } catch (NumberFormatException e) {
+            throw new ValidationException("Hmotnosť musí byť číslo");
+        }
+    }
+
+    public void validatePNR() throws ValidationException {
+        try {
+            int PNRnumber = Integer.parseInt(PNR.getText());
+            if (PNRnumber < 2000 || PNRnumber > 3500) {
+                throw new ValidationException("PNR musí byť v rozmedzí 2000-3500");
+            }
+        }
+        catch (NumberFormatException e) {
+            throw new ValidationException("PNR musí byť číslo");
+        }
+    }
     public String getPNR() {
         return PNR.getText();
     }
@@ -265,33 +292,38 @@ public class PalletInformationController implements Initializable {
         return palletType.getValue();
     }
 
-    public int getWeight(){
-        RadioButton selectedRadioButton = (RadioButton) weight.getSelectedToggle();
-        String weightID = selectedRadioButton.getId();
-        if (weightID.equals("first")){
-            return 500;
-        }
-        if (weightID.equals("second")){
-            return 1000;
-        }
-        if (weightID.equals("third")){
-            return 1200;
-        }
-        return 2000;
+    public double getWeight() {
+        return Double.parseDouble(weight.getText());
+
     }
 
-    public void setWeight(Integer weightValue){
-        if (weightValue == 500) {
-            weight.getToggles().get(0).setSelected(true);
+    public int getNumberOfPositions(){
+        RadioButton selectedRadioButton = (RadioButton) numberOfPositions.getSelectedToggle();
+        String positionId = selectedRadioButton.getId();
+        if (positionId.equals("onePosition")){
+            return 1;
         }
-        else if (weightValue == 1000) {
-            weight.getToggles().get(1).setSelected(true);
+        if (positionId.equals("twoPositions")){
+            return 2;
         }
-        else if (weightValue == 1200){
-            weight.getToggles().get(2).setSelected(true);
+        if (positionId.equals("threePositions")){
+            return 3;
+        }
+        return 4;
+    }
+
+    public void setNumberOfPositions(int number){
+        if (number == 1) {
+            numberOfPositions.getToggles().get(0).setSelected(true);
+        }
+        else if (number == 2) {
+            numberOfPositions.getToggles().get(1).setSelected(true);
+        }
+        else if (number == 3){
+            numberOfPositions.getToggles().get(2).setSelected(true);
         }
         else{
-            weight.getToggles().get(3).setSelected(true);
+            numberOfPositions.getToggles().get(3).setSelected(true);
         }
     }
 }

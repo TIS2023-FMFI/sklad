@@ -7,7 +7,6 @@ import java.util.Objects;
 
 @Entity
 public class Pallet {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "pnr")
     private String pnr;
@@ -58,16 +57,20 @@ public class Pallet {
         this.pnr = pnr;
     }
 
-    public double getWeight() {
-        return weight;
+    public int getNumberOfPositions() {
+        return numberOfPositions;
+    }
+
+    public void setNumberOfPositions(int numberOfPositions) {
+        this.numberOfPositions = numberOfPositions;
     }
 
     public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public double getWeight() {
+        return weight;
     }
 
     public Date getDateIncome() {
@@ -123,11 +126,5 @@ public class Pallet {
         return Objects.hash(pnr, weight, dateIncome, isDamaged, idUser, type, note);
     }
 
-    public int getNumberOfPositions() {
-        return numberOfPositions;
-    }
 
-    public void setNumberOfPositions(int numberOfPositions) {
-        this.numberOfPositions = numberOfPositions;
-    }
 }
