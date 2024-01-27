@@ -48,7 +48,10 @@ public class Warehouse extends Application {
      */
     private Map<Position, Map<Pallet, Map<Material, Integer>>> palletsOnPosition;
 
-
+    /***
+     * Map that maps positions to their weight.
+     */
+    private Map<Position, Double> positionsWeight;
 
     /***
      * Method that always returns the same instance of the Warehouse class.
@@ -83,7 +86,6 @@ public class Warehouse extends Application {
         primaryStage.setScene(new Scene(root, 700, 500));
         stage.setResizable(false);
         primaryStage.show();
-
     }
 
     /***
@@ -127,9 +129,14 @@ public class Warehouse extends Application {
      * Method, that loads data to the memory after a successful login.
      */
     public void loadDb(){
+        positionsWeight = new HashMap<>();
         positionsInRows = databaseHandler.loadPositionsInRows();
         palletsOnPosition = databaseHandler.loadPalletsOnPositions();
         positionsInGroups = databaseHandler.getPositionInGroups();
+    }
+
+    public Map<Position, Double> getPositionsWeight(){
+        return positionsWeight;
     }
   
     public Map<String, Map<Integer, List<Position>>> getPositionsInRows() {
