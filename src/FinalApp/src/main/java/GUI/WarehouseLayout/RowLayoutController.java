@@ -156,13 +156,10 @@ public class RowLayoutController implements Initializable {
     }
 
     public void positionWithPallets(Position position, Map<Pallet, Map<Material, Integer>> palletsOnPosition){
-        int count = 1;
         for (Pallet pallet : palletsOnPosition.keySet()){
-            //Button palletButton = new Button("Paleta-" + count);
             Button palletButton = new Button("Paleta-" + pallet.getPnr());
             palletsHBox.getChildren().add(palletButton);
             palletButton.setOnAction(event -> handlePalletButtonClick(position, pallet, palletsOnPosition.get(pallet)));
-            count++;
         }
     }
 
@@ -181,12 +178,13 @@ public class RowLayoutController implements Initializable {
 
         informationContainer1.getChildren().addAll(positionName, customer, palletType, date, isTall);
 
-        Label weight = new Label("Hmotnosť: " + pallet.getWeight());
+        Label numberOfPosition = new Label("Počet pozícií: " + pallet.getNumberOfPositions());
+        Label weight = new Label("Hmotnosť: " + pallet.getWeight() + " kg");
         Label user = new Label("Meno skladníka: " + databaseHandler.getUsername(pallet.getIdUser()));
         Label isDamaged = new Label("Poškodenosť: " + (pallet.isDamaged() ? "áno" : "nie"));
         Label note = new Label("Poznámka: " + pallet.getNote());
 
-        informationContainer2.getChildren().addAll(weight, user, isDamaged, note);
+        informationContainer2.getChildren().addAll(numberOfPosition, weight, user, isDamaged, note);
 
         TableView<Map.Entry<Material, Integer>> table = new TableView<>();
         TableColumn<Map.Entry<Material, Integer>, String> materialColumn = new TableColumn<>("Material");

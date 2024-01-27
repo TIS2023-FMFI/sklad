@@ -5,14 +5,12 @@ import Entity.Pallet;
 import Entity.Position;
 import Exceptions.MaterialNotAvailable;
 import GUI.StoreInProduct.*;
-import javafx.scene.control.RadioButton;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class StoreInProduct {
     CustomerTruckNumberDataSet customerTruckNumberDataSet;
@@ -38,7 +36,7 @@ public class StoreInProduct {
         List<Position> freePositions = Warehouse.getInstance().getDatabaseHandler().getFreePositions(customerId, isTall);
         List<String> freePositionNames = freePositions.stream().map(Position::getName).toList();
 
-        int numberOfPositions = getNumberOfNeededPositions(palletInformationController.getWeight());
+        int numberOfPositions = palletInformationController.getNumberOfPositions();
 
         List<String> result = new ArrayList<>();
         for (String p : freePositionNames){
@@ -65,20 +63,6 @@ public class StoreInProduct {
         return result;
     }
 
-    public int getNumberOfNeededPositions(int weight){
-        if (weight == 500){
-            return 1;
-        }
-        if (weight == 1000){
-            return 2;
-        }
-        if (weight == 1200){
-            return 3;
-        }
-        return 4;
-    }
-
-
     /***
      * Method that stores in product
      */
@@ -92,6 +76,7 @@ public class StoreInProduct {
         Pallet pallet = new Pallet();
         pallet.setPnr(palletInformationController.getPNR());
         pallet.setWeight(palletInformationController.getWeight());
+        pallet.setNumberOfPositions(palletInformationController.getNumberOfPositions());
         pallet.setDateIncome(java.sql.Date.valueOf(LocalDate.now()));
         pallet.setDamaged(palletInformationController.getIsDamaged());
         pallet.setIdUser(warehouse.getCurrentUser().getId());
@@ -137,28 +122,28 @@ public class StoreInProduct {
         return historyRecord;
     }
 
-    public CustomerTruckNumberDataSet getCustomerTruckNumberDataSet() {
-        return customerTruckNumberDataSet;
-    }
-
     public void initializeCustomerTruckNumberDataSet(String customer, int truckNumber){
         customerTruckNumberDataSet = new CustomerTruckNumberDataSet(customer, truckNumber);
+    }
+
+    public CustomerTruckNumberDataSet getCustomerTruckNumberDataSet() {
+        return customerTruckNumberDataSet;
     }
 
     public void removeCustomerTruckDataSet(){
         customerTruckNumberDataSet = null;
     }
 
-    public void initializePalletInformationDataSet(String PNR, boolean isDamaged, boolean isTall, Map<String, Integer> materialMap,
-                                                   String palletType, Integer weight){
-        palletInformationDataSet = new PalletInformationDataSet(PNR, isDamaged, isTall, materialMap, palletType, weight);
-    }
-
-    public void removePalletInformationDataSet(){
-        palletInformationDataSet = null;
+    public void initializePalletInformationDataSet(String PNR, double weight, boolean isDamaged, boolean isTall, Map<String, Integer> materialMap,
+                                                   String palletType, int numberOfPositions){
+        palletInformationDataSet = new PalletInformationDataSet(PNR, weight, isDamaged, isTall, materialMap, palletType, numberOfPositions);
     }
 
     public PalletInformationDataSet getPalletInformationDataSet(){
         return palletInformationDataSet;
+    }
+
+    public void removePalletInformationDataSet(){
+        palletInformationDataSet = null;
     }
 }
