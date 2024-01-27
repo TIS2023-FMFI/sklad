@@ -5,14 +5,27 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="350.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-image: url(&quot;BackC.jpg&quot;);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
    <children>
-      <Label layoutX="73.0" layoutY="150.0" prefHeight="25.0" prefWidth="124.0" text="Prihlasovacie meno:" />
-      <Label layoutX="73.0" layoutY="203.0" prefHeight="24.0" prefWidth="63.0" text="Heslo:" />
-      <TextField fx:id="username" layoutX="225.0" layoutY="150.0" promptText="meno" text="admin" />
-      <PasswordField fx:id="password" layoutX="225.0" layoutY="202.0" promptText="heslo" text="admin" />
-      <Button layoutX="188.0" layoutY="276.0" mnemonicParsing="false" onAction="#login" text="Prihlásiť sa" />
-      <Label fx:id="wrongLogin" alignment="CENTER" layoutX="33.0" layoutY="65.0" prefHeight="50.0" prefWidth="1000.0" textAlignment="JUSTIFY" textFill="RED" />
+      <Label layoutX="158.0" layoutY="148.0" prefHeight="25.0" prefWidth="172.0" text="Prihlasovacie meno:" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <Label layoutX="158.0" layoutY="202.0" prefHeight="24.0" prefWidth="63.0" text="Heslo:" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <TextField fx:id="username" layoutX="384.0" layoutY="148.0" promptText="meno" text="admin" />
+      <PasswordField fx:id="password" layoutX="384.0" layoutY="201.0" promptText="heslo" text="admin" />
+      <Button layoutX="310.0" layoutY="249.0" mnemonicParsing="false" onAction="#login" text="Prihlásiť sa">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Label fx:id="wrongLogin" alignment="CENTER" layoutX="30.0" layoutY="91.0" prefHeight="44.0" prefWidth="641.0" textAlignment="CENTER" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
    </children>
 </AnchorPane>
