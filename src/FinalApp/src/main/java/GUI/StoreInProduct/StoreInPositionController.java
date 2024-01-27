@@ -52,6 +52,7 @@ public class StoreInPositionController implements Initializable {
     }
 
     public void storeInProduct() throws IOException {
+        Warehouse.getStage().setOnCloseRequest(null);
         Warehouse warehouse = Warehouse.getInstance();
 
         warehouse.getStoreInInstance().storeInProduct();
@@ -67,6 +68,7 @@ public class StoreInPositionController implements Initializable {
         warehouse.changeScene("mainMenu.fxml");
     }
     public void continueStoringIn() throws IOException{
+        Warehouse.getStage().setOnCloseRequest(null);
         Warehouse warehouse = Warehouse.getInstance();
 
         warehouse.getStoreInInstance().storeInProduct();
