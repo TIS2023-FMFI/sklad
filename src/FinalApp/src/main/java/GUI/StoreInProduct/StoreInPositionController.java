@@ -2,6 +2,7 @@ package GUI.StoreInProduct;
 
 import app.Warehouse;
 import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -30,6 +31,7 @@ public class StoreInPositionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Warehouse.getStage().setOnCloseRequest(Event::consume);
         List<String> positions = Warehouse.getInstance().getStoreInInstance().getFreePositionsNames();
 
         if (positions.isEmpty()){
@@ -45,6 +47,7 @@ public class StoreInPositionController implements Initializable {
     }
 
     public void backToPalletInformationForm()throws IOException{
+        Warehouse.getStage().setOnCloseRequest(null);
         Warehouse.getInstance().changeScene("StoreInProduct/PalletInformationForm.fxml");
     }
 
