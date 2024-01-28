@@ -88,11 +88,11 @@ public class CreateNewCustomerController implements Initializable {
         if(!fillData)
         {
             Warehouse.getInstance().getDatabaseHandler().saveCustomer(newCustomer);
-            Warehouse.getInstance().changeScene("CustomerManagement/createCustomerConfirmation.fxml");
+            Warehouse.getInstance().changeScene("CustomerManagement/customerConfirmation.fxml");
         }
         else{
             Warehouse.getInstance().getDatabaseHandler().updateCustomer(newCustomer, id);
-            Warehouse.getInstance().changeScene("CustomerManagement/createCustomerConfirmation.fxml");
+            Warehouse.getInstance().changeScene("CustomerManagement/customerConfirmation.fxml");
         }
 
         errorMessage.setText("Údaje sa nepodarilo uložiť");

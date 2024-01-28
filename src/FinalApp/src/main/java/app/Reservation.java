@@ -180,6 +180,9 @@ public class Reservation {
         for (Pair date : sortedRecords.keySet()) {
             int numberOfPositions = sortedRecords.get(date).size();
             Button edit = new Button("Zmazať");
+            if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
+                edit.setDisable(true);
+            }
             edit.setOnAction(event ->{
                 if(Warehouse.getInstance().getController("cannotRemove") != null){
                     Warehouse.getInstance().removeController("cannotRemove");

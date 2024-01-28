@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="420.0" prefWidth="555.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerManagement.CustomerManagementMainController">
    <children>
-      <Button layoutX="90.0" layoutY="236.0" mnemonicParsing="false" onAction="#createNewCustomerScene" prefHeight="28.0" prefWidth="115.0" text="Pridať zákazníka" />
+      <Button layoutX="218.0" layoutY="297.0" mnemonicParsing="false" onAction="#createNewCustomerScene" prefHeight="28.0" prefWidth="115.0" text="Pridať zákazníka" />
       <Label layoutX="94.0" layoutY="182.0" text="Vyberte zákazníka:">
          <font>
             <Font size="13.0" />
@@ -18,5 +18,6 @@
       <Button layoutX="278.0" layoutY="236.0" mnemonicParsing="false" onAction="#showInformation" prefHeight="28.0" prefWidth="150.0" text="Zobraziť údaje" />
       <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMainReservation" text="Naspäť" />
       <Label fx:id="errorMessage" layoutX="140.0" layoutY="105.0" prefHeight="17.0" prefWidth="273.0" textAlignment="CENTER" />
+      <Button layoutX="79.0" layoutY="236.0" mnemonicParsing="false" onAction="#deleteCustomerScene" prefHeight="28.0" prefWidth="150.0" text="Odstrániť zákazníka" />
    </children>
 </AnchorPane>
