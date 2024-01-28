@@ -1069,5 +1069,18 @@ public class DatabaseHandler {
         }
     }
 
+        public boolean deleteCustomer(String customerName){
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                Query query = session.createQuery("DELETE FROM Customer c WHERE c.name = :name");
+                query.setParameter("name", customerName);
+                query.executeUpdate();
+                session.getTransaction().commit();
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
 
 }

@@ -14,9 +14,9 @@
          </font>
       </Label>
       <ChoiceBox fx:id="customer" layoutX="276.0" layoutY="179.0" onAction="#saveCustomerName" prefWidth="150.0" />
-      <Button layoutX="89.0" layoutY="236.0" mnemonicParsing="false" onAction="#addNewReservation" prefHeight="28.0" prefWidth="115.0" text="Pridať rezerváciu" />
+      <Button fx:id="addReservationB" layoutX="89.0" layoutY="236.0" mnemonicParsing="false" onAction="#addNewReservation" prefHeight="28.0" prefWidth="115.0" text="Pridať rezerváciu" />
       <Button layoutX="278.0" layoutY="236.0" mnemonicParsing="false" onAction="#showReservationRecords" prefHeight="28.0" prefWidth="150.0" text="Zobraziť rezervácie" />
       <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
-      <Button layoutX="276.0" layoutY="97.0" mnemonicParsing="false" onAction="#customerManagement" prefHeight="28.0" prefWidth="150.0" text="Manažment zákazníkov" />
+      <Button fx:id="customerManagementB" layoutX="276.0" layoutY="97.0" mnemonicParsing="false" onAction="#customerManagement" prefHeight="28.0" prefWidth="150.0" text="Manažment zákazníkov" />
    </children>
 </AnchorPane>
