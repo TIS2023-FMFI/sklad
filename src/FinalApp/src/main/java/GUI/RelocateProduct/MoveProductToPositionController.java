@@ -57,7 +57,6 @@ public class MoveProductToPositionController implements Initializable {
             product = controller.finalMaterial;
             quantity = controller.finalQuantity;
         }
-        System.out.println("palletWidth: " + palletWidth);
         if (palletWidth == 1) fillNewPositionsChoice(); //if i am relocating single material, the weight is 500
         if (palletWidth == 2) fillNew2PositionsChoice();
         if (palletWidth == 3) fillNew3PositionsChoice();

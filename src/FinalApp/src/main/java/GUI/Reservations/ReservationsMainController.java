@@ -3,8 +3,10 @@ package GUI.Reservations;
 import GUI.StoreInProduct.HistoryRecord;
 import app.Warehouse;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 
 import java.io.IOException;
@@ -14,12 +16,17 @@ import java.util.ResourceBundle;
 public class ReservationsMainController implements Initializable {
     @FXML
     public ChoiceBox<String> customer;
+    public Button userManagementButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customer.setItems(customers);
         if(customers.size() > 0) {
             customer.setValue(customers.get(0));
+        }
+        if (!Warehouse.getInstance().currentUser.getAdmin()){
+            userManagementButton.setVisible(false);
         }
         Warehouse.getInstance().addController("reservationMain", this);
     }
@@ -46,5 +53,9 @@ public class ReservationsMainController implements Initializable {
 
     public void customerManagement() throws IOException {
         Warehouse.getInstance().changeScene("CustomerManagement/CustomerManagementMain.fxml");
+    }
+
+    public void userManagement() throws IOException {
+        Warehouse.getInstance().changeScene("UserManagement/userManagementMain.fxml");
     }
 }

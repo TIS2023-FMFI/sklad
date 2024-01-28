@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -23,6 +24,7 @@ public class StatisticMainPageController implements Initializable {
     public Label invoicingLabel;
     @FXML
     public ChoiceBox<String> customer;
+    public Button invoicingButton;
     @FXML
     DatePicker dateFrom;
 
@@ -37,6 +39,9 @@ public class StatisticMainPageController implements Initializable {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customer.setItems(customers);
         customer.setValue(customers.get(0));
+        if (!Warehouse.getInstance().getCurrentUser().getAdmin()){
+            invoicingButton.setVisible(false);
+        }
         Warehouse.getInstance().addController("statisticsMainPage", this);
     }
 
