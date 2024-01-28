@@ -305,6 +305,57 @@ public class DatabaseHandler {
         }
     }
 
+    public List<Users> getUsers() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Users> query = session.createQuery("from Users");
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Users getUser(String selectedUser) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Users> query = session.createQuery("from Users where name = :name");
+            query.setParameter("name", selectedUser);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void updateUser(int id, String newName, String newPassword, boolean newIsAdmin) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Query<Users> query = session.createQuery("from Users where id = :id");
+            query.setParameter("id", id);
+            Users user = query.getSingleResult();
+            user.setName(newName);
+            user.setPassword(newPassword);
+            user.setAdmin(newIsAdmin);
+            session.update(user);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addUser(String newName, String newPassword, boolean newIsAdmin) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Users user = new Users();
+            user.setName(newName);
+            user.setPassword(newPassword);
+            user.setAdmin(newIsAdmin);
+            session.save(user);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public class PositionNumberComparator implements Comparator<Position> {
         @Override
@@ -1069,18 +1120,29 @@ public class DatabaseHandler {
         }
     }
 
-        public boolean deleteCustomer(String customerName){
-            try (Session session = sessionFactory.openSession()) {
-                session.beginTransaction();
-                Query query = session.createQuery("DELETE FROM Customer c WHERE c.name = :name");
-                query.setParameter("name", customerName);
-                query.executeUpdate();
-                session.getTransaction().commit();
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
+    public void changeUserActivity(int id, String palletFrom) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("UPDATE Pallet p SET p.idUser = :idUser WHERE p.pnr = :idPallet");
+            query.setParameter("idUser", id);
+            query.setParameter("idPallet", palletFrom);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
+    }
+    public boolean deleteCustomer(String customerName){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM Customer c WHERE c.name = :name");
+            query.setParameter("name", customerName);
+            query.executeUpdate();
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
