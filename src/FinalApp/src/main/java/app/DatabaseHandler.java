@@ -20,6 +20,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DatabaseHandler {
 
@@ -45,15 +46,14 @@ public class DatabaseHandler {
     /***
      * A destructor that closes session factory after exiting application.
      */
-    /*
+    /*%
     @Override
     protected void finalize() {
         if (sessionFactory != null) {
-            //sessionFactory.close();
+            sessionFactory.close();
         }
     }
-     */
-
+    */
     protected boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
             List<Position> newPositions = new ArrayList<>();
@@ -181,6 +181,152 @@ public class DatabaseHandler {
         catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public List<List<Position>> getFreePositions(Customer customer, double weight, boolean isTall, int numberOfPositions){
+        try (Session session = sessionFactory.openSession()) {
+            List<List<String>> result = new ArrayList<>();
+
+            List<List<Position>> reservedPositions = getReservedPositions(customer, weight, isTall, numberOfPositions);
+            List<List<Position>> reservedPositionsWithPallets = getReservedPositionsWithPallets(customer, weight, isTall, numberOfPositions);
+
+            // sorting and finding the best position
+
+
+
+
+            return reservedPositionsWithPallets;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    /***
+     * Method, that returns all the reserved positions that satisfy the given conditions.
+     * @param customer The customer for whom positions are reserved.
+     * @param weight The weight of the pallet.
+     * @param isTall Whether the position is tall.
+     * @param numberOfPositions The number of consecutive positions to be selected.
+     * @return A list of position sets, each representing a valid selection of reserved positions.
+     */
+    public List<List<Position>> getReservedPositions(Customer customer, double weight, boolean isTall, int numberOfPositions){
+        // all free reserved positions for the customer
+        List<Position> allFreeReservedPositions = getAllFreeReservedPositions(customer.getId());
+        allFreeReservedPositions = filterPositionsBasedOnWeightHeight(allFreeReservedPositions, isTall, weight);
+
+        List<List<Position>> result = new ArrayList<>();
+
+        for (Position position : allFreeReservedPositions){
+            List<Position> possibleNPositions = new ArrayList<>();
+            possibleNPositions.add(position);
+            int positionIndex = position.getIndex();
+
+            char row = position.getName().charAt(0);
+            int positionNumber = Integer.parseInt(position.getName().substring(1, 4));
+            char shelf = position.getName().charAt(4);
+
+            boolean areAllSuitable = true;
+            for (int i = 1; i < numberOfPositions; i++){
+                Position neighbouringPosition = getPosition(String.format("%s%03d%s", row, positionNumber + i*2, shelf));
+
+                if (allFreeReservedPositions.contains(neighbouringPosition) && neighbouringPosition.getIndex() == positionIndex){
+                    possibleNPositions.add(neighbouringPosition);
+                }
+                else {
+                    areAllSuitable = false;
+                    break;
+                }
+            }
+            if (areAllSuitable){
+                result.add(possibleNPositions);
+            }
+        }
+        return result;
+    }
+
+    /***
+     * Method, that filters positions based on their height and weight, returning a list of positions that meet specified conditions.
+     * @param positions The positions reserved by a customer.
+     * @param weight The weight of the pallet.
+     * @param isTall Whether the position is tall.
+     * @return A filtered list of positions based on the given conditions.
+     */
+    public List<Position> filterPositionsBasedOnWeightHeight(List<Position> positions, boolean isTall, double weight){
+        List<Position> result = positions;
+        // filtered positions based on whether tall positions are required
+        if (isTall) {
+            result = result.stream().filter(Position::isTall).collect(Collectors.toList());
+        }
+        // filtered positions based on weight (if they weight over 1200 they can only be placed on the ground)
+        if (weight > 1200){
+            result = getAllFreeReservedFloorPositions(result);
+        }
+        return result;
+    }
+
+    /***
+     * Method, that filters out positions that are only on the ground.
+     * @param positions The positions reserved by a customer.
+     * @return list of positions that are on ground.
+     */
+    public List<Position> getAllFreeReservedFloorPositions(List<Position> positions) {
+        List<Position> result = new ArrayList<>();
+        for (Position position : positions) {
+            int shelf = Character.getNumericValue(position.getName().charAt(4));
+            if (shelf == 0) {
+                result.add(position);
+            }
+        }
+        return result;
+    }
+
+    /***
+     * Method, that returns all the positions that are reserved by customer.
+     * @param customerId The unique identifier for the customer.
+     */
+    public List<Position> getAllFreeReservedPositions(int customerId) {
+        LocalDate today = LocalDate.now();
+        try (Session session = sessionFactory.openSession()) {
+            Query<Position> query = session.createQuery("FROM Position p " +
+                    "WHERE p.name IN (SELECT cr.idPosition FROM CustomerReservation cr WHERE cr.idCustomer = :customerId " +
+                    "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil) " +
+                    "AND p.name NOT IN (SELECT pop.idPosition FROM PalletOnPosition pop)"
+            );
+
+            query.setParameter("customerId", customerId);
+            query.setParameter("today", today);
+            return query.list();
+        }
+    }
+
+
+    public List<List<Position>> getReservedPositionsWithPallets(Customer customer, double weight, boolean isTall, int numberOfPosition){
+        // all free reserved positions for the customer with pallet/s on it
+        List<Position> allFreeReservedPositionsWithPallet = getAllFreeReservedPositionsWithPallet(customer.getId());
+        allFreeReservedPositionsWithPallet = filterPositionsBasedOnWeightHeight(allFreeReservedPositionsWithPallet, isTall, weight);
+
+
+        return null;
+    }
+
+    /***
+     * Method, that returns all the positions that are reserved by customer that have pallets stored on them.
+     * @param customerId The unique identifier for the customer.
+     */
+    public List<Position> getAllFreeReservedPositionsWithPallet(int customerId) {
+        LocalDate today = LocalDate.now();
+        try (Session session = sessionFactory.openSession()) {
+            Query<Position> query = session.createQuery("FROM Position p " +
+                    "WHERE p.name IN (SELECT cr.idPosition FROM CustomerReservation cr WHERE cr.idCustomer = :customerId " +
+                    "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil) " +
+                    "AND p.name IN (SELECT pop.idPosition FROM PalletOnPosition pop)"
+            );
+            query.setParameter("customerId", customerId);
+            query.setParameter("today", today);
+            return query.list();
         }
     }
 
@@ -747,28 +893,6 @@ public class DatabaseHandler {
             query.setParameter("today", today);
 
             return (Long) query.uniqueResult() > 0;
-        }
-    }
-
-    /***
-     * Method, that returns all the positions that are reserved by customer and are/aren´t tall.
-     * @param customerId The unique identifier for the customer.
-     * @param isTall If the positions should be tall.
-     */
-    public List<Position> getFreePositions(int customerId, boolean isTall) {
-        LocalDate today = LocalDate.now();
-        try (Session session = sessionFactory.openSession()) {
-            Query<Position> query = session.createQuery("FROM Position p " +
-                    "WHERE p.name IN (SELECT cr.idPosition FROM CustomerReservation cr WHERE cr.idCustomer = :customerId " +
-                    "AND :today BETWEEN cr.reservedFrom AND cr.reservedUntil) " +
-                    "AND p.isTall = :isTall " +
-                    "AND p.name NOT IN (SELECT pop.idPosition FROM PalletOnPosition pop)"
-            );
-
-            query.setParameter("customerId", customerId);
-            query.setParameter("isTall", isTall);
-            query.setParameter("today", today);
-            return query.list();
         }
     }
 
