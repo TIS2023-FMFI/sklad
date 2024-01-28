@@ -1119,6 +1119,7 @@ public class DatabaseHandler {
             return null;
         }
     }
+
     public void changeUserActivity(int id, String palletFrom) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

@@ -17,6 +17,7 @@ public class ReservationsMainController implements Initializable {
     @FXML
     public ChoiceBox<String> customer;
     public Button userManagementButton;
+
     @FXML
     Button customerManagementB;
     @FXML
@@ -31,10 +32,11 @@ public class ReservationsMainController implements Initializable {
         }
 
         Warehouse.getInstance().addController("reservationMain", this);
+
         if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
+            customerManagementB.setDisable(true);
+            addReservationB.setDisable(true);
             userManagementButton.setVisible(false);
-            customerManagementB.setVisible(false);
-            addReservationB.setVisible(false);
         }
     }
     public void backToMenu() throws IOException {
