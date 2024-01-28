@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerManagement.DeleteCustomerController">
+   <children>
+      <Button layoutX="61.0" layoutY="55.0" mnemonicParsing="false" onAction="#backToCustomerManagement" text="Naspäť" />
+      <Label fx:id="message" alignment="TOP_CENTER" layoutX="58.0" layoutY="139.0" prefHeight="64.0" prefWidth="478.0" />
+      <Button layoutX="185.0" layoutY="234.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Rozumiem, napriek tomu odstrániť" />
+   </children>
+</AnchorPane>

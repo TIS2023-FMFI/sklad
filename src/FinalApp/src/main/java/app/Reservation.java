@@ -1,7 +1,6 @@
 package app;
 
 import Entity.*;
-import GUI.Reservations.ReservationViewController;
 import javafx.scene.control.Button;
 import javafx.util.Pair;
 
@@ -104,16 +103,6 @@ public class Reservation {
                             counter++;
                             isTall = position.isTall();
                         }
-                        /*else {
-                            List<Customer> customerList = databaseHandler.getCustomerFromReservedPosition((java.sql.Date) dateFrom, (java.sql.Date) dateTo, position);
-                            if (customerList != null) {
-                                Customer c = customerList.get(0);
-                                if (c.getName().equals(customerName)) {
-                                    counter++;
-                                    System.out.println(c.getName() + " " + position.getName());
-                                }
-                            }
-                        }*/
                     }
                     Collections.sort(positionList, Comparator.comparing(Position::getName));
                     if(isTall){
@@ -137,8 +126,6 @@ public class Reservation {
             Warehouse.getInstance().removeController("bestTallPositions");
         }
         Warehouse.getInstance().addController("bestTallPositions", bestTallPositions);
-
-
         return true;
     }
     protected List<Position> getBestFitPositions(int numberOfPorsitions, PriorityQueue<Pair<Integer, List<Position>>> priorityQueue){
@@ -154,6 +141,14 @@ public class Reservation {
         return bestPositions;
     }
 
+    /**
+     * Function saves given position to dababase
+     * @param positions positions to save
+     * @param customer to whom customer reserve positions
+     * @param dateFrom date interval from
+     * @param dateTo date interval from
+     * @return success of the operation
+     */
     public boolean saveCustomerReservations(Set<Position> positions, Customer customer, Date dateFrom, Date dateTo){
         for(Position position : positions) {
             if(! Warehouse.getInstance().getDatabaseHandler().reservePositionForCustomer(customer.getId(), (java.sql.Date) dateFrom, (java.sql.Date) dateTo, position)){
@@ -163,6 +158,11 @@ public class Reservation {
         return true;
     }
 
+    /**
+     * Function takes information from database about customer reservation of his positions
+     * @param customer to whom customer find data
+     * @return reservation records grouped by date intervals
+     */
     public List<Map<String, Object>> setReservationTable(Customer customer){
         List<CustomerReservation> records = Warehouse.getInstance().getDatabaseHandler().getReservationRecords(customer.getId());
         Map<Pair<Date, Date>, List<String>> sortedRecords = new HashMap<>();
@@ -180,6 +180,9 @@ public class Reservation {
         for (Pair date : sortedRecords.keySet()) {
             int numberOfPositions = sortedRecords.get(date).size();
             Button edit = new Button("Zmazať");
+            if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
+                edit.setDisable(true);
+            }
             edit.setOnAction(event ->{
                 if(Warehouse.getInstance().getController("cannotRemove") != null){
                     Warehouse.getInstance().removeController("cannotRemove");
@@ -206,7 +209,6 @@ public class Reservation {
                     "Edit", edit
             ));
         }
-
         return result;
     }
 
@@ -217,5 +219,19 @@ public class Reservation {
         Warehouse.getInstance().addController("cannotRemove", reservedPositions);
     }
 
+    /**
+     * returns sum of low positions and sum of tall positions
+     * @param allPosition set of position
+     * @return Pair of sum of low and tall positions
+     */
+    public Pair<Integer, Integer> getNumberOfLowTallPosition(Set<Position> allPosition){
+        int low = 0;
+        int tall = 0;
+        for(Position p : allPosition){
+            if(p.isTall()) tall++;
+            else low++;
+        }
+        return new Pair<>(low, tall);
+    }
 
 }

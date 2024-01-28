@@ -416,10 +416,13 @@ public class DatabaseHandler {
             for (Position position : positions) {
                 List<Pallet> pallets = getPalletesOnPosition(position.getName());
                 Map<Pallet, Map<Material, Integer>> materialsOnPallet = new HashMap<>();
+                double weight = 0;
 
                 for (Pallet pallet : pallets){
                     Map<Material, Integer> materialAndItsCount = new HashMap<>();
                     List<StoredOnPallet> storedOnPallet = getStoredOnPallet(pallet.getPnr());
+
+                    weight += pallet.getWeight()/pallet.getNumberOfPositions();
 
                     for (StoredOnPallet product : storedOnPallet){
                         Material material = getMaterial(product.getIdProduct());
@@ -427,6 +430,7 @@ public class DatabaseHandler {
                     }
                     materialsOnPallet.put(pallet, materialAndItsCount);
                 }
+                Warehouse.getInstance().getPositionsWeight().put(position, weight);
                 palletsOnPosition.put(position, materialsOnPallet);
             }
             return palletsOnPosition;
@@ -1115,6 +1119,7 @@ public class DatabaseHandler {
             return null;
         }
     }
+
     public void changeUserActivity(int id, String palletFrom) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -1128,4 +1133,18 @@ public class DatabaseHandler {
         }
     }
 
+
+    public boolean deleteCustomer(String customerName){
+         try (Session session = sessionFactory.openSession()) {
+             session.beginTransaction();
+             Query query = session.createQuery("DELETE FROM Customer c WHERE c.name = :name");
+             query.setParameter("name", customerName);
+             query.executeUpdate();
+             session.getTransaction().commit();
+             return true;
+         } catch (Exception e) {
+             e.printStackTrace();
+             return false;
+         }
+     }
 }

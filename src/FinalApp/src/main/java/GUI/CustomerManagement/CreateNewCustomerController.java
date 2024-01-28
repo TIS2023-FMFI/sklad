@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.hibernate.exception.ConstraintViolationException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -55,8 +54,6 @@ public class CreateNewCustomerController implements Initializable {
         Warehouse.getInstance().changeScene("CustomerManagement/customerManagementMain.fxml");
     }
 
-
-
     public void addNewCustomer() throws IOException {
         customerName = String.valueOf(customerNameT.getText()).trim();
         address = String.valueOf(addressT.getText());
@@ -91,11 +88,11 @@ public class CreateNewCustomerController implements Initializable {
         if(!fillData)
         {
             Warehouse.getInstance().getDatabaseHandler().saveCustomer(newCustomer);
-            Warehouse.getInstance().changeScene("CustomerManagement/createCustomerConfirmation.fxml");
+            Warehouse.getInstance().changeScene("CustomerManagement/customerConfirmation.fxml");
         }
         else{
             Warehouse.getInstance().getDatabaseHandler().updateCustomer(newCustomer, id);
-            Warehouse.getInstance().changeScene("CustomerManagement/createCustomerConfirmation.fxml");
+            Warehouse.getInstance().changeScene("CustomerManagement/customerConfirmation.fxml");
         }
 
         errorMessage.setText("Údaje sa nepodarilo uložiť");

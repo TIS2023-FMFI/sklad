@@ -40,9 +40,7 @@ public class ReservationConfirmationController implements Initializable {
             messageBottom.setText(DELETED_RECORD);
             return;
         }
-
         messageBottom.setText(CREATE_CUSTOMER);
-
     }
     private boolean removeController(String name){
         if(Warehouse.getInstance().getController(name) != null){
@@ -57,7 +55,6 @@ public class ReservationConfirmationController implements Initializable {
             return;
         }
         Warehouse.getInstance().changeScene("Reservations/addReservationFirstForm.fxml");
-
     }
 
     public void backToMainReservations() throws IOException {

@@ -30,15 +30,12 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
 
         Warehouse.getInstance().initializeWarehouseLayout();
 
-      //dalsie tri riadky boli konflikt
         Warehouse.getStage().setMinWidth(900);
         Warehouse.getStage().setMinHeight(600);
         positionsToSave = getPostionsToSave();
       
         getChangedRows();
         loadRows();
-
-
     }
 
     @Override
@@ -96,21 +93,17 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
         return result;
     }
 
+    /**
+     * function finds regals in which is some position choose to be reserved
+     */
     public void getChangedRows(){
-        /*List<Position> bestPositions = (List<Position>) Warehouse.getInstance().getController("bestLowPositions");
-        bestPositions.addAll((List<Position>) Warehouse.getInstance().getController("bestTallPositions"));*/
-
         for(Position p : positionsToSave){
-
             String row = p.getName().substring(0, 1);
-
             boolean even = Integer.parseInt(p.getName().substring(1,4)) % 2 == 0;
             if(even){ row += "p";}
             else{ row += "n";}
-
             changedRows.add(row);
         }
-
     }
     @Override
     public void backToMenu() throws IOException {
