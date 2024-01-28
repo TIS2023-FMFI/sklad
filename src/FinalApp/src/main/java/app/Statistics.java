@@ -75,6 +75,13 @@ public class Statistics {
     }
 
     public class StatsDateComparator implements Comparator<Map.Entry<Date, Pair<Integer,Integer>>> {
+        /***
+         * This method compares two map entries based on key.
+         * @param entry1 First date.
+         * @param entry2 Second date.
+         * @return 0 if dates are equal, 1 if first date is after second date, -1 if first date is before second date.
+         */
+
         @Override
         public int compare(Map.Entry<Date, Pair<Integer,Integer>> entry1,
                            Map.Entry<Date, Pair<Integer,Integer>> entry2) {

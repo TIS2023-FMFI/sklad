@@ -12,8 +12,6 @@ import java.util.*;
 
 
 public class OrderProduct {
-    public OrderProduct() {
-    }
 
     /***
      * Method that checks if the customer can order the given material in the given quantity.

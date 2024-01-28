@@ -8,6 +8,11 @@ import app.Warehouse;
 import java.io.IOException;
 
 public class ConfirmMovingController {
+    /***
+     * Method that is called when user clicks on confirm button. It takes user back to main menu and
+     * calls method that relocates product.
+     * @throws IOException
+     */
     public void backToMenu() throws IOException {
         MoveProductToPositionController controller = (MoveProductToPositionController)
                 Warehouse.getInstance().getController("MoveProductToPositionController");

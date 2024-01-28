@@ -15,6 +15,12 @@ import java.util.Map;
 
 public class RelocateProduct {
 
+    /***
+     * This method moeves the entire pallet to the new position.
+     * @param initialPos Position from which the pallet is moved.
+     * @param finalPos Position to which the pallet is moved.
+     * @param palletFrom Pallet number of the pallet that is moved.
+     */
     public void relocatePallet(Position initialPos, List<String> finalPos, String palletFrom){
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
         List<Position> posList = db.getPositionsOfPallet(palletFrom);
@@ -36,7 +42,15 @@ public class RelocateProduct {
         }
     }
 
-
+    /***
+     * This method moves the product from one pallet to another.
+     * @param finalPos Position to which the product is moved.
+     * @param initialPos Position from which the product is moved.
+     * @param product Name of the product that is moved.
+     * @param quantity Quantity of the product that is moved.
+     * @param palletFrom Pallet number of the pallet from which the product is moved.
+     * @param palletTo Pallet number of the pallet to which the product is moved.
+     */
     public void relocateProduct(String finalPos, Position initialPos,
                                 String product, int quantity, String palletFrom, String palletTo){
 

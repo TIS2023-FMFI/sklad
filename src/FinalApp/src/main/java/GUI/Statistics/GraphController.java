@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class GraphController implements Initializable {
-    public Label valueLabel;
+    @FXML
+    private Label valueLabel;
     @FXML
     private BarChart<String,Number> barChart;
 

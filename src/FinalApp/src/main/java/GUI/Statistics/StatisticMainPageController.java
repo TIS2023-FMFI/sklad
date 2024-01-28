@@ -21,19 +21,27 @@ import java.util.ResourceBundle;
 
 public class StatisticMainPageController implements Initializable {
     @FXML
-    public Label invoicingLabel;
+    private Label invoicingLabel;
     @FXML
-    public ChoiceBox<String> customer;
-    public Button invoicingButton;
+    private ChoiceBox<String> customer;
     @FXML
-    DatePicker dateFrom;
-
+    private Button invoicingButton;
+    @FXML
+    private DatePicker dateFrom;
+    /***
+     * This variable is used to store the date from which the user wants to see the statistics.
+     */
     Date dateFromValue;
     @FXML
-    DatePicker dateTo;
-
+    private DatePicker dateTo;
+    /***
+     * This variable is used to store the date to which the user wants to see the statistics.
+     */
     Date dateToValue;
 
+    /***
+     * This method disables the button for invoicing if the current user is not admin.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
@@ -109,6 +117,5 @@ public class StatisticMainPageController implements Initializable {
         LocalDate localDate = dateTo.getValue();
         dateToValue = Date.valueOf(localDate);
     }
-
 
 }

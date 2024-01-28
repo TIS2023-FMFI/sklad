@@ -3,6 +3,7 @@ package GUI.UserManagement;
 import Entity.Users;
 import app.Warehouse;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -13,16 +14,25 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class saveNewUserController implements Initializable {
+    @FXML
+    private CheckBox isAdmin;
+    @FXML
+    private TextField name;
+    @FXML
+    private TextField password;
+    @FXML
+    private TextField passwordCheck;
+    @FXML
+    private Label errorLabel;
 
-    public CheckBox isAdmin;
-
-    public TextField name;
-    public TextField password;
-    public TextField passwordCheck;
-    public Label errorLabel;
-
+    /***
+     * User that is being updated, if one is being crated, it is null.
+     */
     Users userUpdated;
 
+    /***
+     * Initializes the controller class and hides some of the buttons from not admin users.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         UserManagementMainController userManagementMainController = (UserManagementMainController)
@@ -42,10 +52,17 @@ public class saveNewUserController implements Initializable {
         }
     }
 
+    /***
+     * Goes back to the user management main scene.
+     * @throws IOException if the scene is not found.
+     */
     public void goBack() throws IOException {
         Warehouse.getInstance().changeScene("UserManagement/userManagementMain.fxml");
     }
 
+    /***
+     * Saves the user to the database.
+     */
     public void saveUser() {
         String newName = this.name.getText();
         String newPassword = this.password.getText();

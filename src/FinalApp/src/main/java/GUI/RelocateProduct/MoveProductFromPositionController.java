@@ -12,19 +12,35 @@ import java.util.Set;
 
 public class MoveProductFromPositionController {
     @FXML
-    public CheckBox wholePallet;
-    public Label errorLabel;
+    private CheckBox wholePallet;
+    @FXML
+    private Label errorLabel;
 
+    /***
+     * Flag that is set to true if user wants to relocate whole pallet.
+     */
     boolean isWholePallet = false;
     @FXML
     private TextField position;
 
+    /***
+     * Variable that stores name of position that user entered.
+     */
     public String positionName;
 
+    /***
+     * Method that is called when user clicks on back button. It takes user back to main menu.
+     * @throws IOException if there is problem with loading fxml file
+     */
     public void backToMenu() throws IOException {
         Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
 
+    /***
+     * Method that is called when user clicks on confirm button. It checks if position exists and if it does,
+     * it takes user to next scene.
+     * @throws IOException if there is problem with loading fxml file
+     */
     public void confirmInitialPosition() throws IOException {
         if (!checkIfPositionIsCorrect(position.getText())){
             errorLabel.setText("Pozícia neexistuje");
@@ -37,7 +53,7 @@ public class MoveProductFromPositionController {
         }
     }
 
-    public boolean checkIfPositionIsCorrect(String position){
+    private boolean checkIfPositionIsCorrect(String position){
         //checks memory if position exists
         var positions = Warehouse.getInstance().getPositionsInRows();
         for (var regals : positions.values()){

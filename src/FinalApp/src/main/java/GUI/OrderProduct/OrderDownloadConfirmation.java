@@ -3,6 +3,7 @@ package GUI.OrderProduct;
 import app.DatabaseHandler;
 import app.FileExporter;
 import app.Warehouse;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -11,9 +12,15 @@ import java.time.LocalDate;
 
 public class OrderDownloadConfirmation {
 
-    public TextField numOfPallets;
-    public Label errorLabel;
+    @FXML
+    private TextField numOfPallets;
+    @FXML
+    private Label errorLabel;
 
+    /***
+     * Exports the order to a file and returns to the main menu
+     * @throws IOException if the file cannot be created
+     */
     public void backToMenu() throws IOException {
         if (numOfPallets.getText().equals("")) {
             errorLabel.setText("Zadajte počet palet");
@@ -31,7 +38,7 @@ public class OrderDownloadConfirmation {
         Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
 
-    public boolean isNumber(String s) {
+    private boolean isNumber(String s) {
         try {
             Integer.parseInt(s);
         } catch (NumberFormatException e) {
