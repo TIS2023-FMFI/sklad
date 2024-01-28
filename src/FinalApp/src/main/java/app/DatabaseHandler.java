@@ -365,10 +365,13 @@ public class DatabaseHandler {
             for (Position position : positions) {
                 List<Pallet> pallets = getPalletesOnPosition(position.getName());
                 Map<Pallet, Map<Material, Integer>> materialsOnPallet = new HashMap<>();
+                double weight = 0;
 
                 for (Pallet pallet : pallets){
                     Map<Material, Integer> materialAndItsCount = new HashMap<>();
                     List<StoredOnPallet> storedOnPallet = getStoredOnPallet(pallet.getPnr());
+
+                    weight += pallet.getWeight()/pallet.getNumberOfPositions();
 
                     for (StoredOnPallet product : storedOnPallet){
                         Material material = getMaterial(product.getIdProduct());
@@ -376,6 +379,7 @@ public class DatabaseHandler {
                     }
                     materialsOnPallet.put(pallet, materialAndItsCount);
                 }
+                Warehouse.getInstance().getPositionsWeight().put(position, weight);
                 palletsOnPosition.put(position, materialsOnPallet);
             }
             return palletsOnPosition;
