@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DatabaseHandler {
+    private final double WEIGHT_OF_ONE_POSITION = 500;
 
     private static SessionFactory sessionFactory;
 
@@ -186,15 +187,16 @@ public class DatabaseHandler {
 
     public List<List<Position>> getFreePositions(Customer customer, double weight, boolean isTall, int numberOfPositions){
         try (Session session = sessionFactory.openSession()) {
-            List<List<String>> result = new ArrayList<>();
+            List<List<Position>> result = new ArrayList<>();
 
             List<List<Position>> reservedPositions = getReservedPositions(customer, weight, isTall, numberOfPositions);
             List<List<Position>> reservedPositionsWithPallets = getReservedPositionsWithPallets(customer, weight, isTall, numberOfPositions);
 
+            result.addAll(reservedPositions);
+            result.addAll(reservedPositionsWithPallets);
+
+            
             // sorting and finding the best position
-
-
-
 
             return reservedPositionsWithPallets;
         } catch (Exception e) {
@@ -303,13 +305,63 @@ public class DatabaseHandler {
     }
 
 
-    public List<List<Position>> getReservedPositionsWithPallets(Customer customer, double weight, boolean isTall, int numberOfPosition){
+    public List<List<Position>> getReservedPositionsWithPallets(Customer customer, double weight, boolean isTall, int numberOfPositions){
         // all free reserved positions for the customer with pallet/s on it
-        List<Position> allFreeReservedPositionsWithPallet = getAllFreeReservedPositionsWithPallet(customer.getId());
-        allFreeReservedPositionsWithPallet = filterPositionsBasedOnWeightHeight(allFreeReservedPositionsWithPallet, isTall, weight);
+        List<Position> allReservedPositionsWithPallet = getAllFreeReservedPositionsWithPallet(customer.getId());
+        allReservedPositionsWithPallet = filterPositionsBasedOnWeightHeight(allReservedPositionsWithPallet, isTall, weight);
 
+        List<List<Position>> result = new ArrayList<>();
 
-        return null;
+        for (Position position : allReservedPositionsWithPallet){
+            List<Position> possibleNPositions = new ArrayList<>();
+            possibleNPositions.add(position);
+            int positionIndex = position.getIndex();
+            List<Pallet> palletsOnPosition = getPalletesOnPosition(position.getName());
+            int numberOfPalletsOnPosition = palletsOnPosition.size();
+
+            char row = position.getName().charAt(0);
+            int positionNumber = Integer.parseInt(position.getName().substring(1, 4));
+            char shelf = position.getName().charAt(4);
+
+            boolean areAllSuitable = true;
+            if (getWeightOfPalletsOnPosition(palletsOnPosition) + (weight/numberOfPositions) > WEIGHT_OF_ONE_POSITION){
+                areAllSuitable = false;
+            }
+            for (int i = 1; i < numberOfPositions; i++){
+                Position neighbouringPosition = getPosition(String.format("%s%03d%s", row, positionNumber + i*2, shelf));
+
+                if (allReservedPositionsWithPallet.contains(neighbouringPosition) && neighbouringPosition.getIndex() == positionIndex){
+                    List<Pallet> palletsOnNeighbouringPosition = getPalletesOnPosition(neighbouringPosition.getName());
+                    int numberOfPalletsOnNeighbouringPosition = palletsOnNeighbouringPosition.size();
+                    double weightOfPalletsOnNeighbouringPosition = getWeightOfPalletsOnPosition(palletsOnNeighbouringPosition);
+
+                    if (numberOfPalletsOnPosition == numberOfPalletsOnNeighbouringPosition
+                            && (weightOfPalletsOnNeighbouringPosition + weight/numberOfPositions) <= WEIGHT_OF_ONE_POSITION){
+                        possibleNPositions.add(neighbouringPosition);
+                    }
+                    else {
+                        areAllSuitable = false;
+                        break;
+                    }
+                }
+                else {
+                    areAllSuitable = false;
+                    break;
+                }
+            }
+            if (areAllSuitable){
+                result.add(possibleNPositions);
+            }
+        }
+        return result;
+    }
+
+    public double getWeightOfPalletsOnPosition(List<Pallet> pallets){
+        double result = 0;
+        for (Pallet pallet : pallets){
+            result += pallet.getWeight()/pallet.getNumberOfPositions();
+        }
+        return result;
     }
 
     /***
