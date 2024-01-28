@@ -203,10 +203,10 @@ public class Reservation {
             });
 
             result.add(Map.of(
-                    "Od",  String.valueOf(date.getKey()),
-                    "Do", String.valueOf(date.getValue()),
-                    "Počet pozícií", numberOfPositions,
-                    "Edit", edit
+                    "from",  String.valueOf(date.getKey()),
+                    "until", String.valueOf(date.getValue()),
+                    "numberOfReservedPositions", numberOfPositions,
+                    "edit", edit
             ));
         }
         return result;

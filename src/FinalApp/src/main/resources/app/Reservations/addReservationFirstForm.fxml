@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.AddReservationFirstController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.AddReservationFirstController">
    <children>
-      <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMainReservations" text="Naspäť" />
-      <Label layoutX="102.0" layoutY="109.0" text="Meno zákazníka:" />
-      <Label fx:id="customerName" layoutX="235.0" layoutY="109.0">
+      <Label alignment="CENTER_RIGHT" layoutX="122.0" layoutY="151.0" prefHeight="23.0" prefWidth="175.0" text="Meno zákazníka:">
          <font>
-            <Font size="14.0" />
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <Label fx:id="customerName" layoutX="340.0" layoutY="151.0" prefHeight="23.0" prefWidth="175.0">
+         <font>
+            <Font name="Calibri" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="102.0" layoutY="143.0" prefHeight="18.0" prefWidth="112.0" text="Dátum od (vrátane):"/>
-      <Label layoutX="102.0" layoutY="178.0" prefHeight="18.0" prefWidth="112.0" text="Dátum do (vrátane):" />
-      <DatePicker fx:id="dateFrom" layoutX="232.0" layoutY="139.0" onAction="#saveDateFrom" />
-      <DatePicker fx:id="dateTo" layoutX="232.0" layoutY="174.0" onAction="#saveDateTo" />
-      <Button layoutX="268.0" layoutY="241.0" mnemonicParsing="false" onAction="#nextForm" prefHeight="26.0" prefWidth="64.0" text="Ďalej" />
-      <Label fx:id="errorMessage" textFill="red" layoutX="228.0" layoutY="69.0" prefHeight="18.0" prefWidth="200.0" textAlignment="CENTER" />
+      <Label alignment="CENTER_RIGHT" layoutX="122.0" layoutY="209.0" prefHeight="23.0" prefWidth="175.0" text="Dátum od (vrátane):">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <Label alignment="CENTER_RIGHT" layoutX="122.0" layoutY="266.0" prefHeight="23.0" prefWidth="175.0" text="Dátum do (vrátane):">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <DatePicker fx:id="dateFrom" layoutX="341.0" layoutY="203.0" onAction="#saveDateFrom" prefHeight="36.0" prefWidth="175.0" />
+      <DatePicker fx:id="dateTo" layoutX="340.0" layoutY="260.0" onAction="#saveDateTo" prefHeight="36.0" prefWidth="175.0" />
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="171.0" layoutY="87.0" prefHeight="36.0" prefWidth="384.0" textAlignment="CENTER" textFill="red">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <JFXButton buttonType="RAISED" layoutX="62.0" layoutY="52.0" onAction="#backToMainReservations" ripplerFill="#916f6f" style="-fx-background-color: #5e1919;" text="Naspäť" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="297.0" layoutY="370.0" onAction="#nextForm" prefHeight="44.0" prefWidth="132.0" style="-fx-background-color: #0b1646;" text="Ďalej" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

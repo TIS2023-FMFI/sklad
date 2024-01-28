@@ -16,8 +16,8 @@ public class DeleteCustomerController implements Initializable {
     @FXML
     public Label message;
 
-    private final String WARNING = "Pokiaľ ostránite zákazníka, budú ostránené všetky informácie s ním spojené.\n" +
-            "Záznamy o histórii daného zákazníka budú taktiež odstráné.";
+    private final String WARNING = "Pokiaľ ostránite zákazníka, budú ostránené všetky informácie s ním spojené. " +
+            "\nZáznamy o histórii daného zákazníka budú taktiež odstránené.";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         message.setText(WARNING);

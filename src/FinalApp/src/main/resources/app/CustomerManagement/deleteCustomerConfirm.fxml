@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerManagement.DeleteCustomerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerManagement.DeleteCustomerController">
    <children>
-      <Button layoutX="61.0" layoutY="55.0" mnemonicParsing="false" onAction="#backToCustomerManagement" text="Naspäť" />
-      <Label fx:id="message" alignment="TOP_CENTER" layoutX="58.0" layoutY="139.0" prefHeight="64.0" prefWidth="478.0" />
-      <Button layoutX="185.0" layoutY="234.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Rozumiem, napriek tomu odstrániť" />
+      <Label fx:id="message" alignment="TOP_CENTER" layoutX="62.0" layoutY="182.0" prefHeight="100.0" prefWidth="619.0">
+         <font>
+            <Font name="Calibri Bold" size="17.0" />
+         </font></Label>
+      <JFXButton buttonType="RAISED" layoutX="62.0" layoutY="52.0" onAction="#backToCustomerManagement" ripplerFill="#916f6f" style="-fx-background-color: #5e1919;" text="Naspäť" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="204.0" layoutY="376.0" onAction="#deleteCustomer" style="-fx-background-color: #0b1646;" text="Rozumiem, napriek tomu odstrániť" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

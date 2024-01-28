@@ -29,16 +29,16 @@ public class ReservationViewController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Reservation reservation = new Reservation();
         TableColumn<Map, String> dateFromColumn = new TableColumn<>("Od");
-        dateFromColumn.setCellValueFactory(new MapValueFactory<>("Od"));
+        dateFromColumn.setCellValueFactory(new MapValueFactory<>("from"));
 
         TableColumn<Map, String> dateUntilColumn = new TableColumn<>("Do");
-        dateUntilColumn.setCellValueFactory(new MapValueFactory<>("Do"));
+        dateUntilColumn.setCellValueFactory(new MapValueFactory<>("unitl"));
 
         TableColumn<Map, Integer> numberOfPositionColumn = new TableColumn<>("Počet pozícií");
-        numberOfPositionColumn.setCellValueFactory(new MapValueFactory<>("Počet pozícií"));
+        numberOfPositionColumn.setCellValueFactory(new MapValueFactory<>("numberOfReservedPositions"));
 
         TableColumn<Map, Void> editButton = new TableColumn<>("");
-        editButton.setCellValueFactory(new MapValueFactory<>("Edit"));
+        editButton.setCellValueFactory(new MapValueFactory<>("edit"));
 
         reservationTable.getColumns().addAll(dateFromColumn, dateUntilColumn, numberOfPositionColumn, editButton);
         ChoiceBox<String> nameController = (ChoiceBox<String>)Warehouse.getInstance().getController("customerReservationName");
