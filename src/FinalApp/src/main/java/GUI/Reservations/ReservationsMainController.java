@@ -16,14 +16,11 @@ import java.util.ResourceBundle;
 public class ReservationsMainController implements Initializable {
     @FXML
     public ChoiceBox<String> customer;
-<<<<<<< HEAD
     public Button userManagementButton;
-=======
     @FXML
     Button customerManagementB;
     @FXML
     Button addReservationB;
->>>>>>> 1d64a9d4d27260cd715e19e35647d58b62a2675d
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -32,17 +29,13 @@ public class ReservationsMainController implements Initializable {
         if(customers.size() > 0) {
             customer.setValue(customers.get(0));
         }
-<<<<<<< HEAD
-        if (!Warehouse.getInstance().currentUser.getAdmin()){
-            userManagementButton.setVisible(false);
-        }
+
         Warehouse.getInstance().addController("reservationMain", this);
-=======
         if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
-            customerManagementB.setDisable(true);
-            addReservationB.setDisable(true);
+            userManagementButton.setVisible(false);
+            customerManagementB.setVisible(false);
+            addReservationB.setVisible(false);
         }
->>>>>>> 1d64a9d4d27260cd715e19e35647d58b62a2675d
     }
     public void backToMenu() throws IOException {
         Warehouse.getInstance().changeScene("mainMenu.fxml");
