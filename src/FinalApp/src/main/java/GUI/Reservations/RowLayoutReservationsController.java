@@ -9,10 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 
 import java.util.*;
 
@@ -23,8 +23,6 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
     Label selectedPosition;
     @FXML
     Label errorMessage;
-    @FXML
-    Button reserve;
     Warehouse warehouse;
     Customer customer;
     Date dateFrom;
@@ -32,6 +30,7 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
     Set<Position> aviablePositions;
     Set<Position> positionsToSave;
     int numberOfPosition;
+    int numberOfTallPosition;
     private final String REMOVE_FROM_ADDED = "Pozícia bola odstránená z pridaných na zarezervovanie.";
     private final String ADD_TO_ADDED = "Pozícia zvolená na uloženie.";
     private final String ENOUGH_CHOOSEN_POSITIONS = "Nemožno pridať ďaľšiu pozíciu";
@@ -39,6 +38,8 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
     private final String CANNOT_SAVE = "Nemožno rezervovať zvolenú pozíciu.";
     private final String NOT_ENOUGH_POSITIONS = "Málo zvolených pozícií.";
     private final String DB_FAIL = "Chyba pri nahrávaní do DB";
+    private final String MORE_TALL_POSITIONS_1 = "Musíte ešte vybrať aspoň ";
+    private final String MORE_TALL_POSITIONS_2 = " vysokých pozícií.";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,10 +62,9 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
         dateFrom =(Date) warehouse.getController("dateFrom");
         dateTo = (Date) warehouse.getController("dateTo");
         aviablePositions = (Set<Position>) warehouse.getController("aviablePositions");
-        numberOfPosition = (Integer) warehouse.getController("numberOfPosition");
-
+        numberOfPosition = (Integer) warehouse.getController("lowPositions") + (Integer) warehouse.getController("tallPositions");
+        numberOfTallPosition = (Integer) warehouse.getController("tallPositions");
         updateCounter();
-//        System.out.println(positionsToSave.size() + " " + numberOfPosition);
         createGrid();
     }
 
@@ -94,24 +94,6 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
         return RED_COLOR;
     }
 
-    @Override
-    protected void handlePositionButtonClick(Position position) {
-        Warehouse warehouse = Warehouse.getInstance();
-        Map<Pallet, Map<Material, Integer>> palletsOnPosition = warehouse.getPalletsOnPosition(position);
-
-        palletsHBox.getChildren().clear();
-        clearInformationContainers();
-
-        if (!palletsOnPosition.isEmpty()) {
-            positionWithPallets(position, palletsOnPosition);
-        }
-        else if (warehouse.getDatabaseHandler().isPositionReservedToday(position.getName())) {
-            reservedPosition(position);
-        }
-        else {
-            freePosition();
-        }
-    }
     @Override
     public HBox createShelf(List<Position> positions) {
         HBox shelf = new HBox();
@@ -151,11 +133,25 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
             positionsToSave.remove(position);
             return true;
         }
+
         if(aviablePositions.contains(position)){  //volna pozicia
+            Pair<Integer, Integer> counter = new Reservation().getNumberOfLowTallPosition(positionsToSave);
+            int low = counter.getKey();
+            int tall = counter.getValue();
+            int remainingPosition = numberOfPosition - low - tall;
+            if(! position.isTall()){
+                low += 1;
+                remainingPosition = numberOfPosition - low - tall;
+                if(remainingPosition == 0 && numberOfTallPosition - tall > 0){
+                    errorMessage.setText(MORE_TALL_POSITIONS_1 + numberOfTallPosition + MORE_TALL_POSITIONS_2);
+                    return false;
+                }
+            }
             if(numberOfPosition - positionsToSave.size() == 0) {
                 errorMessage.setText(ENOUGH_CHOOSEN_POSITIONS);
                 return false;
             }
+
             errorMessage.setText(ADD_TO_ADDED);
             positionsToSave.add(position);
             return true;
