@@ -1,9 +1,7 @@
 package GUI.Reservations;
 
-import GUI.StoreInProduct.HistoryRecord;
 import app.Warehouse;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -40,9 +38,15 @@ public class ReservationsMainController implements Initializable {
             addReservationB.setDisable(true);
             editReservationB.setDisable(true);
         }
-        if(! Warehouse.getInstance().getCurrentUser().getAdmin()) {
-            customerManagementB.setVisible(false);
-            addReservationB.setVisible(false);
+//        if(! Warehouse.getInstance().getCurrentUser().getAdmin()) {
+//            customerManagementB.setVisible(false);
+//            addReservationB.setVisible(false);
+
+
+        if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
+            customerManagementB.setDisable(true);
+            addReservationB.setDisable(true);
+            userManagementButton.setVisible(false);
         }
 
     }

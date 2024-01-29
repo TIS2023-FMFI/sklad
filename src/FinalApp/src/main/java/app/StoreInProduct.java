@@ -1,5 +1,6 @@
 package app;
 
+import Entity.Customer;
 import Entity.Material;
 import Entity.Pallet;
 import Entity.Position;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class StoreInProduct {
     CustomerTruckNumberDataSet customerTruckNumberDataSet;
@@ -30,37 +32,15 @@ public class StoreInProduct {
         CustomerTruckNumberController customerTruckNumberController = (CustomerTruckNumberController) warehouse.getController("customerTruckNumber");
         PalletInformationController palletInformationController = (PalletInformationController) warehouse.getController("palletInformation");
 
-        int customerId = warehouse.getDatabaseHandler().getCustomer(customerTruckNumberController.getCustomer()).getId();
+        Customer customer = warehouse.getDatabaseHandler().getCustomer(customerTruckNumberController.getCustomer());
+        double weight = palletInformationController.getWeight();
         boolean isTall = palletInformationController.getIsTall();
-
-        List<Position> freePositions = Warehouse.getInstance().getDatabaseHandler().getFreePositions(customerId, isTall);
-        List<String> freePositionNames = freePositions.stream().map(Position::getName).toList();
-
         int numberOfPositions = palletInformationController.getNumberOfPositions();
 
-        List<String> result = new ArrayList<>();
-        for (String p : freePositionNames){
-            StringBuilder nPositions = new StringBuilder(p);
-            char row = p.charAt(0);
-            int positionNumber = Integer.parseInt(p.substring(1, 4));
-            char shelf = p.charAt(4);
+        List<List<Position>> freePositions = warehouse.getDatabaseHandler().getFreePositions(customer, weight, isTall, numberOfPositions);
 
-            boolean areAllFree = true;
-            for (int i = 1; i < numberOfPositions; i++){
-                String neighbouringPosition = String.format("%s%03d%s", row, positionNumber + i * 2, shelf);
-                if (freePositionNames.contains(neighbouringPosition)){
-                    nPositions.insert(0, neighbouringPosition + "-");
-                }
-                else{
-                    areAllFree = false;
-                    break;
-                }
-            }
-            if (areAllFree){
-                result.add(nPositions.toString());
-            }
-        }
-        return result;
+        return freePositions.stream().map(positions -> positions.stream().map(Position::getName)
+                .collect(Collectors.joining("-"))).toList();
     }
 
     /***
