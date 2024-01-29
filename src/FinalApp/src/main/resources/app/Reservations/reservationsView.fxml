@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationViewController">
    <children>
-      <TableView fx:id="reservationTable" layoutX="96.0" layoutY="80.0" prefHeight="200.0" prefWidth="316.0" />
-      <Button layoutX="55.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToMainReservations" text="Naspäť" />
+      <TableView fx:id="reservationTable" layoutX="143.0" layoutY="96.0" prefHeight="338.0" prefWidth="440.0" />
+      <JFXButton buttonType="RAISED" layoutX="62.0" layoutY="52.0" onAction="#backToMainReservations" ripplerFill="#916f6f" style="-fx-background-color: #5e1919;" text="Naspäť" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

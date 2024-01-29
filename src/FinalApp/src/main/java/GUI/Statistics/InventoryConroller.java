@@ -55,6 +55,9 @@ public class InventoryConroller implements Initializable {
         inventoryTable.getItems().addAll(items);
     }
 
+    /***
+     * This method is called when the user clicks on the "Export" button. It exports the table to an excel file.
+     */
     public void saveInventoryList(){
         FileExporter fileExporter = new FileExporter();
         List<String> columns = new ArrayList<>();
@@ -66,6 +69,10 @@ public class InventoryConroller implements Initializable {
 
     }
 
+    /***
+     * This method is called when the user clicks on the "Back" button. It returns the user to the statistics main page.
+     * @throws IOException
+     */
     public void backToStatistics() throws IOException {
         Warehouse.getInstance().changeScene("Statistics/statisticsMainPageForm.fxml");
     }

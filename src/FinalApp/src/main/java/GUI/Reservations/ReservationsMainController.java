@@ -3,6 +3,7 @@ package GUI.Reservations;
 import GUI.StoreInProduct.HistoryRecord;
 import app.Warehouse;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,6 +17,8 @@ import java.util.ResourceBundle;
 public class ReservationsMainController implements Initializable {
     @FXML
     public ChoiceBox<String> customer;
+    public Button userManagementButton;
+
     @FXML
     Button customerManagementB;
     @FXML
@@ -32,14 +35,16 @@ public class ReservationsMainController implements Initializable {
         if(customers.size() > 0) {
             customer.setValue(customers.get(0));
         }
+
         else{
             addReservationB.setDisable(true);
             editReservationB.setDisable(true);
         }
-        if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
+        if(! Warehouse.getInstance().getCurrentUser().getAdmin()) {
             customerManagementB.setVisible(false);
             addReservationB.setVisible(false);
         }
+
     }
     public void backToMenu() throws IOException {
         Warehouse.getInstance().changeScene("mainMenu.fxml");
@@ -64,5 +69,9 @@ public class ReservationsMainController implements Initializable {
 
     public void customerManagement() throws IOException {
         Warehouse.getInstance().changeScene("CustomerManagement/CustomerManagementMain.fxml");
+    }
+
+    public void userManagement() throws IOException {
+        Warehouse.getInstance().changeScene("UserManagement/userManagementMain.fxml");
     }
 }
