@@ -1,11 +1,8 @@
 package GUI.Reservations;
 
 import Entity.Customer;
-import Entity.CustomerReservation;
-import app.CustomersHandler;
 import app.Reservation;
 import app.Warehouse;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
