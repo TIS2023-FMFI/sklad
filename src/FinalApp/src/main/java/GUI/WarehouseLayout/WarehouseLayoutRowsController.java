@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,9 +22,9 @@ public class WarehouseLayoutRowsController implements Initializable {
     @FXML
     protected HBox rowsContainer;
 
-    protected static final int ROW_BUTTON_HEIGHT = 150;
-    protected static final int ROW_BUTTON_TALL_HEIGHT = 250;
-    protected static final int ROW_BUTTON_WIDTH = 50;
+    protected static final int ROW_BUTTON_HEIGHT = 180;
+    protected static final int ROW_BUTTON_TALL_HEIGHT = 300;
+    protected static final int ROW_BUTTON_WIDTH = 60;
 
     protected boolean isTall;
 
@@ -36,6 +38,7 @@ public class WarehouseLayoutRowsController implements Initializable {
     public void loadRows() {
         Warehouse warehouse = Warehouse.getInstance();
         List<String> rowNames = warehouse.getRowNames();
+        rowsContainer.setAlignment(Pos.BOTTOM_CENTER);
 
         for (String rowName : rowNames) {
             Button rowButton = createRowButton(rowName);
@@ -61,6 +64,9 @@ public class WarehouseLayoutRowsController implements Initializable {
 
     protected Button createRowButton(String rowName) {
         Button rowButton = new Button(rowName);
+
+        rowButton.setFont(Font.font("Calibri", FontWeight.NORMAL, 18));
+
         rowButton.setPrefWidth(ROW_BUTTON_WIDTH);
         rowsContainer.setAlignment(Pos.BOTTOM_CENTER);
         return rowButton;

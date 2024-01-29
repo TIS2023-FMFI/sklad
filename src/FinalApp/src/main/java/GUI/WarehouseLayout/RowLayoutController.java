@@ -20,9 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -50,7 +47,6 @@ public class RowLayoutController implements Initializable {
     protected static final String RED_COLOR = "#CF1616";
     protected static final String ORANGE_COLOR = "#FF8D00";
     protected static final String GREEN_COLOR = "#008000";
-    protected static final String BLACK_COLOR = "#000000";
 
     protected static final int POSITION_BUTTON_WIDTH = 40;
     protected static final int POSITION_BUTTON_HEIGHT = 50;
