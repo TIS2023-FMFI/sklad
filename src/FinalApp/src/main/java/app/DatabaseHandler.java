@@ -386,10 +386,10 @@ public class DatabaseHandler {
      * Method, that removes a material from database after a successful order.
      * @param material The material to be removed.
      * @param quantity The quantity of the material to be removed.
-     * @param position The position from which the material is removed.
+     * @param positions The positions from which the pallet is removed if it is empty.
      * @param pallet The pnr of the pallet from which the material is removed.
      */
-    public void removeItem(Position position, Pallet pallet, Material material, int quantity, boolean removePallet) {
+    public void removeItem(List<Position> positions, Pallet pallet, Material material, int quantity, boolean removePallet) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Query<StoredOnPallet> query = session.createQuery("from StoredOnPallet sop where sop.pnr = :pnr and sop.idProduct = :id");
@@ -399,11 +399,13 @@ public class DatabaseHandler {
             if (sop.getQuantity() == quantity){
                 session.delete(sop);
                 if (removePallet) {
-                    Query<PalletOnPosition> popQ = session.createQuery("from PalletOnPosition pop where pop.idPallet = :pnr and pop.idPosition = :id");
-                    popQ.setParameter("pnr", pallet.getPnr());
-                    popQ.setParameter("id", position.getName());
-                    PalletOnPosition pop = popQ.getSingleResult();
-                    session.delete(pop);
+                    for (Position position : positions) {
+                        Query<PalletOnPosition> popQ = session.createQuery("from PalletOnPosition pop where pop.idPallet = :pnr and pop.idPosition = :id");
+                        popQ.setParameter("pnr", pallet.getPnr());
+                        popQ.setParameter("id", position.getName());
+                        PalletOnPosition pop = popQ.getSingleResult();
+                        session.delete(pop);
+                    }
                     session.delete(pallet);
                 }
             }else {

@@ -17,11 +17,21 @@ import java.util.ResourceBundle;
 public class OrderCustomerSelectionController implements Initializable {
 
     @FXML
-    public ChoiceBox<String> customerChoices;
+    private ChoiceBox<String> customerChoices;
 
+    /***
+     * Customer that was selected in the choice box
+     */
     public Customer customer;
-    public Label errorField;
 
+    @FXML
+    private Label errorField;
+
+    /***
+     * Initializes the choice box with the customers from the database
+     * @param arg0
+     * @param arg1
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
@@ -30,10 +40,18 @@ public class OrderCustomerSelectionController implements Initializable {
         Warehouse.getInstance().addController("OrderCustomerSelectionController", this);
     }
 
+    /***
+     * Goes back to the main menu
+     * @throws IOException when the fxml file is not found
+     */
     public void backToMenu() throws IOException {
        Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
 
+    /***
+     * Confirms the selected customer and goes to the next scene
+     * @throws IOException when the fxml file is not found
+     */
     public void confirmOrderCustomer() throws IOException {
         if (customerChoices.getValue() == null) {
             errorField.setText("Vyberte zákazníka!");

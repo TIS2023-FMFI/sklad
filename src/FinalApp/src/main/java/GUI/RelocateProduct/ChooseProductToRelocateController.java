@@ -16,19 +16,40 @@ import java.util.ResourceBundle;
 
 public class ChooseProductToRelocateController implements Initializable {
     @FXML
-    public TextField quantityText;
+    private TextField quantityText;
     @FXML
-    public Label errorLabel;
-    public Label materialToMoveLabel;
+    private Label errorLabel;
+    @FXML
+    private Label materialToMoveLabel;
     @FXML
     private ChoiceBox<String> productsOnPallet;
     private Map<String, Integer> productsOnPalletMap = new HashMap<>();
+    /***
+     * Chosen position from which the product will be moved
+     */
     public Position initialPosition;
+    /***
+     * Flag, if we are moving the whole pallet or just one material
+     */
     public boolean isWholePallet;
+    /***
+     * If we are moving one material, this is the material
+     */
     public String finalMaterial = null;
+    /***
+     * If we are moving one material, this is the quantity
+     */
     public Integer finalQuantity = null;
+    /***
+     * If we are moving the material, this is the pallet, to which the material will go
+     */
     public String finalPallet = null;
 
+    /***
+     * Method that initializes the controller and disables the quantity textfield if we are moving the whole pallet
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         MoveProductFromPositionController controller = (MoveProductFromPositionController)
@@ -78,9 +99,18 @@ public class ChooseProductToRelocateController implements Initializable {
         }
     }
 
+    /***
+     * Method that takes user back to choosing the initial position
+     * @throws IOException if the fxml file is not found
+     */
     public void backToInitialPosition() throws IOException {
         Warehouse.getInstance().changeScene("RelocateProduct/moveProductFromPositionForm.fxml");
     }
+
+    /***
+     * Method that confirms the product to move and takes user to the form where he chooses the final position
+     * @throws IOException if the fxml file is not found
+     */
     public void confirmProductToMove() throws IOException {
         if (!isWholePallet) {
             if (productsOnPallet.getValue() == null){

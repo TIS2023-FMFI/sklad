@@ -8,6 +8,7 @@ import app.OrderProduct;
 import app.Warehouse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -19,12 +20,21 @@ import java.net.URL;
 import java.util.*;
 
 public class OrderShowPositionsController implements Initializable {
-    public TableView orderTable;
+    @FXML
+    private TableView orderTable;
 
     protected ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
 
+    /***
+     * Customer for which the order is being made
+     */
     Customer cust;
 
+    /***
+     * Initializes the table with the ordered products
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         OrderProductsController cont = (OrderProductsController) Warehouse.getInstance().
@@ -66,10 +76,18 @@ public class OrderShowPositionsController implements Initializable {
 
     }
 
+    /***
+     * Goes back to the customer selection form
+     * @throws IOException if the form is not found
+     */
     public void backToCustomerSelection() throws IOException {
         Warehouse.getInstance().changeScene("OrderProduct/orderCustomerSelectionForm.fxml");
     }
-    public void saveOrderExcel() throws IOException {
+
+    /***
+     * Exports the order to an excel file
+     */
+    public void saveOrderExcel(){
         FileExporter fe = new FileExporter();
         List<String> columns = new ArrayList<>();
         columns.add("Materiál");
@@ -80,12 +98,19 @@ public class OrderShowPositionsController implements Initializable {
 
     }
 
+    /***
+     * Exports the order to a pdf file
+     */
     public void saveOrdersPdf(){
         FileExporter fe = new FileExporter();
         fe.exportOrderPDF(items, cust);
     }
 
-    public void backToMenu() throws IOException {
+    /***
+     * Goes to the confirmation form
+     * @throws IOException if the form is not found
+     */
+    public void continueToConfirmation() throws IOException {
         OrderProduct op = new OrderProduct();
         op.removeOrderedItems(items);
         Warehouse.getInstance().addController("OrderShowPositionsController", this);
