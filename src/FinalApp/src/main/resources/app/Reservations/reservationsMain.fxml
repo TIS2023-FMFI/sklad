@@ -30,6 +30,7 @@
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
+
       <JFXButton fx:id="customerManagementB" buttonType="RAISED" layoutX="370.0" layoutY="133.0" onAction="#customerManagement" prefHeight="44.0" prefWidth="202.0" style="-fx-background-color: #0b1646;" text="Manažment zákazníkov" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="18.0" />

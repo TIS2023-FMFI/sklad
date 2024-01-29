@@ -2,9 +2,15 @@ package app;
 
 import Entity.*;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.util.Pair;
+import com.jfoenix.controls.JFXButton;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Reservation {
@@ -157,6 +163,36 @@ public class Reservation {
         }
         return true;
     }
+    private Button createDeleteButton( Map<Pair<Date, Date>, List<String>> sortedRecords, Pair date, Customer customer){
+        JFXButton edit = new JFXButton("Zmazať");
+        String style = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER; -fx-background-color: red; -fx-font-weight: bold;";
+
+        edit.setStyle(style);
+        edit.setTextFill(Color.WHITE);
+        if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
+            edit.setVisible(false);
+        }
+        edit.setOnAction(event ->{
+            if(Warehouse.getInstance().getController("cannotRemove") != null){
+                Warehouse.getInstance().removeController("cannotRemove");
+            }
+            if(Warehouse.getInstance().getController("DeletedReservation") != null){
+                Warehouse.getInstance().removeController("DeletedReservation");
+            }
+            findUsedPositions(new HashSet<>(sortedRecords.get(date)));
+            if(((Set<String>) Warehouse.getInstance().getController("cannotRemove")).isEmpty()) {
+                Warehouse.getInstance().getDatabaseHandler().deleteReservationRecord(customer, (java.sql.Date) date.getKey(), (java.sql.Date) date.getValue());
+                Warehouse.getInstance().addController("DeletedReservation", true);
+            }
+            try {
+                Warehouse.getInstance().changeScene("Reservations/reservationConfirmation.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return edit;
+
+    }
 
     /**
      * Function takes information from database about customer reservation of his positions
@@ -179,32 +215,13 @@ public class Reservation {
 
         for (Pair date : sortedRecords.keySet()) {
             int numberOfPositions = sortedRecords.get(date).size();
-            Button edit = new Button("Zmazať");
-            if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
-                edit.setDisable(true);
-            }
-            edit.setOnAction(event ->{
-                if(Warehouse.getInstance().getController("cannotRemove") != null){
-                    Warehouse.getInstance().removeController("cannotRemove");
-                }
-                if(Warehouse.getInstance().getController("DeletedReservation") != null){
-                    Warehouse.getInstance().removeController("DeletedReservation");
-                }
-                findUsedPositions(new HashSet<>(sortedRecords.get(date)));
-                if(((Set<String>) Warehouse.getInstance().getController("cannotRemove")).isEmpty()) {
-                    Warehouse.getInstance().getDatabaseHandler().deleteReservationRecord(customer, (java.sql.Date) date.getKey(), (java.sql.Date) date.getValue());
-                    Warehouse.getInstance().addController("DeletedReservation", true);
-                }
-                try {
-                    Warehouse.getInstance().changeScene("Reservations/reservationConfirmation.fxml");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            Button edit = createDeleteButton(sortedRecords, date, customer);
+            LocalDate parsedDate1 = LocalDate.parse(String.valueOf(date.getKey()));
+            LocalDate parsedDate2 = LocalDate.parse(String.valueOf(date.getValue()));
 
             result.add(Map.of(
-                    "from",  String.valueOf(date.getKey()),
-                    "until", String.valueOf(date.getValue()),
+                    "from", parsedDate1.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                    "until", parsedDate2.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                     "numberOfReservedPositions", numberOfPositions,
                     "edit", edit
             ));

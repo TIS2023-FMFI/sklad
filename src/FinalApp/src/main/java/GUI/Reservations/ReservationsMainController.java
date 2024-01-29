@@ -34,23 +34,21 @@ public class ReservationsMainController implements Initializable {
             customer.setValue(customers.get(0));
         }
 
-      /*
         else{
             addReservationB.setDisable(true);
             editReservationB.setDisable(true);
         }
-        if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
-            customerManagementB.setVisible(false);
-            addReservationB.setVisible(false);
-       */
+//        if(! Warehouse.getInstance().getCurrentUser().getAdmin()) {
+//            customerManagementB.setVisible(false);
+//            addReservationB.setVisible(false);
 
-        Warehouse.getInstance().addController("reservationMain", this);
 
         if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
             customerManagementB.setDisable(true);
             addReservationB.setDisable(true);
             userManagementButton.setVisible(false);
         }
+
     }
     public void backToMenu() throws IOException {
         Warehouse.getInstance().changeScene("mainMenu.fxml");
