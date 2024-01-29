@@ -1,9 +1,7 @@
 package GUI.Reservations;
 
-import GUI.StoreInProduct.HistoryRecord;
 import app.Warehouse;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
