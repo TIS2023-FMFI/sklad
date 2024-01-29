@@ -23,7 +23,7 @@ public class StatisticMainPageController implements Initializable {
     @FXML
     private Label invoicingLabel;
     @FXML
-    private ChoiceBox<String> customer;
+    protected ChoiceBox<String> customer;
     @FXML
     private Button invoicingButton;
     @FXML

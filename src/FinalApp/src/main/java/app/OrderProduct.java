@@ -59,20 +59,22 @@ public class OrderProduct {
                 for (Pallet pal : pals) {
                     int num = dbh.getMaterialQuantityOnPallet(pal, mat);
                     if (num >= quantity) {
+                        String poss = getPositionsForPallet(pal);
                         enough = true;
                         Map<String, String> row = Map.of(
                                 "Materiál", mat.getName(),
                                 "Počet", String.valueOf(quantity),
-                                "Pozícia", position.getName(),
+                                "Pozícia", poss,
                                 "PNR", pal.getPnr()
                         );
                         res.add(row);
                         break;
                     } else if (num > 0) {
+                        String poss = getPositionsForPallet(pal);
                         Map<String, String> row = Map.of(
                                 "Materiál", mat.getName(),
                                 "Počet", String.valueOf(num),
-                                "Pozícia", position.getName(),
+                                "Pozícia", poss,
                                 "PNR", pal.getPnr()
                         );
                         res.add(row);
@@ -120,6 +122,19 @@ public class OrderProduct {
             }
             dbh.removeItem(position, pnr, material, quantity, removePallet);
         }
+    }
 
+    private String getPositionsForPallet(Pallet pallet) {
+        List<Position> res = new ArrayList<>();
+        for (Map.Entry<Position, Map<Pallet, Map<Material, Integer>>> entry : Warehouse.getInstance().getPalletsOnPositionMap().entrySet()) {
+            if (entry.getValue().containsKey(pallet)) {
+                res.add(entry.getKey());
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Position pos : res) {
+            sb.append(pos.getName()).append("-");
+        }
+        return sb.substring(0, sb.length() - 1);
     }
 }
