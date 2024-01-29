@@ -7,11 +7,18 @@ import Entity.Users;
 
 import Exceptions.FileNotFound;
 import Exceptions.WrongStringFormat;
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -206,6 +213,28 @@ public class Warehouse extends Application {
     public static Stage getStage() {
         return stage;
     }
+
+    public JFXButton createStyledButton(String buttonText, String backgroundColor, String textColor, double width,
+                                         double height, int fontSize, boolean isTextBold) {
+        JFXButton button = new JFXButton(buttonText);
+
+        BackgroundFill backgroundFill = new BackgroundFill(Color.web(backgroundColor), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY);
+        Background background = new Background(backgroundFill);
+        button.setBackground(background);
+
+        button.setTextFill(Color.web(textColor));
+
+        button.setRipplerFill(Color.WHITE);
+
+        button.setMinWidth(width);
+        button.setMinHeight(height);
+
+        FontWeight fontWeight = isTextBold ? FontWeight.BOLD : FontWeight.NORMAL;
+        button.setFont(Font.font("Calibri", fontWeight, fontSize));
+
+        return button;
+    }
+
     protected boolean loadPosition() {
         try {
             LoadPositions load = new LoadPositions(FILE_NAME);

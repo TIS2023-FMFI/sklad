@@ -7,35 +7,63 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WarehouseLayout.RowLayoutController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WarehouseLayout.RowLayoutController">
    <top>
-      <AnchorPane prefHeight="100.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="100.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="27.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToRows" text="Naspäť" />
-            <Label layoutX="510.0" layoutY="42.0" prefHeight="17.0" prefWidth="42.0" text="Pozícia:" />
-            <Label fx:id="positionName" layoutX="601.0" layoutY="42.0" prefHeight="17.0" prefWidth="99.0" textAlignment="CENTER" />
+            <Button layoutX="27.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToRows" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Label layoutX="644.0" layoutY="42.0" prefHeight="30.0" prefWidth="77.0" text="Pozícia:">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Label>
+            <Label fx:id="positionName" layoutX="750.0" layoutY="45.0" prefHeight="21.0" prefWidth="114.0" textAlignment="CENTER">
+               <font>
+                  <Font name="Calibri" size="20.0" />
+               </font></Label>
          </children>
       </AnchorPane>
    </top>
    <center>
-      <VBox fx:id="positionsVBox" prefHeight="250.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+      <VBox fx:id="positionsVBox" prefHeight="300.0" prefWidth="1500.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
-      <AnchorPane prefHeight="350.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="450.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="palletsHBox" layoutY="-5.0" prefHeight="50.0" prefWidth="1300.0" />
-            <HBox layoutY="55.0" prefHeight="300.0" prefWidth="1300.0">
+            <HBox fx:id="palletsHBox" layoutY="14.0" prefHeight="70.0" prefWidth="1500.0" style="-fx-background-color: D8D9DA;" />
+            <HBox layoutY="83.0" prefHeight="375.0" prefWidth="1500.0" style="-fx-background-color: EDEDED;">
                <children>
-                  <VBox fx:id="informationContainer1" prefHeight="300.0" prefWidth="450.0">
+                  <VBox fx:id="informationContainer1" prefHeight="375.0" prefWidth="450.0">
                      <padding>
-                        <Insets left="100.0" />
+                        <Insets left="100.0" top="70.0" />
                      </padding></VBox>
-                  <VBox fx:id="informationContainer2" prefHeight="300.0" prefWidth="450.0" />
-                  <AnchorPane fx:id="materialCountTable" prefHeight="300.0" prefWidth="399.0" />
+                  <VBox fx:id="informationContainer2" prefHeight="375.0" prefWidth="450.0">
+                     <padding>
+                        <Insets left="50.0" top="70.0" />
+                     </padding></VBox>
+                  <VBox prefHeight="200.0" prefWidth="450.0">
+                     <children>
+                        <AnchorPane prefHeight="60.0" prefWidth="200.0" />
+                        <AnchorPane fx:id="materialCountTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0">
+                           <padding>
+                              <Insets top="70.0" />
+                           </padding>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
                </children>
+               <padding>
+                  <Insets left="100.0" />
+               </padding>
             </HBox>
          </children>
+         <BorderPane.margin>
+            <Insets top="50.0" />
+         </BorderPane.margin>
       </AnchorPane>
    </bottom>
 </BorderPane>
