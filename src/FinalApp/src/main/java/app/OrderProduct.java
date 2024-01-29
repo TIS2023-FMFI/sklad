@@ -140,7 +140,7 @@ public class OrderProduct {
                 }
             }
             //TODO
-            dbh.removeItem(position, pnr, material, quantity, removePallet);
+            dbh.removeItem(positions, pnr, material, quantity, removePallet);
         }
     }
 
