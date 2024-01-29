@@ -1,6 +1,5 @@
 package GUI.Reservations;
 
-import GUI.StoreInProduct.HistoryRecord;
 import app.Warehouse;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,6 +15,8 @@ import java.util.ResourceBundle;
 public class ReservationsMainController implements Initializable {
     @FXML
     public ChoiceBox<String> customer;
+    public Button userManagementButton;
+
     @FXML
     Button customerManagementB;
     @FXML
@@ -32,6 +33,8 @@ public class ReservationsMainController implements Initializable {
         if(customers.size() > 0) {
             customer.setValue(customers.get(0));
         }
+
+      /*
         else{
             addReservationB.setDisable(true);
             editReservationB.setDisable(true);
@@ -39,6 +42,14 @@ public class ReservationsMainController implements Initializable {
         if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
             customerManagementB.setVisible(false);
             addReservationB.setVisible(false);
+       */
+
+        Warehouse.getInstance().addController("reservationMain", this);
+
+        if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
+            customerManagementB.setDisable(true);
+            addReservationB.setDisable(true);
+            userManagementButton.setVisible(false);
         }
     }
     public void backToMenu() throws IOException {
@@ -64,5 +75,9 @@ public class ReservationsMainController implements Initializable {
 
     public void customerManagement() throws IOException {
         Warehouse.getInstance().changeScene("CustomerManagement/CustomerManagementMain.fxml");
+    }
+
+    public void userManagement() throws IOException {
+        Warehouse.getInstance().changeScene("UserManagement/userManagementMain.fxml");
     }
 }

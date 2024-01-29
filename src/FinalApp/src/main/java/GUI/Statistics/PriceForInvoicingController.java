@@ -17,6 +17,11 @@ public class PriceForInvoicingController implements Initializable{
     @FXML
     public Label warningLabel;
 
+    /***
+     * This method is called when the page is opened. It adds this controller to the list of controllers.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Warehouse.getInstance().addController("priceForInvoicing", this);

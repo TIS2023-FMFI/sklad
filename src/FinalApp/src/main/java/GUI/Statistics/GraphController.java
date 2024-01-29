@@ -59,6 +59,10 @@ public class GraphController implements Initializable {
         //barChart.setStyle("-fx-bar-gap: 10; -fx-bar-width: 60;");
     }
 
+    /***
+     * This method is used to go back to statistics main page
+     * @throws IOException if the file is not found
+     */
     public void backToStatistics() throws IOException {
         Warehouse.getInstance().changeScene("Statistics/statisticsMainPageForm.fxml");
     }

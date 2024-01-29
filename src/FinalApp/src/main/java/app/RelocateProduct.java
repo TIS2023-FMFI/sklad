@@ -59,6 +59,7 @@ public class RelocateProduct {
             pallet.setIdUser(Warehouse.getInstance().currentUser.getId());
             pallet.setType("europaleta");
             pallet.setDateIncome(Date.valueOf(LocalDate.now()));
+            pallet.setNumberOfPositions(1);
             Warehouse.getInstance().getPalletsOnPositionMap().get(finalPosition)
                     .put(pallet, new HashMap<Material, Integer>());
             db.addPallet(pallet, finalPosition);

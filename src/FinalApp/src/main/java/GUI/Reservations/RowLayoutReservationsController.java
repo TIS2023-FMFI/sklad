@@ -165,7 +165,6 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
     }
     @Override
     public void backToRows() throws IOException {
-
         Warehouse.getInstance().removeController("rowLayout");
         Warehouse.getInstance().changeScene("Reservations/warehouseLayoutRowsReservationForm.fxml");
     }

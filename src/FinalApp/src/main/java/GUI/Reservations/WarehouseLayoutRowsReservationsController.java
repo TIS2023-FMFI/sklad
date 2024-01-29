@@ -29,9 +29,6 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
         positionsToSave = new HashSet<>();
 
         Warehouse.getInstance().initializeWarehouseLayout();
-
-        Warehouse.getStage().setMinWidth(900);
-        Warehouse.getStage().setMinHeight(600);
         positionsToSave = getPostionsToSave();
       
         getChangedRows();
