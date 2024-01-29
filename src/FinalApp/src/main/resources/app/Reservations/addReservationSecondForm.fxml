@@ -1,22 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.AddReservationSecondController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.AddReservationSecondController">
    <children>
-      <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToFirstForm" text="Naspäť" />
-      <Label layoutX="134.0" layoutY="131.0" text="Počet voľných pozícií:" />
-      <Label layoutX="134.0" layoutY="163.0" text="Z toho vysokých:" />
-      <Label layoutX="134.0" layoutY="200.0" text="Vyberte počet pozícií:" />
-      <Label layoutX="134.0" layoutY="231.0" text="Z toho aspoň vysokých:" />
-      <Button layoutX="280.0" layoutY="279.0" mnemonicParsing="false" onAction="#findPositionsToSave" text="Zobraziť navrhované pozície" />
-      <Label fx:id="numberOfAllFreePositions" layoutX="335.0" layoutY="131.0" />
-      <Label fx:id="numberOfAllTallPositions" layoutX="335.0" layoutY="163.0" />
-      <TextField fx:id="numberOfFreeField" alignment="CENTER_RIGHT" layoutX="300.0" layoutY="196.0" prefHeight="25.0" prefWidth="55.0"/>
-      <TextField fx:id="numberOfTallField" alignment="CENTER_RIGHT" layoutX="300.0" layoutY="227.0" prefHeight="25.0" prefWidth="55.0" text="0" />
-      <Label fx:id="errorMessage" layoutX="250.0" layoutY="69.0" prefHeight="18.0" prefWidth="300.0" textAlignment="CENTER" textFill="red" />
+      <Label alignment="CENTER_RIGHT" layoutX="179.0" layoutY="152.0" text="Počet voľných pozícií:">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <Label alignment="CENTER_RIGHT" layoutX="165.0" layoutY="201.0" prefHeight="23.0" prefWidth="194.0" text="Z toho vysokých:">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <Label alignment="CENTER_RIGHT" layoutX="165.0" layoutY="254.0" prefHeight="23.0" prefWidth="194.0" text="Vyberte počet pozícií:">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <Label alignment="CENTER_RIGHT" layoutX="165.0" layoutY="303.0" text="Z toho aspoň vysokých:">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <Label fx:id="numberOfAllFreePositions" alignment="CENTER_RIGHT" layoutX="420.0" layoutY="152.0" prefHeight="23.0" prefWidth="63.0">
+         <font>
+            <Font name="Calibri" size="20.0" />
+         </font></Label>
+      <Label fx:id="numberOfAllTallPositions" alignment="CENTER_RIGHT" layoutX="420.0" layoutY="201.0" prefHeight="18.0" prefWidth="63.0">
+         <font>
+            <Font name="Calibri" size="20.0" />
+         </font></Label>
+      <TextField fx:id="numberOfFreeField" alignment="CENTER_RIGHT" layoutX="406.0" layoutY="253.0" prefHeight="36.0" prefWidth="74.0">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></TextField>
+      <TextField fx:id="numberOfTallField" alignment="CENTER_RIGHT" layoutX="406.0" layoutY="302.0" prefHeight="36.0" prefWidth="74.0" text="0">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></TextField>
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="156.0" layoutY="88.0" prefHeight="44.0" prefWidth="488.0" textAlignment="CENTER" textFill="red">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font></Label>
+      <JFXButton buttonType="RAISED" layoutX="62.0" layoutY="52.0" onAction="#backToFirstForm" ripplerFill="#916f6f" style="-fx-background-color: #5e1919;" text="Naspäť" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="247.0" layoutY="372.0" onAction="#findPositionsToSave" prefHeight="44.0" prefWidth="281.0" style="-fx-background-color: #0b1646;" text="Zobraziť navrhované pozície" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

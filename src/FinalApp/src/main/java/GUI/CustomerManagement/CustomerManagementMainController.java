@@ -4,6 +4,7 @@ import app.Warehouse;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
@@ -16,14 +17,22 @@ public class CustomerManagementMainController implements Initializable {
     public ChoiceBox<String> customer;
     @FXML
     public Label errorMessage;
+    @FXML
+    Button delete;
+    @FXML
+    Button showCustomer;
 
-    private final String NO_CUSTOMER = "Nie je vybrany žiadny zákazník. Najskôr vytvorte zákaníka.";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customer.setItems(customers);
+        customer.setStyle("-fx-font: 20px 'Calibri';");
         if(customers.size() > 0) {
             customer.setValue(customers.get(0));
+        }
+        else{
+            delete.setDisable(true);
+            showCustomer.setDisable(true);
         }
         if(Warehouse.getInstance().getController("customerName") != null){
             Warehouse.getInstance().removeController("customerName");
@@ -36,10 +45,6 @@ public class CustomerManagementMainController implements Initializable {
         warehouse.addController("customerName", customer);
     }
     public void showInformation() throws IOException {
-        if(customer.getValue() == null){
-            errorMessage.setText(NO_CUSTOMER);
-            return;
-        }
         Warehouse warehouse = Warehouse.getInstance();
         if(warehouse.getController("customerName") != null){
             warehouse.removeController("customerName");

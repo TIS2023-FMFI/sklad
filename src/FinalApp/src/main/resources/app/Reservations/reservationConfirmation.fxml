@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationConfirmationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationConfirmationController">
     <children>
-        <Label fx:id="messageTop" alignment="TOP_CENTER" layoutX="113.0" layoutY="102.0" prefHeight="55.0" prefWidth="374.0" />
-        <Button layoutX="280.0" layoutY="272.0" mnemonicParsing="false" onAction="#backToMainReservations" text="Okej" />
-      <Button layoutX="75.0" layoutY="60.0" mnemonicParsing="false" onAction="#backToForm" text="Naspäť" />
-      <Label fx:id="messageBottom" alignment="TOP_CENTER" layoutX="121.0" layoutY="157.0" prefHeight="110.0" prefWidth="374.0" />
+        <Label fx:id="messageTop" alignment="TOP_CENTER" layoutX="175.0" layoutY="139.0" prefHeight="55.0" prefWidth="374.0">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <Label fx:id="messageBottom" alignment="TOP_CENTER" layoutX="175.0" layoutY="210.0" prefHeight="110.0" prefWidth="374.0">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <JFXButton buttonType="RAISED" layoutX="62.0" layoutY="52.0" onAction="#backToForm" ripplerFill="#916f6f" style="-fx-background-color: #5e1919;" text="Naspäť" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="306.0" layoutY="353.0" onAction="#backToMainReservations" prefHeight="44.0" prefWidth="113.0" style="-fx-background-color: #0b1646;" text="Okej" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
     </children>
 </AnchorPane>

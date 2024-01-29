@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,14 +21,28 @@ public class ReservationsMainController implements Initializable {
     Button customerManagementB;
     @FXML
     Button addReservationB;
+    @FXML
+    Button editReservationB;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customer.setItems(customers);
+        customer.setStyle("-fx-font: 20px 'Calibri';");
         if(customers.size() > 0) {
             customer.setValue(customers.get(0));
         }
+
+      /*
+        else{
+            addReservationB.setDisable(true);
+            editReservationB.setDisable(true);
+        }
+        if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
+            customerManagementB.setVisible(false);
+            addReservationB.setVisible(false);
+       */
 
         Warehouse.getInstance().addController("reservationMain", this);
 
