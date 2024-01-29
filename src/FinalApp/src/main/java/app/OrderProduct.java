@@ -12,8 +12,6 @@ import java.util.*;
 
 
 public class OrderProduct {
-    public OrderProduct() {
-    }
 
     /***
      * Method that checks if the customer can order the given material in the given quantity.
@@ -25,9 +23,14 @@ public class OrderProduct {
     public boolean canCustomerOrder(Customer customer, Material material, int quantity) {
         var dbh = Warehouse.getInstance().getDatabaseHandler();
         List<Position> positions = dbh.getPositionsReservedByCustomer(customer.getName());
+        Set<Pallet> seenPalletes = new HashSet<>();
         for (Position pos : positions) {
             List<Pallet> pallets = dbh.getPalletesOnPosition(pos.getName());
             for (Pallet pallet : pallets) {
+                if (seenPalletes.contains(pallet)) {
+                    continue;
+                }
+                seenPalletes.add(pallet);
                 Integer num = dbh.getMaterialQuantityOnPallet(pallet, material);
                 quantity -= num;
                 if (quantity <= 0) {
@@ -61,20 +64,22 @@ public class OrderProduct {
                 for (Pallet pal : pals) {
                     int num = dbh.getMaterialQuantityOnPallet(pal, mat);
                     if (num >= quantity) {
+                        String poss = getPositionsForPalletString(pal);
                         enough = true;
                         Map<String, String> row = Map.of(
                                 "Materiál", mat.getName(),
                                 "Počet", String.valueOf(quantity),
-                                "Pozícia", position.getName(),
+                                "Pozícia", poss,
                                 "PNR", pal.getPnr()
                         );
                         res.add(row);
                         break;
                     } else if (num > 0) {
+                        String poss = getPositionsForPalletString(pal);
                         Map<String, String> row = Map.of(
                                 "Materiál", mat.getName(),
                                 "Počet", String.valueOf(num),
-                                "Pozícia", position.getName(),
+                                "Pozícia", poss,
                                 "PNR", pal.getPnr()
                         );
                         res.add(row);
@@ -100,8 +105,10 @@ public class OrderProduct {
     public void removeOrderedItems(ObservableList<Map<String, String>> items) {
         var dbh = Warehouse.getInstance().getDatabaseHandler();
         for (Map<String, String> item : items) {
-            Position position = dbh.getPosition(item.get("Pozícia"));
+            //Position position = dbh.getPosition(item.get("Pozícia"));
             Pallet pnr = dbh.getPallet(item.get("PNR"));
+            List<Position> positions = getPositionsForPallet(pnr);
+
             Material material = null;
             try {
                 material = dbh.getMaterial(item.get("Materiál"));
@@ -109,19 +116,55 @@ public class OrderProduct {
                 System.out.println(e.getMessage());
             }
             int quantity = Integer.parseInt(item.get("Počet"));
-            boolean removePallet = false;
-            int numOnPos = Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).get(material);
-            if (numOnPos == quantity) {
-                Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).remove(material);
-                if (Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).isEmpty()) {
-                    Warehouse.getInstance().getPalletsOnPositionMap().get(position).remove(pnr);
-                    removePallet = true;
-                }
-            } else {
-                Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).put(material, numOnPos - quantity);
-            }
-            dbh.removeItem(position, pnr, material, quantity, removePallet);
-        }
 
+
+            boolean removePallet = false;
+            int numOnPos = Warehouse.getInstance().getPalletsOnPositionMap().get(positions.get(0)).get(pnr).get(material);
+            if (numOnPos == quantity) {
+                for (Position position : positions) {
+                    try {
+                        Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).remove(material);
+                    }catch (NullPointerException e) {
+                        System.out.println("Nepodarilo sa odstranit material z pozicie");
+                    }
+                    if (Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).isEmpty()) {
+                        Warehouse.getInstance().getPalletsOnPositionMap().get(position).remove(pnr);
+                        removePallet = true;
+                    }
+                }
+
+            } else {
+                int newQuantity = numOnPos - quantity;
+                for (Position position : positions) {
+                    Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).put(material, newQuantity);
+                }
+            }
+            //TODO
+            dbh.removeItem(positions, pnr, material, quantity, removePallet);
+        }
+    }
+
+    private String getPositionsForPalletString(Pallet pallet) {
+        List<Position> res = new ArrayList<>();
+        for (Map.Entry<Position, Map<Pallet, Map<Material, Integer>>> entry : Warehouse.getInstance().getPalletsOnPositionMap().entrySet()) {
+            if (entry.getValue().containsKey(pallet)) {
+                res.add(entry.getKey());
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Position pos : res) {
+            sb.append(pos.getName()).append("-");
+        }
+        return sb.substring(0, sb.length() - 1);
+    }
+
+    private List<Position> getPositionsForPallet(Pallet pallet) {
+        List<Position> res = new ArrayList<>();
+        for (Map.Entry<Position, Map<Pallet, Map<Material, Integer>>> entry : Warehouse.getInstance().getPalletsOnPositionMap().entrySet()) {
+            if (entry.getValue().containsKey(pallet)) {
+                res.add(entry.getKey());
+            }
+        }
+        return res;
     }
 }

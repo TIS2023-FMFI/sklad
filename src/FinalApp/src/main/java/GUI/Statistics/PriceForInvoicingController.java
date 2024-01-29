@@ -12,10 +12,13 @@ import java.util.ResourceBundle;
 
 public class PriceForInvoicingController implements Initializable{
     @FXML
-    public TextField priceForOnePositionForOneDay;
+    private TextField priceForOnePositionForOneDay;
+    /***
+     * This variable is used to store the price for one position for one day.
+     */
     private Integer price;
     @FXML
-    public Label warningLabel;
+    private Label warningLabel;
 
     /***
      * This method is called when the page is opened. It adds this controller to the list of controllers.

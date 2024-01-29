@@ -30,26 +30,11 @@
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
-<!--<<<<<<< HEAD-->
-<!--=======-->
 
-<!--     /*-->
-<!--&gt;>>>>>> 7be27c4e86db95a08c98cd9d967ce3d06b0b7d4e-->
       <JFXButton fx:id="customerManagementB" buttonType="RAISED" layoutX="370.0" layoutY="133.0" onAction="#customerManagement" prefHeight="44.0" prefWidth="202.0" style="-fx-background-color: #0b1646;" text="Manažment zákazníkov" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </JFXButton>
-<!--<<<<<<< HEAD-->
-<!--=======-->
-<!--     */-->
-<!--      <ChoiceBox fx:id="customer" layoutX="276.0" layoutY="179.0" onAction="#saveCustomerName" prefWidth="150.0" />-->
-<!--      <Button fx:id="addReservationB" layoutX="89.0" layoutY="236.0" mnemonicParsing="false" onAction="#addNewReservation" prefHeight="28.0" prefWidth="115.0" text="Pridať rezerváciu" />-->
-<!--      <Button layoutX="278.0" layoutY="236.0" mnemonicParsing="false" onAction="#showReservationRecords" prefHeight="28.0" prefWidth="150.0" text="Zobraziť rezervácie" />-->
-<!--      <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />-->
-<!--      <Button layoutX="276.0" layoutY="97.0" mnemonicParsing="false" onAction="#customerManagement" prefHeight="28.0" prefWidth="150.0" text="Manažment zákazníkov" />-->
-<!--      <Button fx:id="userManagementButton" layoutX="71.0" layoutY="98.0" mnemonicParsing="false" onAction="#userManagement" prefHeight="26.0" prefWidth="150.0" text="Manažment používateľov" />-->
-<!--      <Button fx:id="customerManagementB" layoutX="276.0" layoutY="97.0" mnemonicParsing="false" onAction="#customerManagement" prefHeight="28.0" prefWidth="150.0" text="Manažment zákazníkov" />-->
-<!--&gt;>>>>>> 7be27c4e86db95a08c98cd9d967ce3d06b0b7d4e-->
    </children>
 </AnchorPane>

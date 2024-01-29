@@ -76,6 +76,14 @@ public class FileExporter {
         }
     }
 
+    /***
+     * Exports data concerning invoicing to pdf file
+     * @param customer Name of a customer who is being invoiced
+     * @param dateFrom Date from which the invoicing is being done
+     * @param dateTo Date to which the invoicing is being done
+     * @param price Price of the invoicing
+     * @param totalReservations Total number of reserved warehouse spaces per day in the invoicing period
+     */
     public void exportInvoicingPDF(String customer, String dateFrom, String dateTo, String price, int totalReservations){
         try {
             Document document = new Document();
@@ -195,6 +203,11 @@ public class FileExporter {
         return day + "." + month + "." + year;
     }
 
+    /**
+     * Exports the order items and their respective positions to PDF
+     * @param items items to be exported
+     * @param customer customer to be exported
+     */
     public void exportOrderPDF(ObservableList<Map<String, String>> items, Customer customer) {
         try {
             Document document = new Document();

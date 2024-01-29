@@ -10,6 +10,6 @@
       <Button layoutX="138.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveOrderExcel" text="Uložiť excel" />
       <TableView fx:id="orderTable" editable="true" layoutX="138.0" layoutY="34.0" prefHeight="284.0" prefWidth="424.0" />
       <Button layoutX="248.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveOrdersPdf" text="Uložiť dodací list" />
-      <Button layoutX="412.0" layoutY="340.0" mnemonicParsing="false" onAction="#backToMenu" text="Potvrdiť a pokračovať" />
+      <Button layoutX="412.0" layoutY="340.0" mnemonicParsing="false" onAction="#continueToConfirmation" text="Potvrdiť a pokračovať" />
    </children>
 </AnchorPane>

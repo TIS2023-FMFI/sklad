@@ -13,14 +13,16 @@ import java.util.ResourceBundle;
 
 public class CalculatedInvoicingController implements javafx.fxml.Initializable{
     @FXML
-    public Label calculatedPrice;
+    private Label calculatedPrice;
     @FXML
-    public Label intervalFrom;
+    private Label intervalFrom;
     @FXML
-    public Label intervalTo;
+    private Label intervalTo;
     @FXML
-    public Label customerName;
-
+    private Label customerName;
+    /***
+     * This variable is used to store the total number of reservations
+     */
     int totalReservations = 0;
 
     /***

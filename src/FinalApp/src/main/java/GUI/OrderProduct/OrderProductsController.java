@@ -58,7 +58,6 @@ public class OrderProductsController implements Initializable {
             }
             Pair<Material, Integer> oldPair = null;
             var newMaterial = new Pair<>(m, Integer.parseInt(quantity.getText()));
-            System.out.println(materials);
             for (Pair<Material,Integer> p : materials) {
                 if (p.getKey().getName().equals(m.getName())) {
                     oldPair = p;

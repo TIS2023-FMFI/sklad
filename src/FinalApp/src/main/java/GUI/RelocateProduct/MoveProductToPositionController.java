@@ -22,21 +22,48 @@ import java.util.ResourceBundle;
 
 public class MoveProductToPositionController implements Initializable {
     @FXML
-    public ChoiceBox<String> newPositionsChoice;
+    private ChoiceBox<String> newPositionsChoice;
     @FXML
-    public Label errorLabel;
+    private Label errorLabel;
     @FXML
-    public TextField newPNR;
+    private TextField newPNR;
+    /***
+     * Variable that stores name of product that user chose to move.
+     */
     String product;
+    /***
+     * Variable that stores quantity of product that user chose to move.
+     */
     int quantity;
+    /***
+     * Variable that stores name of pallet which user is moving the material from.
+     */
     String palletFrom;
+    /***
+     * Variable that stores initial position of pallet which user is moving.
+     */
     Position initialPosition;
+    /***
+     * Variable that stores if user wants to move whole pallet or just some material.
+     */
     boolean isWholePallet;
+    /***
+     * Variable that stores final positions of pallet which user is moving.
+     */
     List<String> finalPositions;
-    //public String finalPosition;
+    /***
+     * Variable that stores final PNR of pallet which user is moving material to.
+     */
     String palletTo;
+    /***
+     * Variable that stores width of moved pallet.
+     */
     public double palletWidth = 1;
 
+    /***
+     * Method that fills newPositionsChoice with correct positions.
+     * @throws IOException if there is problem with loading fxml file
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ChooseProductToRelocateController controller = (ChooseProductToRelocateController)
@@ -150,10 +177,18 @@ public class MoveProductToPositionController implements Initializable {
         }
     }
 
+    /***
+     * Method that takes user back one step to material/pallet selection
+     * @throws IOException
+     */
     public void backToProductChoice() throws IOException {
         Warehouse.getInstance().changeScene("RelocateProduct/chooseProductToRelocateForm.fxml");
     }
 
+    /***
+     * Method that checks chosen positions and if they are correct, calls method to confirm moving
+     * @throws IOException
+     */
     public void confirmFinalPosition() throws IOException {
         if (newPositionsChoice.getValue() == null){
             errorLabel.setText("No position chosen");
@@ -179,7 +214,10 @@ public class MoveProductToPositionController implements Initializable {
         Warehouse.getInstance().changeScene("RelocateProduct/confirmMovingForm.fxml");
     }
 
-    public void checkIfPositionFilled(KeyEvent keyEvent) {
+/***
+     * Method that checks if a position is chosen
+     */
+    public void checkIfPositionFilled() {
         if (newPositionsChoice.getValue() == null){
             newPNR.setText("");
             errorLabel.setText("No position chosen");
@@ -206,7 +244,10 @@ public class MoveProductToPositionController implements Initializable {
         return Warehouse.getInstance().getPalletsOnPositionMap().get(position).containsKey(pallet);
     }
 
-    public void resetPallet(MouseEvent mouseEvent) {
+    /***
+     * Method that resets the pallet number field to empty string
+     */
+    public void resetPallet() {
         newPNR.setText("");
     }
 }

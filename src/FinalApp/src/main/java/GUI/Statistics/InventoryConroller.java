@@ -23,8 +23,11 @@ import java.util.ResourceBundle;
 public class InventoryConroller implements Initializable {
 
     @FXML
-    public TableView inventoryTable;
+    private TableView inventoryTable;
 
+    /***
+     * This variable is used to store the data for the inventory table.
+     */
     private ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
 
     /***
