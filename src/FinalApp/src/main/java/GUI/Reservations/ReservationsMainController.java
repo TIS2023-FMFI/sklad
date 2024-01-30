@@ -2,6 +2,7 @@ package GUI.Reservations;
 
 import app.Warehouse;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -75,7 +76,7 @@ public class ReservationsMainController implements Initializable {
         Warehouse.getInstance().changeScene("CustomerManagement/CustomerManagementMain.fxml");
     }
 
-    public void userManagement() throws IOException {
+    public void goToUserManagement() throws IOException {
         Warehouse.getInstance().changeScene("UserManagement/userManagementMain.fxml");
     }
 }

@@ -16,7 +16,8 @@
       <TextField fx:id="password" layoutX="300.0" layoutY="174.0" />
       <TextField fx:id="passwordCheck" layoutX="300.0" layoutY="218.0" />
       <Button layoutX="98.0" layoutY="63.0" mnemonicParsing="false" onAction="#goBack" text="Naspäť" />
-      <Button layoutX="238.0" layoutY="317.0" mnemonicParsing="false" onAction="#saveUser" text="Vytvoriť používateľa" />
+      <Button fx:id="saveButton" layoutX="238.0" layoutY="317.0" mnemonicParsing="false" onAction="#saveUser" text="Vytvoriť používateľa" />
       <Label fx:id="errorLabel" alignment="CENTER" layoutX="146.0" layoutY="285.0" prefHeight="18.0" prefWidth="306.0" textFill="RED" />
+      <Button fx:id="deleteButton" layoutX="86.0" layoutY="317.0" mnemonicParsing="false" onAction="#deleteUser" text="Zmazať používateľa" />
    </children>
 </AnchorPane>

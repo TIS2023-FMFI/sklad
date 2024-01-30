@@ -6,6 +6,7 @@ import app.RelocateProduct;
 import app.Warehouse;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ConfirmMovingController {
     /***
@@ -19,11 +20,11 @@ public class ConfirmMovingController {
 
         RelocateProduct rp = new RelocateProduct();
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
+        List<String> finalPositions = db.getPositionsWithPallet(controller.palletTo);
         if (controller.isWholePallet){
             rp.relocatePallet(controller.initialPosition, controller.finalPositions, controller.palletFrom);
         } else{
-            //staci prvy prvok z finalPositions lebo ked premiestnujem jeden material, tak sa to premiestni na jednu poziciu
-            rp.relocateProduct(controller.finalPositions.get(0), controller.initialPosition, controller.product,
+            rp.relocateProduct(finalPositions, controller.initialPosition, controller.product,
                 controller.quantity, controller.palletFrom, controller.palletTo);
             db.changeUserActivity(Warehouse.getInstance().currentUser.getId(), controller.palletTo);
         }
