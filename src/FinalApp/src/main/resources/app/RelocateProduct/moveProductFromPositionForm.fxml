@@ -19,6 +19,5 @@
       <Button layoutX="325.0" layoutY="255.0" mnemonicParsing="false" onAction="#confirmInitialPosition" prefHeight="26.0" prefWidth="94.0" text="Pokračovať" />
       <CheckBox fx:id="wholePallet" layoutX="359.0" layoutY="173.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Celá paleta" />
       <Label fx:id="errorLabel" alignment="CENTER" layoutX="125.0" layoutY="222.0" prefHeight="18.0" prefWidth="350.0" textFill="RED" />
-      <Button layoutX="97.0" layoutY="255.0" mnemonicParsing="false" onAction="#checkPositionsForm" prefHeight="26.0" prefWidth="141.0" text="Kontrola pozícií" />
    </children>
 </AnchorPane>
