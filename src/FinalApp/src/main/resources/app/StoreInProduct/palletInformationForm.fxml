@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -12,45 +13,109 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.PalletInformationController">
-   <bottom>
-      <AnchorPane fx:id="informationContainer" prefHeight="400.0" prefWidth="586.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label layoutX="28.0" layoutY="49.0" text="PNR:" />
-            <Button fx:id="addMaterialButton" layoutX="227.0" layoutY="4.0" mnemonicParsing="false" onAction="#addMaterial" text="Pridať materiál" />
-            <TextField fx:id="PNR" layoutX="74.0" layoutY="45.0" prefHeight="25.0" prefWidth="73.0" />
-            <Label layoutX="27.0" layoutY="96.0" prefHeight="17.0" prefWidth="78.0" text="Poškodenosť:" />
-            <CheckBox fx:id="isDamaged" layoutX="52.0" layoutY="125.0" mnemonicParsing="false" text="Paleta alebo tovar je poškodený" />
-            <Label layoutX="28.0" layoutY="228.0" text="Počet pozícií:" />
-            <RadioButton fx:id="onePosition" layoutX="54.0" layoutY="253.0" mnemonicParsing="false" text="1 pozícia">
-               <toggleGroup>
-                  <ToggleGroup fx:id="numberOfPositions" />
-               </toggleGroup></RadioButton>
-            <RadioButton fx:id="twoPositions" layoutX="54.0" layoutY="277.0" mnemonicParsing="false" text="2 pozície" toggleGroup="$numberOfPositions" />
-            <RadioButton fx:id="threePositions" layoutX="54.0" layoutY="303.0" mnemonicParsing="false" text="3 pozície" toggleGroup="$numberOfPositions" />
-            <RadioButton fx:id="fourPositions" layoutX="54.0" layoutY="326.0" mnemonicParsing="false" text="4 pozície" toggleGroup="$numberOfPositions" />
-            <Label layoutX="275.0" layoutY="228.0" text="Typ palety:" />
-            <ChoiceBox fx:id="palletType" layoutX="275.0" layoutY="258.0" prefWidth="150.0" />
-            <Button layoutX="425.0" layoutY="331.0" mnemonicParsing="false" onAction="#nextToPositionForm" text="Nájsť pozíciu" />
-            <Label layoutX="23.0" layoutY="159.0" text="Nadrozmernosť:" />
-            <CheckBox fx:id="isTall" layoutX="52.0" layoutY="183.0" mnemonicParsing="false" text="Paleta vyžaduje vysokú pozíciu" />
-            <Label layoutX="290.0" layoutY="49.0" text="Hmotnosť:" />
-            <TextField fx:id="weight" layoutX="367.0" layoutY="45.0" prefHeight="25.0" prefWidth="116.0" />
-         </children>
-      </AnchorPane>
-   </bottom>
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.PalletInformationController">
    <top>
-      <AnchorPane fx:id="topContainer" prefHeight="80.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="topContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="750.0" BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="33.0" layoutY="27.0" mnemonicParsing="false" onAction="#backToCustomerTruckNumberForm" prefHeight="35.0" prefWidth="75.0" text="Naspäť" textAlignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font></Button>
-            <Label fx:id="errorMessage" alignment="CENTER" layoutX="211.0" layoutY="30.0" prefHeight="30.0" prefWidth="450.0" textAlignment="CENTER" textFill="#ff0707" />
+            <Label fx:id="errorMessage" alignment="CENTER" layoutX="211.0" layoutY="30.0" prefHeight="30.0" prefWidth="450.0" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font name="Calibri Bold" size="19.0" />
+               </font></Label>
          </children>
       </AnchorPane>
    </top>
    <center>
-      <VBox fx:id="materialContainer" prefHeight="80.0" prefWidth="550.0" BorderPane.alignment="CENTER" />
+      <VBox fx:id="materialContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="750.0" BorderPane.alignment="CENTER" />
    </center>
+   <bottom>
+      <AnchorPane fx:id="informationContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="74.0" layoutY="106.0" text="PNR:">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="PNR" layoutX="141.0" layoutY="103.0" prefHeight="30.0" prefWidth="86.0" />
+            <Label layoutX="73.0" layoutY="176.0" prefHeight="23.0" prefWidth="124.0" text="Poškodenosť:">
+               <font>
+                  <Font name="Calibri Bold" size="21.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="isDamaged" layoutX="89.0" layoutY="218.0" mnemonicParsing="false" text="Paleta alebo tovar je poškodený">
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font>
+            </CheckBox>
+            <Label layoutX="481.0" layoutY="178.0" prefHeight="23.0" prefWidth="120.0" text="Počet pozícií:">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="onePosition" layoutX="509.0" layoutY="215.0" mnemonicParsing="false" text="1 pozícia">
+               <toggleGroup>
+                  <ToggleGroup fx:id="numberOfPositions" />
+               </toggleGroup>
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="twoPositions" layoutX="509.0" layoutY="249.0" mnemonicParsing="false" text="2 pozície" toggleGroup="$numberOfPositions">
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="threePositions" layoutX="509.0" layoutY="283.0" mnemonicParsing="false" text="3 pozície" toggleGroup="$numberOfPositions">
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="fourPositions" layoutX="509.0" layoutY="317.0" mnemonicParsing="false" text="4 pozície" toggleGroup="$numberOfPositions">
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font>
+            </RadioButton>
+            <Label layoutX="74.0" layoutY="419.0" text="Typ palety:">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="palletType" layoutX="197.0" layoutY="413.0" prefHeight="30.0" prefWidth="160.0" stylesheets="@../../styles.css" />
+            <Label layoutX="73.0" layoutY="279.0" text="Nadrozmernosť:">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="isTall" layoutX="92.0" layoutY="317.0" mnemonicParsing="false" text="Paleta vyžaduje vysokú pozíciu">
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font>
+            </CheckBox>
+            <Label layoutX="407.0" layoutY="107.0" text="Hmotnosť:">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="weight" layoutX="515.0" layoutY="104.0" prefHeight="30.0" prefWidth="116.0" />
+            <JFXButton fx:id="addMaterialButton" buttonType="RAISED" layoutX="295.0" layoutY="20.0" onAction="#addMaterial" prefHeight="42.0" prefWidth="160.0" style="-fx-background-color: #0C356A;" text="Pridať materiál" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="528.0" layoutY="448.0" onAction="#nextToPositionForm" prefHeight="42.0" prefWidth="160.0" style="-fx-background-color: #0C356A;" text="Nájsť pozíciu" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </JFXButton>
+            <Label layoutX="640.0" layoutY="109.0" prefHeight="21.0" prefWidth="24.0" text="kg">
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </bottom>
 </BorderPane>

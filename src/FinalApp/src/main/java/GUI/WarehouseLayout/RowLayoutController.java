@@ -168,24 +168,25 @@ public class RowLayoutController implements Initializable {
 
     protected void handlePalletButtonClick(Position position, Pallet pallet, Map<Material, Integer> materialsAndCount) {
         clearInformationContainers();
+        Warehouse warehouse = Warehouse.getInstance();
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
 
         String allPositionNames = String.join(", ", databaseHandler.getPositionsWithPallet(pallet.getPnr()));
-        Label positionName = createStyledLabel("Názov pozície: " + allPositionNames);
-        Label customer = createStyledLabel("Zakázník: " + databaseHandler.getCustomerThatReservedPosition(position).getName());
-        Label palletType = createStyledLabel("Typ palety: " + pallet.getType());
+        Label positionName = warehouse.createStyledLabel("Názov pozície: " + allPositionNames, 17);
+        Label customer = warehouse.createStyledLabel("Zakázník: " + databaseHandler.getCustomerThatReservedPosition(position).getName(), 17);
+        Label palletType = warehouse.createStyledLabel("Typ palety: " + pallet.getType(), 17);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateSK = dateFormat.format(pallet.getDateIncome());
-        Label date = createStyledLabel("Dátum zaskladnenia: " + dateSK);
-        Label isTall = createStyledLabel("Nadrozmernosť: " + (position.isTall() ? "áno" : "nie"));
+        Label date = warehouse.createStyledLabel("Dátum zaskladnenia: " + dateSK, 17);
+        Label isTall = warehouse.createStyledLabel("Nadrozmernosť: " + (position.isTall() ? "áno" : "nie"), 17);
 
         informationContainer1.getChildren().addAll(positionName, customer, palletType, date, isTall);
 
-        Label numberOfPosition = createStyledLabel("Počet pozícií: " + pallet.getNumberOfPositions());
-        Label weight = createStyledLabel("Hmotnosť: " + pallet.getWeight() + " kg");
-        Label user = createStyledLabel("Meno skladníka: " + databaseHandler.getUsername(pallet.getIdUser()));
-        Label isDamaged = createStyledLabel("Poškodenosť: " + (pallet.isDamaged() ? "áno" : "nie"));
-        Label note = createStyledLabel("Poznámka: " + pallet.getNote());
+        Label numberOfPosition = warehouse.createStyledLabel("Počet pozícií: " + pallet.getNumberOfPositions(), 17);
+        Label weight = warehouse.createStyledLabel("Hmotnosť: " + pallet.getWeight() + " kg", 17);
+        Label user = warehouse.createStyledLabel("Meno skladníka: " + databaseHandler.getUsername(pallet.getIdUser()), 17);
+        Label isDamaged = warehouse.createStyledLabel("Poškodenosť: " + (pallet.isDamaged() ? "áno" : "nie"), 17);
+        Label note = warehouse.createStyledLabel("Poznámka: " + pallet.getNote(), 17);
 
         informationContainer2.getChildren().addAll(numberOfPosition, weight, user, isDamaged, note);
 
@@ -229,33 +230,24 @@ public class RowLayoutController implements Initializable {
         materialCountTable.getChildren().add(table);
     }
 
-    private Label createStyledLabel(String labelText) {
-        Label label = new Label(labelText);
-
-        label.setTextFill(Color.BLACK);
-        label.setFont(Font.font("Calibri", FontWeight.NORMAL, 17));
-
-        return label;
-    }
-
-
     public void reservedPosition(Position position){
-        DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
+        Warehouse warehouse = Warehouse.getInstance();
+        DatabaseHandler databaseHandler = warehouse.getDatabaseHandler();
         CustomerReservation reservation = databaseHandler.getReservation(position.getName());
 
-        Label positionName = createStyledLabel("Názov pozície: " + position.getName());
-        Label reservedFor = createStyledLabel("Rezervované pre: " + databaseHandler.getCustomerThatReservedPosition(position).getName());
+        Label positionName = warehouse.createStyledLabel("Názov pozície: " + position.getName(), 17);
+        Label reservedFor = warehouse.createStyledLabel("Rezervované pre: " + databaseHandler.getCustomerThatReservedPosition(position).getName(), 17);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateFrom = dateFormat.format(reservation.getReservedFrom());
         String dateUntil = dateFormat.format(reservation.getReservedUntil());
-        Label reservationDate = createStyledLabel("Dátum rezervácie: " + dateFrom + "-" + dateUntil);
+        Label reservationDate = warehouse.createStyledLabel("Dátum rezervácie: " + dateFrom + "-" + dateUntil, 17);
 
         informationContainer1.getChildren().addAll(positionName, reservedFor, reservationDate);
     }
 
     public void freePosition(){
-        Label freePosition = createStyledLabel("Zvolená pozícia je voľná");
+        Label freePosition = Warehouse.getInstance().createStyledLabel("Zvolená pozícia je voľná", 17);
         informationContainer1.getChildren().add(freePosition);
     }
 
