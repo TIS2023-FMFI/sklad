@@ -52,6 +52,9 @@ public class MoveProductFromPositionController {
             Warehouse.getInstance().changeScene("RelocateProduct/chooseProductToRelocateForm.fxml");
         }
     }
+    public void checkPositionsForm() throws IOException {
+        Warehouse.getInstance().changeScene("RelocateProduct/checkPositions.fxml");
+    }
 
     private boolean checkIfPositionIsCorrect(String position){
         //checks memory if position exists
