@@ -243,7 +243,12 @@ public class DatabaseHandler {
                 }
             }
             if (areAllSuitable){
-                result.add(possibleNPositions);
+                if (possibleNPositions.get(0).getName().charAt(4) == '0'){
+                    result.add(possibleNPositions);
+                }
+                else if (weight/numberOfPositions <= WEIGHT_OF_ONE_POSITION){
+                    result.add(possibleNPositions);
+                }
             }
         }
         return result;
@@ -316,15 +321,17 @@ public class DatabaseHandler {
             List<Position> possibleNPositions = new ArrayList<>();
             possibleNPositions.add(position);
             int positionIndex = position.getIndex();
+
             List<Pallet> palletsOnPosition = getPalletesOnPosition(position.getName());
             int numberOfPalletsOnPosition = palletsOnPosition.size();
+            double weightOfPalletsOnPosition = getWeightOfPalletsOnPosition(palletsOnPosition);
 
             char row = position.getName().charAt(0);
             int positionNumber = Integer.parseInt(position.getName().substring(1, 4));
             char shelf = position.getName().charAt(4);
 
             boolean areAllSuitable = true;
-            if (getWeightOfPalletsOnPosition(palletsOnPosition) + (weight/numberOfPositions) > WEIGHT_OF_ONE_POSITION){
+            if (position.getName().charAt(4) != '0' && (weightOfPalletsOnPosition + weight/numberOfPositions) > WEIGHT_OF_ONE_POSITION){
                 areAllSuitable = false;
             }
             for (int i = 1; i < numberOfPositions; i++){
@@ -335,9 +342,12 @@ public class DatabaseHandler {
                     int numberOfPalletsOnNeighbouringPosition = palletsOnNeighbouringPosition.size();
                     double weightOfPalletsOnNeighbouringPosition = getWeightOfPalletsOnPosition(palletsOnNeighbouringPosition);
 
-                    if (numberOfPalletsOnPosition == numberOfPalletsOnNeighbouringPosition
-                            && (weightOfPalletsOnNeighbouringPosition + weight/numberOfPositions) <= WEIGHT_OF_ONE_POSITION){
-                        possibleNPositions.add(neighbouringPosition);
+                    if (numberOfPalletsOnPosition == numberOfPalletsOnNeighbouringPosition) {
+                        if (neighbouringPosition.getName().charAt(4) == '0') {
+                            possibleNPositions.add(neighbouringPosition);
+                        } else if ((weightOfPalletsOnNeighbouringPosition + weight / numberOfPositions) <= WEIGHT_OF_ONE_POSITION) {
+                            possibleNPositions.add(neighbouringPosition);
+                        }
                     }
                     else {
                         areAllSuitable = false;
