@@ -1222,6 +1222,16 @@ public class DatabaseHandler {
         }
     }
 
+    public List<Customer> getCustomers(){
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM Customer ");
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public List<CustomerReservation> getReservationRecords(int customerId){
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("FROM CustomerReservation r WHERE r.idCustomer = :idCustomer");
@@ -1247,20 +1257,6 @@ public class DatabaseHandler {
         }
     }
 
-    public List<Customer> getCustomerFromReservedPosition(Date reservedFrom, Date reservedUntil, Position position){
-        try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery("SELECT idCustomer FROM CustomerReservation r WHERE r.idPosition = :idPostion AND r.reservedFrom = :reservedFrom" +
-                    " and r.reservedUntil = :reservedUntil");
-            query.setParameter("idPosition", position.getName());
-            query.setParameter("reservedFrom", reservedFrom);
-            query.setParameter("reservedUntil", reservedUntil);
-            return query.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public boolean isPositionReserevedByCustomer(Date reservedFrom, Date reservedUntil, Position position, Customer c){
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("SELECT idCustomer FROM CustomerReservation r WHERE r.idPosition = :idPosition AND r.reservedFrom = :reservedFrom" +
@@ -1278,7 +1274,6 @@ public class DatabaseHandler {
     public boolean deleteReservationRecord(Customer customer, Date dateFrom, Date dateUntil){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-//            session.getTransaction();
             Query query = session.createQuery("DELETE FROM CustomerReservation r WHERE r.reservedFrom = :reservedFrom" +
                     " and r.reservedUntil = :reservedUntil and r.idCustomer = :idCustomer");
             query.setParameter("reservedFrom", dateFrom);
@@ -1293,7 +1288,7 @@ public class DatabaseHandler {
         }
     }
 
-    protected List<String> getAllUsedPositions(){
+    public List<String> getAllUsedPositions(){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Query query = session.createQuery("SELECT pop.idPosition FROM PalletOnPosition pop");
@@ -1303,6 +1298,7 @@ public class DatabaseHandler {
             return null;
         }
     }
+
 
     public void changeUserActivity(int id, String palletFrom) {
         try (Session session = sessionFactory.openSession()) {
@@ -1340,5 +1336,9 @@ public class DatabaseHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void checkPositions(){
+
     }
 }

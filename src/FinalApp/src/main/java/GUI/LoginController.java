@@ -1,5 +1,6 @@
 package GUI;
 
+import app.CheckPositions;
 import app.DatabaseHandler;
 import app.Warehouse;
 import javafx.fxml.FXML;
@@ -26,6 +27,10 @@ public class LoginController {
             warehouse.setCurrentUser(DatabaseHandler.checkUser(username.getText(), password.getText()));
             warehouse.loadDb();
             warehouse.changeScene("mainMenu.fxml");
+            CheckPositions checkPositions = new CheckPositions();
+            if(! checkPositions.allPositionsCorrect()){
+                checkPositions.createNewWindow();
+            }
         }
         catch (Exception e){
             wrongLogin.setText(e.getMessage());
