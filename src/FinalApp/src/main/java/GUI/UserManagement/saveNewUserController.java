@@ -43,7 +43,7 @@ public class saveNewUserController implements Initializable {
         UserManagementMainController userManagementMainController = (UserManagementMainController)
                 Warehouse.getInstance().getController("UserManagementMainController");
         if(!userManagementMainController.creatingNew){
-            deleteButton.setVisible(false);
+            deleteButton.setVisible(true);
             userUpdated = Warehouse.getInstance().getDatabaseHandler().getUser(userManagementMainController.selectedUser);
             name.setText(userUpdated.getName());
             password.setText(userUpdated.getPassword());
@@ -51,6 +51,7 @@ public class saveNewUserController implements Initializable {
                 isAdmin.setSelected(true);
             }
         }else {
+            deleteButton.setVisible(false);
             saveButton.setText("Uložiť zmeny");
             userUpdated = null;
             name.setText("");
@@ -70,7 +71,7 @@ public class saveNewUserController implements Initializable {
     /***
      * Saves the user to the database.
      */
-    public void saveUser() {
+    public void saveUser() throws IOException {
         String newName = this.name.getText();
         String newPassword = this.password.getText();
         String newPasswordCheck = this.passwordCheck.getText();
@@ -89,12 +90,13 @@ public class saveNewUserController implements Initializable {
         } else {
             Warehouse.getInstance().getDatabaseHandler().addUser(newName, newPassword, newIsAdmin);
         }
+        goBack();
     }
 
-    public void deleteUser() {
+    public void deleteUser() throws IOException {
         if (userUpdated != null){
             Warehouse.getInstance().getDatabaseHandler().deleteUser(userUpdated.getId());
-
+            goBack();
         }
     }
 }
