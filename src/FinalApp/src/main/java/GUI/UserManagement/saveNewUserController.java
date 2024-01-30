@@ -5,6 +5,7 @@ import app.Warehouse;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,6 +15,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class saveNewUserController implements Initializable {
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private Button saveButton;
     @FXML
     private CheckBox isAdmin;
     @FXML
@@ -38,6 +43,7 @@ public class saveNewUserController implements Initializable {
         UserManagementMainController userManagementMainController = (UserManagementMainController)
                 Warehouse.getInstance().getController("UserManagementMainController");
         if(!userManagementMainController.creatingNew){
+            deleteButton.setVisible(false);
             userUpdated = Warehouse.getInstance().getDatabaseHandler().getUser(userManagementMainController.selectedUser);
             name.setText(userUpdated.getName());
             password.setText(userUpdated.getPassword());
@@ -45,6 +51,7 @@ public class saveNewUserController implements Initializable {
                 isAdmin.setSelected(true);
             }
         }else {
+            saveButton.setText("Uložiť zmeny");
             userUpdated = null;
             name.setText("");
             password.setText("");
@@ -81,6 +88,13 @@ public class saveNewUserController implements Initializable {
             Warehouse.getInstance().getDatabaseHandler().updateUser(userUpdated.getId(), newName, newPassword, newIsAdmin);
         } else {
             Warehouse.getInstance().getDatabaseHandler().addUser(newName, newPassword, newIsAdmin);
+        }
+    }
+
+    public void deleteUser() {
+        if (userUpdated != null){
+            Warehouse.getInstance().getDatabaseHandler().deleteUser(userUpdated.getId());
+
         }
     }
 }

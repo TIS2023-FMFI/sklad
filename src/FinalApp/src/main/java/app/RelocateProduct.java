@@ -44,16 +44,17 @@ public class RelocateProduct {
 
     /***
      * This method moves the product from one pallet to another.
-     * @param finalPos Position to which the product is moved.
+     * @param finalPoses Positions to which the product is moved.
      * @param initialPos Position from which the product is moved.
      * @param product Name of the product that is moved.
      * @param quantity Quantity of the product that is moved.
      * @param palletFrom Pallet number of the pallet from which the product is moved.
      * @param palletTo Pallet number of the pallet to which the product is moved.
      */
-    public void relocateProduct(String finalPos, Position initialPos,
+    public void relocateProduct(List<String> finalPoses, Position initialPos,
                                 String product, int quantity, String palletFrom, String palletTo){
-
+        System.out.println("finalPoses: " + finalPoses);
+        String finalPos = finalPoses.get(0);
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
         Position finalPosition = db.getPosition(finalPos);
         Pallet pallet = null;
@@ -79,7 +80,7 @@ public class RelocateProduct {
             db.addPallet(pallet, finalPosition);
         }
 
-        addItem(finalPosition, product, quantity, pallet);
+        addItem(finalPoses, product, quantity, pallet);
         removeItem(initialPos, product, quantity, palletFrom);
     }
 
@@ -93,7 +94,7 @@ public class RelocateProduct {
         op.removeOrderedItems(items);
     }
 
-    private void addItem(Position finalPos, String product, int quantity, Pallet palletTo) {
+    private void addItem(List<String> finalPoses, String product, int quantity, Pallet palletTo) {
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
         Material material;
         try {
@@ -101,14 +102,17 @@ public class RelocateProduct {
         } catch (MaterialNotAvailable e) {
             return;
         }
-        var matOnPallet = Warehouse.getInstance().getPalletsOnPositionMap().get(finalPos).get(palletTo);
-        for (Material m : matOnPallet.keySet()) {
-            if (m.getName().equals(product)) {
-                db.persistMaterialOnPallet(palletTo, m, quantity);
-                return;
+
+        for (var pos:Warehouse.getInstance().getPalletsOnPositionMap().keySet()) {
+            if (finalPoses.contains(pos.getName())) {
+                if (!Warehouse.getInstance().getPalletsOnPositionMap().get(pos).get(palletTo).containsKey(material)) {
+                    Warehouse.getInstance().getPalletsOnPositionMap().get(pos).get(palletTo).put(material, quantity);
+                }else{
+                    Warehouse.getInstance().getPalletsOnPositionMap().get(pos).get(palletTo).put(material,
+                            Warehouse.getInstance().getPalletsOnPositionMap().get(pos).get(palletTo).get(material) + quantity);
+                }
             }
         }
-        Warehouse.getInstance().getPalletsOnPositionMap().get(finalPos).get(palletTo).put(material, quantity);
         db.persistMaterialOnPallet(palletTo, material, quantity);
     }
 }

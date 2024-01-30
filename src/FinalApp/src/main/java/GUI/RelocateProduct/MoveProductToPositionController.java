@@ -58,8 +58,8 @@ public class MoveProductToPositionController implements Initializable {
     /***
      * Variable that stores width of moved pallet.
      */
-    public double palletWidth = 1;
-
+    public int palletWidth = 1;
+    private double weight = 0;
     /***
      * Method that fills newPositionsChoice with correct positions.
      * @throws IOException if there is problem with loading fxml file
@@ -77,6 +77,7 @@ public class MoveProductToPositionController implements Initializable {
             for (var pallet : palsOnPos.keySet()){
                 if (pallet.getPnr().equals(palletFrom)){
                     palletWidth = pallet.getNumberOfPositions();
+                    weight = pallet.getWeight();;
                     break;
                 }
             }
@@ -84,22 +85,21 @@ public class MoveProductToPositionController implements Initializable {
             product = controller.finalMaterial;
             quantity = controller.finalQuantity;
         }
-        if (palletWidth == 1) fillNewPositionsChoice(); //if i am relocating single material, the weight is 500
-        if (palletWidth == 2) fillNew2PositionsChoice();
-        if (palletWidth == 3) fillNew3PositionsChoice();
-        if (palletWidth == 4) fillNew4PositionsChoice();
+        fillNewPositionsChoice();
     }
 
     private void fillNewPositionsChoice(){
-        //fills newPositionsChoice with positions that can store product
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        List<Position> positions = dbh.getPositionsReservedByCustomer(customer.getName());
-        boolean tall = initialPosition.isTall();
-        for (Position position : positions){
-            if (!position.equals(initialPosition) && position.isTall() == tall)
-                newPositionsChoice.getItems().add(position.getName());
-        }
+        List<List<Position>> freePositions = dbh.getFreePositions(customer, weight, false, palletWidth);
+        newPositionsChoice.getItems().addAll(getToString(freePositions));
+    }
+
+    private List<String> getToString(List<List<Position>> freePositions) {
+        return freePositions.stream().map(positions -> {
+            var posNames = positions.stream().map(Position::getName).toList();
+            return String.join("-", posNames);
+        }).toList();
     }
 
     private void fillNew2PositionsChoice(){
@@ -191,21 +191,21 @@ public class MoveProductToPositionController implements Initializable {
      */
     public void confirmFinalPosition() throws IOException {
         if (newPositionsChoice.getValue() == null){
-            errorLabel.setText("No position chosen");
+            errorLabel.setText("Musíte vybrať pozíciu.");
             return;
         }
-        finalPositions = Arrays.asList(newPositionsChoice.getValue().split(","));
+        finalPositions = Arrays.asList(newPositionsChoice.getValue().split("-"));
         if (finalPositions.size() == 0){
-            errorLabel.setText("No position chosen");
+            errorLabel.setText("Musíte vybrať pozíciu.");
             return;
         }
         if (!isWholePallet) {
             if (!checkIfPNRCorrect(newPNR.getText())) {
-                errorLabel.setText("PNR incorrect");
+                errorLabel.setText("PNR nie je správne zadané.");
                 return;
             }
             if (!checkIfPNRFree(newPNR.getText())) {
-                errorLabel.setText("PNR already used on a different position");
+                errorLabel.setText("PNR sa už v sklade nachádza na inej pozícii");
                 return;
             }
             palletTo = newPNR.getText();

@@ -470,7 +470,6 @@ public class DatabaseHandler {
                     "where pop.idPallet = :pnr");
             query.setParameter("pnr", pallet);
             PalletOnPosition pops = query.getResultList().get(0);
-            System.out.println(pops.getIdPosition() + " " + pos);
             pops.setIdPosition(pos);
             session.update(pops);
             transaction.commit();
@@ -555,6 +554,7 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+
 
 
     public class PositionNumberComparator implements Comparator<Position> {
@@ -1317,6 +1317,18 @@ public class DatabaseHandler {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void deleteUser(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM Users u WHERE u.id = :id");
+            query.setParameter("id", id);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

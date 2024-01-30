@@ -55,6 +55,7 @@ public class OrderProduct {
         List<Map<String, String>> res = new ArrayList<>();
         var dbh = Warehouse.getInstance().getDatabaseHandler();
         List<Position> customersPositions = dbh.getPositionsReservedByCustomer(customer.getName());
+        List<Pallet> seenPalletes = new ArrayList<>();
         for (Pair<Material, Integer> product : products) {
             Material mat = product.getKey();
             int quantity = product.getValue();
@@ -62,6 +63,10 @@ public class OrderProduct {
             for (Position position : customersPositions) {
                 List<Pallet> pals = dbh.getPalletesOnPosition(position.getName());
                 for (Pallet pal : pals) {
+                    if (seenPalletes.contains(pal)) {
+                        continue;
+                    }
+                    seenPalletes.add(pal);
                     int num = dbh.getMaterialQuantityOnPallet(pal, mat);
                     if (num >= quantity) {
                         String poss = getPositionsForPalletString(pal);
