@@ -10,8 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.PalletInformationController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.PalletInformationController">
    <bottom>
       <AnchorPane fx:id="informationContainer" prefHeight="400.0" prefWidth="586.0" BorderPane.alignment="CENTER">
          <children>
@@ -39,10 +40,13 @@
       </AnchorPane>
    </bottom>
    <top>
-      <AnchorPane fx:id="topContainer" prefHeight="70.0" prefWidth="550.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="topContainer" prefHeight="80.0" prefWidth="750.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="22.0" layoutY="22.0" mnemonicParsing="false" onAction="#backToCustomerTruckNumberForm" text="Naspäť" />
-            <Label fx:id="errorMessage" alignment="CENTER" layoutX="108.0" layoutY="27.0" prefHeight="17.0" prefWidth="397.0" textAlignment="CENTER" textFill="#ff0707" />
+            <Button layoutX="33.0" layoutY="27.0" mnemonicParsing="false" onAction="#backToCustomerTruckNumberForm" prefHeight="35.0" prefWidth="75.0" text="Naspäť" textAlignment="CENTER">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Label fx:id="errorMessage" alignment="CENTER" layoutX="211.0" layoutY="30.0" prefHeight="30.0" prefWidth="450.0" textAlignment="CENTER" textFill="#ff0707" />
          </children>
       </AnchorPane>
    </top>
