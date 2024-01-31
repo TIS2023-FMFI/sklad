@@ -15,7 +15,7 @@
             <Font size="15.0" />
          </font></Button>
       <ChoiceBox fx:id="productsOnPallet" layoutX="360.0" layoutY="160.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" stylesheets="@relocateProductStyles.css" />
-      <Label fx:id="materialToMoveLabel" layoutX="108.0" layoutY="163.0" text="Materiál na preskladnenie:">
+      <Label fx:id="materialToMoveLabel" alignment="CENTER_RIGHT" layoutX="33.0" layoutY="163.0" prefHeight="23.0" prefWidth="299.0" text="Materiál na preskladnenie:">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
