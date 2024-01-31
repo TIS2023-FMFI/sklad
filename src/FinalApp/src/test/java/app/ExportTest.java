@@ -226,7 +226,7 @@ public class ExportTest {
 
         try {
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("exports/Dodací list.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("exports/DodacíListTest.pdf"));
             document.open();
 
             PdfPTable table = new PdfPTable(4);
