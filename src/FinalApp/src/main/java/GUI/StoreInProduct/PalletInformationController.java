@@ -2,8 +2,10 @@ package GUI.StoreInProduct;
 
 import Exceptions.ValidationException;
 import app.Warehouse;
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -120,22 +122,28 @@ public class PalletInformationController implements Initializable {
     }
 
     private HBox createMaterialPair() {
-        Label materialLabel = new Label("Materiál:");
+        Warehouse warehouse = Warehouse.getInstance();
+        Label materialLabel = warehouse.createStyledLabel("Materiál:", 22);
         TextField materialTextField = new TextField();
 
-        Label countLabel = new Label("Počet kusov:");
+        Label countLabel = warehouse.createStyledLabel("Počet kusov:", 22);
         TextField countTextField = new TextField();
 
-        HBox materialPair = new HBox(materialLabel, materialTextField, countLabel, countTextField);
+        HBox materialPair = new HBox(materialLabel, materialTextField);
+
+        HBox.setMargin(materialTextField, new Insets(0, 50, 0, 0));
+
+        materialPair.getChildren().addAll(countLabel, countTextField);
 
         if (materialContainer.getChildren().size() > 0) {
-            Button removeButton = new Button("X");
+            JFXButton removeButton = warehouse.createStyledButton("X", "#740c0e",
+                    "#FFFFFF", 30, 30, 17, true);
             removeButton.setOnAction(event -> removeMaterialPair(removeButton));
             materialPair.getChildren().add(removeButton);
         }
         else {
             Label placeholder = new Label();
-            placeholder.setMinWidth(23);
+            placeholder.setMinWidth(32);
             materialPair.getChildren().add(placeholder);
         }
 
@@ -204,7 +212,7 @@ public class PalletInformationController implements Initializable {
 
     private void updateContainerHeights() {
         materialContainer.setPrefHeight(currentPairCount * PAIR_HEIGHT);
-        double newHeight = topContainer.getPrefHeight() + materialContainer.getPrefHeight() + informationContainer.getPrefHeight();
+        double newHeight = topContainer.getPrefHeight() + materialContainer.getPrefHeight() + informationContainer.getPrefHeight() + 50;
 
         borderPane.setPrefHeight(newHeight);
         Warehouse.getStage().setMinHeight(newHeight);

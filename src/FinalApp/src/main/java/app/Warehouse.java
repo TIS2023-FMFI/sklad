@@ -13,6 +13,7 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -99,8 +100,8 @@ public class Warehouse extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent pane = loader.load();
 
-        double newWidth = pane.prefWidth(0);
-        double newHeight = pane.prefHeight(0);
+        double newWidth = pane.prefWidth(-1);
+        double newHeight = pane.prefHeight(-1);
 
         stage.getScene().setRoot(pane);
 
@@ -233,6 +234,15 @@ public class Warehouse extends Application {
         button.setFont(Font.font("Calibri", fontWeight, fontSize));
 
         return button;
+    }
+
+    public Label createStyledLabel(String labelText, int fontSize) {
+        Label label = new Label(labelText);
+
+        label.setTextFill(Color.BLACK);
+        label.setFont(Font.font("Calibri", FontWeight.NORMAL, fontSize));
+
+        return label;
     }
 
     protected boolean loadPosition() {

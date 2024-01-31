@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="401.0" prefWidth="436.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.StoreInPositionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.StoreInPositionController">
    <children>
-      <Label layoutX="47.0" layoutY="98.0" text="Zaskladniť na pozíciu:" />
-      <Label layoutX="47.0" layoutY="148.0" text="Poznámka:" />
-      <TextField fx:id="note" layoutX="58.0" layoutY="174.0" prefHeight="149.0" prefWidth="331.0" />
-      <ChoiceBox fx:id="position" layoutX="186.0" layoutY="94.0" prefHeight="25.0" prefWidth="194.0" />
-      <Button fx:id="storeInProductButton" layoutX="67.0" layoutY="337.0" mnemonicParsing="false" onAction="#storeInProduct" text="Ukončiť zaskladňovanie" />
-      <Button fx:id="continueStoringInButton" layoutX="218.0" layoutY="337.0" mnemonicParsing="false" onAction="#continueStoringIn" text="Pokračovať v zaskladňovaní" />
-      <Button layoutX="31.0" layoutY="31.0" mnemonicParsing="false" onAction="#backToPalletInformationForm" text="Naspäť" />
+      <Label layoutX="42.0" layoutY="133.0" text="Zaskladniť na pozíciu:">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <Label layoutX="43.0" layoutY="202.0" text="Poznámka:">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <TextField fx:id="note" layoutX="52.0" layoutY="249.0" prefHeight="201.0" prefWidth="495.0" />
+      <ChoiceBox fx:id="position" layoutX="294.0" layoutY="127.0" prefHeight="30.0" prefWidth="250.0" stylesheets="@storeInStyles.css" />
+      <Button layoutX="31.0" layoutY="31.0" mnemonicParsing="false" onAction="#backToPalletInformationForm" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
       <Label fx:id="errorMessage" layoutX="110.0" layoutY="35.0" prefHeight="17.0" prefWidth="305.0" textAlignment="CENTER" textFill="#ba1212" />
+      <JFXButton fx:id="storeInProductButton" buttonType="RAISED" layoutX="55.0" layoutY="474.0" onAction="#storeInProduct" prefHeight="37.0" prefWidth="227.0" style="-fx-background-color: #0C356A;" text="Ukončiť zaskladňovanie" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="continueStoringInButton" buttonType="RAISED" layoutX="291.0" layoutY="474.0" onAction="#continueStoringIn" style="-fx-background-color: #0C356A;" text="Pokračovať v zaskladňovaní" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
