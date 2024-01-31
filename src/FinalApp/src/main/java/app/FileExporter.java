@@ -23,6 +23,8 @@ import java.util.*;
 import java.util.List;
 
 public class FileExporter {
+    //private final String PATH = "exports";
+    private final String PATH = "C:\\Users\\Legion\\OneDrive\\Desktop\\skola";
     private final Font customFont = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
     private final Font customFontSmall = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 10);
     private final Font customFontBig = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 15, Font.BOLD);
@@ -87,7 +89,7 @@ public class FileExporter {
     public void exportInvoicingPDF(String customer, String dateFrom, String dateTo, String price, int totalReservations){
         try {
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("exports/Invoice.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(PATH + "/Invoice.pdf"));
             document.open();
 
             DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
@@ -211,7 +213,7 @@ public class FileExporter {
     public void exportOrderPDF(ObservableList<Map<String, String>> items, Customer customer) {
         try {
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("exports/Dodací list.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(PATH + "/Dodací list.pdf"));
             document.open();
 
             PdfPTable table = new PdfPTable(4);
