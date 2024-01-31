@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerManagement.CreateNewCustomerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerManagement.CreateNewCustomerController">
     <children>
-        <Label alignment="CENTER_RIGHT" layoutX="220.0" layoutY="111.0" prefHeight="36.0" prefWidth="66.0" text="meno:">
+        <Label alignment="CENTER_RIGHT" layoutX="178.0" layoutY="87.0" prefHeight="36.0" prefWidth="66.0" text="meno:">
             <font>
-                <Font name="Calibri Bold" size="17.0" />
+                <Font name="Calibri Bold" size="20.0" />
             </font></Label>
-        <TextField fx:id="customerNameT" layoutX="332.0" layoutY="113.0">
+        <TextField fx:id="customerNameT" layoutX="290.0" layoutY="89.0">
          <font>
             <Font name="Calibri" size="17.0" />
          </font></TextField>
@@ -20,61 +21,61 @@
          <font>
             <Font name="Calibri Bold" size="17.0" />
          </font></Label>
-        <Label alignment="CENTER_RIGHT" layoutX="204.0" layoutY="158.0" prefHeight="36.0" prefWidth="83.0" text="adresa:" textAlignment="RIGHT">
+        <Label alignment="CENTER_RIGHT" layoutX="162.0" layoutY="134.0" prefHeight="36.0" prefWidth="83.0" text="adresa:" textAlignment="RIGHT">
             <font>
-                <Font name="Calibri Bold" size="17.0" />
+                <Font name="Calibri Bold" size="20.0" />
             </font>
         </Label>
         <Label fx:id="errorMessage1" layoutX="331.0" layoutY="22.0" prefHeight="18.0" prefWidth="159.0" textAlignment="CENTER" textFill="red" />
-        <Label alignment="CENTER_RIGHT" layoutX="204.0" layoutY="205.0" prefHeight="36.0" prefWidth="83.0" text="mesto:" textAlignment="RIGHT">
+        <Label alignment="CENTER_RIGHT" layoutX="162.0" layoutY="181.0" prefHeight="36.0" prefWidth="83.0" text="mesto:" textAlignment="RIGHT">
             <font>
-                <Font name="Calibri Bold" size="17.0" />
+                <Font name="Calibri Bold" size="20.0" />
             </font>
         </Label>
-        <Label alignment="CENTER_RIGHT" layoutX="242.0" layoutY="256.0" prefHeight="36.0" prefWidth="42.0" text="PSČ:">
+        <Label alignment="CENTER_RIGHT" layoutX="200.0" layoutY="232.0" prefHeight="36.0" prefWidth="42.0" text="PSČ:">
             <font>
-                <Font name="Calibri Bold" size="17.0" />
+                <Font name="Calibri Bold" size="20.0" />
             </font>
         </Label>
-        <Label alignment="CENTER_RIGHT" layoutX="201.0" layoutY="308.0" prefHeight="36.0" prefWidth="83.0" text="*IČO:" textAlignment="RIGHT">
+        <Label alignment="CENTER_RIGHT" layoutX="159.0" layoutY="284.0" prefHeight="36.0" prefWidth="83.0" text="*IČO:" textAlignment="RIGHT">
             <font>
-                <Font name="Calibri Bold" size="17.0" />
+                <Font name="Calibri Bold" size="20.0" />
             </font>
         </Label>
-        <Label alignment="CENTER_RIGHT" layoutX="201.0" layoutY="354.0" prefHeight="36.0" prefWidth="83.0" text="*DIČ:" textAlignment="RIGHT">
+        <Label alignment="CENTER_RIGHT" layoutX="159.0" layoutY="330.0" prefHeight="36.0" prefWidth="83.0" text="*DIČ:" textAlignment="RIGHT">
             <font>
-                <Font name="Calibri Bold" size="17.0" />
+                <Font name="Calibri Bold" size="20.0" />
             </font>
         </Label>
-        <TextField fx:id="addressT" layoutX="332.0" layoutY="160.0">
+        <TextField fx:id="addressT" layoutX="290.0" layoutY="136.0">
          <font>
             <Font name="Calibri" size="17.0" />
          </font></TextField>
-        <TextField fx:id="cityT" layoutX="332.0" layoutY="207.0">
+        <TextField fx:id="cityT" layoutX="290.0" layoutY="183.0">
          <font>
             <Font name="Calibri" size="17.0" />
          </font></TextField>
-        <TextField fx:id="postCodeT" layoutX="332.0" layoutY="258.0">
+        <TextField fx:id="postCodeT" layoutX="290.0" layoutY="234.0">
          <font>
             <Font name="Calibri" size="17.0" />
          </font></TextField>
-        <TextField fx:id="ICOT" layoutX="332.0" layoutY="310.0">
+        <TextField fx:id="ICOT" layoutX="290.0" layoutY="286.0">
          <font>
             <Font name="Calibri" size="17.0" />
          </font></TextField>
-        <TextField fx:id="DICT" layoutX="332.0" layoutY="356.0">
+        <TextField fx:id="DICT" layoutX="290.0" layoutY="332.0">
          <font>
             <Font name="Calibri" size="17.0" />
          </font></TextField>
-      <JFXButton buttonType="RAISED" layoutX="62.0" layoutY="52.0" onAction="#backToMainCusMan" ripplerFill="#916f6f" style="-fx-background-color: #5e1919;" text="Naspäť" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="294.0" layoutY="402.0" onAction="#addNewCustomer" style="-fx-background-color: #0C356A;" text="Uložiť" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="312.0" layoutY="418.0" onAction="#addNewCustomer" style="-fx-background-color: #0b1646;" text="Uložiť" textFill="WHITE">
+      <Button layoutX="35.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToMainCusMan" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
          <font>
-            <Font name="Calibri Bold" size="20.0" />
+            <Font size="15.0" />
          </font>
-      </JFXButton>
+      </Button>
     </children>
 </AnchorPane>
