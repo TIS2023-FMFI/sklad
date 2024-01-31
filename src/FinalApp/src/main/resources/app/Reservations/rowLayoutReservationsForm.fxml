@@ -54,16 +54,16 @@
                      <padding>
                         <Insets left="100.0" />
                      </padding></VBox>
-                  <VBox fx:id="informationContainer2" prefHeight="300.0" prefWidth="650.0">
+                  <VBox fx:id="informationContainer2" prefHeight="300.0" prefWidth="850.0">
                      <children>
-                        <Label fx:id="errorMessage" prefHeight="48.0" prefWidth="552.0" textAlignment="CENTER" textFill="#cc0000">
+                        <Label fx:id="errorMessage" prefHeight="48.0" prefWidth="852.0" textAlignment="CENTER" textFill="#cc0000">
                            <font>
                               <Font name="System Bold" size="19.0" />
                            </font></Label>
                      </children></VBox>
-                  <AnchorPane fx:id="materialCountTable" prefHeight="300.0" prefWidth="399.0">
+                  <AnchorPane fx:id="materialCountTable" prefHeight="300.0" prefWidth="200.0">
                      <children>
-                        <JFXButton buttonType="RAISED" layoutX="245.0" layoutY="-4.0" onAction="#reserve" style="-fx-background-color: #0C356A;" text="Rezervovať" textFill="WHITE">
+                        <JFXButton buttonType="RAISED" layoutX="168.0" layoutY="-4.0" onAction="#reserve" style="-fx-background-color: #0C356A;" text="Rezervovať" textFill="WHITE">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
