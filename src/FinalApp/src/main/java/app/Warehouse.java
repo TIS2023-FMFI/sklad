@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -243,6 +244,15 @@ public class Warehouse extends Application {
         label.setFont(Font.font("Calibri", FontWeight.NORMAL, fontSize));
 
         return label;
+    }
+
+    public TextField createTextfield(int width, int height){
+        TextField textField = new TextField();
+        textField.setMinWidth(width);
+        textField.setMaxWidth(width);
+        textField.setMinHeight(height);
+        textField.setMaxHeight(height);
+        return textField;
     }
 
     protected boolean loadPosition() {

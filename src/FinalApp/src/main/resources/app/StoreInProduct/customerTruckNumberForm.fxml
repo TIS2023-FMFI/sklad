@@ -30,7 +30,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ChoiceBox>
-      <Spinner fx:id="truckNumber" editable="true" layoutX="330.0" layoutY="248.0" prefHeight="30.0" prefWidth="160.0" />
+      <Spinner fx:id="truckNumber" editable="true" layoutX="330.0" layoutY="248.0" prefHeight="30.0" prefWidth="160.0" stylesheets="@storeInStyles.css" />
       <JFXButton buttonType="RAISED" layoutX="255.0" layoutY="376.0" onAction="#nextToInformationForm" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #0C356A;" text="Ďalej" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />
