@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-image: url(&quot;BackC.jpg&quot;);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-image: url(&quot;BackC.jpg&quot;);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
    <children>
       <Label layoutX="158.0" layoutY="148.0" prefHeight="25.0" prefWidth="172.0" text="Prihlasovacie meno:" textFill="WHITE">
          <font>
@@ -17,8 +17,8 @@
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font></Label>
-      <TextField fx:id="username" layoutX="384.0" layoutY="148.0" promptText="meno" text="admin" />
-      <PasswordField fx:id="password" layoutX="384.0" layoutY="201.0" promptText="heslo" text="admin" />
+      <TextField fx:id="username" layoutX="384.0" layoutY="145.0" prefHeight="31.0" prefWidth="149.0" promptText="meno" stylesheets="@styles.css" text="admin" />
+      <PasswordField fx:id="password" layoutX="384.0" layoutY="199.0" prefHeight="30.0" promptText="heslo" text="admin" />
       <Button layoutX="310.0" layoutY="249.0" mnemonicParsing="false" onAction="#login" text="Prihlásiť sa">
          <font>
             <Font size="13.0" />
