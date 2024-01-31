@@ -13,8 +13,8 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <ChoiceBox fx:id="customerChoices" layoutX="325.0" layoutY="208.0" prefWidth="150.0" stylesheets="@../StoreInProduct/storeInStyles.css" />
-      <Label layoutX="177.0" layoutY="214.0" text="Zákazník:">
+      <ChoiceBox fx:id="customerChoices" layoutX="325.0" layoutY="188.0" prefWidth="150.0" stylesheets="@orderProductStyles.css" />
+      <Label layoutX="176.0" layoutY="194.0" text="Zákazník:">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
