@@ -162,7 +162,7 @@ public class FileExporter {
         tableCustomer.addCell(customerCell);
 
 
-        Paragraph invoicingInfo = new Paragraph("Číslo faktúry: 12345\n", customFontSmall);
+        Paragraph invoicingInfo = new Paragraph("Číslo faktúry: \n", customFontSmall);
         invoicingInfo.add("Dátum vystavenia: " + LocalDate.now().format(
                 DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
@@ -219,7 +219,7 @@ public class FileExporter {
             PdfPCell c = new PdfPCell(new Paragraph("Dodací list č:", customFontBold));
             c.setBorder(Rectangle.NO_BORDER);
             table.addCell(c);
-            PdfPCell c1 = new PdfPCell(new Paragraph("25440", customFont));
+            PdfPCell c1 = new PdfPCell(new Paragraph("", customFont));
             c1.setBorder(Rectangle.NO_BORDER);
             table.addCell(c1);
             PdfPCell c2 = new PdfPCell(new Paragraph("Dátum:", customFontBold));

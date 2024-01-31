@@ -1,10 +1,8 @@
 package app;
 
-import Entity.Customer;
-import Entity.CustomerReservation;
-import Entity.PalletOnPosition;
-import Entity.Position;
+import Entity.*;
 import jakarta.persistence.Table;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,6 +28,9 @@ import java.util.*;
 public class CheckPositions implements Initializable {
     @FXML
     public TableView wrongPositionsTable;
+    @FXML
+    public Label label;
+
     private final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
     private final String ALL_POSITION_OK = "Všetky pozície sú v poriadku.";
     private final String WRONG_POSITIONS = "Na niektorých pozíciách je tovar napriek, no nie sú\nrezervované žiadnym zákazníkom.\n" +
@@ -46,6 +47,7 @@ public class CheckPositions implements Initializable {
             Stage newStage = new Stage();
             newStage.setTitle("Chybné pozície");
             newStage.setScene(new Scene(root));
+
             newStage.setOnCloseRequest(windowEvent -> {
                     Warehouse.getInstance().removeController("wrongPositions");}
                     );
@@ -56,13 +58,26 @@ public class CheckPositions implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        TableColumn<Map, String> PNRColumn = new TableColumn<>("PNR");
+        PNRColumn.setCellValueFactory(new MapValueFactory<>("pnr"));
+        PNRColumn.setStyle(STYLE);
+        PNRColumn.setPrefWidth(120);
         TableColumn<Map, String> positionColumn = new TableColumn<>("Pozícia");
         positionColumn.setCellValueFactory(new MapValueFactory<>("position"));
         positionColumn.setStyle(STYLE);
         positionColumn.setPrefWidth(120);
+        TableColumn<Map, String> materialColumn = new TableColumn<>("Materiál");
+        materialColumn.setCellValueFactory(new MapValueFactory<>("material"));
+        materialColumn.setStyle(STYLE);
+        materialColumn.setPrefWidth(120);
+        TableColumn<Map, String> numberColumn = new TableColumn<>("Počet");
+        numberColumn.setCellValueFactory(new MapValueFactory<>("number"));
+        numberColumn.setStyle(STYLE);
+        numberColumn.setPrefWidth(120);
+
         wrongPositions = (Set<String>) Warehouse.getInstance().getController("wrongPositions");
 
-        wrongPositionsTable.getColumns().addAll(positionColumn);
+        wrongPositionsTable.getColumns().addAll(positionColumn, PNRColumn, materialColumn, numberColumn);
         items.addAll(fillTable());
         wrongPositionsTable.getItems().addAll(items);
     }
@@ -101,14 +116,45 @@ public class CheckPositions implements Initializable {
     }
 
     private List<Map<String, Object>> fillTable(){
+        DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
         List<Map<String,Object>> result = new ArrayList<>();
-
+        System.out.println(wrongPositions);
+        Set<String> usedPallets = new HashSet<>();
         for (String position : wrongPositions) {
-            result.add(Map.of(
-                    "position", position
-            ));
+            List<Pallet> palsForPos = databaseHandler.getPalletesOnPosition(position);
+            for (Pallet p : palsForPos) {
+                if (usedPallets.contains(p.getPnr())) {
+                    continue;
+                }
+                usedPallets.add(p.getPnr());
+                Position pos = databaseHandler.getPosition(position);
+                Map<Material, Integer> products = Warehouse.getInstance().getPalletsOnPositionMap().get(pos).get(p);
+                if (products == null) {
+                    continue;
+                }
+                String positionString = getPositionsString(p);
+                for (Map.Entry<Material, Integer> entry : products.entrySet()) {
+                    result.add(Map.of(
+                            "pnr", p.getPnr(),
+                            "position", positionString,
+                            "material", entry.getKey().getName(),
+                            "number", entry.getValue()));
+                }
+            }
+
+
         }
         return result;
     }
+
+    String getPositionsString(Pallet p){
+        StringBuilder result = new StringBuilder();
+        List<Position> poses = Warehouse.getInstance().getDatabaseHandler().getPositionsOfPallet(p.getPnr());
+        for (Position pos : poses) {
+            result.append(pos.getName()).append("-");
+        }
+        return result.substring(0, result.length() - 1);
+    }
+
 
 }

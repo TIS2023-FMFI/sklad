@@ -28,7 +28,7 @@ public class LoginController {
             warehouse.loadDb();
             warehouse.changeScene("mainMenu.fxml");
             CheckPositions checkPositions = new CheckPositions();
-            if(! checkPositions.allPositionsCorrect()){
+            if(!checkPositions.allPositionsCorrect()){
                 checkPositions.createNewWindow();
             }
         }

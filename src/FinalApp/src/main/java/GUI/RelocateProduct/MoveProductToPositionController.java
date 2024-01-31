@@ -64,6 +64,8 @@ public class MoveProductToPositionController implements Initializable {
      * Method that fills newPositionsChoice with correct positions.
      * @throws IOException if there is problem with loading fxml file
      */
+
+    private boolean isTall = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ChooseProductToRelocateController controller = (ChooseProductToRelocateController)
@@ -85,13 +87,14 @@ public class MoveProductToPositionController implements Initializable {
             product = controller.finalMaterial;
             quantity = controller.finalQuantity;
         }
+        if (initialPosition.isTall())isTall = true;
         fillNewPositionsChoice();
     }
 
     private void fillNewPositionsChoice(){
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        List<List<Position>> freePositions = dbh.getFreePositions(customer, weight, false, palletWidth);
+        List<List<Position>> freePositions = dbh.getFreePositions(customer, weight, isTall, palletWidth);
         newPositionsChoice.getItems().addAll(getToString(freePositions));
     }
 
@@ -100,81 +103,6 @@ public class MoveProductToPositionController implements Initializable {
             var posNames = positions.stream().map(Position::getName).toList();
             return String.join("-", posNames);
         }).toList();
-    }
-
-    private void fillNew2PositionsChoice(){
-        DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
-        Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        List<Position> emptyPositions = dbh.getPositionsReservedByCustomer(customer.getName());
-        List<String> posNames = emptyPositions.stream().map(Position::getName).toList();
-        for (String positionName : posNames){
-            String Wrow = positionName.substring(0, 1);
-            String col = positionName.substring(1, 4);
-            String row = positionName.substring(4, 5);
-            int colInt = Integer.parseInt(col);
-            int colInt1 = colInt + 2;
-            StringBuilder zeroes = new StringBuilder();
-            zeroes.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt1).length())));
-            String neighPos = Wrow + zeroes + colInt1 + row;
-            if (posNames.contains(neighPos)){
-                newPositionsChoice.getItems().add(positionName + "," + neighPos);
-            }
-        }
-    }
-    private void fillNew3PositionsChoice(){
-        DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
-        Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        List<Position> emptyPositions = dbh.getPositionsReservedByCustomer(customer.getName());
-        List<String> posNames = emptyPositions.stream().map(Position::getName).toList();
-        for (String positionName : posNames){
-            String Wrow = positionName.substring(0, 1);
-            String col = positionName.substring(1, 4);
-            String row = positionName.substring(4, 5);
-            int colInt = Integer.parseInt(col);
-            int colInt1 = colInt + 2;
-            int colInt2 = colInt + 4;
-            StringBuilder zeroes1 = new StringBuilder();
-            zeroes1.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt1).length())));
-            String neighPos1 = Wrow + zeroes1 + colInt1 + row;
-
-            StringBuilder zeroes2 = new StringBuilder();
-            zeroes2.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt2).length())));
-            String neighPos2 = Wrow + zeroes2 + colInt2 + row;
-
-            if (posNames.contains(neighPos1) && posNames.contains(neighPos2)){
-                newPositionsChoice.getItems().add(positionName + "," + neighPos1 + "," + neighPos2);
-            }
-        }
-    }
-    private void fillNew4PositionsChoice(){
-        DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
-        Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        List<Position> emptyPositions = dbh.getPositionsReservedByCustomer(customer.getName());
-        List<String> posNames = emptyPositions.stream().map(Position::getName).toList();
-        for (String positionName : posNames){
-            String Wrow = positionName.substring(0, 1);
-            String col = positionName.substring(1, 4);
-            String row = positionName.substring(4, 5);
-            int colInt = Integer.parseInt(col);
-            int colInt1 = colInt + 2;
-            int colInt2 = colInt + 4;
-            int colInt3 = colInt + 6;
-            StringBuilder zeroes1 = new StringBuilder();
-            zeroes1.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt1).length())));
-            String neighPos1 = Wrow + zeroes1 + colInt1 + row;
-
-            StringBuilder zeroes2 = new StringBuilder();
-            zeroes2.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt2).length())));
-            String neighPos2 = Wrow + zeroes2 + colInt2 + row;
-
-            StringBuilder zeroes3 = new StringBuilder();
-            zeroes3.append("0".repeat(Math.max(0, 3 - String.valueOf(colInt3).length())));
-            String neighPos3 = Wrow + zeroes3 + colInt3 + row;
-
-            if (posNames.contains(neighPos1) && posNames.contains(neighPos2) && posNames.contains(neighPos3)){
-                newPositionsChoice.getItems().add(positionName + "," + neighPos1 + "," + neighPos2 + "," + neighPos3);
-            }
-        }
     }
 
     /***
