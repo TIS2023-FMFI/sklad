@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationViewController">
    <children>
       <TableView fx:id="reservationTable" layoutX="45.0" layoutY="93.0" prefHeight="370.0" prefWidth="560.0" />
       <Button layoutX="35.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToMainReservations" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
