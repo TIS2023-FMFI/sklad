@@ -28,6 +28,9 @@ import java.util.*;
 public class CheckPositions implements Initializable {
     @FXML
     public TableView wrongPositionsTable;
+    @FXML
+    public Label label;
+
     private final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
     private final String ALL_POSITION_OK = "Všetky pozície sú v poriadku.";
     private final String WRONG_POSITIONS = "Na niektorých pozíciách je tovar napriek, no nie sú\nrezervované žiadnym zákazníkom.\n" +
@@ -44,6 +47,7 @@ public class CheckPositions implements Initializable {
             Stage newStage = new Stage();
             newStage.setTitle("Chybné pozície");
             newStage.setScene(new Scene(root));
+
             newStage.setOnCloseRequest(windowEvent -> {
                     Warehouse.getInstance().removeController("wrongPositions");}
                     );
