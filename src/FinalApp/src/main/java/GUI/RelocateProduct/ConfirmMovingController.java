@@ -20,7 +20,8 @@ public class ConfirmMovingController {
 
         RelocateProduct rp = new RelocateProduct();
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
-        List<String> finalPositions = db.getPositionsWithPallet(controller.palletTo);
+        //List<String> finalPositions = db.getPositionsWithPallet(controller.palletTo);
+        List<String> finalPositions = controller.finalPositions;
         if (controller.isWholePallet){
             rp.relocatePallet(controller.initialPosition, controller.finalPositions, controller.palletFrom);
         } else{

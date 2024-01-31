@@ -59,10 +59,11 @@ public class Statistics {
                     continue;
                 }
                 usedPallets.add(pallet);
+                String positionString = getPositionsString(pallet);
                 var materials = pallets.get(pallet);
                 for (Material material : materials.keySet()) {
                     res.add(Map.of(
-                            "Pozícia", position.getName(),
+                            "Pozícia", positionString,
                             "PNR", pallet.getPnr(),
                             "Materiál", material.getName(),
                             "Počet", String.valueOf(materials.get(material))
@@ -72,6 +73,15 @@ public class Statistics {
             }
         }
         return res;
+    }
+
+    private String getPositionsString(Pallet p){
+        StringBuilder result = new StringBuilder();
+        List<Position> poses = Warehouse.getInstance().getDatabaseHandler().getPositionsOfPallet(p.getPnr());
+        for (Position pos : poses) {
+            result.append(pos.getName()).append("-");
+        }
+        return result.substring(0, result.length() - 1);
     }
 
     public class StatsDateComparator implements Comparator<Map.Entry<Date, Pair<Integer,Integer>>> {

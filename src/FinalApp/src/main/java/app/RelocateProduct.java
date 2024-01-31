@@ -68,7 +68,7 @@ public class RelocateProduct {
         if (pallet == null){
             pallet = new Pallet();
             pallet.setPnr(palletTo);
-            pallet.setWeight(500);
+            pallet.setWeight(0);
             pallet.setDamaged(false);
             pallet.setNote("");
             pallet.setIdUser(Warehouse.getInstance().currentUser.getId());
