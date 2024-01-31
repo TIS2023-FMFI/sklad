@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RelocateProduct.ConfirmMovingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RelocateProduct.ConfirmMovingController">
    <children>
-      <Label layoutX="109.0" layoutY="96.0" text="Preskladnenie bolo úspešné">
+      <Label alignment="CENTER" layoutX="104.0" layoutY="134.0" prefHeight="46.0" prefWidth="392.0" text="Úspešne ste preskladnili tovar">
          <font>
-            <Font size="31.0" />
+            <Font size="28.0" />
          </font>
       </Label>
-      <Button layoutX="274.0" layoutY="229.0" mnemonicParsing="false" onAction="#backToMenu" text="Pokračuǰ" />
+      <JFXButton buttonType="RAISED" layoutX="214.0" layoutY="229.0" onAction="#backToMenu" prefHeight="45.0" prefWidth="160.0" style="-fx-background-color: #0C356A;" text="Pokračovať" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

@@ -14,7 +14,7 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <ChoiceBox fx:id="newPositionsChoice" layoutX="330.0" layoutY="175.0" onMouseClicked="#resetPallet" prefWidth="150.0" stylesheets="@relocateProductStyles.css" />
+      <ChoiceBox fx:id="newPositionsChoice" layoutX="330.0" layoutY="175.0" onMouseClicked="#resetPallet" prefHeight="35.0" prefWidth="202.0" stylesheets="@relocateProductStyles.css" />
       <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="179.0" prefHeight="26.0" prefWidth="218.0" text="Nová pozícia:">
          <font>
             <Font name="Calibri Bold" size="20.0" />
