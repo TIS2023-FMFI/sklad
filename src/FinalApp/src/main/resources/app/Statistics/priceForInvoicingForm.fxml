@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Statistics.PriceForInvoicingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Statistics.PriceForInvoicingController">
    <children>
-      <Button layoutX="66.0" layoutY="35.0" mnemonicParsing="false" onAction="#backToStatistics" text="Naspäť" />
-      <Button layoutX="266.0" layoutY="302.0" mnemonicParsing="false" onAction="#calculateInvoicing" text="Vypočítať" />
-      <Label layoutX="66.0" layoutY="142.0" text="Cena jedného miesta na jeden deň:" />
-      <TextField fx:id="priceForOnePositionForOneDay" layoutX="300.0" layoutY="138.0" onAction="#savePriceForInvoicing" />
-      <Label fx:id="warningLabel" alignment="CENTER" layoutX="29.0" layoutY="181.0" prefHeight="18.0" prefWidth="542.0" textFill="RED" />
+      <Button layoutX="35.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToStatistics" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Label layoutX="73.0" layoutY="196.0" text="Cena jedného miesta na jeden deň:">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font></Label>
+      <TextField fx:id="priceForOnePositionForOneDay" layoutX="399.0" layoutY="192.0" onAction="#savePriceForInvoicing" prefHeight="31.0" prefWidth="142.0" stylesheets="@statisticsStyles.css" />
+      <Label fx:id="warningLabel" alignment="CENTER" layoutX="54.0" layoutY="132.0" prefHeight="18.0" prefWidth="542.0" textFill="#cc0000">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font></Label>
+      <JFXButton buttonType="RAISED" layoutX="260.0" layoutY="282.0" onAction="#calculateInvoicing" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #0C356A;" text="Vypočítať" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
