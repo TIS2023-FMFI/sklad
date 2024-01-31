@@ -12,7 +12,7 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <TableView fx:id="orderTable" editable="true" layoutX="86.0" layoutY="84.0" prefHeight="310.0" prefWidth="510.0" />
+      <TableView fx:id="orderTable" editable="true" layoutX="95.0" layoutY="90.0" prefHeight="310.0" prefWidth="500.0" stylesheets="@orderProductStyles.css" />
       <JFXButton buttonType="RAISED" layoutX="88.0" layoutY="412.0" onAction="#saveOrderExcel" prefHeight="40.0" style="-fx-background-color: #0C356A;" text="Uložiť excel" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />
