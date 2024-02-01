@@ -14,7 +14,7 @@
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="customer" layoutX="336.0" layoutY="161.0" onAction="#saveCustomerName" prefHeight="36.0" prefWidth="191.0" />
+      <ChoiceBox fx:id="customer" layoutX="336.0" layoutY="161.0" onAction="#saveCustomerName" prefHeight="31.0" prefWidth="190.0" stylesheets="@customerManagementStyles.css" />
       <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="119.0" layoutY="97.0" prefHeight="35.0" prefWidth="417.0" textAlignment="CENTER" textFill="#cc0000">
          <font>
             <Font name="System Bold" size="19.0" />

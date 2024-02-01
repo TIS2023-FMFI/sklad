@@ -17,3 +17,7 @@
 .table-view .table-cell {
     -fx-alignment: CENTER;
 }
+
+.date-picker {
+    -fx-font: 17px 'Calibri';
+}

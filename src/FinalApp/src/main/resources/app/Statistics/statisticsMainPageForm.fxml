@@ -26,8 +26,8 @@
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font></Label>
-      <DatePicker fx:id="dateFrom" layoutX="347.0" layoutY="132.0" onAction="#saveDateFrom" prefHeight="25.0" prefWidth="170.0" />
-      <DatePicker fx:id="dateTo" layoutX="347.0" layoutY="180.0" onAction="#saveDateTo" prefHeight="25.0" prefWidth="170.0" />
+      <DatePicker fx:id="dateFrom" layoutX="347.0" layoutY="130.0" onAction="#saveDateFrom" prefHeight="25.0" prefWidth="170.0" stylesheets="@statisticsStyles.css" />
+      <DatePicker fx:id="dateTo" layoutX="347.0" layoutY="178.0" onAction="#saveDateTo" prefHeight="25.0" prefWidth="170.0" stylesheets="@statisticsStyles.css" />
       <ChoiceBox fx:id="customer" layoutX="347.0" layoutY="235.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="170.0" stylesheets="@statisticsStyles.css" />
       <Label fx:id="invoicingLabel" alignment="CENTER" layoutX="166.0" layoutY="56.0" prefHeight="18.0" prefWidth="388.0" textFill="#cc0000">
          <font>
