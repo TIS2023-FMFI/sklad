@@ -13,55 +13,39 @@
             <Font size="14.0" />
          </font></Button>
       <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="60.0" onAction="#showWarehouseLayout" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #740c0e;" text="Zobrazenie skladu" textAlignment="CENTER" textFill="WHITE">
-      //<JFXButton buttonType="RAISED" layoutX="125.0" layoutY="61.0" onAction="#showWarehouseLayout" prefHeight="70.0" prefWidth="250.0" ripplerFill="#586990" style="-fx-background-color: #091c46;" text="Zobrazenie skladu" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="142.0" onAction="#storeInProduct" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #1254a4;" text="Zaskladnenie tovaru" textAlignment="CENTER" textFill="WHITE">
-      //<JFXButton buttonType="RAISED" layoutX="125.0" layoutY="142.0" onAction="#storeInProduct" prefHeight="70.0" prefWidth="250.0" ripplerFill="#586990" style="-fx-background-color: #0C356A;" text="Zaskladnenie tovaru" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="220.0" onAction="#relocateProduct" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #365486;" text="Preskladnenie tovaru" textAlignment="CENTER" textFill="WHITE">
-      //<JFXButton buttonType="RAISED" layoutX="125.0" layoutY="221.0" onAction="#relocateProduct" prefHeight="70.0" prefWidth="250.0" ripplerFill="#586990" style="-fx-background-color: #38434d;" text="Preskladnenie tovaru" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="298.0" onAction="#placeOrder" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #0C356A;" text="Vybavenie objednávky" textAlignment="CENTER" textFill="WHITE">
-      //<JFXButton buttonType="RAISED" layoutX="125.0" layoutY="302.0" onAction="#placeOrder" prefHeight="70.0" prefWidth="250.0" ripplerFill="#586990" style="-fx-background-color: #740c0e;" text="Vybavenie objednávky" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </JFXButton>
+        <font>
+           <Font name="Calibri Bold" size="20.0" />
+        </font>
+        <cursor>
+           <Cursor fx:constant="DEFAULT" />
+        </cursor>
+     </JFXButton>
+     <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="142.0" onAction="#storeInProduct" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #1254a4;" text="Zaskladnenie tovaru" textAlignment="CENTER" textFill="WHITE">
+        <font>
+           <Font name="Calibri Bold" size="20.0" />
+        </font>
+     </JFXButton>
+     <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="220.0" onAction="#relocateProduct" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #365486;" text="Preskladnenie tovaru" textAlignment="CENTER" textFill="WHITE">
+        <font>
+           <Font name="Calibri Bold" size="20.0" />
+        </font>
+     </JFXButton>
+     <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="298.0" onAction="#placeOrder" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #0C356A;" text="Vybavenie objednávky" textAlignment="CENTER" textFill="WHITE">
+        <font>
+           <Font name="Calibri Bold" size="20.0" />
+        </font>
+     </JFXButton>
 
-      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="382.0" onAction="#showStatistics" prefHeight="62.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #091c46;" text="Štatistiky" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="460.0" onAction="#reservationsMain" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #000000;" text="Rezervácie" textAlignment="CENTER" textFill="WHITE">
+     <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="382.0" onAction="#showStatistics" prefHeight="62.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #091c46;" text="Štatistiky" textAlignment="CENTER" textFill="WHITE">
+        <font>
+           <Font name="Calibri Bold" size="20.0" />
+        </font>
+     </JFXButton>
 
-      //<JFXButton buttonType="RAISED" layoutX="125.0" layoutY="383.0" onAction="#showStatistics" prefHeight="70.0" prefWidth="250.0" ripplerFill="#586990" style="-fx-background-color: #365486;" text="Štatistiky" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </JFXButton>
-
-      <JFXButton buttonType="RAISED" layoutX="125.0" layoutY="462.0" onAction="#reservationsMain" prefHeight="70.0" prefWidth="250.0" ripplerFill="#586990" style="-fx-background-color: #000000;" text="Rezervácie" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </JFXButton>
-<!--      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="548.0" onAction="#customerManagement" prefHeight="62.0" prefWidth="220.0" ripplerFill="#4ea17b" style="-fx-background-color: #365486;" text="Management zákazníkov" textAlignment="CENTER" textFill="WHITE">-->
-<!--         <font>-->
-<!--            <Font name="Calibri Bold" size="18.0" />-->
-<!--         </font>-->
-<!--      </JFXButton>-->
+     <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="460.0" onAction="#reservationsMain" prefHeight="65.0" prefWidth="220.0" ripplerFill="#586990" style="-fx-background-color: #000000;" text="Rezervácie" textAlignment="CENTER" textFill="WHITE">
+        <font>
+           <Font name="Calibri Bold" size="20.0" />
+        </font>
+     </JFXButton>
    </children>
 </AnchorPane>

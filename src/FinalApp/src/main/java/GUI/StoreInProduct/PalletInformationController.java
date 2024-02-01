@@ -142,7 +142,7 @@ public class PalletInformationController implements Initializable {
         materialPair.getChildren().addAll(countLabel, countTextField);
 
         if (materialContainer.getChildren().size() > 0) {
-            JFXButton removeButton = warehouse.createStyledButton("X", "#740c0e",
+            JFXButton removeButton = warehouse.createStyledButton("X", "#B80F0A",
                     "#FFFFFF", 29, 29, 17, true);
             removeButton.setAlignment(Pos.CENTER);
             removeButton.setOnAction(event -> removeMaterialPair(removeButton));

@@ -28,7 +28,7 @@ public class AddReservationFirstController implements Initializable {
     @FXML
     Label errorMessage;
     Warehouse warehouse;
-    private final String STYLE = "-fx-font: 20px 'Calibri';";
+    private static final String STYLE = "-fx-font: 17px 'Calibri';";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

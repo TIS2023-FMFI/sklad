@@ -31,9 +31,9 @@
          <font>
             <Font name="Calibri" size="17.0" />
          </font></Label>
-      <Label fx:id="errorMessage" layoutX="170.0" layoutY="34.0" prefHeight="18.0" prefWidth="382.0" textFill="#cc0000">
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="170.0" layoutY="34.0" prefHeight="18.0" prefWidth="382.0" textFill="#cc0000">
          <font>
-            <Font size="19.0" />
+            <Font name="System Bold" size="19.0" />
          </font></Label>
       <ChoiceBox fx:id="material" layoutX="188.0" layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" stylesheets="@orderProductStyles.css" />
       <JFXButton buttonType="RAISED" layoutX="188.0" layoutY="137.0" onAction="#addProduct" prefHeight="40.0" style="-fx-background-color: #0C356A;" text="Pridať materiál" textFill="WHITE">
