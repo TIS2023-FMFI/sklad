@@ -208,8 +208,13 @@ public class Warehouse extends Application {
         return palletsOnPosition.get(position).isEmpty();
     }
 
+
     public Map<Pallet, Map<Material, Integer>> getPalletsOnPosition(Position position){
         return palletsOnPosition.get(position);
+    }
+
+    public void removePalletsOnPosition(Position position){
+        palletsOnPosition.remove(position);
     }
 
     public static Stage getStage() {
