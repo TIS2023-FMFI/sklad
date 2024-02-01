@@ -1,0 +1,12 @@
+.choice-box .label {
+    -fx-font-size: 16;
+}
+
+.choice-box .context-menu {
+    -fx-pref-width: 150;
+}
+
+.table-view {
+    -fx-font-size: 16;
+}
+

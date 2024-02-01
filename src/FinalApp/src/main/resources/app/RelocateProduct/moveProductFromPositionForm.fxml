@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
@@ -7,17 +8,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RelocateProduct.MoveProductFromPositionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RelocateProduct.MoveProductFromPositionController">
    <children>
-      <Button layoutX="42.0" layoutY="35.0" mnemonicParsing="false" onAction="#backToMenu" text="Naspäť" />
-      <TextField fx:id="position" layoutX="359.0" layoutY="119.0" prefHeight="32.0" prefWidth="194.0" />
-      <Label layoutX="19.0" layoutY="122.0" prefHeight="26.0" prefWidth="340.0" text="Pozícia z ktorej sa bude preskladňovať tovar:">
+      <Button layoutX="33.0" layoutY="36.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
          <font>
             <Font size="15.0" />
+         </font></Button>
+      <TextField fx:id="position" layoutX="447.0" layoutY="200.0" prefHeight="32.0" prefWidth="120.0" stylesheets="@relocateProductStyles.css" />
+      <Label layoutX="33.0" layoutY="203.0" prefHeight="26.0" prefWidth="383.0" text="Pozícia z ktorej sa bude preskladňovať tovar:">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="325.0" layoutY="255.0" mnemonicParsing="false" onAction="#confirmInitialPosition" prefHeight="26.0" prefWidth="94.0" text="Pokračovať" />
-      <CheckBox fx:id="wholePallet" layoutX="359.0" layoutY="173.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Celá paleta" />
-      <Label fx:id="errorLabel" alignment="CENTER" layoutX="125.0" layoutY="222.0" prefHeight="18.0" prefWidth="350.0" textFill="RED" />
+      <CheckBox fx:id="wholePallet" layoutX="447.0" layoutY="250.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Celá paleta">
+         <font>
+            <Font name="Calibri" size="17.0" />
+         </font></CheckBox>
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="157.0" layoutY="151.0" prefHeight="18.0" prefWidth="350.0" textFill="#cc0000">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font></Label>
+      <JFXButton buttonType="RAISED" layoutX="245.0" layoutY="344.0" onAction="#confirmInitialPosition" prefHeight="45.0" prefWidth="160.0" style="-fx-background-color: #0C356A;" text="Pokračovať" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

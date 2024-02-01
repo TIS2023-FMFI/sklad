@@ -1,6 +1,5 @@
 package GUI.RelocateProduct;
 
-import Entity.Position;
 import app.DatabaseHandler;
 import app.RelocateProduct;
 import app.Warehouse;

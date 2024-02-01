@@ -3,5 +3,9 @@
 }
 
 .choice-box .context-menu {
-    -fx-pref-width: 160;
+    -fx-pref-width: 150;
+}
+
+.text-field {
+    -fx-font-size: 15;
 }
