@@ -186,25 +186,85 @@ public class DatabaseHandler {
     }
 
     public List<List<Position>> getFreePositions(Customer customer, double weight, boolean isTall, int numberOfPositions){
-        try (Session session = sessionFactory.openSession()) {
-            List<List<Position>> result = new ArrayList<>();
+        List<List<Position>> result = new ArrayList<>();
 
-            List<List<Position>> reservedPositions = getReservedPositions(customer, weight, isTall, numberOfPositions);
-            List<List<Position>> reservedPositionsWithPallets = getReservedPositionsWithPallets(customer, weight, isTall, numberOfPositions);
+        List<List<Position>> reservedPositions = getReservedPositions(customer, weight, isTall, numberOfPositions);
+        List<List<Position>> reservedPositionsWithPallets = getReservedPositionsWithPallets(customer, weight, isTall, numberOfPositions);
 
-            result.addAll(reservedPositions);
-            result.addAll(reservedPositionsWithPallets);
-
-
-            // sorting and finding the best position
-
+        if (reservedPositions.isEmpty() && reservedPositionsWithPallets.isEmpty()){
             return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
-    }
 
+        if (!reservedPositions.isEmpty()){
+            result.addAll(reservedPositions);
+        }
+        if (!reservedPositionsWithPallets.isEmpty()){
+            result.addAll(reservedPositionsWithPallets);
+        }
+
+        // sorting and finding the best position
+        List<List<Position>> floorOrTallPositions = new ArrayList<>();
+
+        for (List<Position> positions : result){
+            if (positions.get(0).isTall() || (positions.get(0).getName().charAt(4) == '0')){
+                floorOrTallPositions.add(positions);
+            }
+        }
+        result.removeAll(floorOrTallPositions);
+
+        Comparator<List<Position>> positionComparator = Comparator
+                .comparing((List<Position> list) -> reservedPositionsWithPallets.contains(list))
+                .thenComparing(list -> reservedPositions.contains(list))
+                .thenComparing(list -> Character.getNumericValue(list.get(0).getName().charAt(4)));
+
+
+        Collections.sort(result, positionComparator);
+
+        List<List<Position>> reservedFloorOrTallPositions = new ArrayList<>();
+        List<List<Position>> reservedWithPalletFloorOrTallPosition = new ArrayList<>();
+
+        for (List<Position> positions : floorOrTallPositions){
+            if (reservedPositions.contains(positions)){
+                reservedFloorOrTallPositions.add(positions);
+            }
+            else if (reservedPositionsWithPallets.contains(positions)){
+                reservedWithPalletFloorOrTallPosition.add(positions);
+            }
+        }
+
+        Comparator<List<Position>> floorOrTallComparator = (list1, list2) -> {
+            boolean tallList1 = list1.stream().anyMatch(Position::isTall);
+            boolean tallList2 = list2.stream().anyMatch(Position::isTall);
+
+            // Sort tall lists last
+            if (tallList1 && !tallList2) {
+                return 1;
+            } else if (!tallList1 && tallList2) {
+                return -1;
+            } else {
+                // Sort by shelf in descending order
+                int shelfComparison = Integer.compare(
+                        Character.getNumericValue(list2.get(0).getName().charAt(4)),
+                        Character.getNumericValue(list1.get(0).getName().charAt(4))
+                );
+
+                // If the lists are not tall, sort by shelf in ascending order
+                return (tallList1 || tallList2) ? shelfComparison : -shelfComparison;
+            }
+        };
+
+        Collections.sort(reservedFloorOrTallPositions, floorOrTallComparator);
+        result.addAll(reservedFloorOrTallPositions);
+
+        Collections.sort(reservedWithPalletFloorOrTallPosition, floorOrTallComparator);
+        result.addAll(reservedWithPalletFloorOrTallPosition);
+
+        // comparator that would sort the reservedFloorOrTallPositions
+        // it should sort it so the list would have the tall list of positions last and before that should be list
+        // of positions that do not need tall position
+        // also the lists of positions that are at the end (they are tall) should be sorted by shelf in desc order
+        return result;
+    }
 
     /***
      * Method, that returns all the reserved positions that satisfy the given conditions.

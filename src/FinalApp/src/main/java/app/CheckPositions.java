@@ -1,29 +1,23 @@
 package app;
 
 import Entity.*;
-import jakarta.persistence.Table;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CheckPositions implements Initializable {
@@ -32,8 +26,11 @@ public class CheckPositions implements Initializable {
     @FXML
     public Label label;
 
-    private final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
-
+    private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
+    private static final String ALL_POSITION_OK = "Všetky pozície sú v poriadku.";
+    private static final String WRONG_POSITIONS = "Na niektorých pozíciách je tovar napriek, no nie sú\nrezervované žiadnym zákazníkom.\n" +
+            "Premiestnite tovar z:";
+    @FXML
     private Label downloadConfirmationLabel;
 
 

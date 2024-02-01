@@ -24,7 +24,10 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Label fx:id="errorMessage" layoutX="110.0" layoutY="35.0" prefHeight="17.0" prefWidth="305.0" textAlignment="CENTER" textFill="#ba1212" />
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="102.0" layoutY="83.0" prefHeight="28.0" prefWidth="467.0" textAlignment="CENTER" textFill="#ba1212">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font></Label>
       <JFXButton fx:id="storeInProductButton" buttonType="RAISED" layoutX="55.0" layoutY="474.0" onAction="#storeInProduct" prefHeight="37.0" prefWidth="227.0" style="-fx-background-color: #0C356A;" text="Ukončiť zaskladňovanie" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />
