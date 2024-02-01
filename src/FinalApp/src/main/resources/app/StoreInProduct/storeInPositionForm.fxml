@@ -38,5 +38,10 @@
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </JFXButton>
+      <JFXButton fx:id="saveRecordButton" buttonType="RAISED" layoutX="219.0" layoutY="474.0" onAction="#saveRecord" style="-fx-background-color: #0C356A;" text="Uložiť záznam" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
