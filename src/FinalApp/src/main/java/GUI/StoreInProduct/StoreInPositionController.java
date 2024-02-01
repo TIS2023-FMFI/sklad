@@ -29,6 +29,9 @@ public class StoreInPositionController implements Initializable {
     @FXML
     private Button continueStoringInButton;
 
+    @FXML
+    private Button saveRecordButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Warehouse.getStage().setOnCloseRequest(Event::consume);
@@ -36,14 +39,21 @@ public class StoreInPositionController implements Initializable {
 
         if (positions.isEmpty()){
             errorMessage.setText("Nenašli sa žiadne pozície, vyhovujúce kritériam");
-            storeInProductButton.setDisable(true);
-            continueStoringInButton.setDisable(true);
+            setButtonsVisibility(false, false, true);
         }
         else {
             position.setItems(FXCollections.observableArrayList(positions));
             position.setValue(positions.get(0));
+            setButtonsVisibility(true, true, false);
         }
         Warehouse.getInstance().addController("storeInPosition", this);
+    }
+
+    public void setButtonsVisibility(boolean visibilityStoreInButton, boolean visibilityContinueStoringButton,
+                                     boolean visibilitySaveRecordButton){
+        storeInProductButton.setVisible(visibilityStoreInButton);
+        continueStoringInButton.setVisible(visibilityContinueStoringButton);
+        saveRecordButton.setVisible(visibilitySaveRecordButton);
     }
 
     public void backToPalletInformationForm()throws IOException{
@@ -59,11 +69,7 @@ public class StoreInPositionController implements Initializable {
         warehouse.getStoreInInstance().getHistoryRecord().addPallet();
         warehouse.getStoreInInstance().saveHistoryRecord();
 
-        warehouse.removeController("customerTruckNumber");
-        warehouse.removeController("palletInformation");
-        warehouse.removeController("storeInPosition");
-
-        warehouse.deleteStoreInProductInstance();
+        removeControllersAndInstances();
 
         warehouse.changeScene("mainMenu.fxml");
     }
@@ -79,6 +85,25 @@ public class StoreInPositionController implements Initializable {
         warehouse.getStoreInInstance().removePalletInformationDataSet();
 
         warehouse.changeScene("StoreInProduct/palletInformationForm.fxml");
+    }
+
+    public void saveRecord() throws IOException{
+        Warehouse.getStage().setOnCloseRequest(null);
+        Warehouse warehouse = Warehouse.getInstance();
+
+        warehouse.getStoreInInstance().saveHistoryRecord();
+        removeControllersAndInstances();
+
+        warehouse.changeScene("mainMenu.fxml");
+    }
+
+    public void removeControllersAndInstances(){
+        Warehouse warehouse = Warehouse.getInstance();
+        warehouse.removeController("customerTruckNumber");
+        warehouse.removeController("palletInformation");
+        warehouse.removeController("storeInPosition");
+
+        warehouse.deleteStoreInProductInstance();
     }
 
     public String getPosition() {

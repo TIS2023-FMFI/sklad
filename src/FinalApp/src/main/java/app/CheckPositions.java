@@ -27,9 +27,6 @@ public class CheckPositions implements Initializable {
     public Label label;
 
     private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
-    private static final String ALL_POSITION_OK = "Všetky pozície sú v poriadku.";
-    private static final String WRONG_POSITIONS = "Na niektorých pozíciách je tovar napriek, no nie sú\nrezervované žiadnym zákazníkom.\n" +
-            "Premiestnite tovar z:";
     @FXML
     private Label downloadConfirmationLabel;
 
