@@ -8,6 +8,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.FileChooser;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -23,8 +24,8 @@ import java.util.*;
 import java.util.List;
 
 public class FileExporter {
-    //private final String PATH = "exports";
-    private final String PATH = "C:\\Users\\Legion\\OneDrive\\Desktop\\skola";
+    private final String PATH = "exports";
+    //private final String PATH = "C:\\Users\\Legion\\OneDrive\\Desktop\\skola";
     private final Font customFont = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
     private final Font customFontSmall = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 10);
     private final Font customFontBig = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 15, Font.BOLD);
@@ -40,6 +41,7 @@ public class FileExporter {
      * @param columns columns to export
      */
     public void exportExcel(ObservableList<Map<String, String>> items, String filename, String sheetname, List<String> columns) {
+        System.out.println(items);
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet spreadsheet = workbook.createSheet(sheetname);
 
@@ -68,9 +70,17 @@ public class FileExporter {
                 cell.setCellValue(obj);
             }
         }
+
         try {
-            FileOutputStream out = new FileOutputStream(
-                    new File("exports/"+filename+".xlsx"));
+            FileChooser fileChooser = new FileChooser();
+
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            File file = fileChooser.showSaveDialog(Warehouse.getStage());
+
+
+            FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
             workbook.write(out);
             out.close();
         } catch (IOException e) {
@@ -88,8 +98,15 @@ public class FileExporter {
      */
     public void exportInvoicingPDF(String customer, String dateFrom, String dateTo, String price, int totalReservations){
         try {
+            FileChooser fileChooser = new FileChooser();
+
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            File file = fileChooser.showSaveDialog(Warehouse.getStage());
+
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(PATH + "/Invoice.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(file.getAbsolutePath()));
             document.open();
 
             DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
@@ -212,8 +229,16 @@ public class FileExporter {
      */
     public void exportOrderPDF(ObservableList<Map<String, String>> items, Customer customer) {
         try {
+            FileChooser fileChooser = new FileChooser();
+
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            File file = fileChooser.showSaveDialog(Warehouse.getStage());
+
+
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(PATH + "/Dodací list.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(file.getAbsolutePath()));
             document.open();
 
             PdfPTable table = new PdfPTable(4);

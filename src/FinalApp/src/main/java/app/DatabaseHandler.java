@@ -1366,6 +1366,17 @@ public class DatabaseHandler {
         }
     }
 
-
-
+    public void deletePnr(Set<String> pnrs){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            for(var pnr : pnrs){
+                Query query = session.createQuery("DELETE FROM Pallet p WHERE p.pnr = :pnr");
+                query.setParameter("pnr", pnr);
+                query.executeUpdate();
+            }
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

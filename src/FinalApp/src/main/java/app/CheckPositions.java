@@ -5,6 +5,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,6 +33,9 @@ public class CheckPositions implements Initializable {
     public Label label;
 
     private final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
+
+    private Label downloadConfirmationLabel;
+
 
     private Set<String> wrongPositions = new HashSet<>();
     private Set<String> palletToRemove = new HashSet<>();
@@ -120,7 +124,6 @@ public class CheckPositions implements Initializable {
     private List<Map<String, Object>> fillTable(){
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
         List<Map<String,Object>> result = new ArrayList<>();
-        System.out.println(wrongPositions);
         Set<String> usedPallets = new HashSet<>();
         for (String position : wrongPositions) {
             List<Pallet> palsForPos = databaseHandler.getPalletesOnPosition(position);
@@ -141,7 +144,7 @@ public class CheckPositions implements Initializable {
                             "pnr", p.getPnr(),
                             "position", positionString,
                             "material", entry.getKey().getName(),
-                            "number", entry.getValue()));
+                            "number", String.valueOf(entry.getValue())));
                 }
             }
         }
@@ -149,7 +152,7 @@ public class CheckPositions implements Initializable {
         return result;
     }
 
-    String getPositionsString(Pallet p){
+    private String getPositionsString(Pallet p){
         StringBuilder result = new StringBuilder();
         List<Position> poses = Warehouse.getInstance().getDatabaseHandler().getPositionsOfPallet(p.getPnr());
         for (Position pos : poses) {
@@ -168,4 +171,10 @@ public class CheckPositions implements Initializable {
     }
 
 
+    public void exportExcel() {
+        FileExporter fe = new FileExporter();
+        fe.exportExcel(wrongPositionsTable.getItems(), "Vymazané produkty",
+                "Zoznam", new ArrayList<>(Arrays.asList("pnr", "position", "material", "number")));
+        downloadConfirmationLabel.setText("Súbor bol úspešne stiahnutý");
+    }
 }

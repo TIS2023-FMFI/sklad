@@ -74,7 +74,6 @@ public class InventoryConroller implements Initializable {
         columns.add("Materiál");
         columns.add("Počet");
         fileExporter.exportExcel(items, "Inventory", "Inventúra " + LocalDate.now(), columns);
-
     }
 
     /***
