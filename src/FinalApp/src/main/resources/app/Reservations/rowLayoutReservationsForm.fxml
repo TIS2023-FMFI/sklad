@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -7,40 +8,66 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.RowLayoutReservationsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.RowLayoutReservationsController">
    <top>
-      <AnchorPane prefHeight="100.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="100.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="27.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToRows" text="Naspäť" />
-            <Label layoutX="510.0" layoutY="42.0" prefHeight="17.0" prefWidth="42.0" text="Pozícia:" />
-            <Label fx:id="positionName" layoutX="601.0" layoutY="42.0" prefHeight="17.0" prefWidth="99.0" textAlignment="CENTER" />
-            <Label layoutX="829.0" layoutY="42.0" text="Vyberte ešte " />
-            <Label fx:id="selectedPosition" layoutX="905.0" layoutY="42.0" />
-            <Label layoutX="950.0" layoutY="42.0" text="pozícií." />
+            <Button layoutX="27.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToRows" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Label layoutX="487.0" layoutY="42.0" prefHeight="23.0" prefWidth="65.0" text="Pozícia:">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Label>
+            <Label fx:id="positionName" layoutX="585.0" layoutY="40.0" prefHeight="17.0" prefWidth="99.0" textAlignment="CENTER">
+               <font>
+                  <Font size="19.0" />
+               </font></Label>
+            <Label layoutX="829.0" layoutY="42.0" text="Vyberte ešte ">
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font></Label>
+            <Label fx:id="selectedPosition" alignment="CENTER" layoutX="943.0" layoutY="35.0" prefHeight="30.0" prefWidth="128.0">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Label>
+            <Label layoutX="1089.0" layoutY="42.0" text="pozícií.">
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font></Label>
          </children>
       </AnchorPane>
    </top>
    <center>
-      <VBox fx:id="positionsVBox" prefHeight="250.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+      <VBox fx:id="positionsVBox" prefHeight="100.0" prefWidth="1500.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
       <AnchorPane prefHeight="350.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="palletsHBox" layoutY="-5.0" prefHeight="50.0" prefWidth="1300.0" />
-            <HBox layoutY="55.0" prefHeight="300.0" prefWidth="1300.0">
+            <HBox fx:id="palletsHBox" layoutY="-5.0" prefHeight="50.0" prefWidth="1500.0" />
+            <HBox layoutY="55.0" prefHeight="300.0" prefWidth="1500.0">
                <children>
-                  <VBox fx:id="informationContainer1" prefHeight="300.0" prefWidth="450.0">
+                  <VBox fx:id="informationContainer1" prefHeight="300.0" prefWidth="250.0">
                      <padding>
                         <Insets left="100.0" />
                      </padding></VBox>
-                  <VBox fx:id="informationContainer2" prefHeight="300.0" prefWidth="450.0">
+                  <VBox fx:id="informationContainer2" prefHeight="300.0" prefWidth="850.0">
                      <children>
-                        <Label fx:id="errorMessage" prefHeight="20.0" prefWidth="451.0" textAlignment="CENTER" textFill="RED" />
+                        <Label fx:id="errorMessage" prefHeight="48.0" prefWidth="852.0" textAlignment="CENTER" textFill="#cc0000">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font></Label>
                      </children></VBox>
-                  <AnchorPane fx:id="materialCountTable" prefHeight="300.0" prefWidth="399.0">
+                  <AnchorPane fx:id="materialCountTable" prefHeight="300.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#reserve" text="Rezervovať" />
+                        <JFXButton buttonType="RAISED" layoutX="168.0" layoutY="-4.0" onAction="#reserve" style="-fx-background-color: #0C356A;" text="Rezervovať" textFill="WHITE">
+                           <font>
+                              <Font name="Calibri Bold" size="20.0" />
+                           </font>
+                        </JFXButton>
                      </children></AnchorPane>
                </children>
             </HBox>

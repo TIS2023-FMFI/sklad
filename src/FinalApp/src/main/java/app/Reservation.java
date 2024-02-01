@@ -165,7 +165,7 @@ public class Reservation {
     }
     private Button createDeleteButton( Map<Pair<Date, Date>, List<String>> sortedRecords, Pair date, Customer customer){
         JFXButton edit = new JFXButton("Zmazať");
-        String style = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER; -fx-background-color: red; -fx-font-weight: bold;";
+        String style = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER; -fx-background-color: #740c0e; -fx-font-weight: bold;";
 
         edit.setStyle(style);
         edit.setTextFill(Color.WHITE);
