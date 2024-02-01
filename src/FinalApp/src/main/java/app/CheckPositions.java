@@ -27,9 +27,6 @@ public class CheckPositions implements Initializable {
     public Label label;
 
     private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
-    private static final String ALL_POSITION_OK = "Všetky pozície sú v poriadku.";
-    private static final String WRONG_POSITIONS = "Na niektorých pozíciách je tovar napriek, no nie sú\nrezervované žiadnym zákazníkom.\n" +
-            "Premiestnite tovar z:";
     @FXML
     private Label downloadConfirmationLabel;
 
@@ -159,12 +156,25 @@ public class CheckPositions implements Initializable {
     }
 
     private void deleteRecords(){
-        Warehouse.getInstance().getDatabaseHandler().deleteStoredOnPallet(palletToRemove);
-        Warehouse.getInstance().getDatabaseHandler().deletePalletOnPosition(wrongPositions);
-//        for(var pos : wrongPositions){
-//            Position position = Warehouse.getInstance().getDatabaseHandler().getPosition(pos);
-//            Warehouse.getInstance().removePalletsOnPosition(position);
-//        }
+        Warehouse warehouse = Warehouse.getInstance();
+        DatabaseHandler databaseHandler = warehouse.getDatabaseHandler();
+
+        databaseHandler.deleteStoredOnPallet(palletToRemove);
+        
+        for (String positionName : wrongPositions){
+            Position position = databaseHandler.getPosition(positionName);
+            Map<Pallet, Map<Material, Integer>> palletsOnPosition = warehouse.getPalletsOnPosition(position);
+
+            for (Pallet pallet : palletsOnPosition.keySet()){
+                List<Position> positions = databaseHandler.getPositionsOfPallet(pallet.getPnr());
+
+                for (Position position1 : positions){
+                    warehouse.removePalletOnPosition(position1, pallet);
+                    databaseHandler.deletePalletOnPosition(pallet.getPnr(), position1.getName());
+                }
+            }
+        }
+        databaseHandler.deletePallets(palletToRemove);
     }
 
 
