@@ -25,14 +25,18 @@ public class LoginController {
                 wrongLogin.setText("Nezadali ste používateľské heslo");
             }
             warehouse.setCurrentUser(DatabaseHandler.checkUser(username.getText(), password.getText()));
+
+
             warehouse.loadDb();
             warehouse.changeScene("mainMenu.fxml");
+
             CheckPositions checkPositions = new CheckPositions();
             if(!checkPositions.allPositionsCorrect()){
                 checkPositions.createNewWindow();
             }
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
             wrongLogin.setText(e.getMessage());
         }
     }

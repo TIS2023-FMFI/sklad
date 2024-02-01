@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -38,9 +39,13 @@ public class CalculatedInvoicingController implements javafx.fxml.Initializable{
         Date dateTo = input.dateToValue;
         String customer = input.customer.getValue();
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String dateFromSK = dateFormat.format(dateFrom);
+        String dateToSK = dateFormat.format(dateTo);
+
         customerName.setText(customer);
-        intervalFrom.setText(dateFrom.toString());
-        intervalTo.setText(dateTo.toString());
+        intervalFrom.setText(dateFromSK);
+        intervalTo.setText(dateToSK);
         var dbh = Warehouse.getInstance().getDatabaseHandler();
         for (LocalDate date = dateFrom.toLocalDate();
             date.isBefore(dateTo.toLocalDate()) || date.isEqual(dateTo.toLocalDate());

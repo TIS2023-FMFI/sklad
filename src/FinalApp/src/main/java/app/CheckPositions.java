@@ -32,11 +32,9 @@ public class CheckPositions implements Initializable {
     public Label label;
 
     private final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
-    private final String ALL_POSITION_OK = "Všetky pozície sú v poriadku.";
-    private final String WRONG_POSITIONS = "Na niektorých pozíciách je tovar napriek, no nie sú\nrezervované žiadnym zákazníkom.\n" +
-            "Premiestnite tovar z:";
 
     private Set<String> wrongPositions = new HashSet<>();
+    private Set<String> palletToRemove = new HashSet<>();
     private ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();
 
     public static void createNewWindow() {
@@ -76,10 +74,14 @@ public class CheckPositions implements Initializable {
         numberColumn.setPrefWidth(120);
 
         wrongPositions = (Set<String>) Warehouse.getInstance().getController("wrongPositions");
+        System.out.println(wrongPositions);
 
         wrongPositionsTable.getColumns().addAll(positionColumn, PNRColumn, materialColumn, numberColumn);
         items.addAll(fillTable());
         wrongPositionsTable.getItems().addAll(items);
+
+        deleteRecords();
+        System.out.println(allPositionsCorrect());
     }
     public boolean allPositionsCorrect(){
         wrongPositions = findWrongPositions();
@@ -132,6 +134,7 @@ public class CheckPositions implements Initializable {
                 if (products == null) {
                     continue;
                 }
+
                 String positionString = getPositionsString(p);
                 for (Map.Entry<Material, Integer> entry : products.entrySet()) {
                     result.add(Map.of(
@@ -141,9 +144,8 @@ public class CheckPositions implements Initializable {
                             "number", entry.getValue()));
                 }
             }
-
-
         }
+        palletToRemove = usedPallets;
         return result;
     }
 
@@ -154,6 +156,15 @@ public class CheckPositions implements Initializable {
             result.append(pos.getName()).append("-");
         }
         return result.substring(0, result.length() - 1);
+    }
+
+    private void deleteRecords(){
+        Warehouse.getInstance().getDatabaseHandler().deleteStoredOnPallet(palletToRemove);
+        Warehouse.getInstance().getDatabaseHandler().deletePalletOnPosition(wrongPositions);
+//        for(var pos : wrongPositions){
+//            Position position = Warehouse.getInstance().getDatabaseHandler().getPosition(pos);
+//            Warehouse.getInstance().removePalletsOnPosition(position);
+//        }
     }
 
 

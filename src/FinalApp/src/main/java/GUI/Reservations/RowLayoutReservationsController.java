@@ -31,15 +31,15 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
     Set<Position> positionsToSave;
     int numberOfPosition;
     int numberOfTallPosition;
-    private final String REMOVE_FROM_ADDED = "Pozícia bola odstránená z pridaných na zarezervovanie.";
-    private final String ADD_TO_ADDED = "Pozícia zvolená na uloženie.";
-    private final String ENOUGH_CHOOSEN_POSITIONS = "Nemožno pridať ďaľšiu pozíciu";
-    private final String RESERVED_BY_SAME_CUSTOMER = "Nemožno rezervovať pozíciu. Pozn: Pozícia je rezervoná zákazníkom v danom intervale.";
-    private final String CANNOT_SAVE = "Nemožno rezervovať zvolenú pozíciu.";
-    private final String NOT_ENOUGH_POSITIONS = "Málo zvolených pozícií.";
-    private final String DB_FAIL = "Chyba pri nahrávaní do DB";
-    private final String MORE_TALL_POSITIONS_1 = "Musíte ešte vybrať aspoň ";
-    private final String MORE_TALL_POSITIONS_2 = " vysokých pozícií.";
+    private static final String REMOVE_FROM_ADDED = "Pozícia bola odstránená z pridaných na zarezervovanie.";
+    private static final String ADD_TO_ADDED = "Pozícia zvolená na uloženie.";
+    private static final String ENOUGH_CHOOSEN_POSITIONS = "Nemožno pridať ďaľšiu pozíciu";
+    private static final String RESERVED_BY_SAME_CUSTOMER = "Nemožno rezervovať pozíciu. Pozn: Pozícia je rezervoná zákazníkom v danom intervale.";
+    private static final String CANNOT_SAVE = "Nemožno rezervovať zvolenú pozíciu.";
+    private static final String NOT_ENOUGH_POSITIONS = "Málo zvolených pozícií.";
+    private static final String DB_FAIL = "Chyba pri nahrávaní do DB";
+    private static final String MORE_TALL_POSITIONS_1 = "Musíte ešte vybrať aspoň ";
+    private static final String MORE_TALL_POSITIONS_2 = " vysokých pozícií.";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

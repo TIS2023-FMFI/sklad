@@ -5,3 +5,11 @@
 .choice-box .context-menu {
     -fx-pref-width: 250;
 }
+
+.spinner .text-field {
+    -fx-font-size: 15;
+}
+
+.text-field {
+    -fx-font-size: 15;
+}

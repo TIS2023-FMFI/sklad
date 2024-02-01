@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OrderProduct.OrderShowPositionsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OrderProduct.OrderShowPositionsController">
    <children>
-      <Button layoutX="51.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToCustomerSelection" text="Naspäť" />
-      <Button layoutX="138.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveOrderExcel" text="Uložiť excel" />
-      <TableView fx:id="orderTable" editable="true" layoutX="138.0" layoutY="34.0" prefHeight="284.0" prefWidth="424.0" />
-      <Button layoutX="248.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveOrdersPdf" text="Uložiť dodací list" />
-      <Button layoutX="412.0" layoutY="340.0" mnemonicParsing="false" onAction="#continueToConfirmation" text="Potvrdiť a pokračovať" />
+      <Button layoutX="35.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToCustomerSelection" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <TableView fx:id="orderTable" editable="true" layoutX="95.0" layoutY="90.0" prefHeight="310.0" prefWidth="500.0" stylesheets="@orderProductStyles.css" />
+      <JFXButton buttonType="RAISED" layoutX="88.0" layoutY="412.0" onAction="#saveOrderExcel" prefHeight="40.0" style="-fx-background-color: #0C356A;" text="Uložiť excel" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="220.0" layoutY="412.0" onAction="#saveOrdersPdf" prefHeight="40.0" style="-fx-background-color: #0C356A;" text="Uložiť dodací list" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="397.0" layoutY="412.0" onAction="#continueToConfirmation" prefHeight="40.0" style="-fx-background-color: #0C356A;" text="Potvrdiť a pokračovať" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

@@ -15,22 +15,22 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Label layoutX="113.0" layoutY="164.0" prefHeight="26.0" prefWidth="93.0" text="Zákazník:">
+      <Label layoutX="113.0" layoutY="166.0" prefHeight="26.0" prefWidth="93.0" text="Zákazník:">
          <font>
             <Font name="Calibri Bold" size="21.0" />
          </font>
       </Label>
-      <Label layoutX="113.0" layoutY="250.0" prefHeight="26.0" prefWidth="170.0" text="Číslo točky za dnes:">
+      <Label layoutX="113.0" layoutY="240.0" prefHeight="26.0" prefWidth="170.0" text="Číslo točky za dnes:">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="customer" layoutX="330.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" styleClass="choice-box" stylesheets="@../../styles.css">
+      <ChoiceBox fx:id="customer" layoutX="330.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" styleClass="choice-box" stylesheets="@../styles.css">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ChoiceBox>
-      <Spinner fx:id="truckNumber" editable="true" layoutX="330.0" layoutY="248.0" prefHeight="30.0" prefWidth="160.0" />
+      <Spinner fx:id="truckNumber" editable="true" layoutX="329.0" layoutY="235.0" prefHeight="30.0" prefWidth="160.0" stylesheets="@storeInStyles.css" />
       <JFXButton buttonType="RAISED" layoutX="255.0" layoutY="376.0" onAction="#nextToInformationForm" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #0C356A;" text="Ďalej" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.StoreInPositionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.StoreInPositionController">
    <children>
       <Label layoutX="42.0" layoutY="133.0" text="Zaskladniť na pozíciu:">
          <font>
@@ -18,7 +18,7 @@
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font></Label>
-      <TextField fx:id="note" layoutX="52.0" layoutY="249.0" prefHeight="201.0" prefWidth="495.0" />
+      <TextField fx:id="note" alignment="TOP_LEFT" layoutX="52.0" layoutY="249.0" prefHeight="201.0" prefWidth="495.0" stylesheets="@storeInStyles.css" />
       <ChoiceBox fx:id="position" layoutX="294.0" layoutY="127.0" prefHeight="30.0" prefWidth="250.0" stylesheets="@storeInStyles.css" />
       <Button layoutX="31.0" layoutY="31.0" mnemonicParsing="false" onAction="#backToPalletInformationForm" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
          <font>

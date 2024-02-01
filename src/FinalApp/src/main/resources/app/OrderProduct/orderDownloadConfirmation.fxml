@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OrderProduct.OrderDownloadConfirmation">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OrderProduct.OrderDownloadConfirmation">
    <children>
-      <Label layoutX="144.0" layoutY="102.0" text="Produkty boli ostránené z databázy">
+      <Label layoutX="170.0" layoutY="98.0" text="Produkty boli ostránené z databázy">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button layoutX="261.0" layoutY="272.0" mnemonicParsing="false" onAction="#backToMenu" text="Odísť do menu" />
-      <Label layoutX="121.0" layoutY="191.0" text="Počet odoslaných paliet:">
+      <Label layoutX="103.0" layoutY="246.0" text="Počet odoslaných paliet:">
          <font>
-            <Font size="14.0" />
+            <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="numOfPallets" layoutX="290.0" layoutY="188.0" />
-      <Label fx:id="errorLabel" alignment="CENTER" layoutX="113.0" layoutY="228.0" prefHeight="22.0" prefWidth="392.0" textFill="RED">
+      <TextField fx:id="numOfPallets" layoutX="342.0" layoutY="242.0" stylesheets="@../RelocateProduct/relocateProductStyles.css" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="124.0" layoutY="189.0" prefHeight="22.0" prefWidth="406.0" textFill="#cc0000">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="19.0" />
          </font>
       </Label>
+      <JFXButton buttonType="RAISED" layoutX="256.0" layoutY="351.0" onAction="#backToMenu" prefHeight="40.0" style="-fx-background-color: #0C356A;" text="Späť na menu" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerManagement.CustomerManagementMainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerManagement.CustomerManagementMainController">
    <children>
-      <Label layoutX="151.0" layoutY="193.0" text="Vyberte zákazníka:">
+      <Label layoutX="124.0" layoutY="167.0" text="Vyberte zákazníka:">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="customer" layoutX="397.0" layoutY="187.0" onAction="#saveCustomerName" prefHeight="36.0" prefWidth="191.0" />
-      <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="184.0" layoutY="98.0" prefHeight="58.0" prefWidth="357.0" textAlignment="CENTER" textFill="RED">
+      <ChoiceBox fx:id="customer" layoutX="336.0" layoutY="161.0" onAction="#saveCustomerName" prefHeight="36.0" prefWidth="191.0" />
+      <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="119.0" layoutY="97.0" prefHeight="35.0" prefWidth="417.0" textAlignment="CENTER" textFill="#cc0000">
          <font>
-            <Font name="Calibri Bold" size="20.0" />
+            <Font name="System Bold" size="19.0" />
          </font></Label>
-      <JFXButton buttonType="RAISED" layoutX="62.0" layoutY="52.0" onAction="#backToMainReservation" ripplerFill="#916f6f" style="-fx-background-color: #5e1919;" text="Naspäť" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="232.0" layoutY="324.0" onAction="#createNewCustomerScene" prefHeight="45.0" prefWidth="191.0" style="-fx-background-color: #0C356A;" text="Pridať zákazníka" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="267.0" layoutY="383.0" onAction="#createNewCustomerScene" prefHeight="36.0" prefWidth="191.0" style="-fx-background-color: #0b1646;" text="Pridať zákazníka" textFill="WHITE">
+      <JFXButton fx:id="showCustomer" buttonType="RAISED" layoutX="336.0" layoutY="260.0" onAction="#showInformation" prefHeight="45.0" prefWidth="191.0" style="-fx-background-color: #0C356A;" text="Zobraziť údaje" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="showCustomer" buttonType="RAISED" layoutX="397.0" layoutY="297.0" onAction="#showInformation" prefHeight="36.0" prefWidth="191.0" style="-fx-background-color: #0b1646;" text="Zobraziť údaje" textFill="WHITE">
+      <JFXButton fx:id="delete" buttonType="RAISED" layoutX="124.0" layoutY="260.0" onAction="#deleteCustomerScene" prefHeight="45.0" style="-fx-background-color: #0C356A;" text="Odstrániť zákazníka" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="delete" buttonType="RAISED" layoutX="122.0" layoutY="297.0" onAction="#deleteCustomerScene" style="-fx-background-color: #0b1646;" text="Odstrániť zákazníka" textFill="WHITE">
+      <Button layoutX="35.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToMainReservation" prefHeight="35.0" prefWidth="75.0" text="Naspäť">
          <font>
-            <Font name="Calibri Bold" size="20.0" />
+            <Font size="15.0" />
          </font>
-      </JFXButton>
+      </Button>
    </children>
 </AnchorPane>

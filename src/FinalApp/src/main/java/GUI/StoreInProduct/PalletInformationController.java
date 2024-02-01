@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,9 +48,10 @@ public class PalletInformationController implements Initializable {
 
     private final Map<String, Integer> materialMap = new LinkedHashMap<>();
 
-    private static final int PAIR_HEIGHT = 25;
+    private static final int PAIR_HEIGHT = 30;
 
     private static final int MAX_PAIRS = 6;
+    private static final int MATERIAL_CONTAINER_SPACING = 5;
     private int currentPairCount;
     private boolean isCountValid;
 
@@ -59,6 +61,7 @@ public class PalletInformationController implements Initializable {
 
         currentPairCount = 0;
         isCountValid = true;
+        materialContainer.setSpacing(MATERIAL_CONTAINER_SPACING);
 
         if (dataSet == null){
             palletType.getItems().addAll(palletTypeOptions);
@@ -92,6 +95,7 @@ public class PalletInformationController implements Initializable {
             HBox materialPair = createMaterialPair();
             ((TextField) materialPair.getChildren().get(1)).setText(name);
             ((TextField) materialPair.getChildren().get(3)).setText(String.valueOf(materialMap.get(name)));
+
             materialContainer.getChildren().add(materialPair);
             currentPairCount++;
             updateContainerHeights();
@@ -123,11 +127,13 @@ public class PalletInformationController implements Initializable {
 
     private HBox createMaterialPair() {
         Warehouse warehouse = Warehouse.getInstance();
-        Label materialLabel = warehouse.createStyledLabel("Materiál:", 22);
-        TextField materialTextField = new TextField();
+        Label materialLabel = warehouse.createStyledLabel("Materiál:", 20);
+        TextField materialTextField = warehouse.createTextfield(150, 30);
+        materialTextField.setStyle("-fx-font-size: 16;");
 
-        Label countLabel = warehouse.createStyledLabel("Počet kusov:", 22);
-        TextField countTextField = new TextField();
+        Label countLabel = warehouse.createStyledLabel("Počet kusov:", 20);
+        TextField countTextField = warehouse.createTextfield(150, 30);
+        countTextField.setStyle("-fx-font-size: 16;");
 
         HBox materialPair = new HBox(materialLabel, materialTextField);
 
@@ -137,7 +143,8 @@ public class PalletInformationController implements Initializable {
 
         if (materialContainer.getChildren().size() > 0) {
             JFXButton removeButton = warehouse.createStyledButton("X", "#740c0e",
-                    "#FFFFFF", 30, 30, 17, true);
+                    "#FFFFFF", 29, 29, 17, true);
+            removeButton.setAlignment(Pos.CENTER);
             removeButton.setOnAction(event -> removeMaterialPair(removeButton));
             materialPair.getChildren().add(removeButton);
         }
@@ -147,7 +154,7 @@ public class PalletInformationController implements Initializable {
             materialPair.getChildren().add(placeholder);
         }
 
-        materialPair.setSpacing(15);
+        materialPair.setSpacing(20);
         materialPair.setAlignment(Pos.CENTER);
 
         countTextField.textProperty().addListener((observable, oldValue, newValue) -> handleCountTextField(newValue));
@@ -211,8 +218,8 @@ public class PalletInformationController implements Initializable {
     }
 
     private void updateContainerHeights() {
-        materialContainer.setPrefHeight(currentPairCount * PAIR_HEIGHT);
-        double newHeight = topContainer.getPrefHeight() + materialContainer.getPrefHeight() + informationContainer.getPrefHeight() + 50;
+        materialContainer.setPrefHeight(currentPairCount * (PAIR_HEIGHT + MATERIAL_CONTAINER_SPACING));
+        double newHeight = topContainer.getPrefHeight() + materialContainer.getPrefHeight() + informationContainer.getPrefHeight();
 
         borderPane.setPrefHeight(newHeight);
         Warehouse.getStage().setMinHeight(newHeight);

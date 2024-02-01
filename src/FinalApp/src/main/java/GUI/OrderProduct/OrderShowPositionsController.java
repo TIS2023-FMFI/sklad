@@ -10,8 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.util.Pair;
 
@@ -24,6 +24,7 @@ public class OrderShowPositionsController implements Initializable {
     private TableView orderTable;
 
     protected ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
+    private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
 
     /***
      * Customer for which the order is being made
@@ -42,15 +43,19 @@ public class OrderShowPositionsController implements Initializable {
 
         TableColumn<Map, String> materialColumn = new TableColumn<>("Materiál");
         materialColumn.setCellValueFactory(new MapValueFactory<>("Materiál"));
+        materialColumn.setPrefWidth(150);
 
         TableColumn<Map, String> quantityColumn = new TableColumn<>("Počet");
         quantityColumn.setCellValueFactory(new MapValueFactory<>("Počet"));
+        quantityColumn.setPrefWidth(74);
 
-        TableColumn<Map, String>positionColumn = new TableColumn<>("Pozícia");
+        TableColumn<Map, String> positionColumn = new TableColumn<>("Pozícia");
         positionColumn.setCellValueFactory(new MapValueFactory<>("Pozícia"));
+        positionColumn.setPrefWidth(200);
 
         TableColumn<Map, String> PNRColumn = new TableColumn<>("PNR");
         PNRColumn.setCellValueFactory(new MapValueFactory<>("PNR"));
+        PNRColumn.setPrefWidth(74);
 
         orderTable.getColumns().addAll(materialColumn, quantityColumn, positionColumn, PNRColumn);
 
