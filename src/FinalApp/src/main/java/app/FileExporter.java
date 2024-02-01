@@ -78,7 +78,9 @@ public class FileExporter {
             fileChooser.getExtensionFilters().add(extFilter);
 
             File file = fileChooser.showSaveDialog(Warehouse.getStage());
-
+            if (file == null) {
+                return;
+            }
 
             FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
             workbook.write(out);
@@ -104,6 +106,9 @@ public class FileExporter {
             fileChooser.getExtensionFilters().add(extFilter);
 
             File file = fileChooser.showSaveDialog(Warehouse.getStage());
+            if (file == null) {
+                return;
+            }
 
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(file.getAbsolutePath()));
@@ -235,6 +240,9 @@ public class FileExporter {
             fileChooser.getExtensionFilters().add(extFilter);
 
             File file = fileChooser.showSaveDialog(Warehouse.getStage());
+            if (file == null) {
+                return;
+            }
 
 
             Document document = new Document();
