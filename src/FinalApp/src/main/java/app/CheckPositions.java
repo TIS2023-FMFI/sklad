@@ -22,9 +22,9 @@ import java.util.*;
 
 public class CheckPositions implements Initializable {
     @FXML
-    public TableView wrongPositionsTable;
+    private TableView wrongPositionsTable;
     @FXML
-    public Label label;
+    private Label label;
 
     private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
     private static final String ALL_POSITION_OK = "Všetky pozície sú v poriadku.";
@@ -38,6 +38,9 @@ public class CheckPositions implements Initializable {
     private Set<String> palletToRemove = new HashSet<>();
     private ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();
 
+    /***
+     * Creates new window with table of positions that should be empty but aren't.
+     */
     public static void createNewWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(CheckPositions.class.getResource("RelocateProduct/checkPositions.fxml"));
@@ -55,6 +58,12 @@ public class CheckPositions implements Initializable {
             e.printStackTrace();
         }
     }
+
+    /***
+     * Fills table with wrong positions.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TableColumn<Map, String> PNRColumn = new TableColumn<>("PNR");
@@ -84,6 +93,9 @@ public class CheckPositions implements Initializable {
         deleteRecords();
         System.out.println(allPositionsCorrect());
     }
+    /***
+     * Saves a list of pallets that should be removed from the warehouse.
+     */
     public boolean allPositionsCorrect(){
         wrongPositions = findWrongPositions();
         Warehouse.getInstance().addController("wrongPositions", wrongPositions);
@@ -114,6 +126,13 @@ public class CheckPositions implements Initializable {
         return currentReservedPositions;
     }
 
+    /***
+     * Checks if date is between two other dates.
+     * @param dateFrom start date
+     * @param dateTo end date
+     * @param current date to check
+     * @return true if current date is between dateFrom and dateTo
+     */
     public boolean overlapDate(Date dateFrom, Date dateTo, Date current){
         return (current.after(dateFrom) || current.equals(dateFrom)) && (current.before(dateTo) || current.equals(dateTo));
     }
@@ -168,6 +187,9 @@ public class CheckPositions implements Initializable {
     }
 
 
+    /***
+     * Exports table to excel file.
+     */
     public void exportExcel() {
         FileExporter fe = new FileExporter();
         fe.exportExcel(wrongPositionsTable.getItems(), "Vymazané produkty",

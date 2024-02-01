@@ -147,7 +147,7 @@ public class MoveProductToPositionController implements Initializable {
         Warehouse.getInstance().changeScene("RelocateProduct/confirmMovingForm.fxml");
     }
 
-/***
+    /***
      * Method that checks if a position is chosen
      */
     public void checkIfPositionFilled() {
