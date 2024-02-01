@@ -95,6 +95,10 @@ public class MoveProductToPositionController implements Initializable {
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
         List<List<Position>> freePositions = dbh.getFreePositions(customer, weight, isTall, palletWidth);
+        if (freePositions.size() == 0){
+            errorLabel.setText("Nenašli sa voľné pozície.");
+            return;
+        }
         newPositionsChoice.getItems().addAll(getToString(freePositions));
     }
 
