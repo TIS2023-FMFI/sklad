@@ -65,7 +65,6 @@ public class MoveProductToPositionController implements Initializable {
      * @throws IOException if there is problem with loading fxml file
      */
 
-    private boolean isTall = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ChooseProductToRelocateController controller = (ChooseProductToRelocateController)
@@ -87,18 +86,20 @@ public class MoveProductToPositionController implements Initializable {
             product = controller.finalMaterial;
             quantity = controller.finalQuantity;
         }
-        if (initialPosition.isTall())isTall = true;
         fillNewPositionsChoice();
     }
 
     private void fillNewPositionsChoice(){
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         Customer customer = dbh.getCustomerThatReservedPosition(initialPosition);
-        List<List<Position>> freePositions = dbh.getFreePositions(customer, weight, isTall, palletWidth);
+        List<List<Position>> freePositions = dbh.getFreePositions(customer, weight, false, palletWidth);
+        List<Position> currentPositions = dbh.getPositionsWithPallet(palletFrom).stream().map(dbh::getPosition).toList();
+        freePositions.remove(currentPositions);
         if (freePositions.size() == 0){
             errorLabel.setText("Nenašli sa voľné pozície.");
             return;
         }
+
         newPositionsChoice.getItems().addAll(getToString(freePositions));
     }
 

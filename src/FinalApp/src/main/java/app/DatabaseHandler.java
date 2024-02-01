@@ -47,7 +47,7 @@ public class DatabaseHandler {
     /***
      * A destructor that closes session factory after exiting application.
      */
-    /*%
+    /*
     @Override
     protected void finalize() {
         if (sessionFactory != null) {
