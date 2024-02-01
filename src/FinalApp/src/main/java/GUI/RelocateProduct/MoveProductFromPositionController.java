@@ -44,13 +44,17 @@ public class MoveProductFromPositionController {
     public void confirmInitialPosition() throws IOException {
         if (!checkIfPositionIsCorrect(position.getText())){
             errorLabel.setText("Pozícia neexistuje");
+            return;
         }
-        else {
-            isWholePallet = wholePallet.isSelected();
-            Warehouse.getInstance().addController("MoveProductFromPositionController", this);
-            positionName = position.getText();
-            Warehouse.getInstance().changeScene("RelocateProduct/chooseProductToRelocateForm.fxml");
+        if (Warehouse.getInstance().getDatabaseHandler().getPalletesOnPosition(position.getText()).isEmpty()){
+            errorLabel.setText("Na pozícii sa nenachádza žiadny produkt");
+            return;
         }
+
+        isWholePallet = wholePallet.isSelected();
+        Warehouse.getInstance().addController("MoveProductFromPositionController", this);
+        positionName = position.getText();
+        Warehouse.getInstance().changeScene("RelocateProduct/chooseProductToRelocateForm.fxml");
     }
 
     private boolean checkIfPositionIsCorrect(String position){

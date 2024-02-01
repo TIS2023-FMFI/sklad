@@ -57,7 +57,12 @@ public class OrderProductsController implements Initializable {
                 return;
             }
             Pair<Material, Integer> oldPair = null;
-            var newMaterial = new Pair<>(m, Integer.parseInt(quantity.getText()));
+            int chosenQuantity = Integer.parseInt(quantity.getText());
+            if (chosenQuantity <= 0) {
+                errorMessage.setText("Počet musí byť kladné číslo!");
+                return;
+            }
+            var newMaterial = new Pair<>(m, chosenQuantity);
             for (Pair<Material,Integer> p : materials) {
                 if (p.getKey().getName().equals(m.getName())) {
                     oldPair = p;
