@@ -144,8 +144,8 @@ public class OrderProduct {
                     Warehouse.getInstance().getPalletsOnPositionMap().get(position).get(pnr).put(material, newQuantity);
                 }
             }
-            //TODO
             dbh.removeItem(positions, pnr, material, quantity, removePallet);
+
         }
     }
 

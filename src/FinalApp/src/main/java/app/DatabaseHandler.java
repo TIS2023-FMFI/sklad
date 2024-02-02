@@ -4,6 +4,7 @@ import Entity.*;
 import Exceptions.MaterialNotAvailable;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
@@ -501,12 +502,33 @@ public class DatabaseHandler {
                     }
                     session.delete(pallet);
                 }
+                transaction.commit();
+                checkIfMaterialIsStored(material);
             }else {
                 int quantityOnPallet = getMaterialQuantityOnPallet(pallet, material);
                 sop.setQuantity(quantityOnPallet - quantity);
                 session.update(sop);
+                transaction.commit();
             }
-            transaction.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkIfMaterialIsStored(Material material) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Long> query = session.createQuery("select count(*) from StoredOnPallet sop where sop.idProduct = :id");
+            query.setParameter("id", material.getId());
+            Long sop = query.getSingleResult();
+            if (sop == 0){
+                Transaction transaction = session.beginTransaction();
+                String hql = "delete from Material where id= :id";
+                Query queryDel = session.createQuery(hql);
+                queryDel.setParameter("id", material.getId());
+                queryDel.executeUpdate();
+                transaction.commit();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

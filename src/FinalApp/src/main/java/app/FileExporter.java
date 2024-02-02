@@ -212,16 +212,9 @@ public class FileExporter {
 
         document.add(Chunk.NEWLINE);
         document.add(new Paragraph("*Cena je vypočítaná podľa počtu rezervovnaých miest v sklade za každý" +
-                "deň intervalu: " + changeDateFormat(dateFrom) + "-" + changeDateFormat(dateTo) + ".", customFontSmall));
+                "deň intervalu: " + dateFrom + "-" + dateTo + ".", customFontSmall));
     }
 
-    private String changeDateFormat(String date){
-        String year = date.substring(0, date.indexOf("-"));
-        date = date.substring(date.indexOf("-")+1);
-        String month = date.substring(0, date.indexOf("-"));
-        String day = date.substring(date.indexOf("-")+1);
-        return day + "." + month + "." + year;
-    }
 
     /**
      * Exports the order items and their respective positions to PDF
