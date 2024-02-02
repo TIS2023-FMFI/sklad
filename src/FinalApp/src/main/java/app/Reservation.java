@@ -218,6 +218,10 @@ public class Reservation {
             Button edit = createDeleteButton(sortedRecords, date, customer);
             LocalDate parsedDate1 = LocalDate.parse(String.valueOf(date.getKey()));
             LocalDate parsedDate2 = LocalDate.parse(String.valueOf(date.getValue()));
+            LocalDate today = LocalDate.now();
+            if(parsedDate2.isBefore(today)){
+                continue;
+            }
 
             result.add(Map.of(
                     "from", parsedDate1.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),

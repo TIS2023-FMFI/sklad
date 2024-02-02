@@ -11,6 +11,7 @@ import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -69,7 +70,7 @@ public class AddReservationSecondController implements Initializable {
             errorMessage.setText(NUMBER_CONTAINS_CHAR);
             return;
         }
-        if(getPosition == 0){
+        if(getPosition <= 0 || getTall < 0){
             errorMessage.setText(MORE_THAN_ZERO);
             return;
         }

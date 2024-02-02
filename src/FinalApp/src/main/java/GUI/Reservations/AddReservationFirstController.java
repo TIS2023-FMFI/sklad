@@ -29,6 +29,8 @@ public class AddReservationFirstController implements Initializable {
     Label errorMessage;
     Warehouse warehouse;
     private static final String STYLE = "-fx-font: 17px 'Calibri';";
+    private static final String PAST_PICKED_DATE = "Dátum od nemôže byť starší ako dnešný dátum.";
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,11 +60,16 @@ public class AddReservationFirstController implements Initializable {
         Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
     }
     private boolean checkInputs(){
+
         if (dateFromValue == null || dateToValue == null) {
             errorMessage.setText("Prázdny dátum");
             return false;
         }else if (dateFromValue.after(dateToValue)) {
             errorMessage.setText("Dátum od je väčší ako dátum do");
+            return false;
+        }
+        else if(dateFromValue.toLocalDate().isBefore(LocalDate.now())){
+            errorMessage.setText(PAST_PICKED_DATE);
             return false;
         }
        return true;
