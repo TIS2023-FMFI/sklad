@@ -6,7 +6,6 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,7 +14,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -24,8 +22,6 @@ import java.util.*;
 import java.util.List;
 
 public class FileExporter {
-    private final String PATH = "exports";
-    //private final String PATH = "C:\\Users\\Legion\\OneDrive\\Desktop\\skola";
     private final Font customFont = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
     private final Font customFontSmall = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 10);
     private final Font customFontBig = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 15, Font.BOLD);
@@ -78,7 +74,9 @@ public class FileExporter {
             fileChooser.getExtensionFilters().add(extFilter);
 
             File file = fileChooser.showSaveDialog(Warehouse.getStage());
-
+            if (file == null) {
+                return;
+            }
 
             FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
             workbook.write(out);
@@ -104,6 +102,9 @@ public class FileExporter {
             fileChooser.getExtensionFilters().add(extFilter);
 
             File file = fileChooser.showSaveDialog(Warehouse.getStage());
+            if (file == null) {
+                return;
+            }
 
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(file.getAbsolutePath()));
@@ -235,6 +236,9 @@ public class FileExporter {
             fileChooser.getExtensionFilters().add(extFilter);
 
             File file = fileChooser.showSaveDialog(Warehouse.getStage());
+            if (file == null) {
+                return;
+            }
 
 
             Document document = new Document();

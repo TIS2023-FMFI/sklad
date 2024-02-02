@@ -27,6 +27,9 @@ public class DatabaseHandler {
 
     private static SessionFactory sessionFactory;
 
+    /***
+     * Constructor that sets up session factory.
+     */
     public DatabaseHandler() {
         setUpSessionFactory();
     }
@@ -47,7 +50,7 @@ public class DatabaseHandler {
     /***
      * A destructor that closes session factory after exiting application.
      */
-    /*%
+    /*
     @Override
     protected void finalize() {
         if (sessionFactory != null) {
@@ -185,6 +188,14 @@ public class DatabaseHandler {
         }
     }
 
+    /***
+     * Method, that returns a list of positions that satisfy the given parameters of a pallet.
+     * @param customer The customer.
+     * @param weight The weight of the pallet.
+     * @param isTall The height of the pallet.
+     * @param numberOfPositions The number of positions.
+     * @return The list of positions.
+     */
     public List<List<Position>> getFreePositions(Customer customer, double weight, boolean isTall, int numberOfPositions){
         List<List<Position>> result = new ArrayList<>();
 
@@ -370,8 +381,15 @@ public class DatabaseHandler {
     }
 
 
+    /***
+     * Method, that returns all the positions that are reserved by customer and have pallets on them.
+     * @param customer The unique identifier for the customer.
+     * @param weight The weight of the pallet.
+     * @param isTall Whether the position is tall.
+     * @param numberOfPositions The number of consecutive positions to be selected.
+     * @return A list of positions that are reserved by customer and have pallets on them.
+     */
     public List<List<Position>> getReservedPositionsWithPallets(Customer customer, double weight, boolean isTall, int numberOfPositions){
-        // all free reserved positions for the customer with pallet/s on it
         List<Position> allReservedPositionsWithPallet = getAllFreeReservedPositionsWithPallet(customer.getId());
         allReservedPositionsWithPallet = filterPositionsBasedOnWeightHeight(allReservedPositionsWithPallet, isTall, weight);
 
@@ -426,6 +444,11 @@ public class DatabaseHandler {
         return result;
     }
 
+    /***
+     * Method, that calculates the weight of all the pallets on a given position.
+     * @param pallets The pallets on the position.
+     * @return The weight of all the pallets on a given position.
+     */
     public double getWeightOfPalletsOnPosition(List<Pallet> pallets){
         double result = 0;
         for (Pallet pallet : pallets){
@@ -489,6 +512,11 @@ public class DatabaseHandler {
         }
     }
 
+    /***
+     * Method, that returns customer that has the given position reserved at the moment.
+     * @param position The position to be checked.
+     * @return The customer that reserved the position.
+     */
     public Customer getCustomerThatReservedPosition(Position position) {
         LocalDate today = LocalDate.now();
 

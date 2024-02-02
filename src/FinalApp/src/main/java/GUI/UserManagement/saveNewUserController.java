@@ -43,6 +43,7 @@ public class saveNewUserController implements Initializable {
         UserManagementMainController userManagementMainController = (UserManagementMainController)
                 Warehouse.getInstance().getController("UserManagementMainController");
         if(!userManagementMainController.creatingNew){
+            saveButton.setText("Uložiť zmeny");
             deleteButton.setVisible(true);
             userUpdated = Warehouse.getInstance().getDatabaseHandler().getUser(userManagementMainController.selectedUser);
             name.setText(userUpdated.getName());
@@ -52,7 +53,6 @@ public class saveNewUserController implements Initializable {
             }
         }else {
             deleteButton.setVisible(false);
-            saveButton.setText("Uložiť zmeny");
             userUpdated = null;
             name.setText("");
             password.setText("");

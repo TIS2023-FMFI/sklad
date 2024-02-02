@@ -121,15 +121,15 @@ public class ChooseProductToRelocateController implements Initializable {
                 errorLabel.setText("Zadajte množstvo produktu.");
                 return;
             }
-            if (quantityText.getText().equals("0")) {
-                errorLabel.setText("Množstvo produktu nemôže byť 0.");
-                return;
-            }
             int num;
             try {
                 num = Integer.parseInt(quantityText.getText());
             } catch (NumberFormatException e) {
                 errorLabel.setText("Množstvo produktu musí byť číslo.");
+                return;
+            }
+            if (num <= 0) {
+                errorLabel.setText("Množstvo produktu musí byť väčšie ako 0.");
                 return;
             }
             String key = productsOnPallet.getValue().substring(0, productsOnPallet.getValue().indexOf(" ("));
