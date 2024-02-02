@@ -42,9 +42,10 @@ public class saveNewUserController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         UserManagementMainController userManagementMainController = (UserManagementMainController)
                 Warehouse.getInstance().getController("UserManagementMainController");
+
         if(!userManagementMainController.creatingNew){
             saveButton.setText("Uložiť zmeny");
-            deleteButton.setVisible(true);
+//            deleteButton.setVisible(true);
             userUpdated = Warehouse.getInstance().getDatabaseHandler().getUser(userManagementMainController.selectedUser);
             name.setText(userUpdated.getName());
             password.setText(userUpdated.getPassword());
@@ -58,6 +59,8 @@ public class saveNewUserController implements Initializable {
             password.setText("");
             isAdmin.setSelected(false);
         }
+        //odstranenie moznosti mazania
+        deleteButton.setVisible(false);
     }
 
     /***

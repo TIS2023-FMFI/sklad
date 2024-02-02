@@ -31,7 +31,7 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="99.0" layoutY="139.0" onAction="#goToUserManagement" prefHeight="44.0" prefWidth="218.0" style="-fx-background-color: #0C356A;" text="Manažment používateľov" textFill="WHITE">
+      <JFXButton fx:id="userManagementButton" buttonType="RAISED" layoutX="99.0" layoutY="139.0" onAction="#goToUserManagement" prefHeight="44.0" prefWidth="218.0" style="-fx-background-color: #0C356A;" text="Manažment používateľov" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="18.0" />
          </font>
