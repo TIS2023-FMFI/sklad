@@ -49,7 +49,7 @@ public class RowLayoutController implements Initializable {
     protected static final String GREEN_COLOR = "#008000";
 
     protected static final int POSITION_BUTTON_WIDTH = 40;
-    protected static final int POSITION_BUTTON_HEIGHT = 50;
+    protected static final int POSITION_BUTTON_HEIGHT = 40;
     protected static final int TALL_POSITION_BUTTON_HEIGHT = 75;
     protected static final int POSITION_BUTTON_SPACING = 3;
 
