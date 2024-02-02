@@ -129,10 +129,18 @@ public class Warehouse extends Application {
         stage.setY(centerY);
     }
 
+
+
     /***
      * Method, that loads data to the memory after a successful login.
      */
     public void loadDb(){
+        positionsInRows = databaseHandler.loadPositionsInRows();
+        palletsOnPosition = databaseHandler.loadPalletsOnPositions();
+        positionsInGroups = databaseHandler.getPositionInGroups();
+    }
+
+    public void updatePositions(){
         positionsInRows = databaseHandler.loadPositionsInRows();
         palletsOnPosition = databaseHandler.loadPalletsOnPositions();
         positionsInGroups = databaseHandler.getPositionInGroups();

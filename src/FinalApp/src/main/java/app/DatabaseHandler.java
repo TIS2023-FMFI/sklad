@@ -58,7 +58,7 @@ public class DatabaseHandler {
         }
     }
     */
-    protected boolean savePositionsToDB(List<Position> positions) {
+    public boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
             List<Position> newPositions = new ArrayList<>();
             List<Position> updatePositions = new ArrayList<>();
@@ -1463,6 +1463,17 @@ public class DatabaseHandler {
                 query.setParameter("pnr", pnr);
                 query.executeUpdate();
             }
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletePositions(){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM Position");
+            query.executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

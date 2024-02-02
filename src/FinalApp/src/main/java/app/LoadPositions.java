@@ -14,7 +14,7 @@ public class LoadPositions {
     private static final int POSTION_NAME_LENGTH = 5;
 
     public List<String> rows = new ArrayList<>();
-    public List<Position> finalPositions = new ArrayList<>();
+    private List<Position> finalPositions = new ArrayList<>();
 
 
     /***
@@ -37,14 +37,18 @@ public class LoadPositions {
         catch (IOException e){
             throw new FileNotFound(fileName);
         }
-
     }
+
+    public List<Position> getFinalPositions() {
+        return finalPositions;
+    }
+
     /***
      * Method, that checks loaded data. When data are checked, it creates new Position
      * and add it to the finalPositions where all created positions are stored.
      * @throws WrongStringFormat when name of the position has wrong format or first letter in the row isn't 'n' or 'v'
      */
-    protected int addPositions() throws WrongStringFormat {
+    public int addPositions() throws WrongStringFormat {
         int addedPosition = 0;
         for(String row : rows){
             List<String> splittedPositions = new ArrayList<>(List.of(row.split("-")));
@@ -67,7 +71,7 @@ public class LoadPositions {
         return addedPosition;
     }
 
-    protected boolean saveToDB(){
+    public boolean saveToDB(){
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
         if(databaseHandler.savePositionsToDB(finalPositions)){
             return true;
