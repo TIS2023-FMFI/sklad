@@ -160,18 +160,12 @@ public class CheckPositions implements Initializable {
         DatabaseHandler databaseHandler = warehouse.getDatabaseHandler();
 
         databaseHandler.deleteStoredOnPallet(palletToRemove);
-        
-        for (String positionName : wrongPositions){
-            Position position = databaseHandler.getPosition(positionName);
-            Map<Pallet, Map<Material, Integer>> palletsOnPosition = warehouse.getPalletsOnPosition(position);
 
-            for (Pallet pallet : palletsOnPosition.keySet()){
-                List<Position> positions = databaseHandler.getPositionsOfPallet(pallet.getPnr());
-
-                for (Position position1 : positions){
-                    warehouse.removePalletOnPosition(position1, pallet);
-                    databaseHandler.deletePalletOnPosition(pallet.getPnr(), position1.getName());
-                }
+        for (String pnr : palletToRemove){
+            Pallet pallet = databaseHandler.getPallet(pnr);
+            List<Position> positions = databaseHandler.getPositionsOfPallet(pnr);
+            for (Position position1 : positions){
+                warehouse.removePalletOnPosition(position1, pallet);
             }
         }
         databaseHandler.deletePallets(palletToRemove);
