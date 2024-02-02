@@ -49,7 +49,7 @@ public class GraphController implements Initializable {
 
                 data.getNode().setOnMouseEntered(event -> {
                     valueLabel.setText(data.getYValue().toString());
-                    valueLabel.setVisible(true);
+                    //valueLabel.setVisible(true);
                 });
 
                 data.getNode().setOnMouseExited(event -> {
@@ -57,7 +57,6 @@ public class GraphController implements Initializable {
                 });
             }
         }
-        //barChart.setStyle("-fx-bar-gap: 10; -fx-bar-width: 60;");
     }
 
     /***

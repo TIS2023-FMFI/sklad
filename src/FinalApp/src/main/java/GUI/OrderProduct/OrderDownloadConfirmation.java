@@ -30,11 +30,16 @@ public class OrderDownloadConfirmation {
             errorLabel.setText("Počet paliet musí byť číslo");
             return;
         }
+        int numInt = Integer.parseInt(numOfPallets.getText());
+        if (numInt <= 0){
+            errorLabel.setText("Počet paliet musí byť väčší ako 0.");
+            return;
+        }
         OrderShowPositionsController cont = (OrderShowPositionsController) Warehouse.getInstance().
                 getController("OrderShowPositionsController");
         DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
         int truckNum = db.getTruckNum(cont.cust.getId(), LocalDate.now(), false);
-        db.saveHistoryRecord(cont.cust.getId(), Integer.parseInt(numOfPallets.getText()), truckNum, false);
+        db.saveHistoryRecord(cont.cust.getId(), numInt, truckNum, false);
         Warehouse.getInstance().changeScene("mainMenu.fxml");
     }
 
