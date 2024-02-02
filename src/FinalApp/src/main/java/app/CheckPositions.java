@@ -23,8 +23,6 @@ import java.util.*;
 public class CheckPositions implements Initializable {
     @FXML
     private TableView wrongPositionsTable;
-    @FXML
-    private Label label;
 
     private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
     @FXML
@@ -178,7 +176,7 @@ public class CheckPositions implements Initializable {
         Warehouse warehouse = Warehouse.getInstance();
         DatabaseHandler databaseHandler = warehouse.getDatabaseHandler();
 
-        databaseHandler.deleteStoredOnPallet(palletToRemove);
+//        databaseHandler.deleteStoredOnPallet(palletToRemove);
 
         for (String pnr : palletToRemove){
             Pallet pallet = databaseHandler.getPallet(pnr);
@@ -192,7 +190,7 @@ public class CheckPositions implements Initializable {
 
 
     /***
-     * Exports table to excel file.
+     * Exports table to Excel file.
      */
     public void exportExcel() {
         FileExporter fe = new FileExporter();
