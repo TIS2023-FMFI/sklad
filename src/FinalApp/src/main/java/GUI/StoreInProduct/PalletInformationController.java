@@ -239,7 +239,7 @@ public class PalletInformationController implements Initializable {
             errorMessage.setText("Nevyplnili ste posledný materiál a jeho počet");
         }
         else if (PNR.getText().isEmpty()) {
-            errorMessage.setText("Nezadali ste PNR číslo");
+            errorMessage.setText("Nezadali ste referenciu");
         }
         else if (weight.getText().isEmpty()) {
             errorMessage.setText("Nezadali ste hmotnosť palety");
@@ -248,7 +248,7 @@ public class PalletInformationController implements Initializable {
             errorMessage.setText("Nezadali ste počet pozícií");
         }
         else if (Warehouse.getInstance().getDatabaseHandler().PNRisUsed(PNR.getText())) {
-            errorMessage.setText("Zadali ste PNR, ktoré sa už používa");
+            errorMessage.setText("Zadali ste referenciu, ktorá sa už používa");
         }
         else {
             try {
@@ -279,9 +279,6 @@ public class PalletInformationController implements Initializable {
     public void validatePNR() throws ValidationException {
         try {
             int PNRnumber = Integer.parseInt(PNR.getText());
-            if (PNRnumber < 2000 || PNRnumber > 3500) {
-                throw new ValidationException("PNR musí byť v rozmedzí 2000-3500");
-            }
         }
         catch (NumberFormatException e) {
             throw new ValidationException("PNR musí byť číslo");

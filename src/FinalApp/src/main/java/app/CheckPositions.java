@@ -61,22 +61,22 @@ public class CheckPositions implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        TableColumn<Map, String> PNRColumn = new TableColumn<>("PNR");
+        TableColumn<Map, String> PNRColumn = new TableColumn<>("Referencia");
         PNRColumn.setCellValueFactory(new MapValueFactory<>("pnr"));
         PNRColumn.setStyle(STYLE);
-        PNRColumn.setPrefWidth(120);
+        PNRColumn.setPrefWidth(200);
         TableColumn<Map, String> positionColumn = new TableColumn<>("Pozícia");
         positionColumn.setCellValueFactory(new MapValueFactory<>("position"));
         positionColumn.setStyle(STYLE);
-        positionColumn.setPrefWidth(120);
+        positionColumn.setPrefWidth(122);
         TableColumn<Map, String> materialColumn = new TableColumn<>("Materiál");
         materialColumn.setCellValueFactory(new MapValueFactory<>("material"));
         materialColumn.setStyle(STYLE);
-        materialColumn.setPrefWidth(120);
+        materialColumn.setPrefWidth(122);
         TableColumn<Map, String> numberColumn = new TableColumn<>("Počet");
         numberColumn.setCellValueFactory(new MapValueFactory<>("number"));
         numberColumn.setStyle(STYLE);
-        numberColumn.setPrefWidth(120);
+        numberColumn.setPrefWidth(70);
 
         wrongPositions = (Set<String>) Warehouse.getInstance().getController("wrongPositions");
         System.out.println(wrongPositions);
@@ -175,8 +175,6 @@ public class CheckPositions implements Initializable {
     private void deleteRecords(){
         Warehouse warehouse = Warehouse.getInstance();
         DatabaseHandler databaseHandler = warehouse.getDatabaseHandler();
-
-//        databaseHandler.deleteStoredOnPallet(palletToRemove);
 
         for (String pnr : palletToRemove){
             Pallet pallet = databaseHandler.getPallet(pnr);

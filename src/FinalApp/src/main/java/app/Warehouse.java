@@ -9,7 +9,6 @@ import Exceptions.FileNotFound;
 import Exceptions.WrongStringFormat;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

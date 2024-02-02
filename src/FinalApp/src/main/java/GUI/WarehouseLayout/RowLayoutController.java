@@ -159,7 +159,7 @@ public class RowLayoutController implements Initializable {
 
     public void positionWithPallets(Position position, Map<Pallet, Map<Material, Integer>> palletsOnPosition){
         for (Pallet pallet : palletsOnPosition.keySet()){
-            JFXButton palletButton = Warehouse.getInstance().createStyledButton("Paleta-" + pallet.getPnr(), "#0C356A",
+            JFXButton palletButton = Warehouse.getInstance().createStyledButton(pallet.getPnr(), "#0C356A",
                     "#FFFFFF",  130, 45, 23, true);
             palletsHBox.getChildren().add(palletButton);
             palletButton.setOnAction(event -> handlePalletButtonClick(position, pallet, palletsOnPosition.get(pallet)));

@@ -42,11 +42,11 @@ public class InventoryConroller implements Initializable {
 
         TableColumn<Map, String> positionColumn = new TableColumn<>("Pozícia");
         positionColumn.setCellValueFactory(new MapValueFactory<>("Pozícia"));
-        positionColumn.setPrefWidth(170);
+        positionColumn.setPrefWidth(220);
 
-        TableColumn<Map, String> PNRColumn = new TableColumn<>("PNR");
+        TableColumn<Map, String> PNRColumn = new TableColumn<>("Referencia");
         PNRColumn.setCellValueFactory(new MapValueFactory<>("PNR"));
-        PNRColumn.setPrefWidth(120);
+        PNRColumn.setPrefWidth(140);
 
         TableColumn<Map, String> materialColumn = new TableColumn<>("Materiál");
         materialColumn.setCellValueFactory(new MapValueFactory<>("Materiál"));
@@ -54,7 +54,7 @@ public class InventoryConroller implements Initializable {
 
         TableColumn<Map, String> quantityColumn = new TableColumn<>("Počet");
         quantityColumn.setCellValueFactory(new MapValueFactory<>("Počet"));
-        quantityColumn.setPrefWidth(90);
+        quantityColumn.setPrefWidth(87);
 
         inventoryTable.getColumns().addAll(positionColumn, PNRColumn, materialColumn, quantityColumn);
 
