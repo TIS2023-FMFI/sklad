@@ -19,12 +19,15 @@ public class ReservationsMainController implements Initializable {
     @FXML
     private Button userManagementButton;
 
+
     @FXML
     Button customerManagementB;
     @FXML
     Button addReservationB;
     @FXML
     Button editReservationB;
+    @FXML
+    Button layout;
 
 
     @Override
@@ -47,9 +50,10 @@ public class ReservationsMainController implements Initializable {
 
 
         if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
-            customerManagementB.setDisable(true);
-            addReservationB.setDisable(true);
+            customerManagementB.setVisible(false);
+            addReservationB.setVisible(false);
             userManagementButton.setVisible(false);
+            layout.setVisible(false);
         }
 
     }
@@ -80,5 +84,9 @@ public class ReservationsMainController implements Initializable {
 
     public void goToUserManagement() throws IOException {
         Warehouse.getInstance().changeScene("UserManagement/userManagementMain.fxml");
+    }
+
+    public void newLayout() throws IOException {
+        Warehouse.getInstance().changeScene("WarehouseLayout/createNewLayout.fxml");
     }
 }

@@ -28,7 +28,7 @@
          </font></Label>
       <DatePicker fx:id="dateFrom" layoutX="341.0" layoutY="203.0" onAction="#saveDateFrom" prefHeight="36.0" prefWidth="175.0" />
       <DatePicker fx:id="dateTo" layoutX="340.0" layoutY="260.0" onAction="#saveDateTo" prefHeight="36.0" prefWidth="175.0" />
-      <Label fx:id="errorMessage" alignment="CENTER" layoutX="171.0" layoutY="87.0" prefHeight="36.0" prefWidth="384.0" textAlignment="CENTER" textFill="#cc0000">
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="79.0" layoutY="88.0" prefHeight="36.0" prefWidth="522.0" textAlignment="CENTER" textFill="#cc0000">
          <font>
             <Font name="System Bold" size="19.0" />
          </font></Label>

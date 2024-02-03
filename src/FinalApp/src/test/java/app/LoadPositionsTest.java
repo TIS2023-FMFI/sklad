@@ -86,7 +86,7 @@ class LoadPositionsTest {
     void savePosition_validName_returnTrue() throws FileNotFound {
         LoadPositions load = new LoadPositions(TEST_FILE_NAME);
         assertTrue(load.savePosition("A1001", true));
-        List<Position> finalPositions = load.finalPositions;
+        List<Position> finalPositions = load.getFinalPositions();
         assertEquals(1, finalPositions.size());
         assertEquals("A1001", finalPositions.get(0).getName());
     }

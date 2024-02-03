@@ -245,7 +245,7 @@ public class PalletInformationController implements Initializable {
             errorMessage.setText("Nezadali ste hmotnosť palety");
         }
         else if (numberOfPositions.getSelectedToggle() == null) {
-            errorMessage.setText("Nezadali ste hmotnosť");
+            errorMessage.setText("Nezadali ste počet pozícií");
         }
         else if (Warehouse.getInstance().getDatabaseHandler().PNRisUsed(PNR.getText())) {
             errorMessage.setText("Zadali ste PNR, ktoré sa už používa");
