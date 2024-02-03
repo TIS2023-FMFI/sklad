@@ -27,5 +27,6 @@
             <Font size="23.0" />
          </font>
       </Label>
+      <Button layoutX="734.0" layoutY="30.0" mnemonicParsing="false" onAction="#exportGraph" prefHeight="35.0" prefWidth="75.0" text="Export" />
    </children>
 </AnchorPane>

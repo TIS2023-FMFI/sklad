@@ -7,8 +7,12 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.ObservableList;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.chart.BarChart;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -21,6 +25,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
+import javafx.embed.swing.SwingFXUtils;
+
+import javax.imageio.ImageIO;
+
 public class FileExporter {
     private final Font customFont = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
     private final Font customFontSmall = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 10);
@@ -32,6 +40,7 @@ public class FileExporter {
     private String COMPANY_ADDRESS = "SNP 811/168";
     private String COMPANY_POSTCODE = "013 24";
     private String COMPANY_CITY = "Strečno";
+
     /***
      * Exports data to excel file
      * @param items data to export
@@ -371,6 +380,31 @@ public class FileExporter {
 
             document.close();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void exportGraph(BarChart<String, Number> barChart) {
+        try {
+            // Take a snapshot of the BarChart
+            javafx.scene.image.WritableImage image = barChart.snapshot(null, null);
+
+            // Convert the snapshot to a BufferedImage
+            java.awt.image.BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+
+            // Save the BufferedImage as a PNG file
+            FileChooser fileChooser = new FileChooser();
+
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG (*.png)", "*.png");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            File file = fileChooser.showSaveDialog(Warehouse.getStage());
+            if (file == null) {
+                return;
+            }
+            ImageIO.write(bufferedImage, "png", file);
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
