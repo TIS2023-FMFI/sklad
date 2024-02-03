@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationsMainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reservations.ReservationsMainController">
    <children>
       <ChoiceBox fx:id="customer" layoutX="373.0" layoutY="232.0" onAction="#saveCustomerName" prefHeight="31.0" prefWidth="190.0" stylesheets="@../CustomerManagement/customerManagementStyles.css" />
       <JFXButton fx:id="addReservationB" buttonType="RAISED" layoutX="87.0" layoutY="317.0" onAction="#addNewReservation" prefHeight="44.0" prefWidth="218.0" style="-fx-background-color: #0C356A;" text="Pridať rezerváciu" textFill="WHITE">

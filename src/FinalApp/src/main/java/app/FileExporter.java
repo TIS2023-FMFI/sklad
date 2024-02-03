@@ -315,7 +315,7 @@ public class FileExporter {
             for (Map<String, String> item:items) {
                 contentTable.addCell(new Paragraph(String.valueOf(num), customFont));
                 contentTable.addCell(new Paragraph(item.get("Pozícia"), customFont));
-                contentTable.addCell(new Paragraph(item.get("PNR"), customFont));
+                contentTable.addCell(new Paragraph(item.get("Paleta"), customFont));
                 contentTable.addCell(new Paragraph(item.get("Materiál"), customFont));
                 contentTable.addCell(new Paragraph(item.get("Počet"), customFont));
                 contentTable.addCell(new Paragraph("", customFont));
