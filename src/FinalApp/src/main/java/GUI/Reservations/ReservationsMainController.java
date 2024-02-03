@@ -16,7 +16,8 @@ import java.util.ResourceBundle;
 public class ReservationsMainController implements Initializable {
     @FXML
     public ChoiceBox<String> customer;
-    public Button userManagementButton;
+    @FXML
+    private Button userManagementButton;
 
     @FXML
     Button customerManagementB;

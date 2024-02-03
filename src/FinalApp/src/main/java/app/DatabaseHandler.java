@@ -675,6 +675,16 @@ public class DatabaseHandler {
         }
     }
 
+    public Customer getCustomerById(int i) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Customer> query = session.createQuery("from Customer where id = :id");
+            query.setParameter("id", i);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
     public class PositionNumberComparator implements Comparator<Position> {
@@ -1253,7 +1263,7 @@ public class DatabaseHandler {
     public boolean saveCustomer(Customer customer){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(customer);
+            session.save(customer);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -1275,7 +1285,7 @@ public class DatabaseHandler {
             customerOld.setAddress(customer.getAddress());
             customerOld.setCity(customer.getCity());
             customerOld.setPostalCode(customer.getPostalCode());
-            customerOld.setIco(customerOld.getIco());
+            customerOld.setIco(customer.getIco());
             customerOld.setDic(customer.getDic());
             session.saveOrUpdate(customerOld);
             session.getTransaction().commit();

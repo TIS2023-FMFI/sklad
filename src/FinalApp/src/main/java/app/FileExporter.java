@@ -28,7 +28,10 @@ public class FileExporter {
     private final Font customFontBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12, Font.BOLD);
     private final Font customFontSmallBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 9, Font.BOLD);
 
-
+    private String COMPANY_NAME = "Gefco Slovakia s.r.o., Distribution Center, logistická hala DC1";
+    private String COMPANY_ADDRESS = "SNP 811/168";
+    private String COMPANY_POSTCODE = "013 24";
+    private String COMPANY_CITY = "Strečno";
     /***
      * Exports data to excel file
      * @param items data to export
@@ -135,13 +138,10 @@ public class FileExporter {
         PdfPTable tableProvider = new PdfPTable(2);
         tableProvider.setWidthPercentage(100);
 
-        Paragraph providerInfo = new Paragraph(
-                """
-                      Názov: Gefco Slovakia s.r.o.
-                               Distribution Center, logistická hala DC1
-                      Adresa: SNP 811/168
-                      Mesto: 013 24 Strečno
-                      """, customFontSmall);
+        Paragraph providerInfo = new Paragraph("Názov: " + COMPANY_NAME, customFontSmall);
+        providerInfo.add("\nAdresa: " + COMPANY_ADDRESS);
+        providerInfo.add("\nMesto:" + COMPANY_POSTCODE + " " + COMPANY_CITY + "\n");
+
         providerInfo.setSpacingAfter(30);
         PdfPCell providerCell = new PdfPCell(providerInfo);
 

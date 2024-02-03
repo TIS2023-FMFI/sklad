@@ -185,6 +185,7 @@ public class CheckPositions implements Initializable {
             List<Position> positions = databaseHandler.getPositionsOfPallet(pnr);
             for (Position position1 : positions){
                 warehouse.removePalletOnPosition(position1, pallet);
+                databaseHandler.deletePalletOnPosition(position1.getName(), pallet.getPnr());
             }
         }
         databaseHandler.deletePallets(palletToRemove);
