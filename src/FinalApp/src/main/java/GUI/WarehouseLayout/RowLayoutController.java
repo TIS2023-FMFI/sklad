@@ -184,7 +184,15 @@ public class RowLayoutController implements Initializable {
 
         Label numberOfPosition = warehouse.createStyledLabel("Počet pozícií: " + pallet.getNumberOfPositions(), 17);
         Label weight = warehouse.createStyledLabel("Hmotnosť: " + pallet.getWeight() + " kg", 17);
-        Label user = warehouse.createStyledLabel("Meno skladníka: " + databaseHandler.getUsername(pallet.getIdUser()), 17);
+        String userName;
+        System.out.println(pallet.getIdUser());
+        if (pallet.getIdUser() == null) {
+            userName = "";
+        } else {
+            userName = databaseHandler.getUsername(pallet.getIdUser());
+        }
+        Label user = warehouse.createStyledLabel("Meno skladníka: " + userName, 17);;
+
         Label isDamaged = warehouse.createStyledLabel("Poškodenosť: " + (pallet.isDamaged() ? "áno" : "nie"), 17);
         Label note = warehouse.createStyledLabel("Poznámka: " + pallet.getNote(), 17);
 
