@@ -21,18 +21,16 @@ public class CustomerManagementMainController implements Initializable {
     @FXML
     public Label errorMessage;
     @FXML
-    private Button companyInfo;
-    @FXML
     Button delete;
     @FXML
     Button showCustomer;
 
+    private Customer root;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Customer us = Warehouse.getInstance().getDatabaseHandler().getCustomerById(43);
-        if (us == null) {
-            us = saveGefcoAsCustomer();
-        }
+        Customer us = Warehouse.getInstance().getDatabaseHandler().getRootCustomer();
+        root = us;
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customers.remove(us.getName());
 
@@ -78,20 +76,9 @@ public class CustomerManagementMainController implements Initializable {
         Warehouse.getInstance().changeScene("CustomerManagement/deleteCustomerConfirm.fxml");
     }
 
-    private Customer saveGefcoAsCustomer() {
-        Customer gefco = new Customer();
-        //gefco.setId(99);
-        gefco.setName("Gefco Slovakia s.r.o.");
-        gefco.setAddress("SNP 811/168");
-        gefco.setCity("Strečno");
-        gefco.setPostalCode("013 24");
-        Warehouse.getInstance().getDatabaseHandler().saveCustomer(gefco);
-        return gefco;
-    }
-
     @FXML
     private void showCompanyInfo() throws IOException {
-        Warehouse.getInstance().addController("customerName", "Gefco");
+        Warehouse.getInstance().addController("customerName", root.getName());
         Warehouse.getInstance().changeScene("CustomerManagement/createNewCustomer.fxml");
     }
 }

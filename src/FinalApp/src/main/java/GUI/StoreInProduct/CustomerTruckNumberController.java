@@ -30,6 +30,7 @@ public class CustomerTruckNumberController implements Initializable {
 
     public void setupDefaultvalues(){
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
+        customers.remove(Warehouse.getInstance().getDatabaseHandler().getRootCustomer().getName());
         customer.setItems(customers);
         customer.setValue(customers.get(0));
 

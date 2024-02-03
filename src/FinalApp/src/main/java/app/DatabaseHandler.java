@@ -4,6 +4,7 @@ import Entity.*;
 import Exceptions.MaterialNotAvailable;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -680,6 +681,18 @@ public class DatabaseHandler {
             Query<Customer> query = session.createQuery("from Customer where id = :id");
             query.setParameter("id", i);
             return query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Customer getRootCustomer() {
+        try (Session session = sessionFactory.openSession()){
+            Query<Customer> query = session.createQuery("from Customer where isRoot = true");
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

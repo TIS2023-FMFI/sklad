@@ -45,6 +45,7 @@ public class StatisticMainPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
+        customers.remove(Warehouse.getInstance().getDatabaseHandler().getRootCustomer().getName());
         customer.setItems(customers);
         customer.setValue(customers.get(0));
         if (!Warehouse.getInstance().getCurrentUser().getAdmin()){

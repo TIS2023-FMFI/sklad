@@ -41,12 +41,7 @@ public class CreateNewCustomerController implements Initializable {
         fillData = Warehouse.getInstance().getController("customerName") != null;
         if(fillData){
             String name = ((String) Warehouse.getInstance().getController("customerName"));
-            Customer customer;
-            if (name.equals("Gefco")) {
-                customer = Warehouse.getInstance().getDatabaseHandler().getCustomerById(43);
-            }else {
-                customer = Warehouse.getInstance().getDatabaseHandler().getCustomer(name);
-            }
+            Customer customer = Warehouse.getInstance().getDatabaseHandler().getCustomer(name);
             id = customer.getId();
             setBox(customerNameT, customer.getName());
             setBox(addressT, customer.getAddress());

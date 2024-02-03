@@ -30,6 +30,7 @@ public class ReservationsMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
+        customers.remove(Warehouse.getInstance().getDatabaseHandler().getRootCustomer().getName());
         customer.setItems(customers);
         customer.setStyle("-fx-font: 20px 'Calibri';");
         if(customers.size() > 0) {
