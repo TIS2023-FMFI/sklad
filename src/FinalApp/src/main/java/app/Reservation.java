@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -179,8 +180,13 @@ public class Reservation {
             if(Warehouse.getInstance().getController("DeletedReservation") != null){
                 Warehouse.getInstance().removeController("DeletedReservation");
             }
-            findUsedPositions(new HashSet<>(sortedRecords.get(date)));
-            if(((Set<String>) Warehouse.getInstance().getController("cannotRemove")).isEmpty()) {
+            LocalDate parsedDate1 = LocalDate.parse(String.valueOf(date.getKey()));
+            LocalDate today = LocalDate.now();
+            if(!parsedDate1.isAfter(today)) {
+                findUsedPositions(new HashSet<>(sortedRecords.get(date)));
+            }
+            if(Warehouse.getInstance().getController("cannotRemove") == null ||
+                    ((Set<String>) Warehouse.getInstance().getController("cannotRemove")).isEmpty()) {
                 Warehouse.getInstance().getDatabaseHandler().deleteReservationRecord(customer, (java.sql.Date) date.getKey(), (java.sql.Date) date.getValue());
                 Warehouse.getInstance().addController("DeletedReservation", true);
             }
