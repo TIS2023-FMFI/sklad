@@ -1,6 +1,7 @@
 package Entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.sql.Date;
 import java.util.Objects;
@@ -21,7 +22,7 @@ public class Pallet {
     private boolean isDamaged;
     @Basic
     @Column(name = "id_user")
-    private int idUser;
+    private Integer idUser;
     @Basic
     @Column(name = "type")
     private String type;
@@ -89,7 +90,7 @@ public class Pallet {
         isDamaged = damaged;
     }
 
-    public int getIdUser() {
+    public Integer getIdUser() {
         return idUser;
     }
 

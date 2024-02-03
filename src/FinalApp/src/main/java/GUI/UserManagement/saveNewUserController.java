@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class saveNewUserController implements Initializable {
@@ -45,8 +46,9 @@ public class saveNewUserController implements Initializable {
 
         if(!userManagementMainController.creatingNew){
             saveButton.setText("Uložiť zmeny");
-//            deleteButton.setVisible(true);
             userUpdated = Warehouse.getInstance().getDatabaseHandler().getUser(userManagementMainController.selectedUser);
+            System.out.println(userUpdated.getName() + " " + Warehouse.getInstance().currentUser.getName());
+            deleteButton.setVisible(!userUpdated.getName().equals(Warehouse.getInstance().currentUser.getName()));
             name.setText(userUpdated.getName());
             password.setText(userUpdated.getPassword());
             if (userUpdated.getAdmin()){

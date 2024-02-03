@@ -1,7 +1,10 @@
 package GUI.CustomerManagement;
 
+import Entity.Customer;
 import app.Warehouse;
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,9 +25,15 @@ public class CustomerManagementMainController implements Initializable {
     @FXML
     Button showCustomer;
 
+    private Customer root;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Customer us = Warehouse.getInstance().getDatabaseHandler().getRootCustomer();
+        root = us;
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
+        customers.remove(us.getName());
+
         customer.setItems(customers);
         customer.setStyle("-fx-font: 20px 'Calibri';");
         if(customers.size() > 0) {
@@ -37,19 +46,19 @@ public class CustomerManagementMainController implements Initializable {
         if(Warehouse.getInstance().getController("customerName") != null){
             Warehouse.getInstance().removeController("customerName");
         }
-        Warehouse.getInstance().addController("customerName", customer);
+        Warehouse.getInstance().addController("customerName", customer.getValue());
     }
 
     public void saveCustomerName(){
         Warehouse warehouse = Warehouse.getInstance();
-        warehouse.addController("customerName", customer);
+        warehouse.addController("customerName", customer.getValue());
     }
     public void showInformation() throws IOException {
         Warehouse warehouse = Warehouse.getInstance();
         if(warehouse.getController("customerName") != null){
             warehouse.removeController("customerName");
         }
-        warehouse.addController("customerName", customer);
+        warehouse.addController("customerName", customer.getValue());
         Warehouse.getInstance().changeScene("CustomerManagement/createNewCustomer.fxml");
     }
 
@@ -65,5 +74,11 @@ public class CustomerManagementMainController implements Initializable {
 
     public void deleteCustomerScene() throws IOException {
         Warehouse.getInstance().changeScene("CustomerManagement/deleteCustomerConfirm.fxml");
+    }
+
+    @FXML
+    private void showCompanyInfo() throws IOException {
+        Warehouse.getInstance().addController("customerName", root.getName());
+        Warehouse.getInstance().changeScene("CustomerManagement/createNewCustomer.fxml");
     }
 }

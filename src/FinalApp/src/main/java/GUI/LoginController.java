@@ -1,5 +1,6 @@
 package GUI;
 
+import Entity.Customer;
 import app.CheckPositions;
 import app.DatabaseHandler;
 import app.Warehouse;
@@ -33,6 +34,16 @@ public class LoginController {
             CheckPositions checkPositions = new CheckPositions();
             if(!checkPositions.allPositionsCorrect()){
                 checkPositions.createNewWindow();
+            }
+
+            if (Warehouse.getInstance().getDatabaseHandler().getRootCustomer() == null) {
+                Customer gefco = new Customer();
+                gefco.setName("Gefco Slovakia s.r.o.");
+                gefco.setAddress("SNP 811/168");
+                gefco.setCity("Strečno");
+                gefco.setPostalCode("013 24");
+                gefco.setRoot(true);
+                Warehouse.getInstance().getDatabaseHandler().saveCustomer(gefco);
             }
         }
         catch (Exception e){

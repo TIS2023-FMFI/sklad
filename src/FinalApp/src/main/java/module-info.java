@@ -8,6 +8,7 @@ module app.finalapp {
     requires org.apache.poi.ooxml;
     requires itextpdf;
     requires com.jfoenix;
+    requires javafx.swing;
 
     opens Entity;
     opens GUI;

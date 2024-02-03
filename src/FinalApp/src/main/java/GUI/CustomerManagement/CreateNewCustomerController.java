@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CreateNewCustomerController implements Initializable {
@@ -39,17 +40,23 @@ public class CreateNewCustomerController implements Initializable {
         customersHandler = new CustomersHandler();
         fillData = Warehouse.getInstance().getController("customerName") != null;
         if(fillData){
-            String name = ((ChoiceBox<String>) Warehouse.getInstance().getController("customerName")).getValue();
+            String name = ((String) Warehouse.getInstance().getController("customerName"));
             Customer customer = Warehouse.getInstance().getDatabaseHandler().getCustomer(name);
             id = customer.getId();
-            customerNameT.setText(customer.getName());
-            addressT.setText(customer.getAddress());
-            cityT.setText(customer.getCity());
-            postCodeT.setText(customer.getPostalCode());
-            ICOT.setText(customer.getIco());
-            DICT.setText(customer.getDic());
+            setBox(customerNameT, customer.getName());
+            setBox(addressT, customer.getAddress());
+            setBox(cityT, customer.getCity());
+            setBox(postCodeT, customer.getPostalCode());
+            setBox(ICOT, customer.getIco());
+            setBox(DICT, customer.getDic());
         }
     }
+
+    private void setBox(TextField box, String value){
+        box.setText(Objects.requireNonNullElse(value, ""));
+    }
+
+
     public void backToMainCusMan() throws IOException {
         Warehouse.getInstance().changeScene("CustomerManagement/customerManagementMain.fxml");
     }

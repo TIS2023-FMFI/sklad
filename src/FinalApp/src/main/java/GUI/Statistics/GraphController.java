@@ -1,7 +1,9 @@
 package GUI.Statistics;
 
+import app.FileExporter;
 import app.Statistics;
 import app.Warehouse;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -65,5 +67,10 @@ public class GraphController implements Initializable {
      */
     public void backToStatistics() throws IOException {
         Warehouse.getInstance().changeScene("Statistics/statisticsMainPageForm.fxml");
+    }
+
+    public void exportGraph() {
+        FileExporter fileExporter = new FileExporter();
+        FileExporter.exportGraph(barChart);
     }
 }
