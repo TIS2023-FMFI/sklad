@@ -26,7 +26,7 @@ import java.util.*;
 import java.util.List;
 
 import javafx.embed.swing.SwingFXUtils;
-
+import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class FileExporter {
@@ -383,13 +383,14 @@ public class FileExporter {
         }
     }
 
+
     public static void exportGraph(BarChart<String, Number> barChart) {
         try {
             // Take a snapshot of the BarChart
-            javafx.scene.image.WritableImage image = barChart.snapshot(null, null);
+            WritableImage image = barChart.snapshot(null, null);
 
             // Convert the snapshot to a BufferedImage
-            java.awt.image.BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
 
             // Save the BufferedImage as a PNG file
             FileChooser fileChooser = new FileChooser();
@@ -407,4 +408,5 @@ public class FileExporter {
             e.printStackTrace();
         }
     }
+
 }
