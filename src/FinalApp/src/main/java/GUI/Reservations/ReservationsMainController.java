@@ -79,7 +79,7 @@ public class ReservationsMainController implements Initializable {
     }
 
     public void customerManagement() throws IOException {
-        Warehouse.getInstance().changeScene("CustomerManagement/CustomerManagementMain.fxml");
+        Warehouse.getInstance().changeScene("CustomerManagement/customerManagementMain.fxml");
     }
 
     public void goToUserManagement() throws IOException {
