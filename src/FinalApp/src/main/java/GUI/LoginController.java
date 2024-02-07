@@ -19,6 +19,10 @@ public class LoginController {
     public void login(){
         try {
             Warehouse warehouse = Warehouse.getInstance();
+            if(warehouse.getDatabaseHandler() == null){
+                wrongLogin.setText("Nepodarilo sa pripojiť ku databáze.");
+                return;
+            }
             if (username.getText() == null || username.getText().trim().isEmpty()) {
                 wrongLogin.setText("Nezadali ste používateľské meno");
             }
@@ -47,7 +51,6 @@ public class LoginController {
             }
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
             wrongLogin.setText(e.getMessage());
         }
     }
