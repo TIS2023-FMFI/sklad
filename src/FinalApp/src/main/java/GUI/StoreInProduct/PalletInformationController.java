@@ -303,7 +303,7 @@ public class PalletInformationController implements Initializable {
             throw new ValidationException("Referencia palety musí byť číslo");
         }
     }
-    private String getPNR() {
+    public String getPNR() {
         return PNR.getText();
     }
 
