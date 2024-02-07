@@ -298,12 +298,14 @@ public class PalletInformationController implements Initializable {
     private void validatePNR() throws ValidationException {
         try {
             int PNRnumber = Integer.parseInt(PNR.getText());
+            /*
             if (PNRnumber < 2000 || PNRnumber > 3500) {
                 throw new ValidationException("PNR musí byť v rozmedzí 2000-3500");
             }
+             */
         }
         catch (NumberFormatException e) {
-            throw new ValidationException("PNR musí byť číslo");
+            throw new ValidationException("Referencia palety musí byť číslo");
         }
     }
     private String getPNR() {
