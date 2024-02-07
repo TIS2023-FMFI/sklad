@@ -28,16 +28,20 @@ import java.util.ResourceBundle;
 public class CreateNewLayoutController implements Initializable {
 
     private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
-    public FileChooser fileChooser;
+    private FileChooser fileChooser;
     @FXML
-    Label errorMessage;
+    private Label errorMessage;
     @FXML
-    Label path;
+    private Label path;
     private File fileToLoad;
     private final String CHOOSE_FILE = "Nebol vybraný súbor.";
     private final String FORMAT_EXCEPTION = "Vybraný súbor má zlú štruktúru.\n";
 
-
+    /***
+     * Initializes the controller and sets title
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fileChooser = new FileChooser();
@@ -45,6 +49,7 @@ public class CreateNewLayoutController implements Initializable {
         fileToLoad = null;
 
     }
+
     @FXML
     protected void selectFile(){
         fileChooser = new FileChooser();
@@ -82,6 +87,10 @@ public class CreateNewLayoutController implements Initializable {
         return true;
     }
 
+    /***
+     * Changes scene to main menu
+     * //@throws IOException
+     */
     @FXML
     public void backToForm() throws IOException {
         Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");

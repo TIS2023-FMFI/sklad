@@ -17,20 +17,19 @@ import java.net.URL;
 import java.util.*;
 
 public class RowLayoutReservationsController extends RowLayoutController implements Initializable {
-
     private static final String BLUE_COLOR = "#000080";    // rezervavanie aktualnym zakaznikom
     @FXML
-    Label selectedPosition;
+    private Label selectedPosition;
     @FXML
-    Label errorMessage;
-    Warehouse warehouse;
-    Customer customer;
-    Date dateFrom;
-    Date dateTo;
-    Set<Position> aviablePositions;
-    Set<Position> positionsToSave;
-    int numberOfPosition;
-    int numberOfTallPosition;
+    private Label errorMessage;
+    private Warehouse warehouse;
+    private Customer customer;
+    private Date dateFrom;
+    private Date dateTo;
+    private Set<Position> aviablePositions;
+    private Set<Position> positionsToSave;
+    private int numberOfPosition;
+    private int numberOfTallPosition;
     private static final String REMOVE_FROM_ADDED = "Pozícia bola odstránená z pridaných na zarezervovanie.";
     private static final String ADD_TO_ADDED = "Pozícia zvolená na uloženie.";
     private static final String ENOUGH_CHOOSEN_POSITIONS = "Nemožno pridať ďaľšiu pozíciu";
@@ -41,6 +40,11 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
     private static final String MORE_TALL_POSITIONS_1 = "Musíte ešte vybrať aspoň ";
     private static final String MORE_TALL_POSITIONS_2 = " vysokých pozícií.";
 
+    /***
+     * Inicializacia
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         warehouse = Warehouse.getInstance();
@@ -94,6 +98,11 @@ public class RowLayoutReservationsController extends RowLayoutController impleme
         return RED_COLOR;
     }
 
+    /**
+     * Vytvorenie regalov
+     * @param positions - pozicie
+     * @return - regal
+     */
     @Override
     public HBox createShelf(List<Position> positions) {
         HBox shelf = new HBox();

@@ -32,6 +32,11 @@ public class StoreInPositionController implements Initializable {
     @FXML
     private Button saveRecordButton;
 
+    /***
+     * Initializes the scene
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Warehouse.getStage().setOnCloseRequest(Event::consume);
@@ -49,18 +54,26 @@ public class StoreInPositionController implements Initializable {
         Warehouse.getInstance().addController("storeInPosition", this);
     }
 
-    public void setButtonsVisibility(boolean visibilityStoreInButton, boolean visibilityContinueStoringButton,
+    private void setButtonsVisibility(boolean visibilityStoreInButton, boolean visibilityContinueStoringButton,
                                      boolean visibilitySaveRecordButton){
         storeInProductButton.setVisible(visibilityStoreInButton);
         continueStoringInButton.setVisible(visibilityContinueStoringButton);
         saveRecordButton.setVisible(visibilitySaveRecordButton);
     }
 
+    /***
+     * Goes back to the pallet information form
+     * @throws IOException if the scene cannot be loaded
+     */
     public void backToPalletInformationForm()throws IOException{
         Warehouse.getStage().setOnCloseRequest(null);
         Warehouse.getInstance().changeScene("StoreInProduct/PalletInformationForm.fxml");
     }
 
+    /***
+     * Stores the pallet in the selected position
+     * @throws IOException -
+     */
     public void storeInProduct() throws IOException {
         Warehouse.getStage().setOnCloseRequest(null);
         Warehouse warehouse = Warehouse.getInstance();
@@ -73,6 +86,11 @@ public class StoreInPositionController implements Initializable {
 
         warehouse.changeScene("mainMenu.fxml");
     }
+
+    /***
+     * Continues storing in the selected position
+     * @throws IOException if the scene cannot be loaded
+     */
     public void continueStoringIn() throws IOException{
         Warehouse.getStage().setOnCloseRequest(null);
         Warehouse warehouse = Warehouse.getInstance();
@@ -87,6 +105,11 @@ public class StoreInPositionController implements Initializable {
         warehouse.changeScene("StoreInProduct/palletInformationForm.fxml");
     }
 
+/***
+     * Saves the record and goes back to the main menu
+     * @throws IOException if the scene cannot be loaded
+     */
+
     public void saveRecord() throws IOException{
         Warehouse.getStage().setOnCloseRequest(null);
         Warehouse warehouse = Warehouse.getInstance();
@@ -97,6 +120,9 @@ public class StoreInPositionController implements Initializable {
         warehouse.changeScene("mainMenu.fxml");
     }
 
+    /***
+     * Removes the controllers and instances
+     */
     public void removeControllersAndInstances(){
         Warehouse warehouse = Warehouse.getInstance();
         warehouse.removeController("customerTruckNumber");

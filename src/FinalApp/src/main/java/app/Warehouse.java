@@ -68,6 +68,9 @@ public class Warehouse extends Application {
         return INSTANCE;
     }
 
+    /***
+     * Constructor of the Warehouse class.
+     */
     public Warehouse() {
         try {
             databaseHandler = new DatabaseHandler();
@@ -78,7 +81,6 @@ public class Warehouse extends Application {
 
     /***
      * The main method that launches and initializes the application.
-     *
      * @param primaryStage The primary stage for the JavaFX application.
      * @throws Exception If there is an error during application startup.
      */
@@ -140,12 +142,15 @@ public class Warehouse extends Application {
         positionsInGroups = databaseHandler.getPositionInGroups();
     }
 
+    /***
+     * Method, that updates the warehouse positions in the memory.
+     */
     public void updatePositions(){
         positionsInRows = databaseHandler.loadPositionsInRows();
         palletsOnPosition = databaseHandler.loadPalletsOnPositions();
         positionsInGroups = databaseHandler.getPositionInGroups();
     }
-  
+
     public Map<String, Map<Integer, List<Position>>> getPositionsInRows() {
         return positionsInRows;
     }
@@ -169,6 +174,9 @@ public class Warehouse extends Application {
         return databaseHandler;
     }
 
+    /***
+     * Method, that initializes the warehouse layout.
+     */
     public void initializeWarehouseLayout(){
         warehouseLayout = new WarehouseLayout();
     }
@@ -177,6 +185,9 @@ public class Warehouse extends Application {
         return warehouseLayout;
     }
 
+    /***
+     * Method, that deletes the warehouse layout instance.
+     */
     public void deleteWarehouseLayoutInstance(){
         warehouseLayout = null;
     }
@@ -185,33 +196,66 @@ public class Warehouse extends Application {
         return storeInProduct;
     }
 
+    /***
+     * Method, that initializes the store in product instance.
+     */
     public void initializeStoreInProduct(){
         storeInProduct = new StoreInProduct();
     }
 
+    /***
+     * Method, that deletes the store in product instance.
+     */
     public void deleteStoreInProductInstance(){
         storeInProduct = null;
     }
 
+    /***
+     * Method, that returns the controller based on its name.
+     */
     public Object getController(String name) {
         return controllers.get(name);
     }
+
+    /***
+     * Method, that adds a controller to the map of controllers.
+     * @param name Name of the controller.
+     * @param controler The controller to be added.
+     */
     public void addController(String name, Object controler) {
         controllers.put(name, controler);
     }
 
+    /***
+     * Method, that removes a controller from the map of controllers.
+     * @param name Name of the controller.
+     */
     public void removeController(String name){
         controllers.remove(name);
     }
 
+    /***
+     * Method, that returns the list of row names.
+     * @return List of row names.
+     */
     public List<String> getRowNames(){
         return new ArrayList<>(positionsInRows.keySet());
     }
+
+    /***
+     * Method, that returns the list of group names.
+     * @return List of group names.
+     */
 
     public Map<Integer, List<Position>> getRowMap(String rowName){
         return positionsInRows.get(rowName);
     }
 
+    /***
+     * Method, that checks if there is a pallet on the position.
+     * @param position The position to be checked.
+     * @return True if there is a pallet on the position, false otherwise.
+     */
     public boolean isPalletOnPosition(Position position){
         return palletsOnPosition.get(position).isEmpty();
     }
@@ -220,6 +264,11 @@ public class Warehouse extends Application {
         return palletsOnPosition.get(position);
     }
 
+    /***
+     * Method, that removes a pallet from the position.
+     * @param position The position from which the pallet is to be removed.
+     * @param pallet The pallet to be removed.
+     */
     public void removePalletOnPosition(Position position, Pallet pallet){
         palletsOnPosition.get(position).remove(pallet);
     }
@@ -228,6 +277,17 @@ public class Warehouse extends Application {
         return stage;
     }
 
+    /***
+     * Method, that creates a styled button.
+     * @param buttonText The text of the button.
+     * @param backgroundColor The background color of the button.
+     * @param textColor The text color of the button.
+     * @param width The width of the button.
+     * @param height The height of the button.
+     * @param fontSize The font size of the button.
+     * @param isTextBold True if the text is to be bold, false otherwise.
+     * @return The created button.
+     */
     public JFXButton createStyledButton(String buttonText, String backgroundColor, String textColor, double width,
                                          double height, int fontSize, boolean isTextBold) {
         JFXButton button = new JFXButton(buttonText);
@@ -249,6 +309,12 @@ public class Warehouse extends Application {
         return button;
     }
 
+    /***
+     * Method, that creates a styled label.
+     * @param labelText The text of the label.
+     * @param fontSize The font size of the label.
+     * @return The created label.
+     */
     public Label createStyledLabel(String labelText, int fontSize) {
         Label label = new Label(labelText);
 
@@ -258,6 +324,12 @@ public class Warehouse extends Application {
         return label;
     }
 
+    /***
+     * Method, that creates a styled textfield.
+     * @param width The width of the textfield.
+     * @param height The height of the textfield.
+     * @return The created textfield.
+     */
     public TextField createTextfield(int width, int height){
         TextField textField = new TextField();
         textField.setMinWidth(width);
@@ -278,6 +350,10 @@ public class Warehouse extends Application {
         }
     }
 
+    /***
+     * Method, that starts the application.
+     * @param args Arguments of the application.
+     */
     public static void main(String[] args) {
         boolean loadNewPositions = false;
         if(loadNewPositions) {

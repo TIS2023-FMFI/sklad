@@ -15,10 +15,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Reservation {
-    Date dateFrom;
-    Date dateTo;
-    Set<Position> aviablePositions = new HashSet<>();
-    DatabaseHandler databaseHandler;
+    private Date dateFrom;
+    private Date dateTo;
+    private Set<Position> aviablePositions = new HashSet<>();
+    private DatabaseHandler databaseHandler;
 
     protected boolean overlapDate(Date dateFrom, Date dateTo){
         if (this.dateTo.before(dateFrom) || this.dateFrom.after(dateTo)) {
@@ -60,6 +60,12 @@ public class Reservation {
     }
 
     class PositionComparator implements Comparator<Pair<Integer, List<Position>>>{
+        /***
+         * Compares its two arguments for order.  Returns a negative integer,
+         * @param res1 the first object to be compared.
+         * @param res2 the second object to be compared.
+         * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
+         */
         @Override
         public int compare(Pair<Integer, List<Position>> res1, Pair<Integer, List<Position>> res2) {
             if(res1.getKey() < res2.getKey()){

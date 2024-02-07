@@ -16,6 +16,10 @@ public class LoginController {
     private TextField username;
     @FXML
     private PasswordField password;
+
+    /***
+     * Method for logging in and checking if the user exists in the database
+     */
     public void login(){
         try {
             Warehouse warehouse = Warehouse.getInstance();

@@ -98,6 +98,10 @@ public class saveNewUserController implements Initializable {
         goBack();
     }
 
+    /***
+     * Deletes the user from the database.
+     * @throws IOException if the scene is not found.
+     */
     public void deleteUser() throws IOException {
         if (userUpdated != null){
             Warehouse.getInstance().getDatabaseHandler().deleteUser(userUpdated.getId());

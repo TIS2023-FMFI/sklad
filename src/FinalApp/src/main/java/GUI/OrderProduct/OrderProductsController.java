@@ -27,20 +27,24 @@ import java.util.ResourceBundle;
 
 public class OrderProductsController implements Initializable {
     @FXML
-    public ChoiceBox<String> material;
+    protected ChoiceBox<String> material;
     @FXML
-    public Label errorMessage;
+    private Label errorMessage;
 
     public Customer customer;
     @FXML
     protected TableView alreadyChosenMaterials;
     protected ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
 
-    Stage newStage;
+    private Stage newStage;
 
     private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
 
-
+    /***
+     * Initializes the table with the correct columns.
+     * @param arg0
+     * @param arg1
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         Warehouse.getInstance().addController("OrderProductsController", this);
@@ -73,6 +77,9 @@ public class OrderProductsController implements Initializable {
 
     }
 
+    /***
+     * Adds the product to the table of chosen products
+     */
     public void addProduct() {
         if (material.getValue() == null) {
             errorMessage.setText("Vyberte materiál!");
@@ -93,9 +100,18 @@ public class OrderProductsController implements Initializable {
     }
 
 
+    /***
+     * Takes user back to the customer selection form
+     * @throws IOException if the scene is not found
+     */
     public void backToCustomerSelection() throws IOException {
         Warehouse.getInstance().changeScene("OrderProduct/orderCustomerSelectionForm.fxml");
     }
+
+    /***
+     * Confirms the order and takes user to the order show positions form
+     * @throws IOException if the scene is not found
+     */
     public void confirmOrderProducts() throws IOException {
         if (items.size() == 0) {
             errorMessage.setText("Musíte pridať aspoň jeden materiál!");
@@ -104,11 +120,17 @@ public class OrderProductsController implements Initializable {
         Warehouse.getInstance().changeScene("OrderProduct/orderShowPositionsForm.fxml");
     }
 
+    /***
+     * Removes the selected products from the table
+     */
     public void clearMaterials() {
         alreadyChosenMaterials.getItems().clear();
         items.clear();
     }
 
+    /***
+     * Adds the new items to the table.
+     */
     public void updateTable() {
         alreadyChosenMaterials.getItems().clear();
         alreadyChosenMaterials.getItems().addAll(items);

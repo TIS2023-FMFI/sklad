@@ -15,10 +15,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StoreInProduct {
-    CustomerTruckNumberDataSet customerTruckNumberDataSet;
-    PalletInformationDataSet palletInformationDataSet;
-    HistoryRecord historyRecord;
+    private CustomerTruckNumberDataSet customerTruckNumberDataSet;
+    private PalletInformationDataSet palletInformationDataSet;
+    private HistoryRecord historyRecord;
 
+    /***
+     * Constructor for StoreInProduct. It sets the historyRecord to a new instance of HistoryRecord.
+     */
     public StoreInProduct() {
         historyRecord = new HistoryRecord();
     }
@@ -91,6 +94,9 @@ public class StoreInProduct {
         }
     }
 
+    /***
+     * Method that saves a history record
+     */
     public void saveHistoryRecord(){
         DatabaseHandler databaseHandler = Warehouse.getInstance().getDatabaseHandler();
         HistoryRecord historyRecord = Warehouse.getInstance().getStoreInInstance().getHistoryRecord();
@@ -98,31 +104,64 @@ public class StoreInProduct {
                 historyRecord.getTruckNumber(), true);
     }
 
+    /***
+     * Method that returns the history record
+     */
     public HistoryRecord getHistoryRecord() {
         return historyRecord;
     }
 
+
+    /***
+     * Method that initializes the customer truck number data set
+     * @param customer customer which truck has arrived
+     * @param truckNumber number of the truck today
+     */
     public void initializeCustomerTruckNumberDataSet(String customer, int truckNumber){
         customerTruckNumberDataSet = new CustomerTruckNumberDataSet(customer, truckNumber);
     }
 
+    /***
+     * Method that returns the customer truck number data set
+     * @return customer truck number data set
+     */
     public CustomerTruckNumberDataSet getCustomerTruckNumberDataSet() {
         return customerTruckNumberDataSet;
     }
 
+    /***
+     * Method that removes the customer truck number data set
+     */
     public void removeCustomerTruckDataSet(){
         customerTruckNumberDataSet = null;
     }
 
+    /***
+     * Method that initializes the pallet information data set
+     * @param PNR PNR of the pallet
+     * @param weight weight of the pallet
+     * @param isDamaged if the pallet is damaged
+     * @param isTall if the pallet is tall
+     * @param materialMap map of materials and their count
+     * @param palletType type of the pallet
+     * @param numberOfPositions number of positions
+     */
     public void initializePalletInformationDataSet(String PNR, double weight, boolean isDamaged, boolean isTall, Map<String, Integer> materialMap,
                                                    String palletType, int numberOfPositions){
         palletInformationDataSet = new PalletInformationDataSet(PNR, weight, isDamaged, isTall, materialMap, palletType, numberOfPositions);
     }
 
+    /***
+     * Method that returns the pallet information data set
+     * @return pallet information data set
+     */
     public PalletInformationDataSet getPalletInformationDataSet(){
         return palletInformationDataSet;
     }
 
+    /***
+     * Method that removes the pallet information data set
+     */
     public void removePalletInformationDataSet(){
         palletInformationDataSet = null;
     }

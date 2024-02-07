@@ -16,6 +16,11 @@ public class CustomerTruckNumberController implements Initializable {
     @FXML
     private Spinner<Integer> truckNumber;
 
+    /***
+     * Initialize the customer and truck number values
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerTruckNumberDataSet dataSet = Warehouse.getInstance().getStoreInInstance().getCustomerTruckNumberDataSet();
@@ -28,7 +33,7 @@ public class CustomerTruckNumberController implements Initializable {
         Warehouse.getInstance().addController("customerTruckNumber", this);
     }
 
-    public void setupDefaultvalues(){
+    private void setupDefaultvalues(){
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customers.remove(Warehouse.getInstance().getDatabaseHandler().getRootCustomer().getName());
         customer.setItems(customers);
@@ -49,6 +54,10 @@ public class CustomerTruckNumberController implements Initializable {
         truckNumber.setValueFactory(valueFactory);
     }
 
+    /***
+     * Go to the next form and check if the customer and truck number are valid
+     * @throws IOException if the form is not found
+     */
     public void nextToInformationForm() throws IOException{
         Warehouse.getInstance().getStoreInInstance().initializeCustomerTruckNumberDataSet(getCustomer(), getTruckNumber());
         HistoryRecord historyRecord = Warehouse.getInstance().getStoreInInstance().getHistoryRecord();
@@ -57,6 +66,10 @@ public class CustomerTruckNumberController implements Initializable {
         Warehouse.getInstance().changeScene("StoreInProduct/palletInformationForm.fxml");
     }
 
+    /***
+     * Go back to the main menu
+     * @throws IOException if the form is not found
+     */
     public void backToMenu() throws IOException {
         Warehouse.getInstance().removeController("customerTruckNumber");
         Warehouse.getInstance().getStoreInInstance().removeCustomerTruckDataSet();

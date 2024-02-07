@@ -55,6 +55,11 @@ public class PalletInformationController implements Initializable {
     private int currentPairCount;
     private boolean isCountValid;
 
+    /***
+     * This method initializes the pallet information form
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         PalletInformationDataSet dataSet = Warehouse.getInstance().getStoreInInstance().getPalletInformationDataSet();
@@ -73,7 +78,7 @@ public class PalletInformationController implements Initializable {
         }
         Warehouse.getInstance().addController("palletInformation", this);
     }
-    public void setupValuesFromDataSet(PalletInformationDataSet dataSet){
+    private void setupValuesFromDataSet(PalletInformationDataSet dataSet){
         PNR.setText(dataSet.PNR());
         weight.setText(String.valueOf(dataSet.weight()));
         isDamaged.setSelected(dataSet.isDamaged());
@@ -90,7 +95,7 @@ public class PalletInformationController implements Initializable {
 
     }
 
-    public void setUpMaterialContainer(Map<String, Integer> materialMap){
+    private void setUpMaterialContainer(Map<String, Integer> materialMap){
         for (String name : materialMap.keySet()){
             HBox materialPair = createMaterialPair();
             ((TextField) materialPair.getChildren().get(1)).setText(name);
@@ -103,6 +108,9 @@ public class PalletInformationController implements Initializable {
         checkMaterialPairCount();
     }
 
+    /***
+     * This method adds the material and checkst the count of the material pairs
+     */
     public void addMaterial() {
         if (currentPairCount < MAX_PAIRS && isCountValid) {
             if (getLastMaterialPair() == null || !isLastMaterialEmpty()) {
@@ -119,12 +127,19 @@ public class PalletInformationController implements Initializable {
         }
     }
 
+    /***
+     * This method removes the material pair
+     */
     private void checkMaterialPairCount(){
         if (currentPairCount == MAX_PAIRS) {
             addMaterialButton.setDisable(true);
         }
     }
 
+    /***
+     * createMaterialPair method creates the material pair
+     * @return
+     */
     private HBox createMaterialPair() {
         Warehouse warehouse = Warehouse.getInstance();
         Label materialLabel = warehouse.createStyledLabel("Materiál:", 20);
@@ -226,6 +241,10 @@ public class PalletInformationController implements Initializable {
         Warehouse.getStage().setHeight(newHeight);
     }
 
+    /***
+     * This method goes back to the customer truck number form
+     * @throws IOException
+     */
     public void backToCustomerTruckNumberForm()throws IOException{
         Warehouse warehouse = Warehouse.getInstance();
 
@@ -265,7 +284,7 @@ public class PalletInformationController implements Initializable {
         }
     }
 
-    public void validateWeight() throws ValidationException {
+    private void validateWeight() throws ValidationException {
         try {
             double weightValue = getWeight();
             if (weightValue <= 0) {
@@ -276,7 +295,7 @@ public class PalletInformationController implements Initializable {
         }
     }
 
-    public void validatePNR() throws ValidationException {
+    private void validatePNR() throws ValidationException {
         try {
             int PNRnumber = Integer.parseInt(PNR.getText());
             if (PNRnumber < 2000 || PNRnumber > 3500) {
@@ -287,7 +306,7 @@ public class PalletInformationController implements Initializable {
             throw new ValidationException("PNR musí byť číslo");
         }
     }
-    public String getPNR() {
+    private String getPNR() {
         return PNR.getText();
     }
 
@@ -318,16 +337,20 @@ public class PalletInformationController implements Initializable {
         if (positionId.equals("onePosition")){
             return 1;
         }
+
         if (positionId.equals("twoPositions")){
             return 2;
         }
+        /***
+         * If the positionId is threePositions, then the number of positions is 3
+         */
         if (positionId.equals("threePositions")){
             return 3;
         }
         return 4;
     }
 
-    public void setNumberOfPositions(int number){
+    private void setNumberOfPositions(int number){
         if (number == 1) {
             numberOfPositions.getToggles().get(0).setSelected(true);
         }
