@@ -10,14 +10,15 @@ import com.jfoenix.controls.JFXButton;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Reservation {
-    Date dateFrom;
-    Date dateTo;
-    Set<Position> aviablePositions = new HashSet<>();
-    DatabaseHandler databaseHandler;
+    private Date dateFrom;
+    private Date dateTo;
+    private Set<Position> aviablePositions = new HashSet<>();
+    private DatabaseHandler databaseHandler;
 
     protected boolean overlapDate(Date dateFrom, Date dateTo){
         if (this.dateTo.before(dateFrom) || this.dateFrom.after(dateTo)) {
@@ -59,6 +60,12 @@ public class Reservation {
     }
 
     class PositionComparator implements Comparator<Pair<Integer, List<Position>>>{
+        /***
+         * Compares its two arguments for order.  Returns a negative integer,
+         * @param res1 the first object to be compared.
+         * @param res2 the second object to be compared.
+         * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
+         */
         @Override
         public int compare(Pair<Integer, List<Position>> res1, Pair<Integer, List<Position>> res2) {
             if(res1.getKey() < res2.getKey()){
@@ -179,8 +186,13 @@ public class Reservation {
             if(Warehouse.getInstance().getController("DeletedReservation") != null){
                 Warehouse.getInstance().removeController("DeletedReservation");
             }
-            findUsedPositions(new HashSet<>(sortedRecords.get(date)));
-            if(((Set<String>) Warehouse.getInstance().getController("cannotRemove")).isEmpty()) {
+            LocalDate parsedDate1 = LocalDate.parse(String.valueOf(date.getKey()));
+            LocalDate today = LocalDate.now();
+            if(!parsedDate1.isAfter(today)) {
+                findUsedPositions(new HashSet<>(sortedRecords.get(date)));
+            }
+            if(Warehouse.getInstance().getController("cannotRemove") == null ||
+                    ((Set<String>) Warehouse.getInstance().getController("cannotRemove")).isEmpty()) {
                 Warehouse.getInstance().getDatabaseHandler().deleteReservationRecord(customer, (java.sql.Date) date.getKey(), (java.sql.Date) date.getValue());
                 Warehouse.getInstance().addController("DeletedReservation", true);
             }

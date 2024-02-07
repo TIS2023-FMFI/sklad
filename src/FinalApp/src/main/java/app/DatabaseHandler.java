@@ -4,6 +4,7 @@ import Entity.*;
 import Exceptions.MaterialNotAvailable;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,7 +60,7 @@ public class DatabaseHandler {
         }
     }
     */
-    protected boolean savePositionsToDB(List<Position> positions) {
+    public boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
             List<Position> newPositions = new ArrayList<>();
             List<Position> updatePositions = new ArrayList<>();
@@ -675,7 +676,28 @@ public class DatabaseHandler {
         }
     }
 
+    public Customer getCustomerById(int i) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Customer> query = session.createQuery("from Customer where id = :id");
+            query.setParameter("id", i);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    public Customer getRootCustomer() {
+        try (Session session = sessionFactory.openSession()){
+            Query<Customer> query = session.createQuery("from Customer where isRoot = true");
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public class PositionNumberComparator implements Comparator<Position> {
         @Override
@@ -869,7 +891,7 @@ public class DatabaseHandler {
      * @throws MaterialNotAvailable if the material is not found in the database.
      * @return The material record.
      */
-    public Material getMaterial(String materialName) throws MaterialNotAvailable {
+    public Material getMaterial(String materialName) throws MaterialNotAvailable{
         try (Session session = sessionFactory.openSession()) {
             Query<Material> query = session.createQuery("from Material m where m.name = :name");
             query.setParameter("name", materialName);
@@ -1253,7 +1275,7 @@ public class DatabaseHandler {
     public boolean saveCustomer(Customer customer){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(customer);
+            session.save(customer);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -1275,7 +1297,7 @@ public class DatabaseHandler {
             customerOld.setAddress(customer.getAddress());
             customerOld.setCity(customer.getCity());
             customerOld.setPostalCode(customer.getPostalCode());
-            customerOld.setIco(customerOld.getIco());
+            customerOld.setIco(customer.getIco());
             customerOld.setDic(customer.getDic());
             session.saveOrUpdate(customerOld);
             session.getTransaction().commit();
@@ -1461,6 +1483,36 @@ public class DatabaseHandler {
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deletePositions(){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM Position");
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Pallet> getPalletesReservedByCustomerWithMaterial(int id, String materialName) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Pallet> query = session.createQuery
+                    ("SELECT p FROM Pallet p " +
+                            "JOIN PalletOnPosition pop ON p.pnr=pop.idPallet " +
+                            "JOIN Position pos ON pop.idPosition=pos.name " +
+                            "JOIN CustomerReservation cr ON pos.name=cr.idPosition " +
+                            "JOIN StoredOnPallet sop ON p.pnr=sop.pnr " +
+                            "WHERE sop.idProduct=:idMat AND cr.idCustomer=:idCus");
+
+            query.setParameter("idCus", id);
+            query.setParameter("idMat", getMaterial(materialName).getId());
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

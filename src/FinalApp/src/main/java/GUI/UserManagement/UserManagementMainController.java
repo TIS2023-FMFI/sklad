@@ -36,7 +36,7 @@ public class UserManagementMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<Users> users = Warehouse.getInstance().getDatabaseHandler().getUsers();
-        users.remove(Warehouse.getInstance().currentUser);
+        //users.remove(Warehouse.getInstance().currentUser);
         usersChoiceBox.setItems(FXCollections.observableArrayList(users.stream().map(Users::getName).toList()));
         if(users.size() > 0) {
             usersChoiceBox.setValue(users.get(0).getName());

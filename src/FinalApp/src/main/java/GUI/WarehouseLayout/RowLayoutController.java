@@ -53,6 +53,11 @@ public class RowLayoutController implements Initializable {
     protected static final int TALL_POSITION_BUTTON_HEIGHT = 75;
     protected static final int POSITION_BUTTON_SPACING = 3;
 
+    /***
+     * Initializes the controller and sets graphic parameters
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Warehouse.getInstance().addController("rowLayout", this);
@@ -70,6 +75,9 @@ public class RowLayoutController implements Initializable {
         createGrid();
     }
 
+    /***
+     * Creates the grid of the warehouse layout
+     */
     public void createGrid() {
         Map<Integer, List<Position>> shelfAndItsPositions = Warehouse.getInstance().getWarehouseLayoutInstance().getShelfAndItsPositions();
         positionsVBox.setSpacing(POSITION_BUTTON_SPACING);
@@ -81,6 +89,11 @@ public class RowLayoutController implements Initializable {
         }
     }
 
+    /***
+     * Adds door placeholders to the shelf
+     * @param positions the shelf
+     * @return
+     */
     public HBox createShelf(List<Position> positions) {
         HBox shelf = new HBox();
         shelf.setSpacing(POSITION_BUTTON_SPACING);
@@ -157,6 +170,9 @@ public class RowLayoutController implements Initializable {
         }
     }
 
+    /***
+     * Adds information to the information container when the position is reserved
+     */
     public void positionWithPallets(Position position, Map<Pallet, Map<Material, Integer>> palletsOnPosition){
         for (Pallet pallet : palletsOnPosition.keySet()){
             JFXButton palletButton = Warehouse.getInstance().createStyledButton(pallet.getPnr(), "#0C356A",
@@ -184,7 +200,15 @@ public class RowLayoutController implements Initializable {
 
         Label numberOfPosition = warehouse.createStyledLabel("Počet pozícií: " + pallet.getNumberOfPositions(), 17);
         Label weight = warehouse.createStyledLabel("Hmotnosť: " + pallet.getWeight() + " kg", 17);
-        Label user = warehouse.createStyledLabel("Meno skladníka: " + databaseHandler.getUsername(pallet.getIdUser()), 17);
+        String userName;
+        System.out.println(pallet.getIdUser());
+        if (pallet.getIdUser() == null) {
+            userName = "";
+        } else {
+            userName = databaseHandler.getUsername(pallet.getIdUser());
+        }
+        Label user = warehouse.createStyledLabel("Meno skladníka: " + userName, 17);;
+
         Label isDamaged = warehouse.createStyledLabel("Poškodenosť: " + (pallet.isDamaged() ? "áno" : "nie"), 17);
         Label note = warehouse.createStyledLabel("Poznámka: " + pallet.getNote(), 17);
 
@@ -230,6 +254,9 @@ public class RowLayoutController implements Initializable {
         materialCountTable.getChildren().add(table);
     }
 
+    /***
+     * Adds information to the information container when the position is reserved
+     */
     public void reservedPosition(Position position){
         Warehouse warehouse = Warehouse.getInstance();
         DatabaseHandler databaseHandler = warehouse.getDatabaseHandler();
@@ -246,17 +273,21 @@ public class RowLayoutController implements Initializable {
         informationContainer1.getChildren().addAll(positionName, reservedFor, reservationDate);
     }
 
-    public void freePosition(){
+    private void freePosition(){
         Label freePosition = Warehouse.getInstance().createStyledLabel("Zvolená pozícia je voľná", 17);
         informationContainer1.getChildren().add(freePosition);
     }
 
-    public void clearInformationContainers(){
+    private void clearInformationContainers(){
         informationContainer1.getChildren().clear();
         informationContainer2.getChildren().clear();
         materialCountTable.getChildren().clear();
     }
 
+    /***
+     * Changes the scene to the rows layout
+     * @throws IOException if the scene is not found
+     */
     public void backToRows() throws IOException {
         Warehouse.getInstance().removeController("rowLayout");
         Warehouse.getInstance().changeScene("WarehouseLayout/warehouseLayoutRowsForm.fxml");

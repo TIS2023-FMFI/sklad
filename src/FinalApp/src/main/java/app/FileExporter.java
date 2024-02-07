@@ -7,8 +7,12 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.ObservableList;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.chart.BarChart;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -21,6 +25,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
+import javafx.embed.swing.SwingFXUtils;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
 public class FileExporter {
     private final Font customFont = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
     private final Font customFontSmall = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 10);
@@ -28,6 +36,10 @@ public class FileExporter {
     private final Font customFontBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12, Font.BOLD);
     private final Font customFontSmallBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 9, Font.BOLD);
 
+    private String COMPANY_NAME = "Gefco Slovakia s.r.o., Distribution Center, logistická hala DC1";
+    private String COMPANY_ADDRESS = "SNP 811/168";
+    private String COMPANY_POSTCODE = "013 24";
+    private String COMPANY_CITY = "Strečno";
 
     /***
      * Exports data to excel file
@@ -37,7 +49,6 @@ public class FileExporter {
      * @param columns columns to export
      */
     public void exportExcel(ObservableList<Map<String, String>> items, String filename, String sheetname, List<String> columns) {
-        System.out.println(items);
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet spreadsheet = workbook.createSheet(sheetname);
 
@@ -135,13 +146,10 @@ public class FileExporter {
         PdfPTable tableProvider = new PdfPTable(2);
         tableProvider.setWidthPercentage(100);
 
-        Paragraph providerInfo = new Paragraph(
-                """
-                      Názov: Gefco Slovakia s.r.o.
-                               Distribution Center, logistická hala DC1
-                      Adresa: SNP 811/168
-                      Mesto: 013 24 Strečno
-                      """, customFontSmall);
+        Paragraph providerInfo = new Paragraph("Názov: " + COMPANY_NAME, customFontSmall);
+        providerInfo.add("\nAdresa: " + COMPANY_ADDRESS);
+        providerInfo.add("\nMesto:" + COMPANY_POSTCODE + " " + COMPANY_CITY + "\n");
+
         providerInfo.setSpacingAfter(30);
         PdfPCell providerCell = new PdfPCell(providerInfo);
 
@@ -315,7 +323,7 @@ public class FileExporter {
             for (Map<String, String> item:items) {
                 contentTable.addCell(new Paragraph(String.valueOf(num), customFont));
                 contentTable.addCell(new Paragraph(item.get("Pozícia"), customFont));
-                contentTable.addCell(new Paragraph(item.get("PNR"), customFont));
+                contentTable.addCell(new Paragraph(item.get("Paleta"), customFont));
                 contentTable.addCell(new Paragraph(item.get("Materiál"), customFont));
                 contentTable.addCell(new Paragraph(item.get("Počet"), customFont));
                 contentTable.addCell(new Paragraph("", customFont));
@@ -374,4 +382,35 @@ public class FileExporter {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * Exports the BarChart to a PNG file
+     * @param barChart BarChart to be exported
+     */
+    public static void exportGraph(BarChart<String, Number> barChart) {
+        try {
+            // Take a snapshot of the BarChart
+            WritableImage image = barChart.snapshot(null, null);
+
+            // Convert the snapshot to a BufferedImage
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+
+            // Save the BufferedImage as a PNG file
+            FileChooser fileChooser = new FileChooser();
+
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG (*.png)", "*.png");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            File file = fileChooser.showSaveDialog(Warehouse.getStage());
+            if (file == null) {
+                return;
+            }
+            ImageIO.write(bufferedImage, "png", file);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

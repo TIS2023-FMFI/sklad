@@ -53,31 +53,18 @@ public class OrderShowPositionsController implements Initializable {
         positionColumn.setCellValueFactory(new MapValueFactory<>("Pozícia"));
         positionColumn.setPrefWidth(200);
 
-        TableColumn<Map, String> PNRColumn = new TableColumn<>("PNR");
-        PNRColumn.setCellValueFactory(new MapValueFactory<>("PNR"));
+        TableColumn<Map, String> PNRColumn = new TableColumn<>("Paleta");
+        PNRColumn.setCellValueFactory(new MapValueFactory<>("Paleta"));
         PNRColumn.setPrefWidth(74);
 
         orderTable.getColumns().addAll(materialColumn, quantityColumn, positionColumn, PNRColumn);
-
-        List<Pair<Material,Integer>> products = cont.materials;
-        Customer customer = cont.customer;
         cust = cont.customer;
-        OrderProduct op = new OrderProduct();
 
-        try {
-            items.addAll(op.setOrderTable(customer, products));
-        } catch (MaterialNotAvailable e) {
-            try {
-                Warehouse.getInstance().changeScene("OrderProduct/orderProductsForm.fxml");
-                ((OrderProductsController) Warehouse.getInstance().getController("OrderProductsController")).
-                        errorMessage.setText(e.getMessage());
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            e.printStackTrace();
-        }
+        items.addAll(cont.items);
 
-        orderTable.getItems().addAll(items);
+
+
+        orderTable.getItems().addAll(cont.items);
 
     }
 
@@ -98,7 +85,8 @@ public class OrderShowPositionsController implements Initializable {
         columns.add("Materiál");
         columns.add("Počet");
         columns.add("Pozícia");
-        columns.add("PNR");
+        columns.add("Paleta");
+        System.out.println(items);
         fe.exportExcel(items, "Order", "Objednávka", columns);
 
     }

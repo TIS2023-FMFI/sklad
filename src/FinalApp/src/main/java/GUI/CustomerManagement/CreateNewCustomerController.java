@@ -11,49 +11,68 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CreateNewCustomerController implements Initializable {
     @FXML
-    public TextField customerNameT; String customerName;
+    private TextField customerNameT; String customerName;
     @FXML
-    public TextField addressT; String address;
+    private TextField addressT; String address;
     @FXML
-    public TextField cityT; String city;
+    private TextField cityT; String city;
     @FXML
-    public TextField postCodeT; String postCode;
+    private TextField postCodeT; String postCode;
     @FXML
-    public TextField ICOT; String ICO;
+    private TextField ICOT; String ICO;
     @FXML
-    public TextField DICT; String DIC;
+    private TextField DICT; String DIC;
     @FXML
-    public Label errorMessage;
-    CustomersHandler customersHandler;
-    final String EMPTY_NAME = "Zadajte meno zákazníka";
-    final String USED_NAME = "Zadané meno existuje";
+    private Label errorMessage;
+    private CustomersHandler customersHandler;
+    private final String EMPTY_NAME = "Zadajte meno zákazníka";
+    private final String USED_NAME = "Zadané meno existuje";
     private boolean fillData = false;
     private int id;
 
+    /***
+     * Method that shows the new customer cration form and fills it if we are editing a customer
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customersHandler = new CustomersHandler();
         fillData = Warehouse.getInstance().getController("customerName") != null;
         if(fillData){
-            String name = ((ChoiceBox<String>) Warehouse.getInstance().getController("customerName")).getValue();
+            String name = ((String) Warehouse.getInstance().getController("customerName"));
             Customer customer = Warehouse.getInstance().getDatabaseHandler().getCustomer(name);
             id = customer.getId();
-            customerNameT.setText(customer.getName());
-            addressT.setText(customer.getAddress());
-            cityT.setText(customer.getCity());
-            postCodeT.setText(customer.getPostalCode());
-            ICOT.setText(customer.getIco());
-            DICT.setText(customer.getDic());
+            setBox(customerNameT, customer.getName());
+            setBox(addressT, customer.getAddress());
+            setBox(cityT, customer.getCity());
+            setBox(postCodeT, customer.getPostalCode());
+            setBox(ICOT, customer.getIco());
+            setBox(DICT, customer.getDic());
         }
     }
+
+    private void setBox(TextField box, String value){
+        box.setText(Objects.requireNonNullElse(value, ""));
+    }
+
+    /***
+     * Method that returns us back to the main customer management page
+     * @throws IOException if the fxml file is not found
+     */
     public void backToMainCusMan() throws IOException {
         Warehouse.getInstance().changeScene("CustomerManagement/customerManagementMain.fxml");
     }
 
+    /***
+     * Method that adds a new customer to the database and moves us to the confirmation page
+     * @throws IOException if the fxml file is not found
+     */
     public void addNewCustomer() throws IOException {
         customerName = String.valueOf(customerNameT.getText()).trim();
         address = String.valueOf(addressT.getText());

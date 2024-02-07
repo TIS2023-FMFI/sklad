@@ -35,6 +35,7 @@ public class OrderCustomerSelectionController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
+        customers.remove(Warehouse.getInstance().getDatabaseHandler().getRootCustomer().getName());
         customerChoices.setItems(customers);
         customerChoices.setValue(customers.get(0));
         Warehouse.getInstance().addController("OrderCustomerSelectionController", this);

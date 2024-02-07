@@ -18,20 +18,26 @@ import java.util.ResourceBundle;
 
 public class AddReservationFirstController implements Initializable {
     @FXML
-    DatePicker dateFrom;
-    Date dateFromValue;
+    private DatePicker dateFrom;
     @FXML
-    DatePicker dateTo;
-    Date dateToValue;
+    private Date dateFromValue;
     @FXML
-    Label customerName;
+    private  DatePicker dateTo;
     @FXML
-    Label errorMessage;
-    Warehouse warehouse;
+    private Date dateToValue;
+    @FXML
+    private Label customerName;
+    @FXML
+    private Label errorMessage;
+    private Warehouse warehouse;
     private static final String STYLE = "-fx-font: 17px 'Calibri';";
     private static final String PAST_PICKED_DATE = "Dátum od nemôže byť starší ako dnešný dátum.";
 
-
+    /***
+     * Method to initialize the first form of adding reservation
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        warehouse = Warehouse.getInstance();
@@ -56,6 +62,10 @@ public class AddReservationFirstController implements Initializable {
         }
     }
 
+    /***
+     * Method to go back to main reservations
+     * @throws IOException
+     */
     public void backToMainReservations() throws IOException {
         Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
     }
@@ -75,11 +85,20 @@ public class AddReservationFirstController implements Initializable {
        return true;
     }
 
+    /***
+     * Method to go to the next form of adding reservation
+     * @throws IOException if the form is not found
+     */
     public void nextForm() throws IOException {
         if(checkInputs()) {
             Warehouse.getInstance().changeScene("Reservations/addReservationSecondForm.fxml");
         }
     }
+
+    /***
+     * Method to save the date from the date picker
+     * @param actionEvent
+     */
     public void saveDateFrom(ActionEvent actionEvent) {
         LocalDate localDate = dateFrom.getValue();
         dateFromValue = Date.valueOf(localDate);
@@ -90,6 +109,10 @@ public class AddReservationFirstController implements Initializable {
 
     }
 
+    /***
+     * Method to save the date from the date picker
+     * @param actionEvent
+     */
     public void saveDateTo(ActionEvent actionEvent) {
         LocalDate localDate = dateTo.getValue();
         dateToValue = Date.valueOf(localDate);
@@ -100,7 +123,13 @@ public class AddReservationFirstController implements Initializable {
     }
 
     public class OwnDatePickerConverter extends StringConverter<LocalDate> {
-        private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        /***
+         * Method to convert the date to string
+         * @param date LocalDate
+         * @return if the date is not null, it returns the date in the format of dateFormatter, else it returns an empty string
+         */
         @Override
         public String toString(LocalDate date) {
             if (date != null) {
@@ -109,6 +138,12 @@ public class AddReservationFirstController implements Initializable {
                 return "";
             }
         }
+
+        /***
+         * Method to convert the string to date
+         * @param string
+         * @return
+         */
         @Override
         public LocalDate fromString(String string) {
             if (string != null && !string.isEmpty()) {

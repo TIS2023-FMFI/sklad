@@ -1,6 +1,10 @@
 package app;
 
 public class EntryPoint {
+    /***
+     * Main method, that starts the application.
+     * @param args
+     */
     public static void main(String[] args) {
         Warehouse.main(args);
     }

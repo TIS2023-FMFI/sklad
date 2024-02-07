@@ -29,6 +29,10 @@ public class Customer {
     @Column(name = "dic_value")
     private String dicValue;
 
+    @Basic
+    @Column(name = "is_root")
+    private boolean isRoot = false;
+
     public Customer() {
     }
 
@@ -109,4 +113,8 @@ public class Customer {
     public void setDic(String dic) {
         this.dicValue = dic;
     }
+
+    public boolean isRoot() {return isRoot;}
+
+    public void setRoot(boolean root) {isRoot = root;}
 }

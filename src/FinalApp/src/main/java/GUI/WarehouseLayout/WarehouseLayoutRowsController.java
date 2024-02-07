@@ -28,6 +28,11 @@ public class WarehouseLayoutRowsController implements Initializable {
 
     protected boolean isTall;
 
+    /***
+     * Method to initialize the warehouse layout and load rows
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Warehouse.getInstance().addController("warehouseLayout", this);
@@ -35,6 +40,9 @@ public class WarehouseLayoutRowsController implements Initializable {
         loadRows();
     }
 
+    /***
+     * Method to load rows
+     */
     public void loadRows() {
         Warehouse warehouse = Warehouse.getInstance();
         List<String> rowNames = warehouse.getRowNames();

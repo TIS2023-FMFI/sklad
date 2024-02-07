@@ -39,5 +39,10 @@
             <Font size="15.0" />
          </font>
       </Button>
+      <JFXButton fx:id="companyInfo" buttonType="RAISED" layoutX="242.0" layoutY="74.0" onAction="#showCompanyInfo" prefHeight="45.0" style="-fx-background-color: #0C356A;" text="Informácie o nás" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package GUI;
 
+import Entity.Customer;
 import app.CheckPositions;
 import app.DatabaseHandler;
 import app.Warehouse;
@@ -15,9 +16,17 @@ public class LoginController {
     private TextField username;
     @FXML
     private PasswordField password;
+
+    /***
+     * Method for logging in and checking if the user exists in the database
+     */
     public void login(){
         try {
             Warehouse warehouse = Warehouse.getInstance();
+            if(warehouse.getDatabaseHandler() == null){
+                wrongLogin.setText("Nepodarilo sa pripojiť ku databáze.");
+                return;
+            }
             if (username.getText() == null || username.getText().trim().isEmpty()) {
                 wrongLogin.setText("Nezadali ste používateľské meno");
             }
@@ -34,9 +43,18 @@ public class LoginController {
             if(!checkPositions.allPositionsCorrect()){
                 checkPositions.createNewWindow();
             }
+
+            if (Warehouse.getInstance().getDatabaseHandler().getRootCustomer() == null) {
+                Customer gefco = new Customer();
+                gefco.setName("Gefco Slovakia s.r.o.");
+                gefco.setAddress("SNP 811/168");
+                gefco.setCity("Strečno");
+                gefco.setPostalCode("013 24");
+                gefco.setRoot(true);
+                Warehouse.getInstance().getDatabaseHandler().saveCustomer(gefco);
+            }
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
             wrongLogin.setText(e.getMessage());
         }
     }

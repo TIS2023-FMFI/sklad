@@ -15,21 +15,24 @@ import java.util.ResourceBundle;
 
 public class ReservationsMainController implements Initializable {
     @FXML
-    public ChoiceBox<String> customer;
+    private ChoiceBox<String> customer;
     @FXML
-    public Button userManagementButton;
-
+    Button userManagementButton;
     @FXML
-    Button customerManagementB;
-    @FXML
+    private  Button customerManagementB;
+    private  @FXML
     Button addReservationB;
-    @FXML
-    Button editReservationB;
+ //   @FXML
+ //   private editReservationB;
+//    @FXML
+
+    Button layout;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
+        customers.remove(Warehouse.getInstance().getDatabaseHandler().getRootCustomer().getName());
         customer.setItems(customers);
         customer.setStyle("-fx-font: 20px 'Calibri';");
         if(customers.size() > 0) {
@@ -38,17 +41,14 @@ public class ReservationsMainController implements Initializable {
 
         else{
             addReservationB.setDisable(true);
-            editReservationB.setDisable(true);
+            //editReservationB.setDisable(true);
         }
-//        if(! Warehouse.getInstance().getCurrentUser().getAdmin()) {
-//            customerManagementB.setVisible(false);
-//            addReservationB.setVisible(false);
-
 
         if(! Warehouse.getInstance().getCurrentUser().getAdmin()){
             customerManagementB.setVisible(false);
             addReservationB.setVisible(false);
             userManagementButton.setVisible(false);
+            layout.setVisible(false);
         }
 
     }
@@ -74,10 +74,14 @@ public class ReservationsMainController implements Initializable {
     }
 
     public void customerManagement() throws IOException {
-        Warehouse.getInstance().changeScene("CustomerManagement/CustomerManagementMain.fxml");
+        Warehouse.getInstance().changeScene("CustomerManagement/customerManagementMain.fxml");
     }
 
     public void goToUserManagement() throws IOException {
         Warehouse.getInstance().changeScene("UserManagement/userManagementMain.fxml");
+    }
+
+    public void newLayout() throws IOException {
+        Warehouse.getInstance().changeScene("WarehouseLayout/createNewLayout.fxml");
     }
 }
