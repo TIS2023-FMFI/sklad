@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.PalletInformationController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StoreInProduct.PalletInformationController">
    <top>
       <AnchorPane fx:id="topContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="750.0" BorderPane.alignment="CENTER">
          <children>
@@ -34,12 +34,12 @@
    <bottom>
       <AnchorPane fx:id="informationContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="21.0" layoutY="106.0" text="Referenčné číslo palety:">
+            <Label layoutX="74.0" layoutY="106.0" text="Referencia:">
                <font>
                   <Font name="Calibri Bold" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="PNR" layoutX="222.0" layoutY="103.0" prefHeight="31.0" prefWidth="174.0" stylesheets="@storeInStyles.css" />
+            <TextField fx:id="PNR" layoutX="190.0" layoutY="102.0" prefHeight="31.0" prefWidth="174.0" stylesheets="@storeInStyles.css" />
             <Label layoutX="73.0" layoutY="176.0" prefHeight="23.0" prefWidth="124.0" text="Poškodenosť:">
                <font>
                   <Font name="Calibri Bold" size="20.0" />

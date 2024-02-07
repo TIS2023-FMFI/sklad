@@ -1470,34 +1470,7 @@ public class DatabaseHandler {
         }
     }
 
-//    public void deleteStoredOnPallet(Set<String> pallets) {
-//        try (Session session = sessionFactory.openSession()) {
-//            session.beginTransaction();
-//            for(var pallet : pallets){
-//                Query query = session.createQuery("DELETE FROM StoredOnPallet sop WHERE sop.pnr = :pnr");
-//                query.setParameter("pnr", pallet);
-//                query.executeUpdate();
-//            }
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
-//    public void deletePalletOnPosition(String palletId, String positionId) {
-//        try (Session session = sessionFactory.openSession()) {
-//            session.beginTransaction();
-//            Query<PalletOnPosition> query = session.createQuery("DELETE FROM PalletOnPosition WHERE idPallet = :palletId AND idPosition = :positionId");
-//            query.setParameter("palletId", palletId);
-//            query.setParameter("positionId", positionId);
-//
-//            query.executeUpdate();
-//
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public void deletePallets(Set<String> pnrs){
         try (Session session = sessionFactory.openSession()) {
