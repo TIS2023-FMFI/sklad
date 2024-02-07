@@ -12,12 +12,19 @@ import java.util.Set;
 
 public class ReservationConfirmationController implements Initializable {
     @FXML
-    Label messageTop;
+    private Label messageTop;
     @FXML
-    Label messageBottom;
+    private Label messageBottom;
     private final String DELETED_RECORD = "Záznam rezervácie bol odstránený.";
     private final String CANNOT_REMOVE = "Nie všetky pozície sú voľné.\nOdstránte tovar z:";
     private final String CREATE_CUSTOMER = "Rezervácia bola úspešne vytvorená.";
+
+    /***
+     * Inicializacia controllera
+     * @param url
+     * @param resourceBundle
+     */
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(Warehouse.getInstance().getController("cannotRemove") != null &&
@@ -63,5 +70,6 @@ public class ReservationConfirmationController implements Initializable {
 
         Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
     }
+
 
 }

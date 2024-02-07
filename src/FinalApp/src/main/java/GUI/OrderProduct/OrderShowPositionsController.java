@@ -62,27 +62,8 @@ public class OrderShowPositionsController implements Initializable {
 
         items.addAll(cont.items);
 
-        /*
-        List<Pair<Material,Integer>> products = cont.materials;
 
-        OrderProduct op = new OrderProduct();
 
-        try {
-            items.addAll(op.setOrderTable(customer, products));
-        } catch (MaterialNotAvailable e) {
-            try {
-                Warehouse.getInstance().changeScene("OrderProduct/orderProductsForm.fxml");
-                ((OrderProductsController) Warehouse.getInstance().getController("OrderProductsController")).
-                        errorMessage.setText(e.getMessage());
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            e.printStackTrace();
-        }
-
-        orderTable.getItems().addAll(items);
-
-         */
         orderTable.getItems().addAll(cont.items);
 
     }

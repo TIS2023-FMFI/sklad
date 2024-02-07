@@ -15,16 +15,17 @@ import java.util.ResourceBundle;
 
 public class ReservationsMainController implements Initializable {
     @FXML
-    public ChoiceBox<String> customer;
+    private ChoiceBox<String> customer;
     @FXML
     Button userManagementButton;
     @FXML
-    Button customerManagementB;
-    @FXML
+    private  Button customerManagementB;
+    private  @FXML
     Button addReservationB;
-    @FXML
-    Button editReservationB;
-    @FXML
+ //   @FXML
+ //   private editReservationB;
+//    @FXML
+
     Button layout;
 
 
@@ -40,7 +41,7 @@ public class ReservationsMainController implements Initializable {
 
         else{
             addReservationB.setDisable(true);
-            editReservationB.setDisable(true);
+            //editReservationB.setDisable(true);
         }
 
         if(! Warehouse.getInstance().getCurrentUser().getAdmin()){

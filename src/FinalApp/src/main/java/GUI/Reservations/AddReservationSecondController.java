@@ -22,22 +22,25 @@ public class AddReservationSecondController implements Initializable {
     private static final String MORE_TALL_THAN_LOW = "Počet vysokých miest nesmie byť väčší ako celkový počet miest.";
     private static final String NUMBER_CONTAINS_CHAR = "Číslo obsahuje nepovolené znaky";
     @FXML
-    Label numberOfAllFreePositions;
+    private Label numberOfAllFreePositions;
     @FXML
-    Label numberOfAllTallPositions;
+    private Label numberOfAllTallPositions;
     @FXML
-    Label errorMessage;
+    private Label errorMessage;
     @FXML
-    TextField numberOfFreeField;
+    private TextField numberOfFreeField;
     @FXML
-    TextField numberOfTallField;
+    private TextField numberOfTallField;
+    private int allFreePosition;
+    private int allTallPosition;
+    private Reservation reservation;
+    private Warehouse warehouse;
 
-    int allFreePosition;
-    int allTallPosition;
-
-    Reservation reservation;
-    Warehouse warehouse;
-
+    /***
+     * Metoda na inicializaciu
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         warehouse = Warehouse.getInstance();
@@ -55,10 +58,19 @@ public class AddReservationSecondController implements Initializable {
             warehouse.removeController("positionsToSave");
         }
     }
+
+    /***
+     * Metoda na navrat na prvu stranku rezervacii
+     * @throws IOException
+     */
     public void backToFirstForm() throws IOException {
         Warehouse.getInstance().changeScene("Reservations/addReservationFirstForm.fxml");
     }
 
+    /***
+     * Metoda na nájdenie ulozenia pozícií pozicii.
+     * @throws IOException
+     */
     public void findPositionsToSave() throws IOException{
         int getPosition = 0;
         int getTall = 0;

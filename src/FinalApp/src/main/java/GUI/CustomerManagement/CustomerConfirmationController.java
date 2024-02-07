@@ -11,11 +11,15 @@ import java.util.ResourceBundle;
 
 public class CustomerConfirmationController implements Initializable {
     @FXML
-    Label message;
+    private Label message;
     private final String DATE_SAVED = "Údaje boli úspešne uložené.";
     private final String CUSTOMER_REMOVED = "Zákazník bol úspešne odstránený.";
 
-
+    /***
+     * Method to initialize the controller and write the message to the label
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String write = DATE_SAVED;
@@ -25,6 +29,10 @@ public class CustomerConfirmationController implements Initializable {
         message.setText(write);
     }
 
+    /***
+     * Method to go back to the main reservations
+     * @throws IOException if the file is not found
+     */
     public void backToMainReservations() throws IOException {
         if(Warehouse.getInstance().getController("deleteCustomer") != null) {
             Warehouse.getInstance().removeController("deleteCustomer");
@@ -32,6 +40,10 @@ public class CustomerConfirmationController implements Initializable {
         Warehouse.getInstance().changeScene("CustomerManagement/customerManagementMain.fxml");
     }
 
+    /***
+     * Method to go back to the form that creates new customer
+     * @throws IOException if the file is not found
+     */
     public void backToForm() throws IOException {
         if(Warehouse.getInstance().getController("deleteCustomer") != null){
             Warehouse.getInstance().removeController("deleteCustomer");

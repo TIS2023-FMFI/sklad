@@ -6,6 +6,7 @@ import app.Warehouse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
@@ -15,16 +16,22 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class OrderMaterialChoices implements Initializable {
-    public TableView choicesOfProduct;
-    public Label header;
+    @FXML
+    private TableView choicesOfProduct;
+    @FXML
+    private Label header;
     private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
-    public Label errorLabel;
-
+    @FXML
+    private Label errorLabel;
     private ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();
+    private OrderProductsController cont;
+    private String materialName;
 
-    OrderProductsController cont;
-    String materialName;
-
+    /***
+     * Initializes the controller and sets up the table columns
+     * @param arg0
+     * @param arg1
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         cont = (OrderProductsController) Warehouse.getInstance().getController("OrderProductsController") ;
@@ -61,6 +68,9 @@ public class OrderMaterialChoices implements Initializable {
 
     }
 
+    /***
+     * Confirms the adding of the selected items to the order
+     */
     public void confirmAdding() {
         ObservableList<Map<String, String>> newItems = FXCollections.observableArrayList();
         for (Map<String, Object> item : items) {
@@ -82,7 +92,7 @@ public class OrderMaterialChoices implements Initializable {
         cont.updateTable();
     }
 
-    public int getAddedQuantity(Map<String, Object> item) {
+    private int getAddedQuantity(Map<String, Object> item) {
         var sp = (Spinner<Integer>) item.get("quantity");
         int quantity = sp.getValue();
         for (Map<String, String> i : cont.items) {

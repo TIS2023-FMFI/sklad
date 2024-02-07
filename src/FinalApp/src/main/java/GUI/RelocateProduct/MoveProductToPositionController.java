@@ -60,11 +60,11 @@ public class MoveProductToPositionController implements Initializable {
      */
     public int palletWidth = 1;
     private double weight = 0;
+
     /***
      * Method that fills newPositionsChoice with correct positions.
      * @throws IOException if there is problem with loading fxml file
      */
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ChooseProductToRelocateController controller = (ChooseProductToRelocateController)

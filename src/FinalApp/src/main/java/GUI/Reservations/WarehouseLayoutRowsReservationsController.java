@@ -20,9 +20,11 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRowsController implements Initializable {
-    Set<String> changedRows = new HashSet<>();
-    Set<Position> positionsToSave;
+    private Set<String> changedRows = new HashSet<>();
+    private Set<Position> positionsToSave;
 
+    @FXML
+    private HBox rowsContainer;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         isTall = false;
@@ -35,6 +37,9 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
         loadRows();
     }
 
+    /***
+     * Function loads rows from warehouse and creates buttons for each row
+     */
     @Override
     public void loadRows() {
         Warehouse warehouse = Warehouse.getInstance();
@@ -67,6 +72,10 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
         }
     }
 
+    /***
+     * Function creates button for each row
+     * @return created button
+     */
     @Override
     public void nextToRowLayout() {
         try {
@@ -76,6 +85,10 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
         }
     }
 
+    /***
+     * Function creates button for each row
+     * @return created button
+     */
     protected Set<Position> getPostionsToSave(){
         if(Warehouse.getInstance().getController("positionsToSave") != null){
             return (Set<Position>) Warehouse.getInstance().getController("positionsToSave");
@@ -102,6 +115,11 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
             changedRows.add(row);
         }
     }
+
+    /***
+     * Function creates button for each row
+     * @throws IOException exception
+     */
     @Override
     public void backToMenu() throws IOException {
         Warehouse warehouse = Warehouse.getInstance();

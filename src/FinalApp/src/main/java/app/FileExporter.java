@@ -384,6 +384,10 @@ public class FileExporter {
     }
 
 
+    /**
+     * Exports the BarChart to a PNG file
+     * @param barChart BarChart to be exported
+     */
     public static void exportGraph(BarChart<String, Number> barChart) {
         try {
             // Take a snapshot of the BarChart

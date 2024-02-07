@@ -17,16 +17,20 @@ import java.util.ResourceBundle;
 
 public class CustomerManagementMainController implements Initializable {
     @FXML
-    public ChoiceBox<String> customer;
+    private ChoiceBox<String> customer;
     @FXML
-    public Label errorMessage;
+    private Label errorMessage;
     @FXML
-    Button delete;
+    private Button delete;
     @FXML
-    Button showCustomer;
-
+    private Button showCustomer;
     private Customer root;
 
+    /***
+     * Method to initialize the customer management main controller and set the customer choice box
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Customer us = Warehouse.getInstance().getDatabaseHandler().getRootCustomer();
@@ -49,10 +53,18 @@ public class CustomerManagementMainController implements Initializable {
         Warehouse.getInstance().addController("customerName", customer.getValue());
     }
 
+    /***
+     * Method that saves customer name to the warehouse
+     */
     public void saveCustomerName(){
         Warehouse warehouse = Warehouse.getInstance();
         warehouse.addController("customerName", customer.getValue());
     }
+
+    /***
+     * Method to show information about the customer
+     * @throws IOException if the scene is not found
+     */
     public void showInformation() throws IOException {
         Warehouse warehouse = Warehouse.getInstance();
         if(warehouse.getController("customerName") != null){
@@ -62,9 +74,18 @@ public class CustomerManagementMainController implements Initializable {
         Warehouse.getInstance().changeScene("CustomerManagement/createNewCustomer.fxml");
     }
 
+    /***
+     * Method that takes user to the main reservation scene
+     * @throws IOException if the scene is not found
+     */
     public void backToMainReservation() throws IOException {
         Warehouse.getInstance().changeScene("Reservations/reservationsMain.fxml");
     }
+
+    /***
+     * Method that removes edited customer and takes user to the create new customer scene
+     * @throws IOException if the scene is not found
+     */
     public void createNewCustomerScene() throws IOException {
         if(Warehouse.getInstance().getController("customerName") != null){
             Warehouse.getInstance().removeController("customerName");
@@ -72,6 +93,10 @@ public class CustomerManagementMainController implements Initializable {
         Warehouse.getInstance().changeScene("CustomerManagement/createNewCustomer.fxml");
     }
 
+    /***
+     * Method that takes user to the delete customer scene
+     * @throws IOException if the scene is not found
+     */
     public void deleteCustomerScene() throws IOException {
         Warehouse.getInstance().changeScene("CustomerManagement/deleteCustomerConfirm.fxml");
     }

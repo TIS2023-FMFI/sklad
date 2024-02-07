@@ -87,6 +87,12 @@ public class OrderProduct {
         return res;
     }
 
+    /***
+     * Method that sets the table for the customer to choose the material that he wants to order.
+     * @param customer Customer that wants to order the material.
+     * @return List of maps that contain the information about the material, quantity,
+     *              position and PNR of meterials that were ordered.
+     */
     public List<Map<String, Object>> setMaterialChoiceTable(Customer customer, String materialName) {
         DatabaseHandler dbh = Warehouse.getInstance().getDatabaseHandler();
         List<Pallet> palletes = dbh.getPalletesReservedByCustomerWithMaterial(customer.getId(),materialName);
