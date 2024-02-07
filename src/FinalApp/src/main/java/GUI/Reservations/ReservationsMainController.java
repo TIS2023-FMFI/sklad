@@ -24,8 +24,7 @@ public class ReservationsMainController implements Initializable {
     Button addReservationB;
  //   @FXML
  //   private editReservationB;
-//    @FXML
-
+    @FXML
     Button layout;
 
 
