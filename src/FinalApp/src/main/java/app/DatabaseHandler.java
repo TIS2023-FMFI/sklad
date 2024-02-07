@@ -676,17 +676,6 @@ public class DatabaseHandler {
         }
     }
 
-    public Customer getCustomerById(int i) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Customer> query = session.createQuery("from Customer where id = :id");
-            query.setParameter("id", i);
-            return query.getSingleResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public Customer getRootCustomer() {
         try (Session session = sessionFactory.openSession()){
             Query<Customer> query = session.createQuery("from Customer where isRoot = true");
@@ -994,17 +983,6 @@ public class DatabaseHandler {
             int customerId = getCustomer(customer).getId();
             Query<Position> query = session.createQuery("from Position p " +
                     "join CustomerReservation cr on p.name = cr.idPosition where cr.idCustomer = :id");
-            query.setParameter("id", customerId);
-            return query.getResultList();
-        }
-    }
-
-    public List<Position> getEmptyPositionsReservedByCustomer(String customer) {
-        try (Session session = sessionFactory.openSession()) {
-            int customerId = getCustomer(customer).getId();
-            Query<Position> query = session.createQuery("from Position p " +
-                    "join CustomerReservation cr on p.name = cr.idPosition where cr.idCustomer = :id and" +
-                    "(SELECT COUNT(*) FROM PalletOnPosition pop WHERE pop.idPosition = p.name) = 0");
             query.setParameter("id", customerId);
             return query.getResultList();
         }
