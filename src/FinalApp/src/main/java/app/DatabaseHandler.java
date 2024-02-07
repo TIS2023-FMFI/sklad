@@ -5,7 +5,6 @@ import Exceptions.MaterialNotAvailable;
 import Exceptions.UserDoesNotExist;
 import Exceptions.WrongPassword;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
@@ -52,14 +51,13 @@ public class DatabaseHandler {
     /***
      * A destructor that closes session factory after exiting application.
      */
-    /*
     @Override
     protected void finalize() {
         if (sessionFactory != null) {
             sessionFactory.close();
         }
     }
-    */
+
     public boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
             List<Position> newPositions = new ArrayList<>();
