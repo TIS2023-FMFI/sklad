@@ -62,7 +62,7 @@ public class saveNewUserController implements Initializable {
             isAdmin.setSelected(false);
         }
         //odstranenie moznosti mazania
-        deleteButton.setVisible(false);
+        //deleteButton.setVisible(false);
     }
 
     /***
