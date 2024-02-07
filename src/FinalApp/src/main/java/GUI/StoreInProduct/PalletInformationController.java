@@ -248,7 +248,7 @@ public class PalletInformationController implements Initializable {
             errorMessage.setText("Nezadali ste počet pozícií");
         }
         else if (Warehouse.getInstance().getDatabaseHandler().PNRisUsed(PNR.getText())) {
-            errorMessage.setText("Zadali ste referenciu, ktorá sa už používa");
+            errorMessage.setText("Zadali ste referenciu, ktorá sa používa");
         }
         else {
             try {
