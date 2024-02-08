@@ -1,53 +1,40 @@
 package GUI.WarehouseLayout;
 
-import Entity.Customer;
 import Exceptions.FileNotFound;
 import Exceptions.WrongStringFormat;
 import app.LoadPositions;
-import app.Reservation;
 import app.Warehouse;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class CreateNewLayoutController implements Initializable {
 
-    private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
     private FileChooser fileChooser;
     @FXML
     private Label errorMessage;
     @FXML
     private Label path;
     private File fileToLoad;
-    private final String CHOOSE_FILE = "Nebol vybraný súbor.";
-    private final String FORMAT_EXCEPTION = "Vybraný súbor má zlú štruktúru.\n";
+    private static final String CHOOSE_FILE = "Nebol vybraný súbor.";
+    private static final String FORMAT_EXCEPTION = "Vybraný súbor má zlú štruktúru.\n";
 
     /***
      * Initializes the controller and sets title
-     * @param url
-     * @param resourceBundle
+     * @param url The location used to resolve relative paths for the root object, or null.
+     * @param resourceBundle The resources used to localize the root object, or null.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fileChooser = new FileChooser();
         fileChooser.setTitle("Zvoľte súbor na nahranie");
         fileToLoad = null;
-
     }
 
     @FXML
@@ -62,6 +49,12 @@ public class CreateNewLayoutController implements Initializable {
         }
     }
 
+    /**
+     * Saves new positions by loading data from a file and adding them to the warehouse.
+     * If the file is incorrect or the data format is wrong, it displays an error message.
+     *
+     * @throws IOException
+     */
     @FXML
     public void saveNewPositions() throws IOException {
         if(!isFileCorrect()){
@@ -89,7 +82,7 @@ public class CreateNewLayoutController implements Initializable {
 
     /***
      * Changes scene to main menu
-     * //@throws IOException
+     * @throws IOException
      */
     @FXML
     public void backToForm() throws IOException {

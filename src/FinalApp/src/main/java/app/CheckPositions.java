@@ -23,11 +23,9 @@ import java.util.*;
 public class CheckPositions implements Initializable {
     @FXML
     private TableView wrongPositionsTable;
-
     private static final String STYLE = "-fx-font: 17px 'Calibri'; -fx-alignment: CENTER;";
     @FXML
     private Label downloadConfirmationLabel;
-
 
     private Set<String> wrongPositions = new HashSet<>();
     private Set<String> palletToRemove = new HashSet<>();
@@ -56,8 +54,8 @@ public class CheckPositions implements Initializable {
 
     /***
      * Fills table with wrong positions.
-     * @param url
-     * @param resourceBundle
+     * @param url The URL for the initialization.
+     * @param resourceBundle The resource bundle associated with the initialization.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -181,7 +179,6 @@ public class CheckPositions implements Initializable {
             List<Position> positions = databaseHandler.getPositionsOfPallet(pnr);
             for (Position position1 : positions){
                 warehouse.removePalletOnPosition(position1, pallet);
-                //databaseHandler.deletePalletOnPosition(position1.getName(), pallet.getPnr());
             }
         }
         databaseHandler.deletePallets(palletToRemove);

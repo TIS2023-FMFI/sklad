@@ -11,7 +11,6 @@ import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -60,15 +59,15 @@ public class AddReservationSecondController implements Initializable {
     }
 
     /***
-     * Metoda na navrat na prvu stranku rezervacii
-     * @throws IOException
+     * Changes the scene to the addReservationFirstForm
+     * @throws IOException if the scene is not found
      */
     public void backToFirstForm() throws IOException {
         Warehouse.getInstance().changeScene("Reservations/addReservationFirstForm.fxml");
     }
 
     /***
-     * Metoda na nájdenie ulozenia pozícií pozicii.
+     * Method to find positions to be saved
      * @throws IOException
      */
     public void findPositionsToSave() throws IOException{
@@ -122,6 +121,4 @@ public class AddReservationSecondController implements Initializable {
         reservation.findPotisionsToReserve(getLow, getTall, nameCustomer);
         Warehouse.getInstance().changeScene("Reservations/warehouseLayoutRowsReservationForm.fxml");
     }
-
-
 }

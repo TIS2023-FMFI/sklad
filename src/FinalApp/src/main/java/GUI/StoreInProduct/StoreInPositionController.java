@@ -72,7 +72,7 @@ public class StoreInPositionController implements Initializable {
 
     /***
      * Stores the pallet in the selected position
-     * @throws IOException -
+     * @throws IOException
      */
     public void storeInProduct() throws IOException {
         Warehouse.getStage().setOnCloseRequest(null);
@@ -105,7 +105,7 @@ public class StoreInPositionController implements Initializable {
         warehouse.changeScene("StoreInProduct/palletInformationForm.fxml");
     }
 
-/***
+    /***
      * Saves the record and goes back to the main menu
      * @throws IOException if the scene cannot be loaded
      */

@@ -24,7 +24,6 @@ public class OrderProduct {
     public void removeOrderedItems(ObservableList<Map<String, String>> items) {
         var dbh = Warehouse.getInstance().getDatabaseHandler();
         for (Map<String, String> item : items) {
-            //Position position = dbh.getPosition(item.get("Pozícia"));
             Pallet pnr = dbh.getPallet(item.get("Paleta"));
             List<Position> positions = getPositionsForPallet(pnr);
 

@@ -7,12 +7,10 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.ObservableList;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.BarChart;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -36,10 +34,10 @@ public class FileExporter {
     private final Font customFontBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12, Font.BOLD);
     private final Font customFontSmallBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 9, Font.BOLD);
 
-    private String COMPANY_NAME = "Gefco Slovakia s.r.o., Distribution Center, logistická hala DC1";
-    private String COMPANY_ADDRESS = "SNP 811/168";
-    private String COMPANY_POSTCODE = "013 24";
-    private String COMPANY_CITY = "Strečno";
+    private static final String COMPANY_NAME = "Gefco Slovakia s.r.o., Distribution Center, logistická hala DC1";
+    private static final String COMPANY_ADDRESS = "SNP 811/168";
+    private static final String COMPANY_POSTCODE = "013 24";
+    private static final String COMPANY_CITY = "Strečno";
 
     /***
      * Exports data to excel file

@@ -3,14 +3,11 @@ package app;
 import Entity.*;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.util.Pair;
 import com.jfoenix.controls.JFXButton;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -20,6 +17,12 @@ public class Reservation {
     private Set<Position> aviablePositions = new HashSet<>();
     private DatabaseHandler databaseHandler;
 
+    /**
+     *Checks if the date range defined by this instance overlaps with the given date range.
+     * @param dateFrom The start date of the given date range.
+     * @param dateTo The end date of the given date range.
+     * @return true if there is an overlap between the date ranges, false otherwise.
+     */
     protected boolean overlapDate(Date dateFrom, Date dateTo){
         if (this.dateTo.before(dateFrom) || this.dateFrom.after(dateTo)) {
             return false;

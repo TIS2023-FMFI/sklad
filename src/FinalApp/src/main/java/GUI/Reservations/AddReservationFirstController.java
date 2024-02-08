@@ -139,10 +139,11 @@ public class AddReservationFirstController implements Initializable {
             }
         }
 
-        /***
-         * Method to convert the string to date
-         * @param string
-         * @return
+        /**
+         * Converts a string representation of a date to a LocalDate object.
+         *
+         * @param string The string representation of the date.
+         * @return The LocalDate object representing the parsed date, or null if the input string is null or empty.
          */
         @Override
         public LocalDate fromString(String string) {

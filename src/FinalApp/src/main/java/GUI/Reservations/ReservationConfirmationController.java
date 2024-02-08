@@ -56,6 +56,7 @@ public class ReservationConfirmationController implements Initializable {
         }
         return false;
     }
+
     public void backToForm() throws IOException {
         if(removeController("DeletedReservation") || removeController("cannotRemove")){
             Warehouse.getInstance().changeScene("Reservations/reservationsView.fxml");

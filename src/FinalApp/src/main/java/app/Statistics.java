@@ -48,10 +48,7 @@ public class Statistics {
     public List<Map<String, String>> setInventoryTable(){
         Set<Pallet> usedPallets = new HashSet<>();
         List<Map<String,String>> res = new ArrayList<>();
-        //var data = Warehouse.getInstance().getWarehouseData();
         var data = Warehouse.getInstance().getPalletsOnPositionMap();
-        //var dbh = Warehouse.getInstance().getDatabaseHandler();
-        //Map<Position, Map<Pallet, Map<Material, Integer>>> palletsOnPosition;
         for (Position position : data.keySet()) {
             var pallets = data.get(position);
             for (Pallet pallet : pallets.keySet()){

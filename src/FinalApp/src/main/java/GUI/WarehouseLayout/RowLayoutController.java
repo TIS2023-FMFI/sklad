@@ -20,9 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
 
 public class RowLayoutController implements Initializable {
@@ -89,10 +86,11 @@ public class RowLayoutController implements Initializable {
         }
     }
 
-    /***
-     * Adds door placeholders to the shelf
-     * @param positions the shelf
-     * @return
+    /**
+     * Creates a shelf layout with door placeholders and position buttons.
+     *
+     * @param positions The list of positions representing the shelf.
+     * @return The horizontal box (HBox) layout representing the shelf.
      */
     public HBox createShelf(List<Position> positions) {
         HBox shelf = new HBox();
@@ -170,8 +168,11 @@ public class RowLayoutController implements Initializable {
         }
     }
 
-    /***
-     * Adds information to the information container when the position is reserved
+    /**
+     * Updates the information container with details when a position is reserved with pallets.
+     *
+     * @param position The position that is reserved.
+     * @param palletsOnPosition The map containing pallets and their respective materials and quantities.
      */
     public void positionWithPallets(Position position, Map<Pallet, Map<Material, Integer>> palletsOnPosition){
         for (Pallet pallet : palletsOnPosition.keySet()){
@@ -257,7 +258,7 @@ public class RowLayoutController implements Initializable {
     /***
      * Adds information to the information container when the position is reserved
      */
-    public void reservedPosition(Position position){
+    private void reservedPosition(Position position){
         Warehouse warehouse = Warehouse.getInstance();
         DatabaseHandler databaseHandler = warehouse.getDatabaseHandler();
         CustomerReservation reservation = databaseHandler.getReservation(position.getName());

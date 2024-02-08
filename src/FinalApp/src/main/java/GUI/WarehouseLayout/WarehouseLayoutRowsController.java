@@ -94,6 +94,11 @@ public class WarehouseLayoutRowsController implements Initializable {
         }
     }
 
+    /***
+     * Changes the scene to the rows layout
+     * @throws IOException
+     * @throws RuntimeException
+     */
     public void nextToRowLayout() {
         try {
             Warehouse.getInstance().changeScene("WarehouseLayout/rowLayoutForm.fxml");
@@ -102,6 +107,10 @@ public class WarehouseLayoutRowsController implements Initializable {
         }
     }
 
+    /***
+     * Changes the scene to the main menu
+     * @throws IOException if the scene is not found
+     */
     public void backToMenu() throws IOException {
         Warehouse warehouse = Warehouse.getInstance();
         warehouse.deleteWarehouseLayoutInstance();

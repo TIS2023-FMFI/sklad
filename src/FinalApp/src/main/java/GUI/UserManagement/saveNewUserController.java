@@ -37,7 +37,7 @@ public class saveNewUserController implements Initializable {
     Users userUpdated;
 
     /***
-     * Initializes the controller class and hides some of the buttons from not admin users.
+     * Initializes the controller class and hides some buttons from not admin users.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,8 +61,6 @@ public class saveNewUserController implements Initializable {
             password.setText("");
             isAdmin.setSelected(false);
         }
-        //odstranenie moznosti mazania
-        //deleteButton.setVisible(false);
     }
 
     /***

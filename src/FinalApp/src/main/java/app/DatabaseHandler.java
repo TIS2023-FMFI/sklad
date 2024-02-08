@@ -58,6 +58,12 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Saves positions to the database.
+     * Positions are either inserted as new records or updated if they already exist.
+     * @param positions The list of positions to save.
+     * @return true if the save operation is successful, false otherwise.
+     */
     public boolean savePositionsToDB(List<Position> positions) {
         try (Session session = sessionFactory.openSession()) {
             List<Position> newPositions = new ArrayList<>();
@@ -558,6 +564,13 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that saves a material on a pallet in the database.
+     * If the material is already stored on the pallet, its quantity is updated otherwise, a new entry is created.
+     * @param pallet The pallet where the material is stored.
+     * @param material The material to be persisted.
+     * @param quantity The quantity of the material to be persisted.
+     */
     public void persistMaterialOnPallet(Pallet pallet, Material material, int quantity) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -582,6 +595,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that updates the position of a pallet in the database.
+     * @param pallet The identifier of the pallet.
+     * @param pos The new position to be assigned to the pallet.
+     */
     public void updatePalletPosition(String pallet, String pos) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -597,6 +615,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that saves a pallet to the database and assigns it to a final position.
+     * @param pallet The pallet to be added.
+     * @param finalPosition The final position to which the pallet is assigned.
+     */
     public void addPallet(Pallet pallet, Position finalPosition) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -611,6 +634,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns the positions associated with a pallet from the database.
+     * @param palletFrom The identifier of the pallet.
+     * @return A list of positions associated with the specified pallet.
+     */
     public List<Position> getPositionsOfPallet(String palletFrom) {
         try (Session session = sessionFactory.openSession()) {
             Query<Position> query1 = session.createQuery("from Position p join " +
@@ -623,6 +651,10 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns a list of all users from the database.
+     * @return A list containing all users stored in the database.
+     */
     public List<Users> getUsers() {
         try (Session session = sessionFactory.openSession()) {
             Query<Users> query = session.createQuery("from Users");
@@ -633,6 +665,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns user from the database based on the specified username.
+     * @param selectedUser The username of the user to retrieve.
+     * @return The user object corresponding to the specified username, or null if not found.
+     */
     public Users getUser(String selectedUser) {
         try (Session session = sessionFactory.openSession()) {
             Query<Users> query = session.createQuery("from Users where name = :name");
@@ -644,6 +681,13 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that updates the information of a user in the database.
+     * @param id The unique identifier of the user.
+     * @param newName The new name to be assigned to the user.
+     * @param newPassword The new password to be assigned to the user.
+     * @param newIsAdmin The new admin status to be assigned to the user.
+     */
     public void updateUser(int id, String newName, String newPassword, boolean newIsAdmin) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -660,6 +704,12 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that adds a new user to the database.
+     * @param newName The name of the new user.
+     * @param newPassword The password of the new user.
+     * @param newIsAdmin The admin status of the new user.
+     */
     public void addUser(String newName, String newPassword, boolean newIsAdmin) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -674,6 +724,10 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that retrieves the root customer from the database.
+     * @return The root customer, or null if not found.
+     */
     public Customer getRootCustomer() {
         try (Session session = sessionFactory.openSession()){
             Query<Customer> query = session.createQuery("from Customer where isRoot = true");
@@ -851,6 +905,10 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that retrieves the names of all customers from the database.
+     * @return An observable list containing the names of all customers, or null if an error occurs.
+     */
     public ObservableList<String> getCustomersNames() {
         try (Session session = sessionFactory.openSession()) {
             Query<String> query = session.createQuery("SELECT c.name FROM Customer c", String.class);
@@ -861,6 +919,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that retrieves a customer by name from the database.
+     * @param customerName The name of the customer to retrieve.
+     * @return The customer with the specified name, or null if not found or an error occurs.
+     */
     public Customer getCustomer(String customerName) {
         try (Session session = sessionFactory.openSession()) {
             Query<Customer> query = session.createQuery("from Customer c where c.name = :name");
@@ -873,7 +936,7 @@ public class DatabaseHandler {
     }
 
     /***
-     * Method, that returns a material record based on the material name.
+     * Method that returns a material record based on the material name.
      * @param materialName The name of the material.
      * @throws MaterialNotAvailable if the material is not found in the database.
      * @return The material record.
@@ -933,6 +996,12 @@ public class DatabaseHandler {
             return query.uniqueResult();
         }
     }
+
+    /**
+     * Method that returns a position by name from the database.
+     * @param name The name of the position to retrieve.
+     * @return The position with the specified name, or null if not found or an error occurs.
+     */
     public Position getPosition(String name) {
         try (Session session = sessionFactory.openSession()) {
             Query<Position> query = session.createQuery("from Position p where p.name = :name");
@@ -944,6 +1013,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns a pallet by its unique identifier (PNR) from the database.
+     * @param pnr The unique identifier of the pallet to retrieve.
+     * @return The pallet with the specified unique identifier, or null if not found or an error occurs.
+     */
     public Pallet getPallet(String pnr) {
         try (Session session = sessionFactory.openSession()) {
             Query<Pallet> query = session.createQuery("from Pallet p where p.pnr = :pnr");
@@ -952,6 +1026,12 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns the number of reservations for a customer on a specific date from the database.
+     * @param customer The name of the customer.
+     * @param date The date for which reservations are counted.
+     * @return The number of reservations for the specified customer on the specified date.
+     */
     public int getNumberOfReservations(String customer, Date date) {
 
         try (Session session = sessionFactory.openSession()) {
@@ -1028,6 +1108,12 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns the quantity of a material stored on a specific pallet.
+     * @param pallet The pallet on which the material is stored.
+     * @param material The material.
+     * @return The quantity of the material stored on the pallet.
+     */
     public Integer getMaterialQuantityOnPallet(Pallet pallet, Material material) {
         try (Session session = sessionFactory.openSession()) {
             Query<StoredOnPallet> query = session.createQuery("from StoredOnPallet sop where sop.pnr = :pnr and sop.idProduct = :id");
@@ -1043,7 +1129,7 @@ public class DatabaseHandler {
     }
 
     /***
-     * Method, that returns whether the position is reserved or not .
+     * Method, that returns whether the position is reserved or not.
      * @param positionName The position name.
      * @return True if the PNR is already used, otherwise false.
      */
@@ -1284,6 +1370,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns the positions associated with a pallet.
+     * @param PNR The unique identifier of the pallet.
+     * @return A list of positions associated with the specified pallet.
+     */
     public List<String> getPositionsWithPallet(String PNR){
         try (Session session = sessionFactory.openSession()) {
             Query<String> query = session.createQuery("SELECT pop.idPosition FROM PalletOnPosition pop " +
@@ -1297,6 +1388,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that checks if a customer exists in the database.
+     * @param name The name of the customer to check.
+     * @return true if the customer exists, false otherwise.
+     */
     public boolean checkCustomerExist(String name){
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("SELECT COUNT(*) FROM Customer c WHERE c.name = :name");
@@ -1308,6 +1404,10 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns all positions from the database.
+     * @return A list containing all positions stored in the database, or null if an error occurs.
+     */
     public List<Position> getAllPositions(){
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("FROM Position p");
@@ -1319,6 +1419,10 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns all reservations from the database.
+     * @return A list containing all reservations stored in the database, or null if an error occurs.
+     */
     public List<CustomerReservation> getAllReservaions(){
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("FROM CustomerReservation");
@@ -1330,6 +1434,10 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns all customers from the database.
+     * @return A list containing all customers stored in the database, or null if an error occurs.
+     */
     public List<Customer> getCustomers(){
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("FROM Customer ");
@@ -1340,6 +1448,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns reservation records for a given customer ID.
+     * @param customerId The ID of the customer for which reservation records are retrieved.
+     * @return A list containing reservation records for the specified customer, or an empty list if no records are found or an error occurs.
+     */
     public List<CustomerReservation> getReservationRecords(int customerId){
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("FROM CustomerReservation r WHERE r.idCustomer = :idCustomer");
@@ -1352,6 +1465,14 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that reserves a position for a customer.
+     * @param customerId The ID of the customer reserving the position.
+     * @param reservedFrom The start date of the reservation.
+     * @param reservedUntil The end date of the reservation.
+     * @param position The position being reserved.
+     * @return true if the reservation is successful, false otherwise.
+     */
     public boolean reservePositionForCustomer(int customerId, Date reservedFrom, Date reservedUntil, Position position){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -1365,6 +1486,14 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that checks if a position is reserved by a customer within a specified time frame.
+     * @param reservedFrom The start date of the reservation.
+     * @param reservedUntil The end date of the reservation.
+     * @param position The position to check for reservation.
+     * @param c The customer reserving the position.
+     * @return true if the position is reserved by the customer within the specified time frame, false otherwise.
+     */
     public boolean isPositionReserevedByCustomer(Date reservedFrom, Date reservedUntil, Position position, Customer c){
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("SELECT idCustomer FROM CustomerReservation r WHERE r.idPosition = :idPosition AND r.reservedFrom = :reservedFrom" +
@@ -1379,6 +1508,13 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that deletes a reservation record for a customer within a specified time frame.
+     * @param customer The customer whose reservation record is being deleted.
+     * @param dateFrom The start date of the reservation.
+     * @param dateUntil The end date of the reservation.
+     * @return true if the deletion is successful, false otherwise.
+     */
     public boolean deleteReservationRecord(Customer customer, Date dateFrom, Date dateUntil){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -1396,6 +1532,10 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that returns all positions currently in use from the database.
+     * @return A list containing the IDs of all positions currently occupied by pallets, or null if an error occurs.
+     */
     public List<String> getAllUsedPositions(){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -1407,7 +1547,11 @@ public class DatabaseHandler {
         }
     }
 
-
+    /**
+     * Method that updates the activity of a user for a specified pallet.
+     * @param id The ID of the user whose activity is being updated.
+     * @param palletFrom The PNR of the pallet for which the activity is being updated.
+     */
     public void changeUserActivity(int id, String palletFrom) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -1420,6 +1564,12 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Method that deletes a customer from the database.
+     * @param customerName The name of the customer to be deleted.
+     * @return true if the deletion is successful, false otherwise.
+     */
     public boolean deleteCustomer(String customerName){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -1434,6 +1584,10 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that deletes a user from the database.
+     * @param id The ID of the user to be deleted.
+     */
     public void deleteUser(int id) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -1446,8 +1600,10 @@ public class DatabaseHandler {
         }
     }
 
-
-
+    /**
+     * Method that deletes pallets from the database.
+     * @param pnrs A set of PNRs corresponding to the pallets to be deleted.
+     */
     public void deletePallets(Set<String> pnrs){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -1462,6 +1618,9 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that deletes all positions from the database.
+     */
     public void deletePositions(){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -1473,6 +1632,12 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Method that retrieves a list of pallets reserved by a customer with a specific material.
+     * @param id The ID of the customer reserving the pallets.
+     * @param materialName The name of the material to check for.
+     * @return A list of pallets reserved by the customer with the specified material, or null if an error occurs.
+     */
     public List<Pallet> getPalletesReservedByCustomerWithMaterial(int id, String materialName) {
         try (Session session = sessionFactory.openSession()) {
             Query<Pallet> query = session.createQuery
