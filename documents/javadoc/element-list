@@ -1,0 +1,13 @@
+module:app.finalapp
+app
+Entity
+Exceptions
+GUI
+GUI.CustomerManagement
+GUI.OrderProduct
+GUI.RelocateProduct
+GUI.Reservations
+GUI.Statistics
+GUI.StoreInProduct
+GUI.UserManagement
+GUI.WarehouseLayout

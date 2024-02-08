@@ -37,8 +37,6 @@ public class LayoutConfirmationController implements Initializable {
     /***
      * Method to load positions from file
      * @throws IOException
-     * @throws FileNotFound
-     * @throws WrongStringFormat
      */
 
     public void saveNewPositions() throws IOException {

@@ -96,7 +96,6 @@ public class WarehouseLayoutRowsController implements Initializable {
 
     /***
      * Changes the scene to the rows layout
-     * @throws IOException
      * @throws RuntimeException
      */
     public void nextToRowLayout() {
