@@ -1,4 +1,5 @@
 package GUI.Statistics;
+
 import app.FileExporter;
 import app.Warehouse;
 import javafx.fxml.FXML;
@@ -8,9 +9,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-
 
 public class CalculatedInvoicingController implements javafx.fxml.Initializable{
     @FXML

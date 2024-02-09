@@ -13,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -109,7 +108,7 @@ public class PalletInformationController implements Initializable {
     }
 
     /***
-     * This method adds the material and checkst the count of the material pairs
+     * This method adds the material and checks the count of the material pairs
      */
     public void addMaterial() {
         if (currentPairCount < MAX_PAIRS && isCountValid) {
@@ -127,19 +126,12 @@ public class PalletInformationController implements Initializable {
         }
     }
 
-    /***
-     * This method removes the material pair
-     */
     private void checkMaterialPairCount(){
         if (currentPairCount == MAX_PAIRS) {
             addMaterialButton.setDisable(true);
         }
     }
 
-    /***
-     * createMaterialPair method creates the material pair
-     * @return
-     */
     private HBox createMaterialPair() {
         Warehouse warehouse = Warehouse.getInstance();
         Label materialLabel = warehouse.createStyledLabel("Materiál:", 20);
@@ -253,6 +245,10 @@ public class PalletInformationController implements Initializable {
         warehouse.changeScene("StoreInProduct/customerTruckNumberForm.fxml");
     }
 
+    /***
+     * This method goes to the store in position form
+     * @throws IOException
+     */
     public void nextToPositionForm() throws IOException {
         if (isLastMaterialEmpty()) {
             errorMessage.setText("Nevyplnili ste posledný materiál a jeho počet");
@@ -328,19 +324,19 @@ public class PalletInformationController implements Initializable {
 
     }
 
+    /**
+     * Retrieves the number of positions selected by the user from a group of radio buttons.
+     * @return The number of positions selected (1, 2, 3, or 4).
+     */
     public int getNumberOfPositions(){
         RadioButton selectedRadioButton = (RadioButton) numberOfPositions.getSelectedToggle();
         String positionId = selectedRadioButton.getId();
         if (positionId.equals("onePosition")){
             return 1;
         }
-
         if (positionId.equals("twoPositions")){
             return 2;
         }
-        /***
-         * If the positionId is threePositions, then the number of positions is 3
-         */
         if (positionId.equals("threePositions")){
             return 3;
         }

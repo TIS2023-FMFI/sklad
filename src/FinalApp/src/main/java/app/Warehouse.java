@@ -131,7 +131,6 @@ public class Warehouse extends Application {
     }
 
 
-
     /***
      * Method, that loads data to the memory after a successful login.
      */

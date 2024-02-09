@@ -23,8 +23,9 @@ public class LayoutConfirmationController implements Initializable {
                                     "nahradené novými zo zvoleného súboru.";
 
 
-    /***
-     * In public, i wouldnt drink from anybodys dronk
+    /**
+     * Initializes the controller by setting a warning message.
+     *
      * @param url
      * @param resourceBundle
      */
@@ -36,8 +37,6 @@ public class LayoutConfirmationController implements Initializable {
     /***
      * Method to load positions from file
      * @throws IOException
-     * @throws FileNotFound
-     * @throws WrongStringFormat
      */
 
     public void saveNewPositions() throws IOException {

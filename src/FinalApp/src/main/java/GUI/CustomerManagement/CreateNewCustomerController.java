@@ -1,11 +1,9 @@
 package GUI.CustomerManagement;
 
 import Entity.Customer;
-import app.CustomersHandler;
 import app.Warehouse;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -29,9 +27,8 @@ public class CreateNewCustomerController implements Initializable {
     private TextField DICT; String DIC;
     @FXML
     private Label errorMessage;
-    private CustomersHandler customersHandler;
-    private final String EMPTY_NAME = "Zadajte meno zákazníka";
-    private final String USED_NAME = "Zadané meno existuje";
+    private static final String EMPTY_NAME = "Zadajte meno zákazníka";
+    private static final String USED_NAME = "Zadané meno existuje";
     private boolean fillData = false;
     private int id;
 
@@ -42,7 +39,6 @@ public class CreateNewCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        customersHandler = new CustomersHandler();
         fillData = Warehouse.getInstance().getController("customerName") != null;
         if(fillData){
             String name = ((String) Warehouse.getInstance().getController("customerName"));
@@ -85,7 +81,7 @@ public class CreateNewCustomerController implements Initializable {
             return;
         }
 
-        if(! customersHandler.checkCustomerName(customerName) && !fillData){
+        if(!Warehouse.getInstance().getDatabaseHandler().checkCustomerExist(customerName) && !fillData){
             errorMessage.setText(USED_NAME);
             return;
         }

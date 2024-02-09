@@ -63,7 +63,6 @@ public class MoveProductToPositionController implements Initializable {
 
     /***
      * Method that fills newPositionsChoice with correct positions.
-     * @throws IOException if there is problem with loading fxml file
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

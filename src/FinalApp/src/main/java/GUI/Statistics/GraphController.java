@@ -69,6 +69,9 @@ public class GraphController implements Initializable {
         Warehouse.getInstance().changeScene("Statistics/statisticsMainPageForm.fxml");
     }
 
+    /**
+     * Exports the graph
+     */
     public void exportGraph() {
         FileExporter fileExporter = new FileExporter();
         FileExporter.exportGraph(barChart);

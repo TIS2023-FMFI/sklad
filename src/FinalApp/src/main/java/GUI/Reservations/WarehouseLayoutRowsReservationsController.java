@@ -73,8 +73,8 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
     }
 
     /***
-     * Function creates button for each row
-     * @return created button
+     * Changes the scene to the rows layout reservation form
+     * @throws RuntimeException if the scene is not found
      */
     @Override
     public void nextToRowLayout() {
@@ -85,9 +85,13 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
         }
     }
 
-    /***
-     * Function creates button for each row
-     * @return created button
+    /**
+     * Method to retrieve positions to be saved.
+     * If the 'positionsToSave' controller exists in the Warehouse instance, it is returned.
+     * Otherwise, a set of positions is created from the combination of 'bestLowPositions' and 'bestTallPositions' controllers,
+     * and stored in the 'positionsToSave' controller for future use.
+     *
+     * @return A set of positions to be saved.
      */
     protected Set<Position> getPostionsToSave(){
         if(Warehouse.getInstance().getController("positionsToSave") != null){
@@ -117,8 +121,8 @@ public class WarehouseLayoutRowsReservationsController extends WarehouseLayoutRo
     }
 
     /***
-     * Function creates button for each row
-     * @throws IOException exception
+     * Changes the scene to the add reservation second form
+     * @throws IOException if the scene is not found
      */
     @Override
     public void backToMenu() throws IOException {
