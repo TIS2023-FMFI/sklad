@@ -16,6 +16,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -34,10 +36,22 @@ public class DatabaseHandler {
     public DatabaseHandler() {
         setUpSessionFactory();
     }
+    private Properties loadProperties() {
+        Properties properties = new Properties();
+        try (FileInputStream fis = new FileInputStream("C:\\Program Files\\Java\\database.cfg.txt")) {
+            properties.load(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
 
     private void setUpSessionFactory() {
+        Properties properties = loadProperties();
+
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
+                .applySettings(properties)
                 .build();
         try {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
