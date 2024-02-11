@@ -70,7 +70,7 @@ public class InventoryConroller implements Initializable {
         FileExporter fileExporter = new FileExporter();
         List<String> columns = new ArrayList<>();
         columns.add("Pozícia");
-        columns.add("PNR");
+        columns.add("Paleta");
         columns.add("Materiál");
         columns.add("Počet");
         fileExporter.exportExcel(items, "Inventory", "Inventúra " + LocalDate.now(), columns);

@@ -12,6 +12,8 @@ import java.util.ResourceBundle;
 
 public class CustomerTruckNumberController implements Initializable {
     @FXML
+    private Label errorLabel;
+    @FXML
     private ChoiceBox<String> customer;
     @FXML
     private Spinner<Integer> truckNumber;
@@ -37,7 +39,7 @@ public class CustomerTruckNumberController implements Initializable {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customers.remove(Warehouse.getInstance().getDatabaseHandler().getRootCustomer().getName());
         customer.setItems(customers);
-        customer.setValue(customers.get(0));
+        if (customers.size() > 0) customer.setValue(customers.get(0));
 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5);
         valueFactory.setValue(1);
@@ -59,6 +61,10 @@ public class CustomerTruckNumberController implements Initializable {
      * @throws IOException if the form is not found
      */
     public void nextToInformationForm() throws IOException{
+        if (customer.getValue() == null) {
+            errorLabel.setText("Vyberte zákazníka!");
+            return;
+        }
         Warehouse.getInstance().getStoreInInstance().initializeCustomerTruckNumberDataSet(getCustomer(), getTruckNumber());
         HistoryRecord historyRecord = Warehouse.getInstance().getStoreInInstance().getHistoryRecord();
         historyRecord.setCustomerID(Warehouse.getInstance().getDatabaseHandler().getCustomer(customer.getValue()).getId());

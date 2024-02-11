@@ -60,19 +60,19 @@ public class CheckPositions implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TableColumn<Map, String> PNRColumn = new TableColumn<>("Referencia");
-        PNRColumn.setCellValueFactory(new MapValueFactory<>("pnr"));
+        PNRColumn.setCellValueFactory(new MapValueFactory<>("Paleta"));
         PNRColumn.setStyle(STYLE);
         PNRColumn.setPrefWidth(200);
         TableColumn<Map, String> positionColumn = new TableColumn<>("Pozícia");
-        positionColumn.setCellValueFactory(new MapValueFactory<>("position"));
+        positionColumn.setCellValueFactory(new MapValueFactory<>("Pozícia"));
         positionColumn.setStyle(STYLE);
         positionColumn.setPrefWidth(122);
         TableColumn<Map, String> materialColumn = new TableColumn<>("Materiál");
-        materialColumn.setCellValueFactory(new MapValueFactory<>("material"));
+        materialColumn.setCellValueFactory(new MapValueFactory<>("Materiál"));
         materialColumn.setStyle(STYLE);
         materialColumn.setPrefWidth(122);
         TableColumn<Map, String> numberColumn = new TableColumn<>("Počet");
-        numberColumn.setCellValueFactory(new MapValueFactory<>("number"));
+        numberColumn.setCellValueFactory(new MapValueFactory<>("Počet"));
         numberColumn.setStyle(STYLE);
         numberColumn.setPrefWidth(70);
 
@@ -150,10 +150,10 @@ public class CheckPositions implements Initializable {
                 String positionString = getPositionsString(p);
                 for (Map.Entry<Material, Integer> entry : products.entrySet()) {
                     result.add(Map.of(
-                            "pnr", p.getPnr(),
-                            "position", positionString,
-                            "material", entry.getKey().getName(),
-                            "number", String.valueOf(entry.getValue())));
+                            "Paleta", p.getPnr(),
+                            "Pozícia", positionString,
+                            "Materiál", entry.getKey().getName(),
+                            "Počet", String.valueOf(entry.getValue())));
                 }
             }
         }
@@ -191,7 +191,7 @@ public class CheckPositions implements Initializable {
     public void exportExcel() {
         FileExporter fe = new FileExporter();
         fe.exportExcel(wrongPositionsTable.getItems(), "Vymazané produkty",
-                "Zoznam", new ArrayList<>(Arrays.asList("pnr", "position", "material", "number")));
+                "Zoznam", new ArrayList<>(Arrays.asList("Paleta", "Pozícia", "Materiál", "Počet")));
         downloadConfirmationLabel.setText("Súbor bol úspešne stiahnutý");
     }
 }
