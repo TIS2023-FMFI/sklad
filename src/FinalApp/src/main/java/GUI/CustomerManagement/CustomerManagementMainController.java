@@ -98,6 +98,7 @@ public class CustomerManagementMainController implements Initializable {
      * @throws IOException if the scene is not found
      */
     public void deleteCustomerScene() throws IOException {
+        saveCustomerName();
         Warehouse.getInstance().changeScene("CustomerManagement/deleteCustomerConfirm.fxml");
     }
 
