@@ -86,9 +86,8 @@ public class RelocateProduct {
 
     private void removeItem(Position initialPos, String product, int quantity, String palletFrom){
         OrderProduct op = new OrderProduct();
-        DatabaseHandler db = Warehouse.getInstance().getDatabaseHandler();
         ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
-        items.add(Map.of("Pozícia", initialPos.getName(), "PNR", palletFrom,
+        items.add(Map.of("Pozícia", initialPos.getName(), "Paleta", palletFrom,
                 "Materiál", product, "Počet", String.valueOf(quantity)));
 
         op.removeOrderedItems(items);
