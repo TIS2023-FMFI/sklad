@@ -37,7 +37,7 @@ public class OrderCustomerSelectionController implements Initializable {
         ObservableList<String> customers = Warehouse.getInstance().getDatabaseHandler().getCustomersNames();
         customers.remove(Warehouse.getInstance().getDatabaseHandler().getRootCustomer().getName());
         customerChoices.setItems(customers);
-        customerChoices.setValue(customers.get(0));
+        if (customers.size() > 0) customerChoices.setValue(customers.get(0));
         Warehouse.getInstance().addController("OrderCustomerSelectionController", this);
     }
 

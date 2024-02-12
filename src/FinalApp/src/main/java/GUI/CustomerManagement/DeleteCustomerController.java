@@ -43,7 +43,7 @@ public class DeleteCustomerController implements Initializable {
      */
     public void deleteCustomer() throws IOException {
         Warehouse.getInstance().addController("deleteCustomer", true);
-        String customerName = ((ChoiceBox<String>) Warehouse.getInstance().getController("customerName")).getValue();
+        String customerName = (String) Warehouse.getInstance().getController("customerName");
         Warehouse.getInstance().getDatabaseHandler().deleteCustomer(customerName);
         Warehouse.getInstance().changeScene("CustomerManagement/customerConfirmation.fxml");
     }

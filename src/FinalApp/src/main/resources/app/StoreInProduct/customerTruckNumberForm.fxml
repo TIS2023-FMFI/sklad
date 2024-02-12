@@ -36,5 +36,9 @@
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </JFXButton>
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="15.0" layoutY="119.0" prefHeight="18.0" prefWidth="562.0" textFill="RED">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
    </children>
 </AnchorPane>

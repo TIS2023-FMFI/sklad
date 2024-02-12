@@ -5,7 +5,7 @@
 -- Dumped from database version 16.0
 -- Dumped by pg_dump version 16.0
 
--- Started on 2024-02-03 22:13:27
+-- Started on 2024-02-11 22:31:44
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,18 +23,18 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 215 (class 1259 OID 25963)
+-- TOC entry 215 (class 1259 OID 27247)
 -- Name: customer; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.customer (
     id integer NOT NULL,
-    name text NOT NULL,
-    address text NOT NULL,
-    city text NOT NULL,
-    postal_code text NOT NULL,
-    ico_value text,
-    dic_value text,
+    name character varying(100) NOT NULL,
+    address character varying(100) NOT NULL,
+    city character varying(100) NOT NULL,
+    postal_code character varying(10) NOT NULL,
+    ico_value character varying(12),
+    dic_value character varying(16),
     is_root boolean DEFAULT false
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE public.customer (
 ALTER TABLE public.customer OWNER TO postgres;
 
 --
--- TOC entry 216 (class 1259 OID 25968)
+-- TOC entry 216 (class 1259 OID 27251)
 -- Name: customer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -57,7 +57,7 @@ ALTER TABLE public.customer ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 217 (class 1259 OID 25969)
+-- TOC entry 217 (class 1259 OID 27252)
 -- Name: customer_reservation; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -66,14 +66,14 @@ CREATE TABLE public.customer_reservation (
     id_customer integer NOT NULL,
     reserved_from date NOT NULL,
     reserved_until date NOT NULL,
-    id_position text NOT NULL
+    id_position character varying(5) NOT NULL
 );
 
 
 ALTER TABLE public.customer_reservation OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 25974)
+-- TOC entry 218 (class 1259 OID 27255)
 -- Name: customer_reservation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -88,7 +88,7 @@ ALTER TABLE public.customer_reservation ALTER COLUMN id ADD GENERATED ALWAYS AS 
 
 
 --
--- TOC entry 219 (class 1259 OID 25975)
+-- TOC entry 219 (class 1259 OID 27256)
 -- Name: history; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -125,7 +125,7 @@ COMMENT ON COLUMN public.history.truck_number IS 'číslo točky';
 
 
 --
--- TOC entry 220 (class 1259 OID 25979)
+-- TOC entry 220 (class 1259 OID 27260)
 -- Name: history_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -140,20 +140,20 @@ ALTER TABLE public.history ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 221 (class 1259 OID 25980)
+-- TOC entry 221 (class 1259 OID 27261)
 -- Name: material; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.material (
     id integer NOT NULL,
-    name text NOT NULL
+    name character varying(100) NOT NULL
 );
 
 
 ALTER TABLE public.material OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 25985)
+-- TOC entry 222 (class 1259 OID 27264)
 -- Name: material_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -168,16 +168,16 @@ ALTER TABLE public.material ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 223 (class 1259 OID 25986)
+-- TOC entry 223 (class 1259 OID 27265)
 -- Name: pallet; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.pallet (
-    pnr text NOT NULL,
+    pnr character varying(15) NOT NULL,
     date_income date NOT NULL,
     is_damaged boolean DEFAULT false NOT NULL,
     id_user integer,
-    type text DEFAULT 'europaleta'::text NOT NULL,
+    type character varying(50) DEFAULT 'europaleta'::character varying NOT NULL,
     note text,
     weight double precision NOT NULL,
     number_of_positions integer NOT NULL
@@ -187,21 +187,21 @@ CREATE TABLE public.pallet (
 ALTER TABLE public.pallet OWNER TO postgres;
 
 --
--- TOC entry 224 (class 1259 OID 25993)
+-- TOC entry 224 (class 1259 OID 27272)
 -- Name: pallet_on_position; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.pallet_on_position (
     id integer NOT NULL,
-    id_pallet text NOT NULL,
-    id_position text NOT NULL
+    id_pallet character varying(15) NOT NULL,
+    id_position character varying(5) NOT NULL
 );
 
 
 ALTER TABLE public.pallet_on_position OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 25998)
+-- TOC entry 225 (class 1259 OID 27275)
 -- Name: pallet_on_position_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -216,12 +216,12 @@ ALTER TABLE public.pallet_on_position ALTER COLUMN id ADD GENERATED ALWAYS AS ID
 
 
 --
--- TOC entry 226 (class 1259 OID 25999)
+-- TOC entry 226 (class 1259 OID 27276)
 -- Name: position; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public."position" (
-    name text NOT NULL,
+    name character varying(5) NOT NULL,
     is_tall boolean DEFAULT false NOT NULL
 );
 
@@ -229,13 +229,13 @@ CREATE TABLE public."position" (
 ALTER TABLE public."position" OWNER TO postgres;
 
 --
--- TOC entry 227 (class 1259 OID 26005)
+-- TOC entry 227 (class 1259 OID 27280)
 -- Name: stored_on_pallet; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.stored_on_pallet (
     id integer NOT NULL,
-    pnr text NOT NULL,
+    pnr character varying(15) NOT NULL,
     id_product integer NOT NULL,
     quantity integer DEFAULT 1 NOT NULL
 );
@@ -244,7 +244,7 @@ CREATE TABLE public.stored_on_pallet (
 ALTER TABLE public.stored_on_pallet OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1259 OID 26011)
+-- TOC entry 228 (class 1259 OID 27284)
 -- Name: stored_on_position_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -259,14 +259,14 @@ ALTER TABLE public.stored_on_pallet ALTER COLUMN id ADD GENERATED ALWAYS AS IDEN
 
 
 --
--- TOC entry 229 (class 1259 OID 26012)
+-- TOC entry 229 (class 1259 OID 27285)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    name text NOT NULL,
-    password text,
+    name character varying(20) NOT NULL,
+    password character varying(20),
     admin boolean
 );
 
@@ -274,7 +274,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 230 (class 1259 OID 26017)
+-- TOC entry 230 (class 1259 OID 27288)
 -- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -289,19 +289,18 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 4923 (class 0 OID 25963)
+-- TOC entry 4923 (class 0 OID 27247)
 -- Dependencies: 215
 -- Data for Name: customer; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.customer (id, name, address, city, postal_code, ico_value, dic_value, is_root) FROM stdin;
-32	Ford	Vlnarska	Bratislava	12540			f
-43	Gefco Slovakia s.r.o.	SNP 811/168	Strečno	013 24	\N	\N	t
+1	Gefco Slovakia s.r.o.	SNP 811/168	Strečno	013 24	\N	\N	t
 \.
 
 
 --
--- TOC entry 4925 (class 0 OID 25969)
+-- TOC entry 4925 (class 0 OID 27252)
 -- Dependencies: 217
 -- Data for Name: customer_reservation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -311,53 +310,37 @@ COPY public.customer_reservation (id, id_customer, reserved_from, reserved_until
 
 
 --
--- TOC entry 4927 (class 0 OID 25975)
+-- TOC entry 4927 (class 0 OID 27256)
 -- Dependencies: 219
 -- Data for Name: history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.history (id, id_customer, "time", date, truck_income, number_of_pallets, truck_number) FROM stdin;
-1	32	10:36:39	2024-02-03	t	1	1
-2	32	10:45:54	2024-02-03	t	1	1
-3	32	10:49:40	2024-02-03	t	1	1
-4	32	11:38:13	2024-02-03	t	1	1
-5	32	12:43:53	2024-02-03	f	2	1
-6	32	13:17:49	2024-02-03	f	1	2
 \.
 
 
 --
--- TOC entry 4929 (class 0 OID 25980)
+-- TOC entry 4929 (class 0 OID 27261)
 -- Dependencies: 221
 -- Data for Name: material; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.material (id, name) FROM stdin;
-1	Motor 3000
-2	Motor 100
-3	Skrina
-4	Test material
-6	Test materialu
-8	Stan
-10	lpl
 \.
 
 
 --
--- TOC entry 4931 (class 0 OID 25986)
+-- TOC entry 4931 (class 0 OID 27265)
 -- Dependencies: 223
 -- Data for Name: pallet; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.pallet (pnr, date_income, is_damaged, id_user, type, note, weight, number_of_positions) FROM stdin;
-2000	2024-02-03	f	\N	Europaleta		500	2
-2002	2024-02-03	f	\N	Europaleta		20	1
-2005	2024-02-03	f	1	Europaleta		20	1
 \.
 
 
 --
--- TOC entry 4932 (class 0 OID 25993)
+-- TOC entry 4932 (class 0 OID 27272)
 -- Dependencies: 224
 -- Data for Name: pallet_on_position; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -367,7 +350,7 @@ COPY public.pallet_on_position (id, id_pallet, id_position) FROM stdin;
 
 
 --
--- TOC entry 4934 (class 0 OID 25999)
+-- TOC entry 4934 (class 0 OID 27276)
 -- Dependencies: 226
 -- Data for Name: position; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1963,28 +1946,23 @@ F0020	t
 
 
 --
--- TOC entry 4935 (class 0 OID 26005)
+-- TOC entry 4935 (class 0 OID 27280)
 -- Dependencies: 227
 -- Data for Name: stored_on_pallet; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.stored_on_pallet (id, pnr, id_product, quantity) FROM stdin;
-6	2002	10	30
-4	2000	8	2
-7	2005	8	3
 \.
 
 
 --
--- TOC entry 4937 (class 0 OID 26012)
+-- TOC entry 4937 (class 0 OID 27285)
 -- Dependencies: 229
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.users (id, name, password, admin) FROM stdin;
 1	admin	admin	t
-2	Peter	Peter	t
-3	Fero	Fero	f
 \.
 
 
@@ -1994,7 +1972,7 @@ COPY public.users (id, name, password, admin) FROM stdin;
 -- Name: customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.customer_id_seq', 43, true);
+SELECT pg_catalog.setval('public.customer_id_seq', 1, true);
 
 
 --
@@ -2003,7 +1981,7 @@ SELECT pg_catalog.setval('public.customer_id_seq', 43, true);
 -- Name: customer_reservation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.customer_reservation_id_seq', 7423, true);
+SELECT pg_catalog.setval('public.customer_reservation_id_seq', 1, false);
 
 
 --
@@ -2012,7 +1990,7 @@ SELECT pg_catalog.setval('public.customer_reservation_id_seq', 7423, true);
 -- Name: history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.history_id_seq', 6, true);
+SELECT pg_catalog.setval('public.history_id_seq', 1, false);
 
 
 --
@@ -2021,7 +1999,7 @@ SELECT pg_catalog.setval('public.history_id_seq', 6, true);
 -- Name: material_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.material_id_seq', 10, true);
+SELECT pg_catalog.setval('public.material_id_seq', 1, false);
 
 
 --
@@ -2030,7 +2008,7 @@ SELECT pg_catalog.setval('public.material_id_seq', 10, true);
 -- Name: pallet_on_position_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.pallet_on_position_id_seq', 12, true);
+SELECT pg_catalog.setval('public.pallet_on_position_id_seq', 1, false);
 
 
 --
@@ -2039,7 +2017,7 @@ SELECT pg_catalog.setval('public.pallet_on_position_id_seq', 12, true);
 -- Name: stored_on_position_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.stored_on_position_id_seq', 7, true);
+SELECT pg_catalog.setval('public.stored_on_position_id_seq', 1, false);
 
 
 --
@@ -2048,11 +2026,11 @@ SELECT pg_catalog.setval('public.stored_on_position_id_seq', 7, true);
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 6, true);
+SELECT pg_catalog.setval('public.user_id_seq', 1, true);
 
 
 --
--- TOC entry 4733 (class 2606 OID 26019)
+-- TOC entry 4733 (class 2606 OID 27290)
 -- Name: customer customer_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2061,7 +2039,7 @@ ALTER TABLE ONLY public.customer
 
 
 --
--- TOC entry 4735 (class 2606 OID 26021)
+-- TOC entry 4735 (class 2606 OID 27292)
 -- Name: customer customer_name_key1; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2070,7 +2048,7 @@ ALTER TABLE ONLY public.customer
 
 
 --
--- TOC entry 4737 (class 2606 OID 26023)
+-- TOC entry 4737 (class 2606 OID 27294)
 -- Name: customer customer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2079,7 +2057,7 @@ ALTER TABLE ONLY public.customer
 
 
 --
--- TOC entry 4739 (class 2606 OID 26025)
+-- TOC entry 4739 (class 2606 OID 27296)
 -- Name: customer_reservation customer_reservation_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2088,7 +2066,7 @@ ALTER TABLE ONLY public.customer_reservation
 
 
 --
--- TOC entry 4746 (class 2606 OID 26027)
+-- TOC entry 4746 (class 2606 OID 27298)
 -- Name: history history_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2097,7 +2075,7 @@ ALTER TABLE ONLY public.history
 
 
 --
--- TOC entry 4748 (class 2606 OID 26029)
+-- TOC entry 4748 (class 2606 OID 27300)
 -- Name: material material_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2106,7 +2084,7 @@ ALTER TABLE ONLY public.material
 
 
 --
--- TOC entry 4750 (class 2606 OID 26031)
+-- TOC entry 4750 (class 2606 OID 27302)
 -- Name: material material_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2115,7 +2093,7 @@ ALTER TABLE ONLY public.material
 
 
 --
--- TOC entry 4757 (class 2606 OID 26033)
+-- TOC entry 4757 (class 2606 OID 27304)
 -- Name: pallet_on_position pallet_on_position_id_pallet_id_position_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2124,7 +2102,7 @@ ALTER TABLE ONLY public.pallet_on_position
 
 
 --
--- TOC entry 4753 (class 2606 OID 26035)
+-- TOC entry 4753 (class 2606 OID 27306)
 -- Name: pallet pallete_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2133,7 +2111,7 @@ ALTER TABLE ONLY public.pallet
 
 
 --
--- TOC entry 4759 (class 2606 OID 26037)
+-- TOC entry 4759 (class 2606 OID 27308)
 -- Name: pallet_on_position pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2142,7 +2120,7 @@ ALTER TABLE ONLY public.pallet_on_position
 
 
 --
--- TOC entry 4761 (class 2606 OID 26039)
+-- TOC entry 4761 (class 2606 OID 27310)
 -- Name: position position_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2151,7 +2129,7 @@ ALTER TABLE ONLY public."position"
 
 
 --
--- TOC entry 4765 (class 2606 OID 26041)
+-- TOC entry 4765 (class 2606 OID 27312)
 -- Name: stored_on_pallet stored_on_position_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2160,7 +2138,7 @@ ALTER TABLE ONLY public.stored_on_pallet
 
 
 --
--- TOC entry 4767 (class 2606 OID 26043)
+-- TOC entry 4767 (class 2606 OID 27314)
 -- Name: stored_on_pallet stored_on_position_pnr_id_product_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2169,7 +2147,7 @@ ALTER TABLE ONLY public.stored_on_pallet
 
 
 --
--- TOC entry 4769 (class 2606 OID 26045)
+-- TOC entry 4769 (class 2606 OID 27316)
 -- Name: users user_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2178,7 +2156,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4771 (class 2606 OID 26047)
+-- TOC entry 4771 (class 2606 OID 27318)
 -- Name: users user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2187,7 +2165,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4754 (class 1259 OID 26048)
+-- TOC entry 4754 (class 1259 OID 27319)
 -- Name: fki_fk_pallet; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2195,7 +2173,7 @@ CREATE INDEX fki_fk_pallet ON public.pallet_on_position USING btree (id_pallet);
 
 
 --
--- TOC entry 4755 (class 1259 OID 26049)
+-- TOC entry 4755 (class 1259 OID 27320)
 -- Name: fki_fk_position; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2203,7 +2181,7 @@ CREATE INDEX fki_fk_position ON public.pallet_on_position USING btree (id_positi
 
 
 --
--- TOC entry 4740 (class 1259 OID 26050)
+-- TOC entry 4740 (class 1259 OID 27321)
 -- Name: fki_foreign_key_position; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2211,7 +2189,7 @@ CREATE INDEX fki_foreign_key_position ON public.customer_reservation USING btree
 
 
 --
--- TOC entry 4741 (class 1259 OID 26051)
+-- TOC entry 4741 (class 1259 OID 27322)
 -- Name: fki_id_customer; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2219,7 +2197,7 @@ CREATE INDEX fki_id_customer ON public.customer_reservation USING btree (id_cust
 
 
 --
--- TOC entry 4742 (class 1259 OID 26052)
+-- TOC entry 4742 (class 1259 OID 27323)
 -- Name: foreign_key_customer; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2227,7 +2205,7 @@ CREATE INDEX foreign_key_customer ON public.customer_reservation USING btree (id
 
 
 --
--- TOC entry 4744 (class 1259 OID 26053)
+-- TOC entry 4744 (class 1259 OID 27324)
 -- Name: foreign_key_history; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2235,7 +2213,7 @@ CREATE INDEX foreign_key_history ON public.history USING btree (id_customer);
 
 
 --
--- TOC entry 4762 (class 1259 OID 26054)
+-- TOC entry 4762 (class 1259 OID 27325)
 -- Name: foreign_key_material; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2243,7 +2221,7 @@ CREATE INDEX foreign_key_material ON public.stored_on_pallet USING btree (id_pro
 
 
 --
--- TOC entry 4763 (class 1259 OID 26055)
+-- TOC entry 4763 (class 1259 OID 27326)
 -- Name: foreign_key_pnr; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2251,7 +2229,7 @@ CREATE INDEX foreign_key_pnr ON public.stored_on_pallet USING btree (pnr);
 
 
 --
--- TOC entry 4743 (class 1259 OID 26056)
+-- TOC entry 4743 (class 1259 OID 27327)
 -- Name: foreign_key_position; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2259,7 +2237,7 @@ CREATE INDEX foreign_key_position ON public.customer_reservation USING btree (id
 
 
 --
--- TOC entry 4751 (class 1259 OID 26057)
+-- TOC entry 4751 (class 1259 OID 27328)
 -- Name: foreign_key_user; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2267,7 +2245,7 @@ CREATE INDEX foreign_key_user ON public.pallet USING btree (id_user);
 
 
 --
--- TOC entry 4772 (class 2606 OID 26115)
+-- TOC entry 4772 (class 2606 OID 27329)
 -- Name: customer_reservation customer_reservation_id_position_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2276,16 +2254,16 @@ ALTER TABLE ONLY public.customer_reservation
 
 
 --
--- TOC entry 4776 (class 2606 OID 26063)
+-- TOC entry 4776 (class 2606 OID 27334)
 -- Name: pallet_on_position fk_pallet; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.pallet_on_position
-    ADD CONSTRAINT fk_pallet FOREIGN KEY (id_pallet) REFERENCES public.pallet(pnr) NOT VALID;
+    ADD CONSTRAINT fk_pallet FOREIGN KEY (id_pallet) REFERENCES public.pallet(pnr) ON DELETE CASCADE;
 
 
 --
--- TOC entry 4777 (class 2606 OID 26120)
+-- TOC entry 4777 (class 2606 OID 27339)
 -- Name: pallet_on_position fk_position; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2294,7 +2272,7 @@ ALTER TABLE ONLY public.pallet_on_position
 
 
 --
--- TOC entry 4773 (class 2606 OID 26078)
+-- TOC entry 4773 (class 2606 OID 27344)
 -- Name: customer_reservation id_customer; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2303,7 +2281,7 @@ ALTER TABLE ONLY public.customer_reservation
 
 
 --
--- TOC entry 4774 (class 2606 OID 26083)
+-- TOC entry 4774 (class 2606 OID 27349)
 -- Name: history id_customer; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2312,7 +2290,7 @@ ALTER TABLE ONLY public.history
 
 
 --
--- TOC entry 4775 (class 2606 OID 26109)
+-- TOC entry 4775 (class 2606 OID 27354)
 -- Name: pallet pallete_id_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2321,7 +2299,7 @@ ALTER TABLE ONLY public.pallet
 
 
 --
--- TOC entry 4778 (class 2606 OID 26093)
+-- TOC entry 4778 (class 2606 OID 27359)
 -- Name: stored_on_pallet stored_on_position_id_product_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2330,15 +2308,15 @@ ALTER TABLE ONLY public.stored_on_pallet
 
 
 --
--- TOC entry 4779 (class 2606 OID 26098)
+-- TOC entry 4779 (class 2606 OID 27364)
 -- Name: stored_on_pallet stored_on_position_pnr_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.stored_on_pallet
-    ADD CONSTRAINT stored_on_position_pnr_fkey FOREIGN KEY (pnr) REFERENCES public.pallet(pnr) NOT VALID;
+    ADD CONSTRAINT stored_on_position_pnr_fkey FOREIGN KEY (pnr) REFERENCES public.pallet(pnr) ON DELETE CASCADE;
 
 
--- Completed on 2024-02-03 22:13:27
+-- Completed on 2024-02-11 22:31:44
 
 --
 -- PostgreSQL database dump complete
