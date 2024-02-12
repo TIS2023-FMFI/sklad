@@ -290,11 +290,7 @@ public class DatabaseHandler {
 
         Collections.sort(reservedWithPalletFloorOrTallPosition, floorOrTallComparator);
         result.addAll(reservedWithPalletFloorOrTallPosition);
-
-        // comparator that would sort the reservedFloorOrTallPositions
-        // it should sort it so the list would have the tall list of positions last and before that should be list
-        // of positions that do not need tall position
-        // also the lists of positions that are at the end (they are tall) should be sorted by shelf in desc order
+        
         return result;
     }
 
