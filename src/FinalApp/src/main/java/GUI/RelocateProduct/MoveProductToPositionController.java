@@ -133,11 +133,11 @@ public class MoveProductToPositionController implements Initializable {
         }
         if (!isWholePallet) {
             if (!checkIfPNRCorrect(newPNR.getText())) {
-                errorLabel.setText("PNR nie je správne zadané.");
+                errorLabel.setText("Číslo palety nie je správne zadané.");
                 return;
             }
             if (!checkIfPNRFree(newPNR.getText())) {
-                errorLabel.setText("PNR sa už v sklade nachádza na inej pozícii");
+                errorLabel.setText("Paleta sa už v sklade nachádza na inej pozícii");
                 return;
             }
             palletTo = newPNR.getText();
@@ -152,19 +152,17 @@ public class MoveProductToPositionController implements Initializable {
     public void checkIfPositionFilled() {
         if (newPositionsChoice.getValue() == null){
             newPNR.setText("");
-            errorLabel.setText("No position chosen");
+            errorLabel.setText("Musíte vybrať pozíciu");
         }
     }
 
     private boolean checkIfPNRCorrect(String PNR){
-        //checks if PNR is correct
-        int pnrNum;
         try {
-            pnrNum = Integer.parseInt(PNR);
+            Integer.parseInt(PNR);
         } catch (NumberFormatException e){
             return false;
         }
-        return (pnrNum > 2000 && pnrNum < 4000);
+        return true;
     }
 
     private boolean checkIfPNRFree(String PNR){

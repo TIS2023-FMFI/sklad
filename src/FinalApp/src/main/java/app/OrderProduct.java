@@ -37,6 +37,7 @@ public class OrderProduct {
 
 
             boolean removePallet = false;
+            System.out.println("Pozicie: " + positions);
             int numOnPos = Warehouse.getInstance().getPalletsOnPositionMap().get(positions.get(0)).get(pnr).get(material);
             if (numOnPos == quantity) {
                 for (Position position : positions) {
