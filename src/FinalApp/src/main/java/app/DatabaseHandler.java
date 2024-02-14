@@ -274,7 +274,6 @@ public class DatabaseHandler {
             } else if (!tallList1 && tallList2) {
                 return -1;
             } else {
-                // Sort by shelf in descending order
                 int shelfComparison = Integer.compare(
                         Character.getNumericValue(list2.get(0).getName().charAt(4)),
                         Character.getNumericValue(list1.get(0).getName().charAt(4))
@@ -290,7 +289,7 @@ public class DatabaseHandler {
 
         Collections.sort(reservedWithPalletFloorOrTallPosition, floorOrTallComparator);
         result.addAll(reservedWithPalletFloorOrTallPosition);
-        
+
         return result;
     }
 
