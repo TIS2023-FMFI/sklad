@@ -107,6 +107,6 @@ public class OrderShowPositionsController implements Initializable {
         OrderProduct op = new OrderProduct();
         op.removeOrderedItems(items);
         Warehouse.getInstance().addController("OrderShowPositionsController", this);
-        Warehouse.getInstance().changeScene("OrderProduct/OrderDownloadConfirmation.fxml");
+        Warehouse.getInstance().changeScene("OrderProduct/orderDownloadConfirmation.fxml");
     }
 }
