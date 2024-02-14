@@ -1,16 +1,19 @@
-<h1>Skladovací systém</h1>
+<h1>Storage system</h1>
 
-Naša aplikácia bola vyvýjaná pre potreby pobočky spoločnosti CEVA Logistics, lokalizovanej v Strečne.
+This application was developed for a branch establishment of CEVA Logistics, located in Strečno.
 
-Návod podľa ktorého sa dá aplikácia spojazdniť sa dá nájsť v documents/Instalacna prirucka.docx
+The manual to set up and run our application can be found in documents/Instalacna prirucka.docx.
 
-Popis poskytovaných funkcií:
+Description of provided functions:
 <ul>
-<li><b>Zobrazenie skladu</b> - grafické rozloženie skladu s real time sledovaním vlastnených materiálov a podrobnými informáciami o nich.</li>
-<li><b>Zaskladnenie</b> - priradenie materiálu a palety na pozíciu v sklade s rozsiahlymi možnosťami výberu parametrov a algrotmom na vybratie ideálnej pozície.</li>
-<li><b>Preskladnenie</b> - moźnosť zmeny umietnenia materiálu v sklade alebo aj celej palety s cel=ym jej obsahom.</li>
-<li><b>Objednávky</b> - vybavenie objednávky od zákazníka s presným výberom požadovaných produktov a možnosťou exportu dodacieho listu do viecerých formátov súborov.</li>
-<li><b>Štatistiky</b> - zobrazenie a export grafu znázorňujúceho pohyb paliet v sklade, spríjemnenie procesu inventúrnej kontroly automatickým výpisom inventúrneho zoznamu a tvorba personalizovaných faktúr zákazníkom.</li>
-<li><b>Rezervácie</b> - zakladanie rezervácií pomocou veľmi používateľsky príjemným grafickým rozhraním a pridávanie nových zákazníkov.</li>
+<li><b>Showcase of warehouse layout</b> - graphic view on the warehouse with real-time tracking of stored materials and plenty of details about them.</li>
+<li><b>Receiving products</b> - every product delivered to our warehouse can be customized by detailed parameters and will be assigned a pallet and position by our algorithm.</li>
+<li><b>Moving products</b> - the ability to change position of a stored product or a whole pallet.</li>
+<li><b>Orders</b> - an order from a customer can be handled effectively by the exact choice of required products and ability to export the delivery note to multiple formats.</li>
+<li><b>Statistics</b> - visual display and export of a graph depicting the movement of pallets in warehouse, making the inventory check process more enjoyable by providing an easily accesible inventoy list and the creation of personalized invoices for all customers.</li>
+<li><b>Reservations</b> - setting up reservations using our user-friendly graphic interface and the ability to manage new or existing customers and users.</li>
 </ul>
 
+You can see a short demo of our application on this link: https://www.youtube.com/watch?v=25a3CLQfCQ8
+
+Out technical documentation can be found [here](documents/javadoc)
