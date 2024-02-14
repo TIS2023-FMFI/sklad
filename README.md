@@ -16,4 +16,4 @@ Description of provided functions:
 
 You can see a short demo of our application on this link: https://www.youtube.com/watch?v=25a3CLQfCQ8
 
-Out technical documentation can be found [here](documents/javadoc)
+Developer technical documentation can be found [here](documents/javadoc)
