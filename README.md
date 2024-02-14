@@ -2,7 +2,7 @@
 
 This application was developed for a branch establishment of CEVA Logistics, located in Strečno.
 
-The manual to set up and run our application can be found in documents/Instalacna prirucka.docx.
+The manual to set up and run our application can be found in [documents/Instalacna prirucka](https://github.com/TIS2023-FMFI/sklad/blob/main/documents/Instalacna%20prirucka.docx)
 
 Description of provided functions:
 <ul>
