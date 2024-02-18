@@ -7,6 +7,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.ObservableList;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
@@ -18,6 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -27,17 +29,17 @@ import javafx.embed.swing.SwingFXUtils;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-public class FileExporter {
+public class FileExporter implements Initializable {
     private final Font customFont = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
     private final Font customFontSmall = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 10);
     private final Font customFontBig = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 15, Font.BOLD);
     private final Font customFontBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12, Font.BOLD);
     private final Font customFontSmallBold = FontFactory.getFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 9, Font.BOLD);
 
-    private static final String COMPANY_NAME = "Gefco Slovakia s.r.o., Distribution Center, logistická hala DC1";
-    private static final String COMPANY_ADDRESS = "SNP 811/168";
-    private static final String COMPANY_POSTCODE = "013 24";
-    private static final String COMPANY_CITY = "Strečno";
+    private String COMPANY_NAME = "Gefco Slovakia s.r.o., Distribution Center, logistická hala DC1";
+    private String COMPANY_ADDRESS = "SNP 811/168";
+    private String COMPANY_POSTCODE = "013 24";
+    private String COMPANY_CITY = "Strečno";
 
     /***
      * Exports data to excel file
@@ -134,6 +136,12 @@ public class FileExporter {
     private void addInvoiceContent(Document document, Customer customer, String dateFrom,
                                         String dateTo, int price, int reservations) throws DocumentException {
         // Add a title to the document
+
+        Customer root_customer = Warehouse.getInstance().getDatabaseHandler().getRootCustomer();
+        COMPANY_NAME = root_customer.getName();
+        COMPANY_ADDRESS = root_customer.getAddress();
+        COMPANY_CITY = root_customer.getCity();
+        COMPANY_POSTCODE = root_customer.getPostalCode();
 
         Paragraph title = new Paragraph("Faktúra", customFontBig);
         title.setAlignment(Element.ALIGN_CENTER);
@@ -265,14 +273,23 @@ public class FileExporter {
             PdfPTable table2 = new PdfPTable(2);
             table2.setWidthPercentage(100);
 
+            Customer root_customer = Warehouse.getInstance().getDatabaseHandler().getRootCustomer();
+            COMPANY_NAME = root_customer.getName();
+            COMPANY_ADDRESS = root_customer.getAddress();
+            COMPANY_CITY = root_customer.getCity();
+            COMPANY_POSTCODE = root_customer.getPostalCode();
+
 
             PdfPCell cellFrom = new PdfPCell(new Paragraph("""
-                   Sprostredkovateľ:
+                    Sprostredkovateľ:
                     
-                      Gefco Slovakia s.r.o.
-                      Distribution Center, logistická hala DC1
-                      SNP 811/168
-                      013 24 Strečno
+                   """ + "    " + root_customer.getName() + """
+                        
+                    """ + "    " + root_customer.getAddress() + """
+                    
+                    """ + "    " + root_customer.getCity() + """
+                    
+                    """ + "    " + root_customer.getPostalCode() + """
                     """,
                     customFont));
             table2.addCell(cellFrom);
@@ -411,4 +428,8 @@ public class FileExporter {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 }
